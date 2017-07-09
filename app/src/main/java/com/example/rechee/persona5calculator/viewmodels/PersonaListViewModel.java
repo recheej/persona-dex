@@ -24,4 +24,8 @@ public class PersonaListViewModel extends ViewModel {
     public Persona[] getAllPersonas() {
         return repository.allPersonas();
     }
+
+    public Persona[] filterPersonas(Persona[] personaToFilter, String personaNameQuery){
+        return Persona.filterPersonaByName(personaToFilter, personaNameQuery);
+    }
 }

@@ -39,11 +39,4 @@ public class ApplicationContextModule {
     public Context providesContext() {
         return context;
     }
-
-    @Persona5ApplicationScope
-    @Provides
-    @Named("applicationGson")
-    public Gson gson() {
-        return new Gson();
-    }
 }

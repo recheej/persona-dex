@@ -15,7 +15,8 @@ import dagger.Component;
  */
 
 @PersonaNameProviderScope
-@Component(modules = {PersonaNameProviderDataModule.class, PersonaNameProviderContextModule.class, PersonaNameProviderFileModule.class})
+@Component(modules = {PersonaNameProviderDataModule.class, PersonaNameProviderContextModule.class, PersonaNameProviderFileModule.class},
+dependencies = {Persona5ApplicationComponent.class})
 public interface PersonaNameProviderComponent {
     void inject(PersonaNameProvider provider);
     @Named("personaNameProviderContext") Context context();

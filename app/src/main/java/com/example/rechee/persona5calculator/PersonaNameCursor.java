@@ -4,17 +4,20 @@ import android.app.SearchManager;
 import android.database.AbstractCursor;
 import android.provider.BaseColumns;
 
+import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.PersonaSearchSuggestion;
+
+import javax.inject.Inject;
 
 /**
  * Created by Rechee on 7/3/2017.
  */
 
 public class PersonaNameCursor extends AbstractCursor {
+    
+    private final Persona[] searchSuggestions;
 
-    private final PersonaSearchSuggestion[] searchSuggestions;
-
-    public PersonaNameCursor(PersonaSearchSuggestion[] searchSuggestions){
+    public PersonaNameCursor(Persona[] searchSuggestions){
         this.searchSuggestions = searchSuggestions;
     }
 
@@ -36,10 +39,9 @@ public class PersonaNameCursor extends AbstractCursor {
             case 1:
                 return this.searchSuggestions[getPosition()].name;
             case 2:
-                return this.searchSuggestions[getPosition()].arcana;
+                return this.searchSuggestions[getPosition()].arcanaName;
             case 3:
                 return Integer.toString(getPosition());
-
         }
 
         return null;
@@ -76,6 +78,6 @@ public class PersonaNameCursor extends AbstractCursor {
 
     @Override
     public boolean isNull(int column) {
-        return this.searchSuggestions[getPosition()].name == null;
+        return this.searchSuggestions[getPosition()] == null || this.searchSuggestions[getPosition()].name == null;
     }
 }

@@ -5,6 +5,7 @@ import com.example.rechee.persona5calculator.models.Enumerations.ElementEffect;
 import com.example.rechee.persona5calculator.models.Enumerations.Element;
 import com.example.rechee.persona5calculator.models.Enumerations.Personality;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -117,5 +118,22 @@ public class Persona extends BasePersona {
         }
 
         return persona;
+    }
+
+    public static Persona[] filterPersonaByName(Persona[] personasToFilter, String nameQuery){
+        ArrayList<Persona> filteredSuggestions = new ArrayList<>(personasToFilter.length);
+        for (Persona suggestion: personasToFilter){
+            String personaName = suggestion.name.toLowerCase();
+
+            if(personaName.contains(nameQuery)){
+                filteredSuggestions.add(suggestion);
+            }
+        }
+
+        if(filteredSuggestions.size() == 0){
+            return new Persona[0];
+        }
+
+        return filteredSuggestions.toArray(new Persona[filteredSuggestions.size()]);
     }
 }

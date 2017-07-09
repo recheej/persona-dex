@@ -1,6 +1,8 @@
 package com.example.rechee.persona5calculator.fragments;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.rechee.persona5calculator.R;
+import com.example.rechee.persona5calculator.activities.PersonaDetailActivity;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
@@ -16,13 +19,15 @@ import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
  */
 
 public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder>{
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView textViewPersonaName;
         private TextView textViewPersonaLevel;
         private TextView textViewPersonaArcana;
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            itemView.setOnClickListener(this);
 
             this.textViewPersonaName = (TextView) itemView.findViewById(R.id.textViewPersonaName);
             this.textViewPersonaLevel = (TextView) itemView.findViewById(R.id.textViewPersonaLevel);
@@ -33,6 +38,13 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
             this.textViewPersonaName.setText(personaToBind.name);
             this.textViewPersonaLevel.setText(Integer.toString(personaToBind.level));
             this.textViewPersonaArcana.setText(personaToBind.arcanaName);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Context context = itemView.getContext();
+            Intent startDetailIntent = new Intent(context, PersonaDetailActivity.class);
+            context.startActivity(startDetailIntent);
         }
     }
 

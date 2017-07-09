@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mainToolbar;
 
     private Persona[] filteredPersonas;
+    private Persona[] allPersonas;
 
     @Inject
     PersonaListViewModel viewModel;
@@ -82,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.addItemDecoration(mDividerItemDecoration);
         }
 
-        this.filteredPersonas = viewModel.getAllPersonas();
+        this.filteredPersonas = Persona5Application.get(this).getAllPersonas();
+        this.allPersonas = this.filteredPersonas;
 
         personaListAdapter = new PersonaListAdapter(this.filteredPersonas);
         recyclerView.setAdapter(personaListAdapter);
@@ -101,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
         if(Intent.ACTION_SEARCH.equals(intent.getAction())){
             String query = intent.getStringExtra(SearchManager.QUERY);
 
-            //MainActivity.this.filteredPersonas = viewModel.filterPersonaByName(query);
-            personaListAdapter.setPersonas(MainActivity.this.filteredPersonas );
+            this.filteredPersonas = viewModel.filterPersonas(this.filteredPersonas, query);
+            personaListAdapter.setPersonas(MainActivity.this.filteredPersonas);
         }
         else if(Intent.ACTION_VIEW.equals(intent.getAction())){
             String personaName = intent.getDataString();
@@ -115,16 +117,22 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.persona_list_menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
-            public boolean onClose() {
-                //MainActivity.this.filteredPersonas = viewModel.filterPersonaByName("");
-                personaListAdapter.setPersonas(MainActivity.this.filteredPersonas );
-                return false;
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                //restore all personas to list
+                MainActivity.this.filteredPersonas = MainActivity.this.allPersonas;
+                MainActivity.this.personaListAdapter.setPersonas(MainActivity.this.filteredPersonas);
+                return true;
             }
         });
+
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         ComponentName componentName = getComponentName();

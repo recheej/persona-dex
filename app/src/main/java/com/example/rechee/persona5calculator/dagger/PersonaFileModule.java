@@ -32,7 +32,6 @@ public class PersonaFileModule {
         this.context = context;
     }
 
-    @ViewModelScope
     @Provides
     @Named("personaFileContents")
     String personaFileContents() {
@@ -40,7 +39,6 @@ public class PersonaFileModule {
         return this.fileContents(stream);
     }
 
-    @ViewModelScope
     @Provides
     @Named("arcanaMapFileContentsA")
     String arcanaMapFileContents() {
