@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity"
-            android:launchMode="singleTop"
-            >
+        <activity
+            android:name=".activities.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,16 +21,19 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/persona_search_config"
-                />
+                android:resource="@xml/persona_search_config" />
         </activity>
+        <activity android:name=".activities.PersonaDetailActivity"></activity>
+
         <provider
-            android:authorities="com.example.rechee.persona5calculator"
             android:name=".PersonaNameProvider"
-            android:exported="false"
-            />
+            android:authorities="com.example.rechee.persona5calculator"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>
