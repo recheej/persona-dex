@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Persona5Calculator</string>
+    <string name="level_label">Level:</string>
+    <string name="action_search">search</string>
+    <string name="personas">Persona</string>
+    <string name="hint_persona_name">Search Personas</string>
+</resources>
