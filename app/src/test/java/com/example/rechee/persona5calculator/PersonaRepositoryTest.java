@@ -19,7 +19,9 @@ public class PersonaRepositoryTest {
     @Test
     public void getAllPersonas_ReturnsEqualLength() throws Exception {
         Gson gson = new Gson();
-        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(FakePersonaData.fakePersonaFileContents(),
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
+                FakePersonaData.fakePersonaFileContents(),
+                "",
                 gson);
 
         Persona[] resultPersonas = personaRepositoryFile.allPersonas();
@@ -30,7 +32,9 @@ public class PersonaRepositoryTest {
     @Test
     public void getAllPersonas_HasData() throws Exception {
         Gson gson = new Gson();
-        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(FakePersonaData.fakePersonaFileContents(),
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
+                FakePersonaData.fakePersonaFileContents(),
+                "",
                 gson);
 
         Persona[] resultPersonas = personaRepositoryFile.allPersonas();
@@ -45,7 +49,21 @@ public class PersonaRepositoryTest {
     @Test
     public void getAllPersonas_IsSorted() throws Exception {
         Gson gson = new Gson();
-        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(FakePersonaData.fakePersonaFileContents(),
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
+                FakePersonaData.fakePersonaFileContents(),
+                "",
+                gson);
+
+        Persona[] resultPersonas = personaRepositoryFile.allPersonas();
+        assertTrue(resultPersonas[0].name.compareTo(resultPersonas[1].name) < 1);
+    }
+
+    @Test
+    public void testPersonaFusions() throws Exception {
+        Gson gson = new Gson();
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
+                FakePersonaData.fakePersonaFileContents(),
+                "",
                 gson);
 
         Persona[] resultPersonas = personaRepositoryFile.allPersonas();

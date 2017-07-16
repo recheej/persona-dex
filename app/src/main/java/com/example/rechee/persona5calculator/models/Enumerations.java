@@ -26,7 +26,8 @@ public class Enumerations {
         MOON,
         SUN,
         JUDGEMENT,
-        WORLD
+        WORLD,
+        STRENGTH
     }
 
     public enum Personality {

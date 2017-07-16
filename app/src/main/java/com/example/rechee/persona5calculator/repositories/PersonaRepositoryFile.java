@@ -1,6 +1,7 @@
 package com.example.rechee.persona5calculator.repositories;
 
 import com.example.rechee.persona5calculator.models.Persona;
+import com.example.rechee.persona5calculator.models.RawArcanaMap;
 import com.example.rechee.persona5calculator.models.RawPersona;
 import com.google.gson.Gson;
 import java.util.Arrays;
@@ -17,11 +18,13 @@ public class PersonaRepositoryFile implements PersonaRepository {
 
     private final String personaFileContents;
     private final Gson gson;
+    private final String arcanaMapFileContents;
 
     @Inject
-    public PersonaRepositoryFile(@Named("personaFileContents") String personaFileContents, Gson gson) {
+    public PersonaRepositoryFile(@Named("personaFileContents") String personaFileContents, @Named("arcanaMapFileContents") String arcanaMapFileContents,  Gson gson) {
         this.personaFileContents = personaFileContents;
         this.gson = gson;
+        this.arcanaMapFileContents = arcanaMapFileContents;
     }
 
     @Override
@@ -41,5 +44,10 @@ public class PersonaRepositoryFile implements PersonaRepository {
         });
 
         return personas;
+    }
+
+    @Override
+    public RawArcanaMap[] rawArcanas() {
+        return gson.fromJson(arcanaMapFileContents, RawArcanaMap[].class);
     }
 }

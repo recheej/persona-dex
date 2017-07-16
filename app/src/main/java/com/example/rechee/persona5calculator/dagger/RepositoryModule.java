@@ -24,7 +24,7 @@ public class RepositoryModule {
 
     @ViewModelScope
     @Provides
-    public PersonaRepositoryFile repositoryFile(@Named("personaFileContents") String personaFileContents, @Named("applicationGson") Gson gson){
-        return new PersonaRepositoryFile(personaFileContents, gson);
+    public PersonaRepositoryFile repositoryFile(@Named("personaFileContents") String personaFileContents, @Named("arcanaMapFileContents") String arcanaMapFileContents, @Named("applicationGson") Gson gson){
+        return new PersonaRepositoryFile(personaFileContents, arcanaMapFileContents, gson);
     }
 }

@@ -5,6 +5,6 @@ package com.example.rechee.persona5calculator.models;
  */
 
 public class RawArcanaMap {
-    String[] source;
-    String result;
+    public String[] source;
+    public String result;
 }

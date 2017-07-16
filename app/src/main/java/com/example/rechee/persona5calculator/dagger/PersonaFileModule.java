@@ -40,7 +40,7 @@ public class PersonaFileModule {
     }
 
     @Provides
-    @Named("arcanaMapFileContentsA")
+    @Named("arcanaMapFileContents")
     String arcanaMapFileContents() {
         InputStream stream = context.getResources().openRawResource(R.raw.arcana_combo_data);
         return this.fileContents(stream);

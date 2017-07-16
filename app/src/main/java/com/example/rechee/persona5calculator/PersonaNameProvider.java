@@ -40,7 +40,7 @@ public class PersonaNameProvider extends ContentProvider {
         String query = uri.getLastPathSegment().toLowerCase();
 
         if(!query.equals("search_suggest_query")){
-            Persona[] filteredPersonas = Persona.filterPersonaByName(suggestions, query);
+            Persona[] filteredPersonas = PersonaUtilities.filterPersonaByName(suggestions, query);
             return new PersonaNameCursor(filteredPersonas);
         }
 

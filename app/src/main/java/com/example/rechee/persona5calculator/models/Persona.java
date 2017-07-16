@@ -1,5 +1,6 @@
 package com.example.rechee.persona5calculator.models;
 
+import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.models.Enumerations.Arcana;
 import com.example.rechee.persona5calculator.models.Enumerations.ElementEffect;
 import com.example.rechee.persona5calculator.models.Enumerations.Element;
@@ -18,11 +19,29 @@ public class Persona extends BasePersona {
     Stats stats;
     HashMap<Element, ElementEffect> elements;
     Personality personality;
-    Arcana arcana;
+    public Arcana arcana;
 
     public Persona() {
         this.elements = new HashMap<>();
         personality = Personality.UNKNOWN;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Persona){
+            Persona otherPersona = (Persona) obj;
+            return otherPersona.hashCode() == this.hashCode();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return arcana.ordinal() + level;
+    }
+
+    public Arcana getArcana() {
+        return arcana;
     }
 
     static class Stats {
@@ -105,35 +124,12 @@ public class Persona extends BasePersona {
 
         String rawArcanaFormatted = rawPersona.arcana.replaceAll("\\s+", "").toLowerCase();
 
-        HashMap<String, Arcana> arcanaHashMap = new HashMap<>();
-        for(Arcana arcana: Arcana.values()){
-            String arcanaStringFormatted = arcana.name().replaceAll("\\s+", "")
-                    .replaceAll("_", "").toLowerCase();
-
-            arcanaHashMap.put(arcanaStringFormatted, arcana);
-        }
+        HashMap<String, Arcana> arcanaHashMap = PersonaUtilities.arcanaHashMap();
 
         if(arcanaHashMap.containsKey(rawArcanaFormatted)){
             persona.arcana = arcanaHashMap.get(rawArcanaFormatted);
         }
 
         return persona;
-    }
-
-    public static Persona[] filterPersonaByName(Persona[] personasToFilter, String nameQuery){
-        ArrayList<Persona> filteredSuggestions = new ArrayList<>(personasToFilter.length);
-        for (Persona suggestion: personasToFilter){
-            String personaName = suggestion.name.toLowerCase();
-
-            if(personaName.contains(nameQuery)){
-                filteredSuggestions.add(suggestion);
-            }
-        }
-
-        if(filteredSuggestions.size() == 0){
-            return new Persona[0];
-        }
-
-        return filteredSuggestions.toArray(new Persona[filteredSuggestions.size()]);
     }
 }

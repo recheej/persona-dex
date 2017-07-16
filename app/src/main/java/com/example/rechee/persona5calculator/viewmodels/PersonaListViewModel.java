@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator.viewmodels;
 
 import android.arch.lifecycle.ViewModel;
 
+import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 
@@ -26,6 +27,6 @@ public class PersonaListViewModel extends ViewModel {
     }
 
     public Persona[] filterPersonas(Persona[] personaToFilter, String personaNameQuery){
-        return Persona.filterPersonaByName(personaToFilter, personaNameQuery);
+        return PersonaUtilities.filterPersonaByName(personaToFilter, personaNameQuery);
     }
 }
