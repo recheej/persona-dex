@@ -26,9 +26,9 @@ public class PersonaGraph {
         }
 
         PersonaEdge newEdge = new PersonaEdge();
-        newEdge.start = personaOne;
-        newEdge.end = result;
-        newEdge.pairPersona = personaTwo;
+        newEdge.start = personaOne.name;
+        newEdge.end = result.name;
+        newEdge.pairPersona = personaTwo.name;
 
         if(personaTable.containsKey(personaOne.name)){
             personaTable.get(personaOne.name).add(newEdge);
@@ -40,9 +40,9 @@ public class PersonaGraph {
         }
 
         PersonaEdge edgeTwo = new PersonaEdge();
-        edgeTwo.start = personaTwo;
-        edgeTwo.end = result;
-        edgeTwo.pairPersona = personaOne;
+        edgeTwo.start = personaTwo.name;
+        edgeTwo.end = result.name;
+        edgeTwo.pairPersona = personaOne.name;
 
         if(personaTable.containsKey(personaTwo.name)){
             personaTable.get(personaTwo.name).add(edgeTwo);
@@ -67,7 +67,7 @@ public class PersonaGraph {
             }
 
             for (PersonaEdge edgeForPersona: personaTable.get(personaName)){
-                if(Objects.equals(edgeForPersona.end.name, persona.name)){
+                if(Objects.equals(edgeForPersona.end, persona.name)){
                     edgesTo.add(edgeForPersona);
                 }
             }

@@ -5,8 +5,8 @@ package com.example.rechee.persona5calculator.models;
  */
 
 public class PersonaEdge {
-    public Persona start;
-    public Persona end;
+    public String start;
+    public String end;
 
-    public Persona pairPersona;
+    public String pairPersona;
 }
