@@ -21,5 +21,4 @@ public interface Persona5ApplicationComponent {
     @Named("applicationContext") Context getContext();
     @Named("applicationGson") Gson gson();
     Persona[] allPersonas();
-    RawArcanaMap[] arcanaMaps();
 }

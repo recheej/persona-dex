@@ -54,11 +54,12 @@ public class PersonaGraph {
         }
     }
 
-    public List<PersonaEdge> edgesFrom(Persona persona){
-        return this.personaTable.get(persona.name);
+    public PersonaEdge[] edgesFrom(Persona persona){
+        List<PersonaEdge> edgesFrom = this.personaTable.get(persona.name);
+        return edgesFrom.toArray(new PersonaEdge[edgesFrom.size()]);
     }
 
-    public List<PersonaEdge> edgesTo(Persona persona){
+    public PersonaEdge[] edgesTo(Persona persona){
         List<PersonaEdge> edgesTo = new ArrayList<>();
 
         for(String personaName: this.personaTable.keySet()){
@@ -73,6 +74,6 @@ public class PersonaGraph {
             }
         }
 
-        return edgesTo;
+        return edgesTo.toArray(new PersonaEdge[edgesTo.size()]);
     }
 }

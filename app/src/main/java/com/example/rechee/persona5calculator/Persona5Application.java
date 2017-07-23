@@ -13,6 +13,7 @@ import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaGraph;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.RawArcanaMap;
+import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,10 @@ public class Persona5Application extends Application {
 
     public static Persona5Application get(Activity activity){
         return (Persona5Application) activity.getApplication();
+    }
+
+    public static Persona5Application get(FusionCalculatorService service){
+        return (Persona5Application) service.getApplication();
     }
 
     @Override

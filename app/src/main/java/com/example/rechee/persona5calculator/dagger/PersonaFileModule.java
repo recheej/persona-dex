@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator.dagger;
 
 import android.content.Context;
 
+import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.RawPersona;
@@ -36,34 +37,6 @@ public class PersonaFileModule {
     @Named("personaFileContents")
     String personaFileContents() {
         InputStream stream = context.getResources().openRawResource(R.raw.person_data);
-        return this.fileContents(stream);
-    }
-
-    @Provides
-    @Named("arcanaMapFileContents")
-    String arcanaMapFileContents() {
-        InputStream stream = context.getResources().openRawResource(R.raw.arcana_combo_data);
-        return this.fileContents(stream);
-    }
-
-    private String fileContents(InputStream stream){
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        StringBuilder out = new StringBuilder();
-        String line;
-
-        String fileContents = "";
-        try {
-            while ((line = reader.readLine()) != null) {
-                out.append(line);
-            }
-            reader.close();
-
-            fileContents = out.toString();
-
-        } catch (IOException e) {
-            fileContents = "";
-        }
-
-        return fileContents;
+        return PersonaUtilities.getFileContents(stream);
     }
 }

@@ -18,13 +18,11 @@ public class PersonaRepositoryFile implements PersonaRepository {
 
     private final String personaFileContents;
     private final Gson gson;
-    private final String arcanaMapFileContents;
 
     @Inject
-    public PersonaRepositoryFile(@Named("personaFileContents") String personaFileContents, @Named("arcanaMapFileContents") String arcanaMapFileContents,  Gson gson) {
+    public PersonaRepositoryFile(@Named("personaFileContents") String personaFileContents, Gson gson) {
         this.personaFileContents = personaFileContents;
         this.gson = gson;
-        this.arcanaMapFileContents = arcanaMapFileContents;
     }
 
     @Override
@@ -44,10 +42,5 @@ public class PersonaRepositoryFile implements PersonaRepository {
         });
 
         return personas;
-    }
-
-    @Override
-    public RawArcanaMap[] rawArcanas() {
-        return gson.fromJson(arcanaMapFileContents, RawArcanaMap[].class);
     }
 }

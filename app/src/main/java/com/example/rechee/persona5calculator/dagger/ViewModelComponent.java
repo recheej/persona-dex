@@ -18,5 +18,4 @@ import dagger.Component;
 @Component(modules = {RepositoryModule.class, PersonaFileModule.class}, dependencies = {Persona5ApplicationComponent.class})
 public interface ViewModelComponent {
     PersonaRepository personaRepository();
-    @Named("personaFileContents") String personaFileContents();
 }

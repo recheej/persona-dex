@@ -20,9 +20,7 @@ public class PersonaRepositoryTest {
     public void getAllPersonas_ReturnsEqualLength() throws Exception {
         Gson gson = new Gson();
         PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
-                FakePersonaData.fakePersonaFileContents(),
-                "",
-                gson);
+                FakePersonaData.fakePersonaFileContents(), gson);
 
         Persona[] resultPersonas = personaRepositoryFile.allPersonas();
         assertNotNull(resultPersonas);
@@ -33,9 +31,7 @@ public class PersonaRepositoryTest {
     public void getAllPersonas_HasData() throws Exception {
         Gson gson = new Gson();
         PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
-                FakePersonaData.fakePersonaFileContents(),
-                "",
-                gson);
+                FakePersonaData.fakePersonaFileContents(), gson);
 
         Persona[] resultPersonas = personaRepositoryFile.allPersonas();
         for(Persona persona : resultPersonas){
@@ -50,9 +46,7 @@ public class PersonaRepositoryTest {
     public void getAllPersonas_IsSorted() throws Exception {
         Gson gson = new Gson();
         PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
-                FakePersonaData.fakePersonaFileContents(),
-                "",
-                gson);
+                FakePersonaData.fakePersonaFileContents(), gson);
 
         Persona[] resultPersonas = personaRepositoryFile.allPersonas();
         assertTrue(resultPersonas[0].name.compareTo(resultPersonas[1].name) < 1);
@@ -62,9 +56,7 @@ public class PersonaRepositoryTest {
     public void testPersonaFusions() throws Exception {
         Gson gson = new Gson();
         PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
-                FakePersonaData.fakePersonaFileContents(),
-                "",
-                gson);
+                FakePersonaData.fakePersonaFileContents(), gson);
 
         Persona[] resultPersonas = personaRepositoryFile.allPersonas();
         assertTrue(resultPersonas[0].name.compareTo(resultPersonas[1].name) < 1);

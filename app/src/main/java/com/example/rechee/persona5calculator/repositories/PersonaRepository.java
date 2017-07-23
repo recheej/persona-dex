@@ -9,5 +9,4 @@ import com.example.rechee.persona5calculator.models.RawArcanaMap;
 
 public interface PersonaRepository {
     Persona[] allPersonas();
-    RawArcanaMap[] rawArcanas();
 }

@@ -30,6 +30,7 @@ import com.example.rechee.persona5calculator.dagger.RepositoryModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelComponent;
 import com.example.rechee.persona5calculator.fragments.PersonaListAdapter;
 import com.example.rechee.persona5calculator.models.Persona;
+import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
 import javax.inject.Inject;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
                 .build();
         component.inject(this);
+
+        startService(new Intent(this, FusionCalculatorService.class));
 
         setSupportActionBar(this.mainToolbar);
 

@@ -3,6 +3,10 @@ package com.example.rechee.persona5calculator;
 import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Persona;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -57,5 +61,26 @@ public class PersonaUtilities {
         }
 
         return filteredSuggestions.toArray(new Persona[filteredSuggestions.size()]);
+    }
+
+    public static String getFileContents(InputStream stream){
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder out = new StringBuilder();
+        String line;
+
+        String fileContents = "";
+        try {
+            while ((line = reader.readLine()) != null) {
+                out.append(line);
+            }
+            reader.close();
+
+            fileContents = out.toString();
+
+        } catch (IOException e) {
+            fileContents = "";
+        }
+
+        return fileContents;
     }
 }

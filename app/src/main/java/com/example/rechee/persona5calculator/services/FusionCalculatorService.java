@@ -5,10 +5,18 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
+import com.example.rechee.persona5calculator.Persona5Application;
+import com.example.rechee.persona5calculator.PersonaUtilities;
+import com.example.rechee.persona5calculator.dagger.DaggerFusionCalculatorServiceComponent;
+import com.example.rechee.persona5calculator.dagger.FusionCalculatorServiceComponent;
+import com.example.rechee.persona5calculator.dagger.FusionServiceContextModule;
 import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaGraph;
+import com.example.rechee.persona5calculator.models.PersonaStore;
+import com.example.rechee.persona5calculator.models.RawArcanaMap;
+import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -28,25 +36,50 @@ import static com.example.rechee.persona5calculator.models.Enumerations.*;
 public class FusionCalculatorService extends IntentService {
 
     @Inject
+    PersonaEdgesRepository personaEdgeRepository;
+    @Inject
     SparseArray<List<Persona>> personaByArcana;
-
     @Inject
     Persona[] personas;
-
     @Inject
     HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable;
 
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public FusionCalculatorService(String name) {
-        super(name);
-    }
+    private final static String SERVICE_NAME = "FusionCalculatorService";
+//
+//    /**
+//     * Creates an IntentService.  Invoked by your subclass's constructor.
+//     *
+//     * @param name Used to name the worker thread, important only for debugging.
+//     */
+//    public FusionCalculatorService(String name, Persona[] personas, SparseArray<List<Persona>> personaByArcana,
+//                                   HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable, PersonaEdgesRepository personaEdgesRepository) {
+//        super(name);
+//        this.personas = personas;
+//        this.personaByArcana = personaByArcana;
+//        this.arcanaTable = arcanaTable;
+//        this.personaEdgeRepository = personaEdgesRepository;
+//    }
+//
+//    public FusionCalculatorService(Persona[] personas, SparseArray<List<Persona>> personaByArcana,
+//                                   HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable, PersonaEdgesRepository personaEdgesRepository) {
+//        super(SERVICE_NAME);
+//        this.personas = personas;
+//        this.personaByArcana = personaByArcana;
+//        this.arcanaTable = arcanaTable;
+//        this.personaEdgeRepository = personaEdgesRepository;
+//    }
+
+    public FusionCalculatorService(){super(SERVICE_NAME);}
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+
+        FusionCalculatorServiceComponent component = DaggerFusionCalculatorServiceComponent.builder()
+                .persona5ApplicationComponent(Persona5Application.get(this).getComponent())
+                .fusionServiceContextModule(new FusionServiceContextModule(this))
+                .build();
+        component.inject(this);
+
         Arrays.sort(personas, new Comparator<Persona>() {
             @Override
             public int compare(Persona o1, Persona o2) {
@@ -62,7 +95,15 @@ public class FusionCalculatorService extends IntentService {
             }
         });
 
-        this.makePersonaGraph(personas, personaByArcana, arcanaTable);
+        PersonaGraph graph = this.makePersonaGraph(personas, personaByArcana, arcanaTable);
+
+        for(Persona persona: personas){
+            PersonaEdge[] edgesTo = graph.edgesTo(persona);
+            PersonaEdge[] edgesFrom = graph.edgesFrom(persona);
+
+            PersonaStore store = new PersonaStore(edgesFrom, edgesTo);
+            this.personaEdgeRepository.addPersonaEdges(persona, store);
+        }
     }
 
     private PersonaGraph makePersonaGraph(Persona[] personas, SparseArray<List<Persona>> personaByArcana, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){
