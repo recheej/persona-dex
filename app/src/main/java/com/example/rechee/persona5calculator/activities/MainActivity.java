@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.MenuItemCompat;
@@ -30,6 +31,7 @@ import com.example.rechee.persona5calculator.dagger.RepositoryModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelComponent;
 import com.example.rechee.persona5calculator.fragments.PersonaListAdapter;
 import com.example.rechee.persona5calculator.models.Persona;
+import com.example.rechee.persona5calculator.models.PersonaStore;
 import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
@@ -69,7 +71,15 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         component.inject(this);
 
-        startService(new Intent(this, FusionCalculatorService.class));
+        SharedPreferences fusionSharedPreferences = getSharedPreferences(Persona5Application.getPersonaFusionSharedPrefName(),
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = fusionSharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+
+        if(!fusionSharedPreferences.contains("finished")){
+            startService(new Intent(this, FusionCalculatorService.class));
+        }
 
         setSupportActionBar(this.mainToolbar);
 
@@ -88,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
 
         this.filteredPersonas = Persona5Application.get(this).getAllPersonas();
         this.allPersonas = this.filteredPersonas;
+
+        String test = fusionSharedPreferences.getString(allPersonas[0].name, null);
+        String test2 = "";
 
         personaListAdapter = new PersonaListAdapter(this.filteredPersonas);
         recyclerView.setAdapter(personaListAdapter);

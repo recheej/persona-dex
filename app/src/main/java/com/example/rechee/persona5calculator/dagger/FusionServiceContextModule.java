@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
 
+import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.models.Enumerations;
@@ -43,7 +44,7 @@ public class FusionServiceContextModule {
 
     @FusionServiceScope
     @Provides
-    public RawArcanaMap[] rawArcanas(@Named("fusionServiceGson") Gson gson, @Named("arcanaMapFileContents") String arcanaMapFileContents) {
+    RawArcanaMap[] rawArcanas(@Named("fusionServiceGson") Gson gson, @Named("arcanaMapFileContents") String arcanaMapFileContents) {
         return gson.fromJson(arcanaMapFileContents, RawArcanaMap[].class);
     }
 
@@ -57,13 +58,13 @@ public class FusionServiceContextModule {
 
     @FusionServiceScope
     @Provides
-    public SharedPreferences sharedPreferences(){
-        return context.getSharedPreferences("personaFusions", Context.MODE_PRIVATE);
+    SharedPreferences sharedPreferences(){
+        return context.getSharedPreferences(Persona5Application.getPersonaFusionSharedPrefName(), Context.MODE_PRIVATE);
     }
 
     @FusionServiceScope
     @Provides
-    public PersonaEdgesRepository edgesRepository(SharedPreferences sharedPreferences, @Named("fusionServiceGson") Gson gson) {
+    PersonaEdgesRepository edgesRepository(SharedPreferences sharedPreferences, @Named("fusionServiceGson") Gson gson) {
         return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
     }
 }

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import static com.example.rechee.persona5calculator.models.Enumerations.*;
 
@@ -40,34 +41,12 @@ public class FusionCalculatorService extends IntentService {
     @Inject
     SparseArray<List<Persona>> personaByArcana;
     @Inject
-    Persona[] personas;
+    @Named("personaByLevel") Persona[] personas;
+
     @Inject
     HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable;
 
     private final static String SERVICE_NAME = "FusionCalculatorService";
-//
-//    /**
-//     * Creates an IntentService.  Invoked by your subclass's constructor.
-//     *
-//     * @param name Used to name the worker thread, important only for debugging.
-//     */
-//    public FusionCalculatorService(String name, Persona[] personas, SparseArray<List<Persona>> personaByArcana,
-//                                   HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable, PersonaEdgesRepository personaEdgesRepository) {
-//        super(name);
-//        this.personas = personas;
-//        this.personaByArcana = personaByArcana;
-//        this.arcanaTable = arcanaTable;
-//        this.personaEdgeRepository = personaEdgesRepository;
-//    }
-//
-//    public FusionCalculatorService(Persona[] personas, SparseArray<List<Persona>> personaByArcana,
-//                                   HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable, PersonaEdgesRepository personaEdgesRepository) {
-//        super(SERVICE_NAME);
-//        this.personas = personas;
-//        this.personaByArcana = personaByArcana;
-//        this.arcanaTable = arcanaTable;
-//        this.personaEdgeRepository = personaEdgesRepository;
-//    }
 
     public FusionCalculatorService(){super(SERVICE_NAME);}
 
@@ -80,7 +59,10 @@ public class FusionCalculatorService extends IntentService {
                 .build();
         component.inject(this);
 
-        Arrays.sort(personas, new Comparator<Persona>() {
+        Persona[] personsSortedByLevel = new Persona[personas.length];
+
+        System.arraycopy(personas, 0, personsSortedByLevel, 0, personas.length);
+        Arrays.sort(personsSortedByLevel, new Comparator<Persona>() {
             @Override
             public int compare(Persona o1, Persona o2) {
                 if(o1.level < o2.level){
@@ -95,42 +77,32 @@ public class FusionCalculatorService extends IntentService {
             }
         });
 
-        PersonaGraph graph = this.makePersonaGraph(personas, personaByArcana, arcanaTable);
+        PersonaGraph graph = this.makePersonaGraph(personsSortedByLevel, personaByArcana, arcanaTable);
 
-        for(Persona persona: personas){
+        for(Persona persona: personsSortedByLevel){
             PersonaEdge[] edgesTo = graph.edgesTo(persona);
             PersonaEdge[] edgesFrom = graph.edgesFrom(persona);
 
             PersonaStore store = new PersonaStore(edgesFrom, edgesTo);
             this.personaEdgeRepository.addPersonaEdges(persona, store);
         }
+
+        this.personaEdgeRepository.markFinished();
+        stopSelf();
     }
 
     private PersonaGraph makePersonaGraph(Persona[] personas, SparseArray<List<Persona>> personaByArcana, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){
 
-        HashMap<String, HashSet<String>> pairSet = new HashMap<>(210);
+        HashSet<Integer> pairSet = new HashSet<>(210);
         PersonaGraph graph = new PersonaGraph();
 
         for (Persona personaOne: personas){
-
-            if(personaOne.rare || personaOne.special){
-                continue;
-            }
-
             for (Persona personaTwo: personas){
-                if(personaTwo.rare || personaTwo.special){
-                    continue;
-                }
 
-                if(pairSet.containsKey(personaOne.name)){
-                    if(pairSet.get(personaOne.name).contains(personaTwo.name)){
-                        continue;
-                    }
-                }
-                else if(pairSet.containsKey(personaTwo.name)){
-                    if(pairSet.get(personaTwo.name).contains(personaOne.name)){
-                        continue;
-                    }
+                //use the xor of the name hash code's to avoid duplicates
+                int pairHashCode = personaOne.name.hashCode() ^ personaTwo.name.hashCode();
+                if(pairSet.contains(pairHashCode)){
+                    continue;
                 }
 
                 Persona result = this.fuseNormal(personaOne, personaTwo, personaByArcana, arcanaTable);
@@ -139,25 +111,7 @@ public class FusionCalculatorService extends IntentService {
                     graph.addLink(personaOne, personaTwo, result);
                 }
 
-                if(pairSet.containsKey(personaOne.name)){
-                    pairSet.get(personaOne.name).add(personaTwo.name);
-                }
-                else{
-                    HashSet<String> set = new HashSet<>();
-                    set.add(personaTwo.name);
-
-                    pairSet.put(personaOne.name, set);
-                }
-
-                if(pairSet.containsKey(personaTwo.name)){
-                    pairSet.get(personaTwo.name).add(personaOne.name);
-                }
-                else{
-                    HashSet<String> set = new HashSet<>();
-                    set.add(personaOne.name);
-
-                    pairSet.put(personaTwo.name, set);
-                }
+                pairSet.add(pairHashCode);
             }
         }
 
@@ -174,6 +128,10 @@ public class FusionCalculatorService extends IntentService {
             return null;
         }
 
+        if(personaOne.max || personaTwo.max){
+            return null;
+        }
+
         Arcana resultArcana;
         if(personaOne.getArcana() == personaTwo.getArcana()){
             resultArcana = personaOne.getArcana();
@@ -186,7 +144,7 @@ public class FusionCalculatorService extends IntentService {
             return null;
         }
 
-        float calculatedLevel = (personaOne.level + personaTwo.level) / 2;
+        int calculatedLevel = ((personaOne.level + personaTwo.level) / 2) + 1;
 
         List<Persona> personaForResultArcana = personaByArcana.get(resultArcana.ordinal());
 
@@ -231,7 +189,11 @@ public class FusionCalculatorService extends IntentService {
             for(int i = personaForResultArcana.size() - 1; i >= 0; i--){
                 Persona fusedPersona = personaForResultArcana.get(i);
 
-                if(this.personaIsValidInFusion(fusedPersona) && !(fusedPersona.name.equals(personaOne.name) || fusedPersona.name.equals(personaTwo.name))){
+                if(fusedPersona.name.equals(personaOne.name) || fusedPersona.name.equals(personaTwo.name)){
+                    continue;
+                }
+
+                if(fusedPersona.level < calculatedLevel && this.personaIsValidInFusion(fusedPersona)){
                     return fusedPersona;
                 }
             }
@@ -252,7 +214,7 @@ public class FusionCalculatorService extends IntentService {
     }
 
     private boolean personaIsValidInFusion(Persona persona){
-        return !(persona.rare || persona.special || persona.dlc);
+        return !persona.rare && !persona.special && !persona.dlc;
     }
 
     @Nullable

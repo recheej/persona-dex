@@ -19,11 +19,28 @@ public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository 
         this.gson = gson;
     }
 
-
     @Override
     public void addPersonaEdges(Persona persona, PersonaStore personaStore) {
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(persona.name, gson.toJson(personaStore));
+
+        if(!sharedPreferences.contains("initialized")){
+            editor.putBoolean("initialized", true);
+        }
+
         editor.apply();
+    }
+
+    @Override
+    public void markFinished(){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("finished", true);
+        editor.apply();
+    }
+
+    @Override
+    public PersonaStore getEdgesForPersona(Persona persona) {
+        return gson.fromJson(sharedPreferences.getString(persona.name, ""), PersonaStore.class);
     }
 }

@@ -56,6 +56,11 @@ public class PersonaGraph {
 
     public PersonaEdge[] edgesFrom(Persona persona){
         List<PersonaEdge> edgesFrom = this.personaTable.get(persona.name);
+
+        if(edgesFrom == null){
+            return new PersonaEdge[0];
+        }
+
         return edgesFrom.toArray(new PersonaEdge[edgesFrom.size()]);
     }
 

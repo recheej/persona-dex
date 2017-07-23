@@ -32,6 +32,7 @@ public class ApplicationRepositoryModule {
 
     @Persona5ApplicationScope
     @Provides
+    @Named("personaByName")
     Persona[] personas(PersonaRepository repository) {
         return repository.allPersonas();
     }

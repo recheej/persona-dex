@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,7 +59,32 @@ public class FusionArcanaDataModule {
 
     @FusionServiceScope
     @Provides
-    SparseArray<List<Persona>> personaByArcana(Persona[] personas, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){
+    @Named("personaByLevel")
+    Persona[] personaByLevel(@Named("personaByName") Persona[] personas) {
+        Persona[] personsSortedByLevel = new Persona[personas.length];
+
+        System.arraycopy(personas, 0, personsSortedByLevel, 0, personas.length);
+        Arrays.sort(personsSortedByLevel, new Comparator<Persona>() {
+            @Override
+            public int compare(Persona o1, Persona o2) {
+                if(o1.level < o2.level){
+                    return -1;
+                }
+
+                if(o1.level == o2.level){
+                    return 0;
+                }
+
+                return 1;
+            }
+        });
+
+        return personsSortedByLevel;
+    }
+
+    @FusionServiceScope
+    @Provides
+    SparseArray<List<Persona>> personaByArcana(@Named("personaByLevel") Persona[] personas, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){
         SparseArray<List<Persona>> personaByArcana = new SparseArray<>(arcanaTable.size());
         for(Persona persona: personas){
             int arcanaIndex = persona.getArcana().ordinal();
