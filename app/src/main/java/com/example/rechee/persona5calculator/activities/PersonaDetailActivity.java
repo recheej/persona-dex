@@ -37,7 +37,6 @@ public class PersonaDetailActivity extends AppCompatActivity {
                 .layoutModule(new LayoutModule(this))
                 .activityContextModule(new ActivityContextModule(this))
                 .viewModelComponent(viewModelComponent)
-
                 .build();
         component.inject(this);
 

@@ -67,15 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 .layoutModule(new LayoutModule(this))
                 .activityContextModule(new ActivityContextModule(this))
                 .viewModelComponent(viewModelComponent)
-
                 .build();
         component.inject(this);
 
         SharedPreferences fusionSharedPreferences = getSharedPreferences(Persona5Application.getPersonaFusionSharedPrefName(),
                 Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = fusionSharedPreferences.edit();
-        editor.clear();
-        editor.commit();
 
         if(!fusionSharedPreferences.contains("finished")){
             startService(new Intent(this, FusionCalculatorService.class));
@@ -98,9 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
         this.filteredPersonas = Persona5Application.get(this).getAllPersonas();
         this.allPersonas = this.filteredPersonas;
-
-        String test = fusionSharedPreferences.getString(allPersonas[0].name, null);
-        String test2 = "";
 
         personaListAdapter = new PersonaListAdapter(this.filteredPersonas);
         recyclerView.setAdapter(personaListAdapter);

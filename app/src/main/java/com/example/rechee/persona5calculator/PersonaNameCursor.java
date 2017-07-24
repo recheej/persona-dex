@@ -37,11 +37,10 @@ public class PersonaNameCursor extends AbstractCursor {
         switch (column){
             case 0:
             case 1:
+            case 3:
                 return this.searchSuggestions[getPosition()].name;
             case 2:
                 return this.searchSuggestions[getPosition()].arcanaName;
-            case 3:
-                return Integer.toString(getPosition());
         }
 
         return null;
