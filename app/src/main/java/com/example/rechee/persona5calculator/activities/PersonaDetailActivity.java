@@ -15,6 +15,8 @@ import com.example.rechee.persona5calculator.dagger.DaggerViewModelComponent;
 import com.example.rechee.persona5calculator.dagger.LayoutModule;
 import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelComponent;
+import com.example.rechee.persona5calculator.models.Persona;
+import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
 
 import javax.inject.Inject;
 
@@ -22,6 +24,10 @@ public class PersonaDetailActivity extends AppCompatActivity {
 
     @Inject
     Toolbar mainToolbar;
+
+    @Inject
+    PersonaDetailViewModel viewModel;
+    private Persona detailPersona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,15 @@ public class PersonaDetailActivity extends AppCompatActivity {
                 .viewModelComponent(viewModelComponent)
                 .build();
         component.inject(this);
+
+
+        this.detailPersona = viewModel.getDetailPersona();
+        setUpToolbar();
+    }
+
+    private void setUpToolbar(){
+        this.mainToolbar.setTitle(this.detailPersona.name);
+        this.mainToolbar.setSubtitle(String.format("Level: %d", this.detailPersona.level));
 
         setSupportActionBar(this.mainToolbar);
     }

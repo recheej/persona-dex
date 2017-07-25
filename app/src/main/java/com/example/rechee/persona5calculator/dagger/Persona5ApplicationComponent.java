@@ -1,6 +1,7 @@
 package com.example.rechee.persona5calculator.dagger;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.RawArcanaMap;
@@ -21,4 +22,5 @@ public interface Persona5ApplicationComponent {
     @Named("applicationContext") Context getContext();
     @Named("applicationGson") Gson gson();
     @Named("personaByName") Persona[] allPersonasByName();
+    @Named("transferSharedPreferences") SharedPreferences sharedPreferences();
 }

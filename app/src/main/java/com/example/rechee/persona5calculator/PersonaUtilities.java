@@ -20,6 +20,9 @@ public class PersonaUtilities {
 
     private HashMap<String, Enumerations.Arcana> arcanaHashMap;
 
+    public static final String SHARED_PREF_FUSIONS = "personaFusions";
+    public static final String SHARED_PREF_TRANSFER_CONTENT = "personaTransferContent";
+
     public PersonaUtilities(){
         this.arcanaHashMap = PersonaUtilities.arcanaHashMap();
     }
@@ -48,10 +51,12 @@ public class PersonaUtilities {
 
     public static Persona[] filterPersonaByName(Persona[] personasToFilter, String nameQuery){
         ArrayList<Persona> filteredSuggestions = new ArrayList<>(personasToFilter.length);
+
+        String nameQueryLowerCase = nameQuery.toLowerCase();
         for (Persona suggestion: personasToFilter){
             String personaName = suggestion.name.toLowerCase();
 
-            if(personaName.contains(nameQuery)){
+            if(personaName.contains(nameQueryLowerCase)){
                 filteredSuggestions.add(suggestion);
             }
         }

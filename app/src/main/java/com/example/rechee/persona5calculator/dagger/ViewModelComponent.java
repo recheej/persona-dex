@@ -3,6 +3,7 @@ package com.example.rechee.persona5calculator.dagger;
 import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaRepositoryFile;
+import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
 import javax.inject.Named;
@@ -18,4 +19,5 @@ import dagger.Component;
 @Component(modules = {RepositoryModule.class, PersonaFileModule.class}, dependencies = {Persona5ApplicationComponent.class})
 public interface ViewModelComponent {
     PersonaRepository personaRepository();
+    PersonaTransferRepository transferRepository();
 }

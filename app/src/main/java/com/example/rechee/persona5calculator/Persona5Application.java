@@ -36,10 +36,6 @@ public class Persona5Application extends Application {
 
     }
 
-    public static String getPersonaFusionSharedPrefName() {
-        return "personaFusions";
-    }
-
     public Persona[] getAllPersonas() {
         return this.component.allPersonasByName();
     }

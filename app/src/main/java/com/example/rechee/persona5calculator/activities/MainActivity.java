@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.rechee.persona5calculator.Persona5Application;
+import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.dagger.ActivityComponent;
 import com.example.rechee.persona5calculator.dagger.ActivityContextModule;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         component.inject(this);
 
-        SharedPreferences fusionSharedPreferences = getSharedPreferences(Persona5Application.getPersonaFusionSharedPrefName(),
+        SharedPreferences fusionSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);
 
         if(!fusionSharedPreferences.contains("finished")){
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         this.filteredPersonas = Persona5Application.get(this).getAllPersonas();
         this.allPersonas = this.filteredPersonas;
 
-        personaListAdapter = new PersonaListAdapter(this.filteredPersonas);
+        personaListAdapter = new PersonaListAdapter(this.filteredPersonas, viewModel);
         recyclerView.setAdapter(personaListAdapter);
 
         Intent intent = getIntent();
@@ -117,6 +118,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(Intent.ACTION_VIEW.equals(intent.getAction())){
             String personaName = intent.getDataString();
+            viewModel.storePersonaForDetail(personaName);
+            
+            Intent startDetailIntent = new Intent(this, PersonaDetailActivity.class);
+            startActivity(startDetailIntent);
         }
     }
 

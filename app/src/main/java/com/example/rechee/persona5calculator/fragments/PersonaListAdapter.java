@@ -23,8 +23,10 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         private TextView textViewPersonaName;
         private TextView textViewPersonaLevel;
         private TextView textViewPersonaArcana;
+        private PersonaListViewModel viewModel;
+        private Persona bindedPersona;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, PersonaListViewModel viewModel) {
             super(itemView);
 
             itemView.setOnClickListener(this);
@@ -32,9 +34,11 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
             this.textViewPersonaName = (TextView) itemView.findViewById(R.id.textViewPersonaName);
             this.textViewPersonaLevel = (TextView) itemView.findViewById(R.id.textViewPersonaLevel);
             this.textViewPersonaArcana = (TextView) itemView.findViewById(R.id.textViewArcana);
+            this.viewModel = viewModel;
         }
 
         public void bindPersona(Persona personaToBind){
+            this.bindedPersona = personaToBind;
             this.textViewPersonaName.setText(personaToBind.name);
             this.textViewPersonaLevel.setText(Integer.toString(personaToBind.level));
             this.textViewPersonaArcana.setText(personaToBind.arcanaName);
@@ -42,6 +46,8 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
 
         @Override
         public void onClick(View v) {
+            viewModel.storePersonaForDetail(bindedPersona);
+
             Context context = itemView.getContext();
             Intent startDetailIntent = new Intent(context, PersonaDetailActivity.class);
             context.startActivity(startDetailIntent);
@@ -49,9 +55,11 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
     }
 
     private Persona[] personas;
+    private final PersonaListViewModel viewModel;
 
-    public PersonaListAdapter(Persona[] personas){
+    public PersonaListAdapter(Persona[] personas, PersonaListViewModel viewModel){
         this.personas = personas;
+        this.viewModel = viewModel;
     }
 
     @Override
@@ -59,7 +67,7 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_persona_item, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, viewModel);
     }
 
     @Override
