@@ -2,9 +2,7 @@ package com.example.rechee.persona5calculator.viewmodels;
 
 import android.arch.lifecycle.ViewModel;
 
-import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.models.Persona;
-import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
 
 import javax.inject.Inject;

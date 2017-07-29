@@ -1,12 +1,6 @@
 package com.example.rechee.persona5calculator.dagger;
 
-import android.content.Context;
-
 import com.example.rechee.persona5calculator.PersonaNameProvider;
-import com.example.rechee.persona5calculator.models.PersonaSearchSuggestion;
-import com.example.rechee.persona5calculator.repositories.PersonaSuggestionRepository;
-
-import javax.inject.Named;
 
 import dagger.Component;
 
@@ -15,8 +9,14 @@ import dagger.Component;
  */
 
 @PersonaNameProviderScope
-@Component(modules = {PersonaNameProviderContextModule.class,}, dependencies = {Persona5ApplicationComponent.class})
+@Component(
+        modules = {
+                NameProviderRepositoryModule.class,
+                PersonaFileModule.class
+        },
+        dependencies = {
+        }
+)
 public interface PersonaNameProviderComponent {
     void inject(PersonaNameProvider provider);
-    @Named("personaNameProviderContext") Context context();
 }

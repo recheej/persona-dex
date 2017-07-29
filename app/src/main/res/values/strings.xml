@@ -8,4 +8,9 @@
     <string name="tab_name_fusions">Fusions</string>
     <string name="tab_name_elements">Elements</string>
     <string name="tab_name_skills">Skills</string>
+    <string name="skill_strength">Strength</string>
+    <string name="skill_magic">Magic</string>
+    <string name="skill_endurance">Endurance</string>
+    <string name="skill_agility">Agility</string>
+    <string name="skill_luck">Luck</string>
 </resources>

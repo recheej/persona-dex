@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.google.gson.Gson;
 
-import javax.inject.Named;
-
 /**
  * Created by Rechee on 7/23/2017.
  */

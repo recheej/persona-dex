@@ -2,20 +2,17 @@ package com.example.rechee.persona5calculator;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.example.rechee.persona5calculator.dagger.DaggerPersonaNameProviderComponent;
+import com.example.rechee.persona5calculator.dagger.NameProviderRepositoryModule;
+import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.PersonaNameProviderComponent;
-import com.example.rechee.persona5calculator.dagger.PersonaNameProviderContextModule;
 import com.example.rechee.persona5calculator.models.Persona;
-import com.example.rechee.persona5calculator.models.PersonaSearchSuggestion;
-import com.example.rechee.persona5calculator.repositories.PersonaSuggestionRepository;
-
-import java.util.ArrayList;
+import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 
 import javax.inject.Inject;
 
@@ -30,12 +27,25 @@ public class PersonaNameProvider extends ContentProvider {
         return true;
     }
 
+    @Inject
+    PersonaRepository personaRepository;
+
+    private Persona[] suggestions;
+
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        Persona5Application application = (Persona5Application) getContext().getApplicationContext();
 
-        Persona[] suggestions = application.getAllPersonas();
+        Persona5Application application = (Persona5Application) getContext().getApplicationContext();
+        PersonaNameProviderComponent component = DaggerPersonaNameProviderComponent.builder()
+                .nameProviderRepositoryModule(new NameProviderRepositoryModule())
+                .personaFileModule(new PersonaFileModule(getContext()))
+                .build();
+        component.inject(this);
+
+        if(this.suggestions == null){
+            this.suggestions = personaRepository.allPersonas();
+        }
 
         String query = uri.getLastPathSegment().toLowerCase();
 

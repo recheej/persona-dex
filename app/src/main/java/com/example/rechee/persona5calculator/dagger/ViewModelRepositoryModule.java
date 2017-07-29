@@ -14,27 +14,26 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Rechee on 7/1/2017.
+ * Created by Rechee on 7/3/2017.
  */
 
 @Module
-public class RepositoryModule {
-
-    @ViewModelScope
+public class ViewModelRepositoryModule {
     @Provides
-    PersonaRepository provideRepository(PersonaRepositoryFile fileRepository) {
-        return fileRepository;
-    }
-
-    @ViewModelScope
-    @Provides
-    PersonaRepositoryFile repositoryFile(@Named("personaFileContents") String personaFileContents, @Named("applicationGson") Gson gson){
+    @ActivityScope
+    PersonaRepository provideRepository(@Named("personaFileContents") String personaFileContents, Gson gson) {
         return new PersonaRepositoryFile(personaFileContents, gson);
     }
 
-    @ViewModelScope
     @Provides
-    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences, @Named("applicationGson") Gson gson){
+    @ActivityScope
+    Gson gson() {
+        return new Gson();
+    }
+
+    @Provides
+    @ActivityScope
+    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences, Gson gson){
         return new PersonaTransferRepositorySharedPref(sharedPreferences, gson);
     }
 }

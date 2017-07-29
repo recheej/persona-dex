@@ -1,19 +1,15 @@
 package com.example.rechee.persona5calculator.dagger;
 
-import android.content.Context;
 import android.util.SparseArray;
 
 import com.example.rechee.persona5calculator.PersonaUtilities;
-import com.example.rechee.persona5calculator.R;
-import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Enumerations.Arcana;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.RawArcanaMap;
+import com.example.rechee.persona5calculator.repositories.PersonaRepository;
+import com.example.rechee.persona5calculator.repositories.PersonaRepositoryFile;
+import com.google.gson.Gson;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -60,7 +56,8 @@ public class FusionArcanaDataModule {
     @FusionServiceScope
     @Provides
     @Named("personaByLevel")
-    Persona[] personaByLevel(@Named("personaByName") Persona[] personas) {
+    Persona[] personaByLevel(PersonaRepository repository) {
+        Persona[] personas = repository.allPersonas();
         Persona[] personsSortedByLevel = new Persona[personas.length];
 
         System.arraycopy(personas, 0, personsSortedByLevel, 0, personas.length);
@@ -101,5 +98,17 @@ public class FusionArcanaDataModule {
         }
 
         return personaByArcana;
+    }
+
+    @Provides
+    @FusionServiceScope
+    PersonaRepository provideRepository(@Named("personaFileContents") String personaFileContents, Gson gson) {
+        return new PersonaRepositoryFile(personaFileContents, gson);
+    }
+
+    @Provides
+    @FusionServiceScope
+    Gson gson() {
+        return new Gson();
     }
 }

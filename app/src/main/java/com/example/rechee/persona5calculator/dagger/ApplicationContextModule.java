@@ -1,20 +1,8 @@
 package com.example.rechee.persona5calculator.dagger;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.example.rechee.persona5calculator.PersonaUtilities;
-import com.example.rechee.persona5calculator.R;
-import com.example.rechee.persona5calculator.models.Persona;
-import com.example.rechee.persona5calculator.models.RawPersona;
 import com.google.gson.Gson;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Comparator;
 
 import javax.inject.Named;
 
@@ -34,17 +22,17 @@ public class ApplicationContextModule {
         this.context = context;
     }
 
-    @Persona5ApplicationScope
     @Provides
+    @ApplicationScope
     @Named("applicationContext")
     public Context providesContext() {
         return context;
     }
 
-    @Persona5ApplicationScope
     @Provides
-    @Named("transferSharedPreferences")
-    SharedPreferences sharedPreferences(){
-        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_TRANSFER_CONTENT, Context.MODE_PRIVATE);
+    @ApplicationScope
+    @Named("applicationGson")
+    Gson gson() {
+        return new Gson();
     }
 }

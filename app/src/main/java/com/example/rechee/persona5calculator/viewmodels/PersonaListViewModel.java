@@ -8,8 +8,6 @@ import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
 
 
-import java.util.Arrays;
-
 import javax.inject.Inject;
 
 /**
@@ -20,11 +18,17 @@ public class PersonaListViewModel extends ViewModel {
 
     private final PersonaRepository repository;
     private final PersonaTransferRepository transferRepository;
+    private final Persona[] allPersonas;
 
     @Inject
     public PersonaListViewModel(PersonaRepository repository, PersonaTransferRepository transferRepository){
         this.repository = repository;
+        this.allPersonas = repository.allPersonas();
         this.transferRepository = transferRepository;
+    }
+
+    public Persona[] getAllPersonas() {
+        return this.allPersonas;
     }
 
     public Persona[] filterPersonas(Persona[] personasToFilter, String personaNameQuery){
@@ -32,7 +36,7 @@ public class PersonaListViewModel extends ViewModel {
     }
 
     public void storePersonaForDetail(String personaName){
-        Persona foundPersona = this.filterPersonas(repository.allPersonas(), personaName)[0];
+        Persona foundPersona = this.filterPersonas(this.allPersonas, personaName)[0];
         this.transferRepository.storePersonaForDetail(foundPersona);
     }
 

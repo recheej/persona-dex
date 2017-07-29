@@ -1,7 +1,6 @@
 package com.example.rechee.persona5calculator.repositories;
 
 import com.example.rechee.persona5calculator.models.Persona;
-import com.example.rechee.persona5calculator.models.RawArcanaMap;
 import com.example.rechee.persona5calculator.models.RawPersona;
 import com.google.gson.Gson;
 import java.util.Arrays;

@@ -6,7 +6,6 @@ import android.app.Application;
 import com.example.rechee.persona5calculator.dagger.ApplicationContextModule;
 import com.example.rechee.persona5calculator.dagger.DaggerPersona5ApplicationComponent;
 import com.example.rechee.persona5calculator.dagger.Persona5ApplicationComponent;
-import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 
@@ -30,14 +29,8 @@ public class Persona5Application extends Application {
         super.onCreate();
 
         this.component = DaggerPersona5ApplicationComponent.builder()
-                .personaFileModule(new PersonaFileModule(this))
                 .applicationContextModule(new ApplicationContextModule(this))
                 .build();
-
-    }
-
-    public Persona[] getAllPersonas() {
-        return this.component.allPersonasByName();
     }
 
     public Persona5ApplicationComponent getComponent() {

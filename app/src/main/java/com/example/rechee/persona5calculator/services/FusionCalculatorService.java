@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
 import com.example.rechee.persona5calculator.Persona5Application;
-import com.example.rechee.persona5calculator.dagger.DaggerFusionCalculatorServiceComponent;
+import com.example.rechee.persona5calculator.dagger.DaggerPersona5ApplicationComponent;
+import com.example.rechee.persona5calculator.dagger.FusionArcanaDataModule;
 import com.example.rechee.persona5calculator.dagger.FusionCalculatorServiceComponent;
 import com.example.rechee.persona5calculator.dagger.FusionServiceContextModule;
+import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaGraph;
@@ -49,11 +51,8 @@ public class FusionCalculatorService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-
-        FusionCalculatorServiceComponent component = DaggerFusionCalculatorServiceComponent.builder()
-                .persona5ApplicationComponent(Persona5Application.get(this).getComponent())
-                .fusionServiceContextModule(new FusionServiceContextModule(this))
-                .build();
+        FusionCalculatorServiceComponent component = Persona5Application.get(this).getComponent()
+                .plus(new FusionServiceContextModule(this), new FusionArcanaDataModule(), new PersonaFileModule(this));
         component.inject(this);
 
         Persona[] personsSortedByLevel = new Persona[personas.length];

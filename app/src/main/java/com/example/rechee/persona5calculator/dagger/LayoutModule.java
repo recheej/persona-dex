@@ -21,7 +21,6 @@ public class LayoutModule {
         this.activity = activity;
     }
 
-    @ActivityScope
     @Provides
     Toolbar mainToolbar() {
         return (Toolbar) activity.findViewById(R.id.main_toolbar);

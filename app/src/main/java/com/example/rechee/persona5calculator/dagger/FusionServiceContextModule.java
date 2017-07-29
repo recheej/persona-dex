@@ -1,21 +1,16 @@
 package com.example.rechee.persona5calculator.dagger;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.widget.Toolbar;
 
-import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.R;
-import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.RawArcanaMap;
 import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaEdgesSharedPrefRepository;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
-import java.util.HashMap;
 
 import javax.inject.Named;
 
@@ -37,14 +32,7 @@ public class FusionServiceContextModule {
 
     @Provides
     @FusionServiceScope
-    @Named("fusionServiceGson")
-    Gson gson() {
-        return new Gson();
-    }
-
-    @FusionServiceScope
-    @Provides
-    RawArcanaMap[] rawArcanas(@Named("fusionServiceGson") Gson gson, @Named("arcanaMapFileContents") String arcanaMapFileContents) {
+    RawArcanaMap[] rawArcanas(@Named("applicationGson") Gson gson, @Named("arcanaMapFileContents") String arcanaMapFileContents) {
         return gson.fromJson(arcanaMapFileContents, RawArcanaMap[].class);
     }
 
@@ -56,16 +44,16 @@ public class FusionServiceContextModule {
         return PersonaUtilities.getFileContents(stream);
     }
 
-    @FusionServiceScope
     @Provides
+    @FusionServiceScope
     @Named("fusionSharedPreferences")
     SharedPreferences sharedPreferences(){
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS, Context.MODE_PRIVATE);
     }
 
-    @FusionServiceScope
     @Provides
-    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, @Named("fusionServiceGson") Gson gson) {
+    @FusionServiceScope
+    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, @Named("applicationGson") Gson gson) {
         return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
     }
 }
