@@ -14,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,18 +23,19 @@ import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.dagger.ActivityComponent;
 import com.example.rechee.persona5calculator.dagger.ActivityContextModule;
+import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.dagger.LayoutModule;
 import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
-import com.example.rechee.persona5calculator.fragments.PersonaListAdapter;
+import com.example.rechee.persona5calculator.adapters.PersonaListAdapter;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 new PersonaFileModule(this)
         );
         component.inject(this);
+        this.component = component;
 
         SharedPreferences fusionSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);

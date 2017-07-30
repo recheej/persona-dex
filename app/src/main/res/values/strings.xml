@@ -5,7 +5,6 @@
     <string name="personas">Persona</string>
     <string name="hint_persona_name">Search Personas</string>
     <string name="tab_name_info">Info</string>
-    <string name="tab_name_fusions">Fusions</string>
     <string name="tab_name_elements">Elements</string>
     <string name="tab_name_skills">Skills</string>
     <string name="skill_strength">Strength</string>
@@ -13,4 +12,6 @@
     <string name="skill_endurance">Endurance</string>
     <string name="skill_agility">Agility</string>
     <string name="skill_luck">Luck</string>
+    <string name="fusions">Fusions</string>
+    <string name="arcana">Arcana</string>
 </resources>

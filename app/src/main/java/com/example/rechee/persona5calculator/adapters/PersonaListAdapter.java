@@ -1,4 +1,4 @@
-package com.example.rechee.persona5calculator.fragments;
+package com.example.rechee.persona5calculator.adapters;
 
 
 import android.content.Context;

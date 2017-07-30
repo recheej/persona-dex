@@ -24,12 +24,14 @@ public class ActivityContextModule {
         this.context = context;
     }
 
+    @ActivityScope
     @Provides
     @Named("activityContext")
     public Context providesContext() {
         return context;
     }
 
+    @ActivityScope
     @Provides
     @Named("transferSharedPreferences")
     SharedPreferences sharedPreferences(){

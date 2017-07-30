@@ -1,27 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp">
-
-
-    <TextView
-        android:id="@+id/textView_arcanaName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        />
+    android:elevation="2dp"
+    android:orientation="vertical"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp">
 
     <LinearLayout
+        android:id="@+id/personaDetailHeader"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:layout_below="@id/textView_arcanaName"
-        android:orientation="vertical">
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="5dp"
+        >
+
+        <TextView
+            android:id="@+id/textView_arcanaLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/arcana"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_arcanaName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAlignment="textEnd"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_StatLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/personaDetailHeader"
+        android:text="Stats"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        style="@style/PersonaStatsTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_StatLabel">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,27 +59,20 @@
 
             <TextView
                 android:id="@+id/textViewStrengthLabel"
+                style="@style/PersonaStatsTextLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/skill_strength"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp" />
+                android:text="@string/skill_strength" />
 
             <TextView
                 android:id="@+id/textViewStrengthStat"
+                style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16"
-                android:textAlignment="textEnd"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="16" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/white"/>
+        <include layout="@layout/grid_divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,27 +81,20 @@
 
             <TextView
                 android:id="@+id/textViewMagicLabel"
+                style="@style/PersonaStatsTextLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/skill_magic"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp" />
+                android:text="@string/skill_magic" />
 
             <TextView
                 android:id="@+id/textViewMagicStat"
+                style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16"
-                android:textAlignment="textEnd"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="16" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/white"/>
+        <include layout="@layout/grid_divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,27 +103,20 @@
 
             <TextView
                 android:id="@+id/textViewEnduranceLabel"
+                style="@style/PersonaStatsTextLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/skill_endurance"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp" />
+                android:text="@string/skill_endurance" />
 
             <TextView
                 android:id="@+id/textViewEnduranceStat"
+                style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16"
-                android:textAlignment="textEnd"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="16" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/white"/>
+        <include layout="@layout/grid_divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,27 +125,20 @@
 
             <TextView
                 android:id="@+id/textViewAgilityLabel"
+                style="@style/PersonaStatsTextLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/skill_agility"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp" />
+                android:text="@string/skill_agility" />
 
             <TextView
                 android:id="@+id/textViewAgilityStat"
+                style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16"
-                android:textAlignment="textEnd"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="16" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/white"/>
+        <include layout="@layout/grid_divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,22 +147,28 @@
 
             <TextView
                 android:id="@+id/textViewLuckLabel"
+                style="@style/PersonaStatsTextLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/skill_luck"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp" />
+                android:text="@string/skill_luck" />
 
             <TextView
                 android:id="@+id/textViewLuckStat"
+                style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16"
-                android:textAlignment="textEnd"
-                android:textColor="?android:attr/textColorPrimaryInverse"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="16" />
         </LinearLayout>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/fusions"
+        tools:elevation="24dp" />
 </RelativeLayout>

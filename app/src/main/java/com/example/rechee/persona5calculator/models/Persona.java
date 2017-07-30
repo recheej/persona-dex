@@ -26,6 +26,10 @@ public class Persona extends BasePersona {
         personality = Personality.UNKNOWN;
     }
 
+    public Stats getStats() {
+        return this.stats;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Persona){
@@ -44,14 +48,14 @@ public class Persona extends BasePersona {
         return arcana;
     }
 
-    static class Stats {
-        final int ENDURANCE;
-        final int AGILITY;
-        final int STRENGTH;
-        final int MAGIC;
-        final int LUCK;
+    public static class Stats {
+        public final int ENDURANCE;
+        public final int AGILITY;
+        public final int STRENGTH;
+        public final int MAGIC;
+        public final int LUCK;
 
-        public Stats(int[] rawStats){
+        Stats(int[] rawStats){
             STRENGTH = rawStats[0];
             MAGIC = rawStats[1];
             ENDURANCE = rawStats[2];

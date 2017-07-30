@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rechee.persona5calculator.activities.MainActivity">
+    tools:context="com.example.rechee.persona5calculator.activities.MainActivity"
+    android:fitsSystemWindows="true">
 
     <include layout="@layout/toolbar_main"
         android:layout_height="wrap_content"

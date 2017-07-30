@@ -22,4 +22,5 @@ import dagger.Subcomponent;
 public interface ActivityComponent {
     void inject(MainActivity activity);
     void inject(PersonaDetailActivity activity);
+    FragmentComponent plus();
 }
