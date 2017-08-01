@@ -23,4 +23,12 @@ public class PersonaDetailViewModel extends ViewModel {
     public Persona getDetailPersona(){
         return repository.getDetailPersona();
     }
+
+    public void storePersonaForFusion(Persona personaForFusion){
+        repository.storePersonaForFusion(personaForFusion);
+    }
+
+    public String getPersonaForFusion(){
+        return repository.getPersonaForFusion();
+    }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="PersonaStatsTheme">
+    <style name="PersonaStatsTheme.V21">
         <item name="android:elevation">4dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/colorAccent</item>
-        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="FusionHeaderLabel.V21">
+        <item name="android:elevation">4dp</item>
     </style>
 </resources>

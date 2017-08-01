@@ -1,8 +1,10 @@
 package com.example.rechee.persona5calculator.dagger;
 
+import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
+import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
 import dagger.Module;
@@ -24,5 +26,11 @@ public class ViewModelModule {
     @ActivityScope
     PersonaListViewModel personaListViewModel(PersonaRepository personaRepository, PersonaTransferRepository personaTransferRepository) {
         return new PersonaListViewModel(personaRepository, personaTransferRepository);
+    }
+
+    @Provides
+    @ActivityScope
+    PersonaFusionListViewModel personaFusionListViewModel(PersonaEdgesRepository repository) {
+        return new PersonaFusionListViewModel(repository);
     }
 }

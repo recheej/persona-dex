@@ -14,4 +14,10 @@
     <string name="skill_luck">Luck</string>
     <string name="fusions">Fusions</string>
     <string name="arcana">Arcana</string>
+    
+    <string name="to">To</string>
+    <string name="from">from</string>
+    <string name="persona_one">Persona One</string>
+    <string name="persona_two">Persona Two</string>
+    <string name="result">Result</string>
 </resources>

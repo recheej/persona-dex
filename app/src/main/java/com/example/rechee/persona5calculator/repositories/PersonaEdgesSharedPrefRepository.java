@@ -43,4 +43,9 @@ public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository 
     public PersonaStore getEdgesForPersona(Persona persona) {
         return gson.fromJson(sharedPreferences.getString(persona.name, ""), PersonaStore.class);
     }
+
+    @Override
+    public PersonaStore getEdgesForPersona(String personaName) {
+        return gson.fromJson(sharedPreferences.getString(personaName, ""), PersonaStore.class);
+    }
 }

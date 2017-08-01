@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator.dagger;
 
 import com.example.rechee.persona5calculator.activities.MainActivity;
 import com.example.rechee.persona5calculator.activities.PersonaDetailActivity;
+import com.example.rechee.persona5calculator.activities.PersonaFusionActivity;
 
 import dagger.Subcomponent;
 
@@ -22,5 +23,6 @@ import dagger.Subcomponent;
 public interface ActivityComponent {
     void inject(MainActivity activity);
     void inject(PersonaDetailActivity activity);
+    void inject(PersonaFusionActivity activity);
     FragmentComponent plus();
 }

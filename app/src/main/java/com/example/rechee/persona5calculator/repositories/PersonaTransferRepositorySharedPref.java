@@ -31,4 +31,16 @@ public class PersonaTransferRepositorySharedPref implements PersonaTransferRepos
         String personaDetailJson = sharedPreferences.getString("detailPersona", "");
         return gson.fromJson(personaDetailJson, Persona.class);
     }
+
+    @Override
+    public void storePersonaForFusion(Persona personaForFusion) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("personaForFusion", personaForFusion.name);
+        editor.commit();
+    }
+
+    @Override
+    public String getPersonaForFusion() {
+        return sharedPreferences.getString("personaForFusion", "");
+    }
 }

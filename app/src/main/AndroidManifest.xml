@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".services.FusionCalculatorService" />
+
         <activity
             android:name=".activities.MainActivity"
             android:launchMode="singleTop">
@@ -27,14 +28,14 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/persona_search_config" />
         </activity>
-        <activity android:name=".activities.PersonaDetailActivity"></activity>
+        <activity android:name=".activities.PersonaDetailActivity" />
 
         <provider
             android:name=".PersonaNameProvider"
             android:authorities="com.example.rechee.persona5calculator"
             android:exported="false" />
 
-
+        <activity android:name=".activities.PersonaFusionActivity"></activity>
     </application>
 
 </manifest>

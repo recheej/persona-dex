@@ -37,4 +37,11 @@ public class ActivityContextModule {
     SharedPreferences sharedPreferences(){
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_TRANSFER_CONTENT, Context.MODE_PRIVATE);
     }
+
+    @Provides
+    @ActivityScope
+    @Named("fusionSharedPreferences")
+    SharedPreferences fusionSharedPreferences(){
+        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS, Context.MODE_PRIVATE);
+    }
 }

@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator.dagger;
 
 import com.example.rechee.persona5calculator.activities.MainActivity;
 import com.example.rechee.persona5calculator.activities.PersonaDetailActivity;
+import com.example.rechee.persona5calculator.fragments.FusionListFragment;
 import com.example.rechee.persona5calculator.fragments.PersonaDetailInfoFragment;
 
 import dagger.Subcomponent;
@@ -17,4 +18,5 @@ import dagger.Subcomponent;
 )
 public interface FragmentComponent {
     void inject(PersonaDetailInfoFragment fragment);
+    void inject(FusionListFragment fragment);
 }

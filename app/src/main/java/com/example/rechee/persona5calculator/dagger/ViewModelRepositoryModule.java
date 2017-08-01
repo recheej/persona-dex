@@ -2,6 +2,8 @@ package com.example.rechee.persona5calculator.dagger;
 
 import android.content.SharedPreferences;
 
+import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository;
+import com.example.rechee.persona5calculator.repositories.PersonaEdgesSharedPrefRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaRepositoryFile;
 import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
@@ -35,5 +37,11 @@ public class ViewModelRepositoryModule {
     @ActivityScope
     PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences, Gson gson){
         return new PersonaTransferRepositorySharedPref(sharedPreferences, gson);
+    }
+
+    @Provides
+    @ActivityScope
+    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson){
+        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
     }
 }

@@ -12,4 +12,6 @@ public interface PersonaEdgesRepository {
     void addPersonaEdges(Persona persona, PersonaStore personaStore);
     void markFinished();
     PersonaStore getEdgesForPersona(Persona persona);
+
+    PersonaStore getEdgesForPersona(String personaName);
 }

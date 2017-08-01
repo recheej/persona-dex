@@ -14,4 +14,12 @@ public class PersonaStore {
         this.edgesFrom = edgesFrom;
         this.edgesTo = edgesTo;
     }
+
+    public PersonaEdge[] edgesTo() {
+        return this.edgesTo;
+    }
+
+    public PersonaEdge[] edgesFrom() {
+        return this.edgesFrom;
+    }
 }
