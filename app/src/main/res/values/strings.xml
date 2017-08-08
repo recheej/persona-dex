@@ -20,4 +20,6 @@
     <string name="persona_one">Persona One</string>
     <string name="persona_two">Persona Two</string>
     <string name="result">Result</string>
+    <string name="expand_more">expand more</string>
+    <string name="details_for">Details for</string>
 </resources>

@@ -38,4 +38,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-alpha3'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    compile 'net.cachapa.expandablelayout:expandablelayout:2.9.1'
 }

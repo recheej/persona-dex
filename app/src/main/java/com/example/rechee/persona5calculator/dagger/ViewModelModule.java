@@ -30,7 +30,7 @@ public class ViewModelModule {
 
     @Provides
     @ActivityScope
-    PersonaFusionListViewModel personaFusionListViewModel(PersonaEdgesRepository repository) {
-        return new PersonaFusionListViewModel(repository);
+    PersonaFusionListViewModel personaFusionListViewModel(PersonaEdgesRepository repository, PersonaListViewModel personaListViewModel) {
+        return new PersonaFusionListViewModel(repository, personaListViewModel);
     }
 }

@@ -1,25 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="2"
-    android:layout_marginBottom="5dp"
-    >
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView_personaNameOne"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:paddingStart="16dp">
+
+        <TextView
+            android:id="@+id/textView_personaNameOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="TextView"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/expand_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/expand_more"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            app:srcCompat="@drawable/ic_expand_more_white_24dp" />
+
+        <TextView
+            android:id="@+id/textView_personaNameTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toStartOf="@id/expand_icon"
+            android:text="TextView"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/grid_divider_horizontal" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_fusion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="14sp" />
+        android:background="@color/colorAccent"
+        app:el_duration="300"
+        app:el_expanded="false">
 
-    <TextView
-        android:id="@+id/textView_personaNameTwo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_weight="1"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/persona_one_detail"
+                android:text="test text"
+                style="@style/FusionDetail" />
+
+            <include layout="@layout/grid_divider_horizontal_dark" />
+
+            <TextView
+                android:id="@+id/persona_two_detail"
+                android:text="test text two"
+                style="@style/FusionDetail"/>
+
+        </LinearLayout>
+
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
 
 </LinearLayout>

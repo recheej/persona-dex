@@ -96,13 +96,13 @@ public class FusionListFragment extends Fragment {
         TextView personaHeaderColumnTwo = (TextView) fragmentListView.findViewById(R.id.textView_fusion_column_two_label);
 
         if(this.isToList){
-            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesTo(), personaName, true);
+            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesTo(), personaName, true, recyclerView, viewModel);
 
             personaHeaderColumnOne.setText(R.string.persona_one);
             personaHeaderColumnTwo.setText(R.string.persona_two);
         }
         else{
-            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesFrom(), personaName, false);
+            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesFrom(), personaName, false, recyclerView, viewModel);
             personaHeaderColumnOne.setText(R.string.persona_two);
             personaHeaderColumnTwo.setText(R.string.result);
         }

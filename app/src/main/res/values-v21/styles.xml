@@ -5,6 +5,10 @@
     </style>
 
     <style name="FusionHeaderLabel.V21">
-        <item name="android:elevation">4dp</item>
+        <item name="android:elevation">8dp</item>
     </style>
+
+    <string name="FusionListItem.V21">
+        <item name="android:elevation">4dp</item>
+    </string>
 </resources>
