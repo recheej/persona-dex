@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.fragments.PersonaDetailInfoFragment;
+import com.example.rechee.persona5calculator.fragments.PersonaElementsFragment;
+import com.example.rechee.persona5calculator.fragments.PersonaSkillsFragment;
 import com.example.rechee.persona5calculator.models.Persona;
 
 /**
@@ -27,8 +29,12 @@ public class PersonaDetailFragmentPagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
                 return new PersonaDetailInfoFragment();
+            case 1:
+                return new PersonaElementsFragment();
+            case 2:
+                return new PersonaSkillsFragment();
             default:
-                return new PersonaDetailInfoFragment();
+                return null;
         }
     }
 

@@ -6,8 +6,9 @@ import com.example.rechee.persona5calculator.models.Enumerations.ElementEffect;
 import com.example.rechee.persona5calculator.models.Enumerations.Element;
 import com.example.rechee.persona5calculator.models.Enumerations.Personality;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,9 @@ public class Persona extends BasePersona {
     Stats stats;
     HashMap<Element, ElementEffect> elements;
     Personality personality;
+
+    private Skill[] personaSkills;
+
     public Arcana arcana;
 
     public Persona() {
@@ -26,8 +30,16 @@ public class Persona extends BasePersona {
         personality = Personality.UNKNOWN;
     }
 
+    public Skill[] getPersonaSkills() {
+        return personaSkills;
+    }
+
     public Stats getStats() {
         return this.stats;
+    }
+
+    public HashMap<Element, ElementEffect> getElements() {
+        return this.elements;
     }
 
     @Override
@@ -72,9 +84,10 @@ public class Persona extends BasePersona {
         persona.max = rawPersona.max;
         persona.dlc = rawPersona.dlc;
         persona.rare = rawPersona.rare;
-        persona.skills = rawPersona.skills;
         persona.arcanaName = rawPersona.arcana;
         persona.stats = new Persona.Stats(rawPersona.stats);
+
+        persona.mapSkills(rawPersona.skills);
 
         Element[] elements = new Element[] {Element.PHYSICAL, Element.GUN, Element.FIRE, Element.ICE, Element.ELECTRIC,
                 Element.WIND, Element.PSYCHIC, Element.NUCLEAR, Element.BLESS, Element.CURSE };
@@ -135,5 +148,18 @@ public class Persona extends BasePersona {
         }
 
         return persona;
+    }
+
+    private void mapSkills(HashMap<String, Integer> baseSkills){
+        this.personaSkills = new Skill[baseSkills.size()];
+
+        int i = 0;
+        for (Map.Entry<String, Integer> entry : baseSkills.entrySet()) {
+            Skill newSkill = new Skill();
+            newSkill.setName(entry.getKey());
+            newSkill.setLevel(entry.getValue());
+            personaSkills[i] = newSkill;
+            i += 1;
+        }
     }
 }

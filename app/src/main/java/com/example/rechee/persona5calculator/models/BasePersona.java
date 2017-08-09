@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class BasePersona {
     public String name;
     public int level;
-    public HashMap<String, Integer> skills;
+    HashMap<String, Integer> skills;
     public boolean special;
     public boolean max;
     public boolean dlc;

@@ -14,7 +14,7 @@
     <string name="skill_luck">Luck</string>
     <string name="fusions">Fusions</string>
     <string name="arcana">Arcana</string>
-    
+
     <string name="to">To</string>
     <string name="from">from</string>
     <string name="persona_one">Persona One</string>
@@ -22,4 +22,20 @@
     <string name="result">Result</string>
     <string name="expand_more">expand more</string>
     <string name="details_for">Details for</string>
+    
+    <string name="element_physical">Physical</string>
+    <string name="element_gun">Gun</string>
+    <string name="element_fire">Fire</string>
+    <string name="element_ice">Ice</string>
+    <string name="element_electric">Electric</string>
+    <string name="element_wind">Wind</string>
+    <string name="element_psy">Psy</string>
+    <string name="element_nuclear">Nuclear</string>
+    <string name="element_bless">Bless</string>
+    <string name="element_curse">Curse</string>
+    <string name="effect_weak">WEAK</string>
+    <string name="effect_resist">RESIST</string>
+    <string name="effect_null">NULL</string>
+    <string name="effect_repel">REPEL</string>
+    <string name="effect_drain">DRAIN</string>
 </resources>

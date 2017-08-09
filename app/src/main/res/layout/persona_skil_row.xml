@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/textViewSkillName"
+        style="@style/PersonaStatsTextLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/element_curse" />
+
+    <TextView
+        android:id="@+id/textViewSkillLevel"
+        style="@style/PersonaStatsTextValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="16" />
+
+</LinearLayout>
+
