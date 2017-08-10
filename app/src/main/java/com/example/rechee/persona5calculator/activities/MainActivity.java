@@ -69,9 +69,9 @@ public class MainActivity extends BaseActivity {
         SharedPreferences fusionSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);
 
-        //if(!fusionSharedPreferences.contains("finished")){
+        if(!fusionSharedPreferences.contains("finished")){
             startService(new Intent(this, FusionCalculatorService.class));
-        //}
+        }
 
         setSupportActionBar(this.mainToolbar);
 
