@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity {
         if(Intent.ACTION_SEARCH.equals(intent.getAction())){
             String query = intent.getStringExtra(SearchManager.QUERY);
 
-            this.filteredPersonas = viewModel.filterPersonas(this.filteredPersonas, query);
+            this.filteredPersonas = viewModel.filterPersonas(this.allPersonas, query);
             personaListAdapter.setPersonas(this.filteredPersonas);
         }
         else if(Intent.ACTION_VIEW.equals(intent.getAction())){
