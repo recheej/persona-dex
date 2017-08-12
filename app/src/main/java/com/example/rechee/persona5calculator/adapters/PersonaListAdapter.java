@@ -14,6 +14,11 @@ import com.example.rechee.persona5calculator.activities.PersonaDetailActivity;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by Rechee on 7/3/2017.
  */
@@ -54,11 +59,12 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         }
     }
 
-    private Persona[] personas;
+    private List<Persona> personas;
     private final PersonaListViewModel viewModel;
 
     public PersonaListAdapter(Persona[] personas, PersonaListViewModel viewModel){
-        this.personas = personas;
+        this.personas = new ArrayList<>(personas.length);
+        Collections.addAll(this.personas, personas);
         this.viewModel = viewModel;
     }
 
@@ -72,16 +78,17 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bindPersona(this.personas[position]);
+        holder.bindPersona(this.personas.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return this.personas.length;
+        return this.personas.size();
     }
 
     public void setPersonas(Persona[] newPersonas){
-        this.personas = newPersonas;
+        this.personas.clear();
+        Collections.addAll(this.personas, newPersonas);
         this.notifyDataSetChanged();
     }
 }
