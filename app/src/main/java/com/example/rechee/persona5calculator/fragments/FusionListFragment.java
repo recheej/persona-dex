@@ -1,7 +1,9 @@
 package com.example.rechee.persona5calculator.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.renderscript.BaseObj;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.activities.BaseActivity;
 import com.example.rechee.persona5calculator.adapters.PersonaFusionListAdapter;
@@ -20,10 +23,11 @@ import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaStore;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
+import com.squareup.leakcanary.RefWatcher;
 
 import javax.inject.Inject;
 
-public class FusionListFragment extends Fragment {
+public class FusionListFragment extends BaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String IS_TO_LIST = "isToList";
     private static final String PERSONA_NAME = "personaName";
@@ -31,7 +35,6 @@ public class FusionListFragment extends Fragment {
     private boolean isToList;
     private String personaName;
     private RecyclerView recyclerView;
-    private BaseActivity activity ;
 
     @Inject
     PersonaFusionListViewModel viewModel;
@@ -64,18 +67,16 @@ public class FusionListFragment extends Fragment {
             isToList = getArguments().getBoolean(IS_TO_LIST);
             personaName = getArguments().getString(PERSONA_NAME);
         }
-
-        this.activity = (BaseActivity) getActivity();
-        FragmentComponent component = activity.getComponent().plus();
-        component.inject(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View fragmentListView = inflater.inflate(R.layout.fragment_fusion_list, container, false);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        recyclerView = (RecyclerView) fragmentListView.findViewById(R.id.recycler_view_persona_list);
+        FragmentComponent component = activity.getComponent().plus();
+        component.inject(this);
+
+        recyclerView = (RecyclerView) baseView.findViewById(R.id.recycler_view_persona_list);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -84,8 +85,8 @@ public class FusionListFragment extends Fragment {
         PersonaStore personaStore = viewModel.getEdgesForPersona(personaName);
 
         PersonaFusionListAdapter fusionListAdapter;
-        TextView personaHeaderColumnOne = (TextView) fragmentListView.findViewById(R.id.textView_fusion_column_one_label);
-        TextView personaHeaderColumnTwo = (TextView) fragmentListView.findViewById(R.id.textView_fusion_column_two_label);
+        TextView personaHeaderColumnOne = (TextView) baseView.findViewById(R.id.textView_fusion_column_one_label);
+        TextView personaHeaderColumnTwo = (TextView) baseView.findViewById(R.id.textView_fusion_column_two_label);
 
         if(this.isToList){
             fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesTo(), personaName, true, recyclerView, viewModel);
@@ -99,7 +100,19 @@ public class FusionListFragment extends Fragment {
             personaHeaderColumnTwo.setText(R.string.result);
         }
         recyclerView.setAdapter(fusionListAdapter);
+    }
 
-        return fragmentListView;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        baseView = inflater.inflate(R.layout.fragment_fusion_list, container, false);
+        return baseView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = Persona5Application.getRefWatcher(this.activity);
+        refWatcher.watch(this);
     }
 }

@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.activities.BaseActivity;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.Skill;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -26,14 +28,13 @@ import javax.inject.Inject;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PersonaSkillsFragment extends Fragment {
+public class PersonaSkillsFragment extends BaseFragment {
 
     private Persona detailPersona;
 
     @Inject
     PersonaDetailViewModel viewModel;
 
-    private BaseActivity activity;
     private Skill[] skills;
 
     public PersonaSkillsFragment() {
@@ -42,10 +43,9 @@ public class PersonaSkillsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        this.activity = (BaseActivity) getActivity();
         FragmentComponent component = activity.getComponent().plus();
         component.inject(this);
 
@@ -69,15 +69,11 @@ public class PersonaSkillsFragment extends Fragment {
         });
 
         this.skills = personaSkills;
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_persona_skills, container, false);
+        LinearLayout skillsGrid = (LinearLayout) baseView.findViewById(R.id.skill_grid);
 
-        LinearLayout skillsGrid = (LinearLayout) view.findViewById(R.id.skill_grid);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        ViewGroup container = (ViewGroup) activity.findViewById(R.id.view_pager);
 
         for(Skill personaSkill: this.skills){
             View personaSkillRow = inflater.inflate(R.layout.persona_skil_row, container, false);
@@ -101,8 +97,20 @@ public class PersonaSkillsFragment extends Fragment {
         }
 
         skillsGrid.removeViewAt(skillsGrid.getChildCount() - 1); //remove hanging divider
-
-        return view;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        baseView = inflater.inflate(R.layout.fragment_persona_skills, container, false);
+        return baseView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = Persona5Application.getRefWatcher(this.activity);
+        refWatcher.watch(this);
+    }
 }

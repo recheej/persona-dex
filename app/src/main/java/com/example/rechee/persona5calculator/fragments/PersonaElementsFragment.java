@@ -3,18 +3,21 @@ package com.example.rechee.persona5calculator.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.activities.BaseActivity;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.util.HashMap;
 
@@ -22,50 +25,45 @@ import javax.inject.Inject;
 
 import static com.example.rechee.persona5calculator.models.Enumerations.*;
 
-public class PersonaElementsFragment extends Fragment {
+public class PersonaElementsFragment extends BaseFragment {
 
     private Persona detailPersona;
 
     @Inject
     PersonaDetailViewModel viewModel;
 
-    private BaseActivity activity;
-
     public PersonaElementsFragment() {
         super();
     }
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        this.activity = (BaseActivity) getActivity();
-        FragmentComponent component = activity.getComponent().plus();
+        FragmentComponent component = activityComponent.plus();
         component.inject(this);
 
         this.detailPersona = viewModel.getDetailPersona();
+
+        HashMap<Element, ElementEffect> elements = detailPersona.getElements();
+
+        setElementView(baseView, R.id.textViewPhysicalStat, elements.get(Element.PHYSICAL));
+        setElementView(baseView, R.id.textViewGunStat, elements.get(Element.GUN));
+        setElementView(baseView, R.id.textViewFireStat, elements.get(Element.FIRE));
+        setElementView(baseView, R.id.textViewIceStat, elements.get(Element.ICE));
+        setElementView(baseView, R.id.textViewElectricStat, elements.get(Element.ELECTRIC));
+        setElementView(baseView, R.id.textViewWindStat, elements.get(Element.WIND));
+        setElementView(baseView, R.id.textViewPsyStat, elements.get(Element.PSYCHIC));
+        setElementView(baseView, R.id.textViewNuclearStat, elements.get(Element.NUCLEAR));
+        setElementView(baseView, R.id.textViewBlessStat, elements.get(Element.BLESS));
+        setElementView(baseView, R.id.textViewCurseStat, elements.get(Element.CURSE));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_persona_elements, container, false);
-        HashMap<Element, ElementEffect> elements = detailPersona.getElements();
-
-        setElementView(view, R.id.textViewPhysicalStat, elements.get(Element.PHYSICAL));
-        setElementView(view, R.id.textViewGunStat, elements.get(Element.GUN));
-        setElementView(view, R.id.textViewFireStat, elements.get(Element.FIRE));
-        setElementView(view, R.id.textViewIceStat, elements.get(Element.ICE));
-        setElementView(view, R.id.textViewElectricStat, elements.get(Element.ELECTRIC));
-        setElementView(view, R.id.textViewWindStat, elements.get(Element.WIND));
-        setElementView(view, R.id.textViewPsyStat, elements.get(Element.PSYCHIC));
-        setElementView(view, R.id.textViewNuclearStat, elements.get(Element.NUCLEAR));
-        setElementView(view, R.id.textViewBlessStat, elements.get(Element.BLESS));
-        setElementView(view, R.id.textViewCurseStat, elements.get(Element.CURSE));
-
-        return view;
+        baseView = inflater.inflate(R.layout.fragment_persona_elements, container, false);
+        return baseView;
     }
 
     private void setElementView(View parentView, int textViewID, ElementEffect effect){
@@ -94,5 +92,12 @@ public class PersonaElementsFragment extends Fragment {
         }
 
         elementStatView.setText(statText);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        RefWatcher refWatcher = Persona5Application.getRefWatcher(this.activity);
+        refWatcher.watch(this);
     }
 }

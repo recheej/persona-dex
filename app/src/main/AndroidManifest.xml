@@ -35,7 +35,7 @@
             android:authorities="com.example.rechee.persona5calculator"
             android:exported="false" />
 
-        <activity android:name=".activities.PersonaFusionActivity"></activity>
+        <activity android:name=".activities.PersonaFusionActivity" />
     </application>
 
 </manifest>
