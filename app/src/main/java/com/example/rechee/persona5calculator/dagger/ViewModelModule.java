@@ -6,6 +6,7 @@ import com.example.rechee.persona5calculator.repositories.PersonaTransferReposit
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
+import com.example.rechee.persona5calculator.viewmodels.PersonaSkillsViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -32,5 +33,11 @@ public class ViewModelModule {
     @ActivityScope
     PersonaFusionListViewModel personaFusionListViewModel(PersonaEdgesRepository repository, PersonaListViewModel personaListViewModel) {
         return new PersonaFusionListViewModel(repository, personaListViewModel);
+    }
+
+    @Provides
+    @ActivityScope
+    PersonaSkillsViewModel personaSkillsViewModel(PersonaTransferRepository transferRepository) {
+        return new PersonaSkillsViewModel(transferRepository);
     }
 }

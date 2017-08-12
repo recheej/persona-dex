@@ -12,15 +12,12 @@ import android.widget.TextView;
 
 import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.R;
-import com.example.rechee.persona5calculator.activities.BaseActivity;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.Skill;
-import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
+import com.example.rechee.persona5calculator.viewmodels.PersonaSkillsViewModel;
 import com.squareup.leakcanary.RefWatcher;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -33,7 +30,7 @@ public class PersonaSkillsFragment extends BaseFragment {
     private Persona detailPersona;
 
     @Inject
-    PersonaDetailViewModel viewModel;
+    PersonaSkillsViewModel viewModel;
 
     private Skill[] skills;
 
@@ -49,26 +46,7 @@ public class PersonaSkillsFragment extends BaseFragment {
         FragmentComponent component = activity.getComponent().plus();
         component.inject(this);
 
-        this.detailPersona = viewModel.getDetailPersona();
-
-        Skill[] personaSkills = this.detailPersona.getPersonaSkills();
-        Arrays.sort(personaSkills, new Comparator<Skill>() {
-            @Override
-            public int compare(Skill o1, Skill o2) {
-                if(o1.getLevel() < o2.getLevel()){
-                    return -1;
-                }
-
-                if(o1.getLevel() > o2.getLevel()){
-                    return 1;
-                }
-
-                //if the levels are equal, compare by name;
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
-
-        this.skills = personaSkills;
+        this.skills = viewModel.getPersonaSkills();
 
         LinearLayout skillsGrid = (LinearLayout) baseView.findViewById(R.id.skill_grid);
 
