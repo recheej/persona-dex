@@ -11,6 +11,7 @@ import com.example.rechee.persona5calculator.models.PersonaStore;
 public interface PersonaEdgesRepository {
     void addPersonaEdges(Persona persona, PersonaStore personaStore);
     void markFinished();
+    void markInit();
     PersonaStore getEdgesForPersona(Persona persona);
 
     PersonaStore getEdgesForPersona(String personaName);

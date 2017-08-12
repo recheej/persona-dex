@@ -21,6 +21,7 @@ public class PersonaUtilities {
     private HashMap<String, Enumerations.Arcana> arcanaHashMap;
 
     public static final String SHARED_PREF_FUSIONS = "personaFusions";
+    public static final String SHARED_PREF_COMMON = "personaFusionsCommon";
     public static final String SHARED_PREF_TRANSFER_CONTENT = "personaTransferContent";
 
     public PersonaUtilities(){

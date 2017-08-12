@@ -23,14 +23,6 @@ import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewMod
 
 import javax.inject.Inject;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FusionListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FusionListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FusionListFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String IS_TO_LIST = "isToList";
@@ -84,7 +76,7 @@ public class FusionListFragment extends Fragment {
         View fragmentListView = inflater.inflate(R.layout.fragment_fusion_list, container, false);
 
         recyclerView = (RecyclerView) fragmentListView.findViewById(R.id.recycler_view_persona_list);
-        recyclerView.hasFixedSize();
+        recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

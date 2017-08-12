@@ -75,6 +75,7 @@ public class FusionCalculatorService extends IntentService {
 
         PersonaGraph graph = this.makePersonaGraph(personsSortedByLevel, personaByArcana, arcanaTable);
 
+        this.personaEdgeRepository.markInit();
         for(Persona persona: personsSortedByLevel){
             PersonaEdge[] edgesTo = graph.edgesTo(persona);
             PersonaEdge[] edgesFrom = graph.edgesFrom(persona);
@@ -84,7 +85,6 @@ public class FusionCalculatorService extends IntentService {
         }
 
         this.personaEdgeRepository.markFinished();
-        stopSelf();
     }
 
     private PersonaGraph makePersonaGraph(Persona[] personas, SparseArray<List<Persona>> personaByArcana, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){

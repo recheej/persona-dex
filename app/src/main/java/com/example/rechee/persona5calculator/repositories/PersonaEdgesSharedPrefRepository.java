@@ -12,31 +12,36 @@ import com.google.gson.Gson;
 
 public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository {
     private final SharedPreferences sharedPreferences;
+    private final SharedPreferences commonPreferences;
     private final Gson gson;
+    private final SharedPreferences.Editor editor;
+    private SharedPreferences.Editor commonPreferencesEditor;
 
-    public PersonaEdgesSharedPrefRepository(SharedPreferences sharedPreferences, Gson gson){
+    public PersonaEdgesSharedPrefRepository(SharedPreferences sharedPreferences, SharedPreferences commonPreferences, Gson gson){
         this.sharedPreferences = sharedPreferences;
+        this.commonPreferences = commonPreferences;
         this.gson = gson;
+        editor = sharedPreferences.edit();
+        commonPreferencesEditor = commonPreferences.edit();
     }
 
     @Override
     public void addPersonaEdges(Persona persona, PersonaStore personaStore) {
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(persona.name, gson.toJson(personaStore));
+    }
 
-        if(!sharedPreferences.contains("initialized")){
-            editor.putBoolean("initialized", true);
+    @Override
+    public void markInit() {
+        if(!commonPreferences.contains("initialized")){
+            commonPreferencesEditor.putBoolean("initialized", true);
         }
-
-        editor.apply();
     }
 
     @Override
     public void markFinished(){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("finished", true);
-        editor.apply();
+        editor.commit();
+        commonPreferencesEditor.commit();
     }
 
     @Override

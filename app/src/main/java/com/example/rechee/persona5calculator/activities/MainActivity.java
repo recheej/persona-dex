@@ -66,17 +66,17 @@ public class MainActivity extends BaseActivity {
         component.inject(this);
         this.component = component;
 
-        SharedPreferences fusionSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
+        SharedPreferences commonSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_COMMON,
                 Context.MODE_PRIVATE);
 
-        if(!fusionSharedPreferences.contains("finished")){
+        if(!commonSharedPreferences.contains("finished")){
             startService(new Intent(this, FusionCalculatorService.class));
         }
 
         setSupportActionBar(this.mainToolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.persona_view);
-        recyclerView.hasFixedSize();
+        recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
