@@ -41,4 +41,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.2'
+    compile 'com.github.viethoa:fastscroller:1.2.0'
 }

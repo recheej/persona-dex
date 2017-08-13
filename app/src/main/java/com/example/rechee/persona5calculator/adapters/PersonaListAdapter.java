@@ -13,6 +13,7 @@ import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.activities.PersonaDetailActivity;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
+import com.viethoa.RecyclerViewFastScroller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +24,8 @@ import java.util.List;
  * Created by Rechee on 7/3/2017.
  */
 
-public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder>{
+public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder> implements  RecyclerViewFastScroller.BubbleTextGetter{
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView textViewPersonaName;
         private TextView textViewPersonaLevel;
@@ -84,6 +86,18 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
     @Override
     public int getItemCount() {
         return this.personas.size();
+    }
+
+    @Override
+    public String getTextToShowInBubble(int pos) {
+        if (pos < 0 || pos >= personas.size())
+            return null;
+
+        String name = personas.get(pos).name;
+        if (name == null || name.length() < 1)
+            return null;
+
+        return name.substring(0, 1);
     }
 
     public void setPersonas(Persona[] newPersonas){

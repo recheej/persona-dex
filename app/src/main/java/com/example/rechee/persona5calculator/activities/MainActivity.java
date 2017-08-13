@@ -32,6 +32,11 @@ import com.example.rechee.persona5calculator.adapters.PersonaListAdapter;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
+import com.viethoa.RecyclerViewFastScroller;
+import com.viethoa.models.AlphabetItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -50,6 +55,7 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     PersonaListViewModel viewModel;
+    private RecyclerViewFastScroller fastScroller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +100,32 @@ public class MainActivity extends BaseActivity {
         personaListAdapter = new PersonaListAdapter(this.filteredPersonas, viewModel);
         recyclerView.setAdapter(personaListAdapter);
 
+        setUpAlphabetScroller();
+
         Intent intent = getIntent();
         handleIntent(intent);
+    }
+
+    private void setUpAlphabetScroller(){
+        
+        fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
+        fastScroller.setRecyclerView(recyclerView);
+
+        ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
+        List<String> strAlphabets = new ArrayList<>();
+        for (int i = 0; i < filteredPersonas.length; i++) {
+            Persona persona = filteredPersonas[i];
+            if (persona.name == null || persona.name.trim().isEmpty())
+                continue;
+
+            String word = persona.name.substring(0, 1);
+            if (!strAlphabets.contains(word)) {
+                strAlphabets.add(word);
+                mAlphabetItems.add(new AlphabetItem(i, word, false));
+            }
+        }
+
+        fastScroller.setUpAlphabet(mAlphabetItems);
     }
 
     @Override
