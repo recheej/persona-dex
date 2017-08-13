@@ -12,20 +12,21 @@
         android:layout_width="match_parent"
         />
 
+
     <com.viethoa.RecyclerViewFastScroller
         android:id="@+id/fast_scroller"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/main_toolbar">
-
-    </com.viethoa.RecyclerViewFastScroller>
+        android:layout_below="@+id/main_toolbar" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/main_toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/fast_scroller"
         android:id="@+id/persona_view"
         android:scrollbars="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingTop="4dp"/>
 

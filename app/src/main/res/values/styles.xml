@@ -17,7 +17,6 @@
     </style>
 
     <style name="PersonaStatsTextLabel">
-        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
         <item name="android:textSize">14sp</item>
     </style>
 

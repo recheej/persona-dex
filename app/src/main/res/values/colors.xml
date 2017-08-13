@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#9B0000</color>
     <color name="colorAccent">#616161</color>
     <color name="colorAccentLight">#8d8d8d</color>
+    <color name="alphabet_text_selected_color">@color/colorPrimary</color>
+    <color name="alphabet_background_color">@color/colorAccent</color>
 </resources>
