@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.Skill;
 import com.example.rechee.persona5calculator.viewmodels.PersonaSkillsViewModel;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Locale;
 
@@ -83,12 +81,5 @@ public class PersonaSkillsFragment extends BaseFragment {
         // Inflate the layout for this fragment
         baseView = inflater.inflate(R.layout.fragment_persona_skills, container, false);
         return baseView;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = Persona5Application.getRefWatcher(this.activity);
-        refWatcher.watch(this);
     }
 }

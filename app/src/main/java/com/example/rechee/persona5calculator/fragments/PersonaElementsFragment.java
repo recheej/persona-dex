@@ -1,29 +1,23 @@
 package com.example.rechee.persona5calculator.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.R;
-import com.example.rechee.persona5calculator.activities.BaseActivity;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
-import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import static com.example.rechee.persona5calculator.models.Enumerations.*;
+import static com.example.rechee.persona5calculator.models.Enumerations.Element;
+import static com.example.rechee.persona5calculator.models.Enumerations.ElementEffect;
 
 public class PersonaElementsFragment extends BaseFragment {
 
@@ -92,12 +86,5 @@ public class PersonaElementsFragment extends BaseFragment {
         }
 
         elementStatView.setText(statText);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = Persona5Application.getRefWatcher(this.activity);
-        refWatcher.watch(this);
     }
 }

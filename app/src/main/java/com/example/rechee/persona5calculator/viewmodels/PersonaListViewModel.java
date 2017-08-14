@@ -8,6 +8,9 @@ import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
 
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import javax.inject.Inject;
 
 /**
@@ -16,15 +19,46 @@ import javax.inject.Inject;
 
 public class PersonaListViewModel extends ViewModel {
 
-    private final PersonaRepository repository;
     private final PersonaTransferRepository transferRepository;
     private final Persona[] allPersonas;
 
+    private final Comparator<Persona> sortByPersonaNameDesc;
+    private final Comparator<Persona> sortByPersonaNameAsc;
+    private final Comparator<Persona> sortByPersonaLevelAsc;
+    private final Comparator<Persona> sortByPersonaLevelDesc;
+
     @Inject
     public PersonaListViewModel(PersonaRepository repository, PersonaTransferRepository transferRepository){
-        this.repository = repository;
         this.allPersonas = repository.allPersonas();
         this.transferRepository = transferRepository;
+
+        sortByPersonaNameAsc = new Comparator<Persona>() {
+            @Override
+            public int compare(Persona o1, Persona o2) {
+                return o1.name.compareTo(o2.name);
+            }
+        };
+
+        sortByPersonaNameDesc = new Comparator<Persona>() {
+            @Override
+            public int compare(Persona o1, Persona o2) {
+                return o1.name.compareTo(o2.name) * -1;
+            }
+        };
+
+        sortByPersonaLevelAsc = new Comparator<Persona>() {
+            @Override
+            public int compare(Persona o1, Persona o2) {
+                return Integer.compare(o1.level, o2.level);
+            }
+        };
+
+        sortByPersonaLevelDesc = new Comparator<Persona>() {
+            @Override
+            public int compare(Persona o1, Persona o2) {
+                return Integer.compare(o1.level, o2.level) * -1;
+            }
+        };
     }
 
     public Persona[] getAllPersonas() {
@@ -42,5 +76,33 @@ public class PersonaListViewModel extends ViewModel {
 
     public void storePersonaForDetail(Persona personaToStore){
         this.transferRepository.storePersonaForDetail(personaToStore);
+    }
+
+    public void sortPersonasByName(Persona[] personas, boolean asc){
+
+        if(personas.length == 1){
+            return;
+        }
+
+        if(asc){
+            Arrays.sort(personas, sortByPersonaNameAsc);
+        }
+        else{
+            Arrays.sort(personas, sortByPersonaNameDesc);
+        }
+    }
+
+    public void sortPersonasByLevel(Persona[] personas, boolean asc){
+
+        if(personas.length == 1){
+            return;
+        }
+
+        if(asc){
+            Arrays.sort(personas, sortByPersonaLevelAsc);
+        }
+        else{
+            Arrays.sort(personas, sortByPersonaLevelDesc);
+        }
     }
 }

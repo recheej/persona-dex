@@ -7,16 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.activities.PersonaDetailActivity;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
-import com.viethoa.RecyclerViewFastScroller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,45 +23,31 @@ import java.util.List;
  * Created by Rechee on 7/3/2017.
  */
 
-public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder> implements  RecyclerViewFastScroller.BubbleTextGetter{
+public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder> implements SectionIndexer{
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private List<Persona> personas;
+    private final PersonaListViewModel viewModel;
+    private ArrayList<Integer> mSectionPositions;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewPersonaName;
         private TextView textViewPersonaLevel;
         private TextView textViewPersonaArcana;
-        private PersonaListViewModel viewModel;
-        private Persona bindedPersona;
 
-        public ViewHolder(View itemView, PersonaListViewModel viewModel) {
+        public ViewHolder(View itemView) {
             super(itemView);
-
-            itemView.setOnClickListener(this);
 
             this.textViewPersonaName = (TextView) itemView.findViewById(R.id.textViewPersonaName);
             this.textViewPersonaLevel = (TextView) itemView.findViewById(R.id.textViewPersonaLevel);
             this.textViewPersonaArcana = (TextView) itemView.findViewById(R.id.textViewArcana);
-            this.viewModel = viewModel;
         }
 
         public void bindPersona(Persona personaToBind){
-            this.bindedPersona = personaToBind;
             this.textViewPersonaName.setText(personaToBind.name);
             this.textViewPersonaLevel.setText(Integer.toString(personaToBind.level));
             this.textViewPersonaArcana.setText(personaToBind.arcanaName);
         }
-
-        @Override
-        public void onClick(View v) {
-            viewModel.storePersonaForDetail(bindedPersona);
-
-            Context context = itemView.getContext();
-            Intent startDetailIntent = new Intent(context, PersonaDetailActivity.class);
-            context.startActivity(startDetailIntent);
-        }
     }
-
-    private List<Persona> personas;
-    private final PersonaListViewModel viewModel;
 
     public PersonaListAdapter(Persona[] personas, PersonaListViewModel viewModel){
         this.personas = new ArrayList<>(personas.length);
@@ -75,7 +60,21 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_persona_item, parent, false);
 
-        return new ViewHolder(view, viewModel);
+        final ViewHolder viewHolder = new ViewHolder(view);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Persona detailPersona = personas.get(viewHolder.getAdapterPosition());
+                viewModel.storePersonaForDetail(detailPersona);
+
+                Context context = v.getContext();
+                Intent startDetailIntent = new Intent(context, PersonaDetailActivity.class);
+                context.startActivity(startDetailIntent);
+            }
+        });
+
+        return viewHolder;
     }
 
     @Override
@@ -88,21 +87,37 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         return this.personas.size();
     }
 
-    @Override
-    public String getTextToShowInBubble(int pos) {
-        if (pos < 0 || pos >= personas.size())
-            return null;
-
-        String name = personas.get(pos).name;
-        if (name == null || name.length() < 1)
-            return null;
-
-        return name.substring(0, 1);
-    }
-
     public void setPersonas(Persona[] newPersonas){
         this.personas.clear();
         Collections.addAll(this.personas, newPersonas);
         this.notifyDataSetChanged();
+    }
+
+    /**
+     * Section Indexer Methods
+     */
+
+    @Override
+    public Object[] getSections() {
+        List<String> sections = new ArrayList<>(26);
+        mSectionPositions = new ArrayList<>(26);
+        for (int i = 0, size = personas.size(); i < size; i++) {
+            String section = String.valueOf(personas.get(i).name.charAt(0)).toUpperCase();
+            if (!sections.contains(section)) {
+                sections.add(section);
+                mSectionPositions.add(i);
+            }
+        }
+        return sections.toArray(new String[0]);
+    }
+
+    @Override
+    public int getPositionForSection(int sectionIndex) {
+        return mSectionPositions.get(sectionIndex);
+    }
+
+    @Override
+    public int getSectionForPosition(int position) {
+        return 0;
     }
 }

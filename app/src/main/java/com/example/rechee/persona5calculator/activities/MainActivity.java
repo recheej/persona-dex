@@ -6,43 +6,40 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.R;
+import com.example.rechee.persona5calculator.adapters.PersonaListAdapter;
 import com.example.rechee.persona5calculator.dagger.ActivityComponent;
 import com.example.rechee.persona5calculator.dagger.ActivityContextModule;
-import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.dagger.LayoutModule;
 import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
-import com.example.rechee.persona5calculator.adapters.PersonaListAdapter;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
-import com.viethoa.RecyclerViewFastScroller;
-import com.viethoa.models.AlphabetItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
+import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
+
 public class MainActivity extends BaseActivity {
 
-    private RecyclerView recyclerView;
+    private IndexFastScrollRecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private PersonaListAdapter personaListAdapter;
     private DividerItemDecoration mDividerItemDecoration;
@@ -55,7 +52,6 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     PersonaListViewModel viewModel;
-    private RecyclerViewFastScroller fastScroller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +77,10 @@ public class MainActivity extends BaseActivity {
 
         setSupportActionBar(this.mainToolbar);
 
-        recyclerView = (RecyclerView) findViewById(R.id.persona_view);
+
+        recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setPreviewVisibility(false);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -100,32 +98,8 @@ public class MainActivity extends BaseActivity {
         personaListAdapter = new PersonaListAdapter(this.filteredPersonas, viewModel);
         recyclerView.setAdapter(personaListAdapter);
 
-        setUpAlphabetScroller();
-
         Intent intent = getIntent();
         handleIntent(intent);
-    }
-
-    private void setUpAlphabetScroller(){
-        
-        fastScroller = (RecyclerViewFastScroller) findViewById(R.id.fast_scroller);
-        fastScroller.setRecyclerView(recyclerView);
-
-        ArrayList<AlphabetItem> mAlphabetItems = new ArrayList<>();
-        List<String> strAlphabets = new ArrayList<>();
-        for (int i = 0; i < filteredPersonas.length; i++) {
-            Persona persona = filteredPersonas[i];
-            if (persona.name == null || persona.name.trim().isEmpty())
-                continue;
-
-            String word = persona.name.substring(0, 1);
-            if (!strAlphabets.contains(word)) {
-                strAlphabets.add(word);
-                mAlphabetItems.add(new AlphabetItem(i, word, false));
-            }
-        }
-
-        fastScroller.setUpAlphabet(mAlphabetItems);
     }
 
     @Override
@@ -178,5 +152,59 @@ public class MainActivity extends BaseActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.action_sort:
+                this.showSortPopup();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showSortPopup(){
+        View sortMenuView = findViewById(R.id.action_sort);
+        PopupMenu popupMenu = new PopupMenu(this, sortMenuView);
+        popupMenu.inflate(R.menu.sort_persona_menu);
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.menu_sort_name_asc:
+                        viewModel.sortPersonasByName(filteredPersonas, true);
+                        personaListAdapter.setPersonas(filteredPersonas);
+
+                        recyclerView.setIndexBarVisibility(true);
+                        return true;
+                    case R.id.menu_sort_name_desc:
+                        viewModel.sortPersonasByName(filteredPersonas, false);
+                        personaListAdapter.setPersonas(filteredPersonas);
+
+                        recyclerView.setIndexBarVisibility(true);
+                        return true;
+                    case R.id.menu_sort_level_asc:
+                        viewModel.sortPersonasByLevel(filteredPersonas, true);
+                        personaListAdapter.setPersonas(filteredPersonas);
+
+                        recyclerView.setIndexBarVisibility(false);
+                        return true;
+                    case R.id.menu_sort_level_desc:
+                        viewModel.sortPersonasByLevel(filteredPersonas, false);
+                        personaListAdapter.setPersonas(filteredPersonas);
+
+                        recyclerView.setIndexBarVisibility(false);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        popupMenu.show();
     }
 }

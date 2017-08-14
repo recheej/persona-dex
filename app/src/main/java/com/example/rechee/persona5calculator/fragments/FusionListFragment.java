@@ -1,11 +1,7 @@
 package com.example.rechee.persona5calculator.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.renderscript.BaseObj;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,17 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.R;
-import com.example.rechee.persona5calculator.activities.BaseActivity;
 import com.example.rechee.persona5calculator.adapters.PersonaFusionListAdapter;
-import com.example.rechee.persona5calculator.adapters.PersonaListAdapter;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
-import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaStore;
-import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
-import com.squareup.leakcanary.RefWatcher;
 
 import javax.inject.Inject;
 
@@ -107,12 +97,5 @@ public class FusionListFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         baseView = inflater.inflate(R.layout.fragment_fusion_list, container, false);
         return baseView;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        RefWatcher refWatcher = Persona5Application.getRefWatcher(this.activity);
-        refWatcher.watch(this);
     }
 }

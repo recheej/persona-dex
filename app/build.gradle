@@ -39,7 +39,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-alpha3'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.2'
-    compile 'com.github.viethoa:fastscroller:1.2.0'
+    compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.8'
 }
