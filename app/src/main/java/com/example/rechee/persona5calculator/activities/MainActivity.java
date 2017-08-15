@@ -77,10 +77,11 @@ public class MainActivity extends BaseActivity {
 
         setSupportActionBar(this.mainToolbar);
 
-
         recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setPreviewVisibility(false);
+        recyclerView.setIndexBarCornerRadius(0);
+        recyclerView.setIndexbarMargin(0);
+        recyclerView.setPreviewPadding(0);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
