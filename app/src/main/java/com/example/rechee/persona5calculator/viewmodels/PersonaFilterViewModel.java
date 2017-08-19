@@ -3,6 +3,9 @@ package com.example.rechee.persona5calculator.viewmodels;
 import com.example.rechee.persona5calculator.models.ArcanaMap;
 import com.example.rechee.persona5calculator.models.Enumerations;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import javax.inject.Inject;
 
 /**
@@ -35,6 +38,26 @@ public class PersonaFilterViewModel {
             maps[i + 1].arcana = arcana;
             maps[i + 1].name = name;
         }
+
+        Arrays.sort(maps, new Comparator<ArcanaMap>() {
+            @Override
+            public int compare(ArcanaMap o1, ArcanaMap o2) {
+
+                if(o1.arcana == null && o2.arcana == null){
+                    return 0;
+                }
+
+                if(o1.arcana == null){
+                    return -1;
+                }
+
+                if(o2.arcana == null){
+                    return 1;
+                }
+
+                return o1.name.compareTo(o2.name);
+            }
+        });
 
         return maps;
     }

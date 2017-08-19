@@ -77,12 +77,7 @@ public class FilterDialogFragment extends DialogFragment {
                 R.layout.support_simple_spinner_dropdown_item, viewModel.getArcanaMaps());
         arcanaSpinner.setAdapter(arcanaMapArrayAdapter);
 
-        InputFilter filter = new InputFilter.LengthFilter(2) {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                return null;
-            }
-        };
+        InputFilter filter = new InputFilter.LengthFilter(2);
 
         final EditText minLevelEditText = (EditText) view.findViewById(R.id.editText_minLevel);
         final EditText maxLevelEditText = (EditText) view.findViewById(R.id.editText_maxLevel);
