@@ -45,4 +45,5 @@
     <string name="sort_level_desc">Sort by Level 99–1</string>
     <string name="cancel">Cancel</string>
     <string name="filter">Filter</string>
+    <string name="stats">Stats</string>
 </resources>

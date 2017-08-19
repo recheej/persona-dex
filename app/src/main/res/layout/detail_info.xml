@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:text="@string/arcana"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="?android:textColorPrimary"/>
 
         <TextView
             android:id="@+id/textView_arcanaName"
@@ -31,7 +32,7 @@
             android:text="TextView"
             android:textAlignment="textEnd"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 
@@ -40,9 +41,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/personaDetailHeader"
-        android:text="Stats"
+        android:text="@string/stats"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="?android:textColorPrimary"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -68,7 +70,8 @@
                 style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
+                android:text="16"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <include layout="@layout/grid_divider_horizontal" />
@@ -90,7 +93,8 @@
                 style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
+                android:text="16"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <include layout="@layout/grid_divider_horizontal" />
@@ -112,7 +116,8 @@
                 style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
+                android:text="16"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <include layout="@layout/grid_divider_horizontal" />
@@ -134,7 +139,8 @@
                 style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
+                android:text="16"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <include layout="@layout/grid_divider_horizontal" />
@@ -156,7 +162,8 @@
                 style="@style/PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
+                android:text="16"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
     </LinearLayout>
 

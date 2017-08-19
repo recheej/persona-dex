@@ -57,4 +57,14 @@
         <item name="android:paddingEnd">16dp</item>
     </style>
 
+    <style name="DenseListTextPrimary">
+        <item name="android:text">13sp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="DenseListTextSecondary">
+        <item name="android:text">13sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
 </resources>
