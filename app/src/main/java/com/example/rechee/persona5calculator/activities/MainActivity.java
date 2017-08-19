@@ -29,7 +29,9 @@ import com.example.rechee.persona5calculator.dagger.LayoutModule;
 import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
+import com.example.rechee.persona5calculator.fragments.FilterDialogFragment;
 import com.example.rechee.persona5calculator.models.Persona;
+import com.example.rechee.persona5calculator.models.PersonaFilterArgs;
 import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
@@ -37,8 +39,9 @@ import javax.inject.Inject;
 
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements FilterDialogFragment.OnFilterListener {
 
+    private static final String FILTER_DIALOG = "FILTER_DIALOG";
     private IndexFastScrollRecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private PersonaListAdapter personaListAdapter;
@@ -46,12 +49,14 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     Toolbar mainToolbar;
+    private Menu menu;
 
     private Persona[] filteredPersonas;
     private Persona[] allPersonas;
 
     @Inject
     PersonaListViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +87,8 @@ public class MainActivity extends BaseActivity {
         recyclerView.setIndexBarCornerRadius(0);
         recyclerView.setIndexbarMargin(0);
         recyclerView.setPreviewPadding(0);
+        recyclerView.setIndexbarWidth(70);
+        recyclerView.setIndexbarMargin(10);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -126,7 +133,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.persona_list_menu, menu);
 
@@ -134,6 +142,7 @@ public class MainActivity extends BaseActivity {
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
+                menu.setGroupVisible(R.id.menu_item_group_sorting, false);
                 return true;
             }
 
@@ -142,6 +151,8 @@ public class MainActivity extends BaseActivity {
                 //restore all personas to list when you click the x button on search
                 MainActivity.this.filteredPersonas = MainActivity.this.allPersonas;
                 MainActivity.this.personaListAdapter.setPersonas(MainActivity.this.filteredPersonas);
+
+                menu.setGroupVisible(R.id.menu_item_group_sorting, true);
                 return true;
             }
         });
@@ -161,6 +172,10 @@ public class MainActivity extends BaseActivity {
         switch(item.getItemId()){
             case R.id.action_sort:
                 this.showSortPopup();
+                return true;
+            case R.id.action_filter:
+                FilterDialogFragment dialogFragment = new FilterDialogFragment();
+                dialogFragment.show(getFragmentManager(), FILTER_DIALOG);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -207,5 +222,11 @@ public class MainActivity extends BaseActivity {
         });
 
         popupMenu.show();
+    }
+
+    @Override
+    public void onFilterSelected(PersonaFilterArgs filterArgs) {
+        this.filteredPersonas = viewModel.filterPersonas(filterArgs, allPersonas);
+        personaListAdapter.setPersonas(this.filteredPersonas);
     }
 }

@@ -4,12 +4,15 @@ import android.arch.lifecycle.ViewModel;
 
 import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.models.Persona;
+import com.example.rechee.persona5calculator.models.PersonaFilterArgs;
 import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -104,5 +107,24 @@ public class PersonaListViewModel extends ViewModel {
         else{
             Arrays.sort(personas, sortByPersonaLevelDesc);
         }
+    }
+
+    public Persona[] filterPersonas(PersonaFilterArgs filterArgs, Persona[] personasToFilter) {
+        List<Persona> filteredPersonas = new ArrayList<>(personasToFilter.length);
+        for (Persona persona : personasToFilter) {
+            if(filterArgs.arcana != null){
+                if(persona.arcana != filterArgs.arcana){
+                    continue;
+                }
+            }
+
+            if(persona.level < filterArgs.minLevel || persona.level > filterArgs.maxLevel){
+                continue;
+            }
+
+            filteredPersonas.add(persona);
+        }
+
+        return filteredPersonas.toArray(new Persona[filteredPersonas.size()]);
     }
 }

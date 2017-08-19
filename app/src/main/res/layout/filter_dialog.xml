@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:padding="16dp">
 
@@ -14,34 +15,70 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/arcana"
-            android:textSize="20sp" />
+            android:textSize="16sp"
+            android:layout_centerVertical="true"/>
 
         <Spinner
             android:id="@+id/spinner_arcana"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <include layout="@layout/grid_divider_horizontal"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
         android:padding="16dp">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            />
 
-        <Button
+        <TextView
+            android:id="@+id/textViewMinLevelLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/filter"
-            android:layout_alignParentEnd="true"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
+            android:text="Min Level"
+            android:textSize="16sp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/editText_minLevel"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@id/textViewMinLevelLabel"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:text="1" />
+
+        <TextView
+            android:id="@+id/textViewMaxLevelLabel"
+            android:layout_toEndOf="@id/editText_minLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Max Level"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/editText_maxLevel"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@id/textViewMaxLevelLabel"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:text="99" />
+
     </RelativeLayout>
+
+    <include layout="@layout/grid_divider_horizontal"/>
+
 
 </LinearLayout>
