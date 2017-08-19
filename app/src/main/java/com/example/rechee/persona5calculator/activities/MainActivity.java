@@ -84,11 +84,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setIndexBarCornerRadius(0);
-        recyclerView.setIndexbarMargin(0);
-        recyclerView.setPreviewPadding(0);
-        recyclerView.setIndexbarWidth(70);
-        recyclerView.setIndexbarMargin(10);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -108,6 +103,21 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         Intent intent = getIntent();
         handleIntent(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        int childCount = recyclerView.getChildCount();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        int childCount = recyclerView.getChildCount();
+
     }
 
     @Override
