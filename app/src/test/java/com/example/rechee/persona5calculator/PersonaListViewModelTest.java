@@ -34,11 +34,11 @@ public class PersonaListViewModelTest {
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 2;
 
-        Persona[] personasToSort = new Persona[] {testPersona, testPersonaTwo};
+        Persona[] personasToSort = new Persona[] {testPersonaTwo, testPersona};
 
         viewModel.sortPersonasByName(personasToSort, true);
 
-        assertEquals(testPersonaTwo, personasToSort[0]);
+        assertEquals(testPersona, personasToSort[0]);
     }
 
     @Test
