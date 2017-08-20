@@ -49,14 +49,12 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Inject
     Toolbar mainToolbar;
-    private Menu menu;
 
     private Persona[] filteredPersonas;
     private Persona[] allPersonas;
 
     @Inject
     PersonaListViewModel viewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +127,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
-        this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.persona_list_menu, menu);
 

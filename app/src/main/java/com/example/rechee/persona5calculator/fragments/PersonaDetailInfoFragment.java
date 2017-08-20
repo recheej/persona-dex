@@ -74,9 +74,4 @@ public class PersonaDetailInfoFragment extends BaseFragment {
         TextView view = (TextView) rootView.findViewById(textViewId);
         view.setText(text);
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 }

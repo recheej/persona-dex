@@ -3,14 +3,15 @@ package com.example.rechee.persona5calculator.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.example.rechee.persona5calculator.Persona5Application;
-import com.example.rechee.persona5calculator.dagger.DaggerPersona5ApplicationComponent;
 import com.example.rechee.persona5calculator.dagger.FusionArcanaDataModule;
 import com.example.rechee.persona5calculator.dagger.FusionCalculatorServiceComponent;
 import com.example.rechee.persona5calculator.dagger.FusionServiceContextModule;
 import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
+import com.example.rechee.persona5calculator.models.Pair;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaGraph;
@@ -89,15 +90,15 @@ public class FusionCalculatorService extends IntentService {
 
     private PersonaGraph makePersonaGraph(Persona[] personas, SparseArray<List<Persona>> personaByArcana, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){
 
-        HashSet<Integer> pairSet = new HashSet<>(210);
+        HashSet<Pair<Persona, Persona>> pairSet = new HashSet<>(20000);
         PersonaGraph graph = new PersonaGraph();
 
         for (Persona personaOne: personas){
             for (Persona personaTwo: personas){
 
                 //use the xor of the name hash code's to avoid duplicates
-                int pairHashCode = personaOne.name.hashCode() ^ personaTwo.name.hashCode();
-                if(pairSet.contains(pairHashCode)){
+                Pair<Persona, Persona> personaPair = new Pair<>(personaOne, personaTwo);
+                if(pairSet.contains(personaPair)){
                     continue;
                 }
 
@@ -107,7 +108,7 @@ public class FusionCalculatorService extends IntentService {
                     graph.addLink(personaOne, personaTwo, result);
                 }
 
-                pairSet.add(pairHashCode);
+                pairSet.add(personaPair);
             }
         }
 

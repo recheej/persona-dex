@@ -46,14 +46,14 @@ public class Persona extends BasePersona {
     public boolean equals(Object obj) {
         if(obj instanceof Persona){
             Persona otherPersona = (Persona) obj;
-            return otherPersona.hashCode() == this.hashCode();
+            return Objects.equals(otherPersona.name, this.name);
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return arcana.ordinal() + level;
+        return this.name.hashCode();
     }
 
     public Arcana getArcana() {

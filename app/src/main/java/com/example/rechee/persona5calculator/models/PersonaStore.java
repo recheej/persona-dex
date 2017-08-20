@@ -7,11 +7,19 @@ import java.util.List;
  */
 
 public class PersonaStore {
-    PersonaEdge[] edgesFrom;
-    PersonaEdge[] edgesTo;
+    private PersonaEdge[] edgesFrom;
+    private PersonaEdge[] edgesTo;
 
     public PersonaStore(PersonaEdge[] edgesFrom, PersonaEdge[] edgesTo){
         this.edgesFrom = edgesFrom;
+        this.edgesTo = edgesTo;
+    }
+
+    public void setEdgesFrom(PersonaEdge[] edgesFrom) {
+        this.edgesFrom = edgesFrom;
+    }
+
+    public void setEdgesTo(PersonaEdge[] edgesTo) {
         this.edgesTo = edgesTo;
     }
 
