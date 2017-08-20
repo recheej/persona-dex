@@ -1,10 +1,14 @@
 package com.example.rechee.persona5calculator.activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.R;
@@ -15,6 +19,7 @@ import com.example.rechee.persona5calculator.dagger.LayoutModule;
 import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
+import com.example.rechee.persona5calculator.fragments.PersonaDetailInfoFragment;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
 
@@ -60,5 +65,26 @@ public class PersonaDetailActivity extends BaseActivity {
         this.mainToolbar.setSubtitle(String.format("Level: %d", this.detailPersona.level));
 
         setSupportActionBar(this.mainToolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.persona_detail_menu, menu);
+
+        MenuItem fusionMenuItem = menu.findItem(R.id.menu_item_fusions);
+        fusionMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                viewModel.storePersonaForFusion(detailPersona);
+
+                Intent startDetailIntent = new Intent(PersonaDetailActivity.this, PersonaFusionActivity.class);
+                startActivity(startDetailIntent);
+
+                return true;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 }

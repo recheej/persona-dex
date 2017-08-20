@@ -166,15 +166,4 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/fusions_button"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/linearLayout"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/fusions"
-        tools:elevation="24dp" />
 </RelativeLayout>

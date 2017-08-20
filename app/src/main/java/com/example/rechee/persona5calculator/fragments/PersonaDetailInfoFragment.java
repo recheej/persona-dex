@@ -51,22 +51,12 @@ public class PersonaDetailInfoFragment extends BaseFragment {
         setTextViewText(baseView, R.id.textViewLuckStat, Integer.toString(personaStats.LUCK));
 
         setTextViewText(baseView, R.id.textView_arcanaName, detailPersona.arcanaName);
-
-        baseView.findViewById(R.id.fusions_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.storePersonaForFusion(PersonaDetailInfoFragment.this.detailPersona);
-
-                Intent startDetailIntent = new Intent(PersonaDetailInfoFragment.this.activity, PersonaFusionActivity.class);
-                PersonaDetailInfoFragment.this.activity.startActivity(startDetailIntent);
-            }
-        });
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        baseView = inflater.inflate(R.layout.detail_info, container, false);
+        baseView = inflater.inflate(R.layout.fragment_detail_info, container, false);
         return baseView;
     }
 
