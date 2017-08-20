@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -9,7 +10,8 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="39dp"
-        android:paddingStart="16dp">
+        android:paddingStart="16dp"
+        tools:ignore="RtlSymmetry">
 
         <TextView
             android:id="@+id/textView_personaNameOne"
@@ -17,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="TextView"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/expand_icon"
@@ -60,14 +63,16 @@
             <TextView
                 android:id="@+id/persona_one_detail"
                 android:text="test text"
-                style="@style/FusionDetail" />
+                style="@style/FusionDetail"
+                tools:ignore="HardcodedText" />
 
             <include layout="@layout/grid_divider_horizontal_dark" />
 
             <TextView
                 android:id="@+id/persona_two_detail"
                 android:text="test text two"
-                style="@style/FusionDetail"/>
+                style="@style/FusionDetail"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
