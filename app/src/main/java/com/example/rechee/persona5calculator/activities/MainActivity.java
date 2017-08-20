@@ -106,21 +106,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        int childCount = recyclerView.getChildCount();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        int childCount = recyclerView.getChildCount();
-
-    }
-
-    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         handleIntent(intent);

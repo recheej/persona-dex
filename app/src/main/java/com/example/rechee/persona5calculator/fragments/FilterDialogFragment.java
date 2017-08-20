@@ -36,10 +36,8 @@ import javax.inject.Inject;
 
 public class FilterDialogFragment extends DialogFragment {
 
-    private OnFilterListener listener;
-
     public  interface OnFilterListener {
-        public void onFilterSelected(PersonaFilterArgs filterArgs);
+        void onFilterSelected(PersonaFilterArgs filterArgs);
     }
 
     @Inject
@@ -48,26 +46,13 @@ public class FilterDialogFragment extends DialogFragment {
     private BaseActivity activity;
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if(context instanceof OnFilterListener){
-            this.listener = (OnFilterListener) context;
-        }
-        else{
-            throw new ClassCastException(context.toString()
-                    + " must implement FilterDialogFragment.OnFilterListener");
-        }
-    }
-
-    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         this.activity = (BaseActivity) getActivity();
         FragmentComponent component = activity.getComponent().plus();
         component.inject(this);
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = activity.getLayoutInflater();
 
         final View view = inflater.inflate(R.layout.filter_dialog, null);
 
@@ -85,7 +70,7 @@ public class FilterDialogFragment extends DialogFragment {
         minLevelEditText.setFilters(new InputFilter[]{filter});
         maxLevelEditText.setFilters(new InputFilter[]{filter});
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         builder.setView(view)
                 .setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
@@ -103,19 +88,21 @@ public class FilterDialogFragment extends DialogFragment {
                             filterArgs.minLevel = Integer.parseInt(minLevelText);
                         }
 
-
                         String maxLevelText = maxLevelEditText.getText().toString();
                         if(!minLevelText.isEmpty()){
                             filterArgs.maxLevel = Integer.parseInt(maxLevelText);
                         }
 
+                        OnFilterListener listener = (OnFilterListener) activity;
                         listener.onFilterSelected(filterArgs);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
                     }
                 });
 
