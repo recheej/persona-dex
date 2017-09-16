@@ -1,23 +1,26 @@
 package com.example.rechee.persona5calculator.activities;
 
 import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.PersonaUtilities;
@@ -55,6 +58,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Inject
     PersonaListViewModel viewModel;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +78,22 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         SharedPreferences commonSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_COMMON,
                 Context.MODE_PRIVATE);
 
+        registerCalculationFinishedReceiver();
+
+        recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
+        recyclerView.setHasFixedSize(true);
+
         if(!commonSharedPreferences.contains("finished")){
+
+            progressBar = (ProgressBar) findViewById(R.id.progress_bar_fusions);
+
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+
             startService(new Intent(this, FusionCalculatorService.class));
         }
 
         setSupportActionBar(this.mainToolbar);
-
-        recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
-        recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -101,6 +113,20 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         Intent intent = getIntent();
         handleIntent(intent);
+    }
+
+    // Define the callback for what to do when fusion calculation service is finished
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    };
+
+    private void registerCalculationFinishedReceiver() {
+        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorService.Constants.BROADCAST_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, calculationFinishedIntentFilter);
     }
 
     @Override

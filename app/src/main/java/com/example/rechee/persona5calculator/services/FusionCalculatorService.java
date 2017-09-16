@@ -3,6 +3,7 @@ package com.example.rechee.persona5calculator.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -48,6 +49,12 @@ public class FusionCalculatorService extends IntentService {
 
     private final static String SERVICE_NAME = "FusionCalculatorService";
 
+    public final class Constants {
+        // Defines a custom Intent action
+        public static final String BROADCAST_ACTION =
+                "com.example.rechee.person5calculator.BROADCAST";
+    }
+
     public FusionCalculatorService(){super(SERVICE_NAME);}
 
     @Override
@@ -86,6 +93,9 @@ public class FusionCalculatorService extends IntentService {
         }
 
         this.personaEdgeRepository.markFinished();
+
+        Intent fusionCalculationFishedIntent = new Intent(Constants.BROADCAST_ACTION);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(fusionCalculationFishedIntent);
     }
 
     private PersonaGraph makePersonaGraph(Persona[] personas, SparseArray<List<Persona>> personaByArcana, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){
