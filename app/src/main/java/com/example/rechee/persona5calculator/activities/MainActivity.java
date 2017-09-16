@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
 
-        if(!commonSharedPreferences.contains("finished")){
+        if(!commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished")){
 
             progressBar = (ProgressBar) findViewById(R.id.progress_bar_fusions);
 
@@ -97,13 +97,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            //add divider for api >= 25
-            mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                    this.getResources().getConfiguration().orientation);
-            recyclerView.addItemDecoration(mDividerItemDecoration);
-        }
 
         this.filteredPersonas = viewModel.getAllPersonas();
         this.allPersonas = this.filteredPersonas;
