@@ -6,7 +6,6 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp"
     android:orientation="vertical">
 
     <TextView
@@ -28,7 +27,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/textViewPersonaLevelLabel"
@@ -46,8 +46,7 @@
             android:text="1234"
             style="@style/DenseListTextSecondary"
             tools:ignore="HardcodedText" />
-
     </LinearLayout>
 
-
+    <include layout="@layout/grid_divider_horizontal" />
 </LinearLayout>

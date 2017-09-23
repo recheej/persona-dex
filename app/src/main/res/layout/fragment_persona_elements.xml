@@ -1,239 +1,242 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.rechee.persona5calculator.fragments.PersonaElementsFragment"
-    android:orientation="vertical"
+    android:fillViewport="false"
+    android:paddingBottom="10dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    >
+    tools:context="com.example.rechee.persona5calculator.fragments.PersonaElementsFragment">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        style="@style/PersonaStatsTheme"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/linearLayout"
+            style="@style/PersonaStatsTheme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:layout_marginTop="20dp">
 
-            <TextView
-                android:id="@+id/textViewPhysicalLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_physical" />
-
-            <TextView
-                android:id="@+id/textViewPhysicalStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewPhysicalLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_physical" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewPhysicalStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewGunLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_gun" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewGunStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewGunLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_gun" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewGunStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewFireLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_fire" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewFireStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewFireLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_fire" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewFireStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewIceLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_ice" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewIceStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewIceLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_ice" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewIceStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewElectricLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_electric" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewElectricStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewElectricLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_electric" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewElectricStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewWindLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_wind" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewWindStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewWindLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_wind" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewWindStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewPsyLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_psy" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewPsyStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewPsyLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_psy" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewPsyStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewNuclearLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_nuclear" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewNuclearStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewNuclearLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_nuclear" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewNuclearStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewBlessLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_bless" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewBlessStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <TextView
+                    android:id="@+id/textViewBlessLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_bless" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                <TextView
+                    android:id="@+id/textViewBlessStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewCurseLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/element_curse" />
+            <include layout="@layout/grid_divider_horizontal" />
 
-            <TextView
-                android:id="@+id/textViewCurseStat"
-                style="@style/PersonaStatsTextValue"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16" />
-        </LinearLayout>
+                android:padding="5dp">
 
+                <TextView
+                    android:id="@+id/textViewCurseLabel"
+                    style="@style/PersonaStatsTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/element_curse" />
+
+                <TextView
+                    android:id="@+id/textViewCurseStat"
+                    style="@style/PersonaStatsTextValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
+</ScrollView>
 
-
-</FrameLayout>
