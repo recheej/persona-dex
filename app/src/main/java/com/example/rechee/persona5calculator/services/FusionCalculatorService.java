@@ -209,17 +209,6 @@ public class FusionCalculatorService extends IntentService {
         }
     }
 
-    @Nullable
-    private Persona personaThatContainsName(Persona[] personas, String personaName){
-        for(Persona persona: personas){
-            if(persona.name.toLowerCase().contains(personaName.toLowerCase())){
-                return persona;
-            }
-        }
-
-        return null;
-    }
-
     private boolean personaIsValidInFusion(Persona persona){
         return !persona.rare && !persona.special && !persona.dlc;
     }
