@@ -16,8 +16,7 @@ import dagger.Subcomponent;
                 LayoutModule.class,
                 ActivityContextModule.class,
                 ViewModelModule.class,
-                ViewModelRepositoryModule.class,
-                PersonaFileModule.class
+                ViewModelRepositoryModule.class
         }
 )
 public interface ActivityComponent {

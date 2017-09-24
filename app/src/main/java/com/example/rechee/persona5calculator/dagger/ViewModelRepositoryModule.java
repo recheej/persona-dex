@@ -21,11 +21,6 @@ import dagger.Provides;
 
 @Module
 public class ViewModelRepositoryModule {
-    @Provides
-    @ActivityScope
-    PersonaRepository provideRepository(@Named("personaFileContents") String personaFileContents, Gson gson) {
-        return new PersonaRepositoryFile(personaFileContents, gson);
-    }
 
     @Provides
     @ActivityScope

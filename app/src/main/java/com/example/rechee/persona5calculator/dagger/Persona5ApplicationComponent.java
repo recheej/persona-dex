@@ -16,8 +16,7 @@ public interface Persona5ApplicationComponent {
     ActivityComponent plus(LayoutModule layoutModule,
                            ActivityContextModule activityContextModule,
                            ViewModelModule viewModelModule,
-                           ViewModelRepositoryModule viewModelRepositoryModule,
-                           PersonaFileModule fileModule);
+                           ViewModelRepositoryModule viewModelRepositoryModule);
 
-    FusionCalculatorServiceComponent plus(FusionServiceContextModule fusionServiceContextModule, FusionArcanaDataModule fusionArcanaDataModule, PersonaFileModule fileModule);
+    FusionCalculatorServiceComponent plus(FusionServiceContextModule fusionServiceContextModule, FusionArcanaDataModule fusionArcanaDataModule);
 }

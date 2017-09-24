@@ -11,8 +11,7 @@ import dagger.Component;
 @PersonaNameProviderScope
 @Component(
         modules = {
-                NameProviderRepositoryModule.class,
-                PersonaFileModule.class
+                NameProviderRepositoryModule.class
         },
         dependencies = {
         }

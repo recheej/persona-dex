@@ -12,8 +12,7 @@ import dagger.Subcomponent;
 @FusionServiceScope
 @Subcomponent(modules = {
         FusionServiceContextModule.class,
-        FusionArcanaDataModule.class,
-        PersonaFileModule.class
+        FusionArcanaDataModule.class
     }
 )
 public interface FusionCalculatorServiceComponent {

@@ -3,8 +3,14 @@ package com.example.rechee.persona5calculator.dagger;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.rechee.persona5calculator.PersonaFileUtilities;
 import com.example.rechee.persona5calculator.PersonaUtilities;
+import com.example.rechee.persona5calculator.R;
+import com.example.rechee.persona5calculator.repositories.PersonaRepository;
+import com.example.rechee.persona5calculator.repositories.PersonaRepositoryFile;
 import com.google.gson.Gson;
+
+import java.io.InputStream;
 
 import javax.inject.Named;
 
@@ -50,5 +56,14 @@ public class ActivityContextModule {
     @Named("fusionCommonPreferences")
     SharedPreferences commonSharedPreferences() {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_COMMON, Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @ActivityScope
+    PersonaRepository provideRepository(Gson gson) {
+        InputStream stream = context.getResources().openRawResource(R.raw.person_data);
+        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(gson);
+
+        return new PersonaRepositoryFile(personaFileUtilities.allPersonas(stream));
     }
 }

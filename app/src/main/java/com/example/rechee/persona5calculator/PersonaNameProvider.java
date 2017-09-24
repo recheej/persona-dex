@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -9,7 +10,6 @@ import android.support.annotation.Nullable;
 
 import com.example.rechee.persona5calculator.dagger.DaggerPersonaNameProviderComponent;
 import com.example.rechee.persona5calculator.dagger.NameProviderRepositoryModule;
-import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.PersonaNameProviderComponent;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.repositories.PersonaRepository;
@@ -36,10 +36,10 @@ public class PersonaNameProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
+        Context context = getContext();
         Persona5Application application = (Persona5Application) getContext().getApplicationContext();
         PersonaNameProviderComponent component = DaggerPersonaNameProviderComponent.builder()
-                .nameProviderRepositoryModule(new NameProviderRepositoryModule())
-                .personaFileModule(new PersonaFileModule(getContext()))
+                .nameProviderRepositoryModule(new NameProviderRepositoryModule(context))
                 .build();
         component.inject(this);
 

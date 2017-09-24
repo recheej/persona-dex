@@ -18,12 +18,6 @@ public class PersonaListViewModelTest {
     @Test
     public void testSortByNameAsc() throws Exception {
 
-        Gson gson = new Gson();
-        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
-                FakePersonaData.fakePersonaFileContents(), gson);
-
-        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
-
         Persona testPersona = new Persona();
         testPersona.name = "A";
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
@@ -36,6 +30,9 @@ public class PersonaListViewModelTest {
 
         Persona[] personasToSort = new Persona[] {testPersonaTwo, testPersona};
 
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(personasToSort);
+
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
         viewModel.sortPersonasByName(personasToSort, true);
 
         assertEquals(testPersona, personasToSort[0]);
@@ -43,12 +40,6 @@ public class PersonaListViewModelTest {
 
     @Test
     public void testSortByNameDesc() throws Exception {
-
-        Gson gson = new Gson();
-        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
-                FakePersonaData.fakePersonaFileContents(), gson);
-
-        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
 
         Persona testPersona = new Persona();
         testPersona.name = "A";
@@ -62,6 +53,9 @@ public class PersonaListViewModelTest {
 
         Persona[] personasToSort = new Persona[] {testPersona, testPersonaTwo};
 
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(personasToSort);
+
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
         viewModel.sortPersonasByName(personasToSort, false);
 
         assertEquals(testPersonaTwo, personasToSort[0]);
@@ -69,12 +63,6 @@ public class PersonaListViewModelTest {
 
     @Test
     public void testSortByLevelAsc() throws Exception {
-
-        Gson gson = new Gson();
-        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
-                FakePersonaData.fakePersonaFileContents(), gson);
-
-        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
 
         Persona testPersona = new Persona();
         testPersona.name = "A";
@@ -88,6 +76,9 @@ public class PersonaListViewModelTest {
 
         Persona[] personasToSort = new Persona[] {testPersona, testPersonaTwo};
 
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(personasToSort);
+
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
         viewModel.sortPersonasByLevel(personasToSort, true);
 
         assertEquals(testPersonaTwo, personasToSort[0]);
@@ -95,12 +86,6 @@ public class PersonaListViewModelTest {
 
     @Test
     public void testSortByLevelDesc() throws Exception {
-
-        Gson gson = new Gson();
-        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(
-                FakePersonaData.fakePersonaFileContents(), gson);
-
-        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
 
         Persona testPersona = new Persona();
         testPersona.name = "A";
@@ -113,7 +98,9 @@ public class PersonaListViewModelTest {
         testPersonaTwo.level = 2;
 
         Persona[] personasToSort = new Persona[] {testPersona, testPersonaTwo};
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(personasToSort);
 
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
         viewModel.sortPersonasByLevel(personasToSort, false);
 
         assertEquals(testPersonaTwo, personasToSort[0]);

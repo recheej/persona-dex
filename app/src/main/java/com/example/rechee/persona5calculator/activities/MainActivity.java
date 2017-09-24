@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
@@ -29,7 +28,6 @@ import com.example.rechee.persona5calculator.adapters.PersonaListAdapter;
 import com.example.rechee.persona5calculator.dagger.ActivityComponent;
 import com.example.rechee.persona5calculator.dagger.ActivityContextModule;
 import com.example.rechee.persona5calculator.dagger.LayoutModule;
-import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
 import com.example.rechee.persona5calculator.fragments.FilterDialogFragment;
@@ -69,8 +67,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 new LayoutModule(this),
                 new ActivityContextModule(this),
                 new ViewModelModule(),
-                new ViewModelRepositoryModule(),
-                new PersonaFileModule(this)
+                new ViewModelRepositoryModule()
         );
         component.inject(this);
         this.component = component;

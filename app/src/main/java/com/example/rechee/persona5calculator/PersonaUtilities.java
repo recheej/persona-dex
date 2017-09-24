@@ -1,5 +1,7 @@
 package com.example.rechee.persona5calculator;
 
+import android.util.SparseArray;
+
 import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Persona;
 
@@ -9,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.example.rechee.persona5calculator.models.Enumerations.*;
 
@@ -28,14 +31,14 @@ public class PersonaUtilities {
         this.arcanaHashMap = PersonaUtilities.arcanaHashMap();
     }
 
-    public Arcana nameToArcana(String rawArcanaName){
+    Arcana nameToArcana(String rawArcanaName){
         String arcanaStringFormatted = rawArcanaName.replaceAll("\\s+", "")
                 .replaceAll("_", "").toLowerCase();
 
         return this.arcanaHashMap.get(arcanaStringFormatted);
     }
 
-    public static PersonaUtilities getUtilities() {
+    static PersonaUtilities getUtilities() {
         return new PersonaUtilities();
     }
 
@@ -67,26 +70,5 @@ public class PersonaUtilities {
         }
 
         return filteredSuggestions.toArray(new Persona[filteredSuggestions.size()]);
-    }
-
-    public static String getFileContents(InputStream stream){
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        StringBuilder out = new StringBuilder();
-        String line;
-
-        String fileContents = "";
-        try {
-            while ((line = reader.readLine()) != null) {
-                out.append(line);
-            }
-            reader.close();
-
-            fileContents = out.toString();
-
-        } catch (IOException e) {
-            fileContents = "";
-        }
-
-        return fileContents;
     }
 }

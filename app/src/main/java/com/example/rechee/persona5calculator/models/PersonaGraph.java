@@ -19,7 +19,7 @@ public class PersonaGraph {
         this.personaTable = new HashMap<>();
     }
 
-    public void addLink(Persona personaOne, Persona personaTwo, Persona result){
+    public void addEdge(Persona personaOne, Persona personaTwo, Persona result){
 
         if(!personaTable.containsKey(result.name)){
             personaTable.put(result.name, new ArrayList<PersonaEdge>());

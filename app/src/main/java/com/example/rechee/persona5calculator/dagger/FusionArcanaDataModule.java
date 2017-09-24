@@ -2,10 +2,10 @@ package com.example.rechee.persona5calculator.dagger;
 
 import android.util.SparseArray;
 
+import com.example.rechee.persona5calculator.PersonaFileUtilities;
 import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.models.Enumerations.Arcana;
 import com.example.rechee.persona5calculator.models.Persona;
-import com.example.rechee.persona5calculator.models.RawArcanaMap;
 import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaRepositoryFile;
 import com.google.gson.Gson;
@@ -27,31 +27,6 @@ import dagger.Provides;
 
 @Module
 public class FusionArcanaDataModule {
-
-    @FusionServiceScope
-    @Provides
-    HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable(RawArcanaMap[] arcanaMaps) {
-        PersonaUtilities personaUtilities = PersonaUtilities.getUtilities();
-
-        HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable = new HashMap<>(30);
-        for (RawArcanaMap arcanaMap: arcanaMaps){
-            Arcana arcanaPersonaOne = personaUtilities.nameToArcana(arcanaMap.source[0]);
-            Arcana arcanaPersonaTwo = personaUtilities.nameToArcana(arcanaMap.source[1]);
-
-            Arcana resultArcana = personaUtilities.nameToArcana(arcanaMap.result);
-
-            if(arcanaTable.containsKey(arcanaPersonaOne)){
-                arcanaTable.get(arcanaPersonaOne).put(arcanaPersonaTwo, resultArcana);
-            }
-            else{
-                HashMap<Arcana, Arcana> innerTable = new HashMap<>();
-                innerTable.put(arcanaPersonaTwo, resultArcana);
-                arcanaTable.put(arcanaPersonaOne, innerTable);
-            }
-        }
-
-        return arcanaTable;
-    }
 
     @FusionServiceScope
     @Provides
@@ -77,33 +52,6 @@ public class FusionArcanaDataModule {
         });
 
         return personsSortedByLevel;
-    }
-
-    @FusionServiceScope
-    @Provides
-    SparseArray<List<Persona>> personaByArcana(@Named("personaByLevel") Persona[] personas, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){
-        SparseArray<List<Persona>> personaByArcana = new SparseArray<>(arcanaTable.size());
-        for(Persona persona: personas){
-            int arcanaIndex = persona.getArcana().ordinal();
-            List<Persona> personaList = personaByArcana.get(arcanaIndex);
-
-            if(personaList == null){
-                personaList = new ArrayList<>();
-                personaList.add(persona);
-                personaByArcana.put(persona.getArcana().ordinal(), personaList);
-            }
-            else{
-                personaList.add(persona);
-            }
-        }
-
-        return personaByArcana;
-    }
-
-    @Provides
-    @FusionServiceScope
-    PersonaRepository provideRepository(@Named("personaFileContents") String personaFileContents, Gson gson) {
-        return new PersonaRepositoryFile(personaFileContents, gson);
     }
 
     @Provides

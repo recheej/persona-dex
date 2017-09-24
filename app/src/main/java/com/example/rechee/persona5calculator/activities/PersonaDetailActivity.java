@@ -3,7 +3,6 @@ package com.example.rechee.persona5calculator.activities;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,10 +15,8 @@ import com.example.rechee.persona5calculator.adapters.PersonaDetailFragmentPager
 import com.example.rechee.persona5calculator.dagger.ActivityComponent;
 import com.example.rechee.persona5calculator.dagger.ActivityContextModule;
 import com.example.rechee.persona5calculator.dagger.LayoutModule;
-import com.example.rechee.persona5calculator.dagger.PersonaFileModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
-import com.example.rechee.persona5calculator.fragments.PersonaDetailInfoFragment;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
 
@@ -43,8 +40,7 @@ public class PersonaDetailActivity extends BaseActivity {
                 new LayoutModule(this),
                 new ActivityContextModule(this),
                 new ViewModelModule(),
-                new ViewModelRepositoryModule(),
-                new PersonaFileModule(this)
+                new ViewModelRepositoryModule()
         );
         component.inject(this);
         this.component = component;
