@@ -73,9 +73,6 @@ public class FusionListFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        FragmentComponent component = activity.getComponent().plus();
-        component.inject(this);
-
         SharedPreferences commonSharedPreferences = activity.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);
         recyclerView = (RecyclerView) baseView.findViewById(R.id.recycler_view_persona_list);
@@ -87,13 +84,20 @@ public class FusionListFragment extends BaseFragment {
 
             progressBar.setVisibility(ProgressBar.VISIBLE);
             recyclerView.setVisibility(View.INVISIBLE);
+
+            FragmentComponent component = activity.getComponent().plus();
+            component.inject(this);
         }
         else{
+            FragmentComponent component = activity.getComponent().plus();
+            component.inject(this);
+
             setUpRecyclerView();
         }
     }
 
     private void setUpRecyclerView() {
+
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
