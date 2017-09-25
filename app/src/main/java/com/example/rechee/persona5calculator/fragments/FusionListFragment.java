@@ -1,18 +1,27 @@
 package com.example.rechee.persona5calculator.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.adapters.PersonaFusionListAdapter;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.models.PersonaStore;
+import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 
 import javax.inject.Inject;
@@ -28,6 +37,7 @@ public class FusionListFragment extends BaseFragment {
 
     @Inject
     PersonaFusionListViewModel viewModel;
+    private ProgressBar progressBar;
 
     public FusionListFragment() {
         // Required empty public constructor
@@ -66,7 +76,24 @@ public class FusionListFragment extends BaseFragment {
         FragmentComponent component = activity.getComponent().plus();
         component.inject(this);
 
+        SharedPreferences commonSharedPreferences = activity.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
+                Context.MODE_PRIVATE);
         recyclerView = (RecyclerView) baseView.findViewById(R.id.recycler_view_persona_list);
+
+        if(commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished")){
+            registerCalculationFinishedReceiver();
+
+            progressBar = (ProgressBar) activity.findViewById(R.id.progress_bar_fusions);
+
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
+        else{
+            setUpRecyclerView();
+        }
+    }
+
+    private void setUpRecyclerView() {
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -90,6 +117,21 @@ public class FusionListFragment extends BaseFragment {
             personaHeaderColumnTwo.setText(R.string.result);
         }
         recyclerView.setAdapter(fusionListAdapter);
+    }
+
+    // Define the callback for what to do when fusion calculation service is finished
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setUpRecyclerView();
+            progressBar.setVisibility(ProgressBar.INVISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    };
+
+    private void registerCalculationFinishedReceiver() {
+        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorService.Constants.BROADCAST_ACTION);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, calculationFinishedIntentFilter);
     }
 
     @Override

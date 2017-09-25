@@ -36,7 +36,7 @@ public class ViewModelRepositoryModule {
 
     @Provides
     @ActivityScope
-    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences,  @Named("fusionCommonPreferences") SharedPreferences commonPreferences, Gson gson){
-        return new PersonaEdgesSharedPrefRepository(sharedPreferences, commonPreferences, gson);
+    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson){
+        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
     }
 }

@@ -53,13 +53,6 @@ public class ActivityContextModule {
 
     @Provides
     @ActivityScope
-    @Named("fusionCommonPreferences")
-    SharedPreferences commonSharedPreferences() {
-        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_COMMON, Context.MODE_PRIVATE);
-    }
-
-    @Provides
-    @ActivityScope
     PersonaRepository provideRepository(Gson gson) {
         InputStream stream = context.getResources().openRawResource(R.raw.person_data);
         PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(gson);
