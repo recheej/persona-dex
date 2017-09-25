@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.SparseArray;
 
 import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.dagger.FusionArcanaDataModule;
@@ -16,6 +15,7 @@ import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaGraph;
 import com.example.rechee.persona5calculator.models.PersonaStore;
 import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository;
+import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -64,7 +64,10 @@ public class FusionCalculatorService extends IntentService {
         this.personaEdgeRepository.markInit();
         for(Persona persona: personaByLevel){
             PersonaEdge[] edgesTo = graph.edgesTo(persona);
+            edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.name, true);
+
             PersonaEdge[] edgesFrom = graph.edgesFrom(persona);
+            edgesFrom = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesFrom, persona.name, false);
 
             PersonaStore store = new PersonaStore(edgesFrom, edgesTo);
             this.personaEdgeRepository.addPersonaEdges(persona, store);

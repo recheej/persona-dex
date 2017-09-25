@@ -61,14 +61,7 @@ public class FusionServiceContextModule {
 
     @Provides
     @FusionServiceScope
-    @Named("fusionCommonPreferences")
-    SharedPreferences commonSharedPreferences() {
-        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_COMMON, Context.MODE_PRIVATE);
-    }
-
-    @Provides
-    @FusionServiceScope
-    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, @Named("fusionCommonPreferences") SharedPreferences commonPreferences, @Named("applicationGson") Gson gson) {
-        return new PersonaEdgesSharedPrefRepository(sharedPreferences, commonPreferences, gson);
+    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, @Named("applicationGson") Gson gson) {
+        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
     }
 }

@@ -39,7 +39,7 @@ public class PersonaFusionListViewModel extends ViewModel {
         return personaStore;
     }
 
-    private PersonaEdge[] filterOutDuplicateEdges(PersonaEdge[] edges, String personaName, boolean isToList){
+    public static PersonaEdge[] filterOutDuplicateEdges(PersonaEdge[] edges, String personaName, boolean isToList){
         HashSet<Pair<String, String>> personaSet = new HashSet<>(2000);
 
         List<PersonaEdge> filteredEdges = new ArrayList<>(2000);

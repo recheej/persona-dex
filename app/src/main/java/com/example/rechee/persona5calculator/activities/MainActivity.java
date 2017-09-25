@@ -56,7 +56,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Inject
     PersonaListViewModel viewModel;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,21 +71,13 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         component.inject(this);
         this.component = component;
 
-        SharedPreferences commonSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_COMMON,
+        SharedPreferences commonSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);
-
-        registerCalculationFinishedReceiver();
 
         recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
 
         if(!commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished")){
-
-            progressBar = (ProgressBar) findViewById(R.id.progress_bar_fusions);
-
-            progressBar.setVisibility(ProgressBar.VISIBLE);
-            recyclerView.setVisibility(View.INVISIBLE);
-
             startService(new Intent(this, FusionCalculatorService.class));
         }
 
@@ -103,20 +94,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         Intent intent = getIntent();
         handleIntent(intent);
-    }
-
-    // Define the callback for what to do when fusion calculation service is finished
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-    };
-
-    private void registerCalculationFinishedReceiver() {
-        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorService.Constants.BROADCAST_ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, calculationFinishedIntentFilter);
     }
 
     @Override

@@ -102,8 +102,15 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
                     this.textViewPersonaOneDetail.setText(detailsFor + ": " + edge.start);
                     this.textViewPersonaTwoDetail.setText(detailsFor + ": " + edge.pairPersona);
-                }
-                else{
+                } else {
+                    if (edge.start.equals(personaName)) {
+                        this.textViewPersonaNameOne.setText(edge.pairPersona);
+
+                    } else {
+                        this.textViewPersonaNameOne.setText(edge.start);
+
+                    }
+
                     this.textViewPersonaNameOne.setText(edge.pairPersona);
                     this.textViewPersonaNameTwo.setText(edge.end);
 

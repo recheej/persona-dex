@@ -27,8 +27,7 @@ public class PersonaFusionActivity extends BaseActivity {
     @Inject
     PersonaDetailViewModel viewModel;
 
-    private RecyclerView recyclerView;
-    private PersonaFusionListAdapter adapter;
+    private String personaForFusion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +43,12 @@ public class PersonaFusionActivity extends BaseActivity {
         component.inject(this);
         this.component = component;
 
+        personaForFusion = viewModel.getPersonaForFusion();
+
         setUpToolbar();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_fusion);
-        PersonaFusionListPagerAdapter pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(), this, viewModel.getPersonaForFusion());
+        PersonaFusionListPagerAdapter pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(), this, personaForFusion);
         viewPager.setAdapter(pagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_fusions);
@@ -55,7 +56,7 @@ public class PersonaFusionActivity extends BaseActivity {
     }
 
     private void setUpToolbar(){
-        this.mainToolbar.setTitle(String.format("Fusions for: %s", viewModel.getPersonaForFusion()));
+        this.mainToolbar.setTitle(String.format("Fusions for: %s", personaForFusion));
 
         setSupportActionBar(this.mainToolbar);
     }

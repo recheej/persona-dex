@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +11,15 @@
         android:layout_width="match_parent"
         />
 
+    <ProgressBar
+        android:id="@+id/progress_bar_fusions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"/>
+
     <android.support.v4.view.ViewPager
+        android:layout_below="@id/main_toolbar"
         android:id="@+id/view_pager_fusion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -32,4 +39,4 @@
         </android.support.design.widget.TabLayout>
     </android.support.v4.view.ViewPager>
 
-</LinearLayout>
+</RelativeLayout>
