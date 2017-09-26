@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
 
-        if(!commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished")){
+        if(!commonSharedPreferences.contains("initialized") || (commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished"))){
             startService(new Intent(this, FusionCalculatorService.class));
         }
 

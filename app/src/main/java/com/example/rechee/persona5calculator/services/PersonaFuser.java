@@ -3,7 +3,6 @@ package com.example.rechee.persona5calculator.services;
 import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
-import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Enumerations.Arcana;
 import com.example.rechee.persona5calculator.models.Persona;
 
@@ -11,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
-import javax.inject.Named;
 
 /**
  * Created by Rechee on 9/24/2017.
@@ -55,11 +52,7 @@ public class PersonaFuser {
             return null;
         }
 
-        if(!this.personaIsValidInFusion(personaOne) || !this.personaIsValidInFusion(personaTwo)){
-            return null;
-        }
-
-        if(personaOne.max || personaTwo.max){
+        if(!personaIsValidInRecipe(personaOne) || !personaIsValidInRecipe(personaTwo)){
             return null;
         }
 
@@ -75,7 +68,8 @@ public class PersonaFuser {
             return null;
         }
 
-        int calculatedLevel = ((personaOne.level + personaTwo.level) / 2) + 1;
+        int calculatedLevel = (personaOne.level + personaTwo.level) / 2;
+        calculatedLevel += 1;
 
         List<Persona> personaForResultArcana = personaByArcana.get(resultArcana.ordinal());
 
@@ -93,7 +87,7 @@ public class PersonaFuser {
                 Persona persona = personaForResultArcana.get(i);
 
                 if(persona.level < calculatedLevel){
-                    if(!this.personaIsValidInFusion(persona)|| Objects.equals(persona.name, personaOne.name) || Objects.equals(persona.name, personaTwo.name)){
+                    if(!this.personaIsValidInFusionResult(persona)|| Objects.equals(persona.name, personaOne.name) || Objects.equals(persona.name, personaTwo.name)){
                         continue;
                     }
 
@@ -106,7 +100,7 @@ public class PersonaFuser {
         else{
             for (Persona persona : personaForResultArcana) {
                 if (persona.level >= calculatedLevel) {
-                    if(!this.personaIsValidInFusion(persona) || persona.name.equals(personaOne.name) || persona.name.equals(personaTwo.name)){
+                    if(!this.personaIsValidInFusionResult(persona) || persona.name.equals(personaOne.name) || persona.name.equals(personaTwo.name)){
                         continue;
                     }
 
@@ -118,8 +112,12 @@ public class PersonaFuser {
         }
     }
 
-    private boolean personaIsValidInFusion(Persona persona){
-        return !persona.rare && !persona.special && !persona.dlc;
+    private boolean personaIsValidInRecipe(Persona persona){
+        return !persona.rare;
+    }
+
+    private boolean personaIsValidInFusionResult(Persona persona){
+        return !persona.rare && !persona.special;
     }
 
     @Nullable

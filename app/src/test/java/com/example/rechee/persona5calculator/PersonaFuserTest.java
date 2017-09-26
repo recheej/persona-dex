@@ -107,6 +107,21 @@ public class PersonaFuserTest {
         }
     }
 
+    @Test
+    public void specialCannotBeResultOfFusion() {
+        //asserts that a special persona cannot be fused from any fusion.
+        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable);
+
+        for (Persona personaOne : allPersonas) {
+            for (Persona personaTwo : allPersonas) {
+                Persona result = fuser.fuseNormal(personaOne, personaTwo);
+                if(result != null){
+                    assertFalse(result.special);
+                }
+            }
+        }
+    }
+
     private Persona getPersonaByName(String name) {
         for (Persona persona : allPersonas) {
             if(persona.name.toLowerCase().equals(name.toLowerCase())){
