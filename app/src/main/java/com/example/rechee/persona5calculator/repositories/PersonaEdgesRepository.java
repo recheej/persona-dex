@@ -1,7 +1,6 @@
 package com.example.rechee.persona5calculator.repositories;
 
 import com.example.rechee.persona5calculator.models.Persona;
-import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaStore;
 
 /**
@@ -12,7 +11,6 @@ public interface PersonaEdgesRepository {
     void addPersonaEdges(Persona persona, PersonaStore personaStore);
     void markFinished();
     void markInit();
-    PersonaStore getEdgesForPersona(Persona persona);
-
-    PersonaStore getEdgesForPersona(String personaName);
+    PersonaStore getEdgesForPersona(int personaID);
+    void setPersonaIDs(Persona[] personas);
 }

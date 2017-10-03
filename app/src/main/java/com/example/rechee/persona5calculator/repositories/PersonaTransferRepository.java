@@ -11,5 +11,5 @@ public interface PersonaTransferRepository {
     void storePersonaForDetail(Persona persona);
     Persona getDetailPersona();
     void storePersonaForFusion(Persona personaForFusion);
-    String getPersonaForFusion();
+    int getPersonaForFusion();
 }

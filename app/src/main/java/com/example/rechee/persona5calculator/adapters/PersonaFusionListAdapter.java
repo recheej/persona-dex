@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.activities.PersonaDetailActivity;
-import com.example.rechee.persona5calculator.models.PersonaEdge;
+import com.example.rechee.persona5calculator.models.RawPersonaEdge;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -24,11 +24,11 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
     private final RecyclerView recyclerView;
 
-    private final PersonaEdge[] edges;
-    private final String personaName;
+    private final RawPersonaEdge[] edges;
+    private final int personaID;
     private final boolean isToList;
     private final PersonaFusionListViewModel viewModel;
-    private PersonaEdge selectedPersonaEdge;
+    private RawPersonaEdge selectedPersonaEdge;
     private int selectedPosition = -1;
 
 
@@ -42,7 +42,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
         private TextView textViewPersonaOneDetail;
         private TextView textViewPersonaTwoDetail;
 
-        private PersonaEdge personaEdge;
+        private RawPersonaEdge personaEdge;
 
         ViewHolder(final View itemView, boolean isToList) {
             super(itemView);
@@ -85,7 +85,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
             return this.expandableLayout;
         }
 
-        PersonaEdge personaEdge() {
+        RawPersonaEdge personaEdge() {
             return this.personaEdge;
         }
 
@@ -93,8 +93,8 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
             return this.expandImage;
         }
 
-        void bind(PersonaEdge edge){
-            if(edge != null && edge.start != null){
+        void bind(RawPersonaEdge edge){
+            if(edge != null && edge.start != 0){
                 String detailsFor = itemView.getContext().getString(R.string.details_for);
                 if(isToList){
                     this.textViewPersonaNameOne.setText(edge.start);
@@ -103,7 +103,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
                     this.textViewPersonaOneDetail.setText(detailsFor + ": " + edge.start);
                     this.textViewPersonaTwoDetail.setText(detailsFor + ": " + edge.pairPersona);
                 } else {
-                    if (edge.start.equals(personaName)) {
+                    if (edge.start == personaID) {
                         this.textViewPersonaNameOne.setText(edge.pairPersona);
 
                     } else {
@@ -133,9 +133,9 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
         }
     }
 
-    public PersonaFusionListAdapter(PersonaEdge[] edges, String personaName, boolean isToList, RecyclerView recyclerView, PersonaFusionListViewModel viewModel){
+    public PersonaFusionListAdapter(RawPersonaEdge[] edges, int personaID, boolean isToList, RecyclerView recyclerView, PersonaFusionListViewModel viewModel){
         this.edges = edges;
-        this.personaName = personaName;
+        this.personaID = personaID;
         this.isToList = isToList;
         this.recyclerView = recyclerView;
         this.viewModel = viewModel;

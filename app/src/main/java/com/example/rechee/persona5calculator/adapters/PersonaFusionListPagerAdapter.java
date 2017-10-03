@@ -14,21 +14,21 @@ import com.example.rechee.persona5calculator.fragments.FusionListFragment;
 
 public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
     private final Context context;
-    private final String personaName;
+    private final int personaID;
 
-    public PersonaFusionListPagerAdapter(FragmentManager fm, Context context, String personaName) {
+    public PersonaFusionListPagerAdapter(FragmentManager fm, Context context, int personaID) {
         super(fm);
         this.context = context;
-        this.personaName = personaName;
+        this.personaID = personaID;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return FusionListFragment.newInstance(true, personaName);
+                return FusionListFragment.newInstance(true, personaID);
             case 1:
-                return FusionListFragment.newInstance(false, personaName);
+                return FusionListFragment.newInstance(false, personaID);
             default:
                 return null;
         }

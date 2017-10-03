@@ -13,9 +13,11 @@ public class PersonaTransferRepositorySharedPref implements PersonaTransferRepos
 
     private final SharedPreferences sharedPreferences;
     private final Gson gson;
+    private final SharedPreferences fusionSharedPreferences;
 
-    public PersonaTransferRepositorySharedPref(SharedPreferences sharedPreferences, Gson gson){
+    public PersonaTransferRepositorySharedPref(SharedPreferences sharedPreferences, SharedPreferences fusionSharedPrefernces, Gson gson){
         this.sharedPreferences = sharedPreferences;
+        this.fusionSharedPreferences = fusionSharedPrefernces;
         this.gson = gson;
     }
 
@@ -34,13 +36,14 @@ public class PersonaTransferRepositorySharedPref implements PersonaTransferRepos
 
     @Override
     public void storePersonaForFusion(Persona personaForFusion) {
+        int personaID = fusionSharedPreferences.getInt(personaForFusion.name, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("personaForFusion", personaForFusion.name);
+        editor.putInt("personaForFusion", personaID);
         editor.commit();
     }
 
     @Override
-    public String getPersonaForFusion() {
-        return sharedPreferences.getString("personaForFusion", "");
+    public int getPersonaForFusion() {
+        return sharedPreferences.getInt("personaForFusion", 0);
     }
 }

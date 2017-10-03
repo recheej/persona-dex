@@ -1,33 +1,31 @@
 package com.example.rechee.persona5calculator.models;
 
-import java.util.List;
-
 /**
  * Created by Rechee on 7/22/2017.
  */
 
 public class PersonaStore {
-    private PersonaEdge[] edgesFrom;
-    private PersonaEdge[] edgesTo;
+    private RawPersonaEdge[] edgesFrom;
+    private RawPersonaEdge[] edgesTo;
 
-    public PersonaStore(PersonaEdge[] edgesFrom, PersonaEdge[] edgesTo){
+    public PersonaStore(RawPersonaEdge[] edgesFrom, RawPersonaEdge[] edgesTo){
         this.edgesFrom = edgesFrom;
         this.edgesTo = edgesTo;
     }
 
-    public void setEdgesFrom(PersonaEdge[] edgesFrom) {
+    public void setEdgesFrom(RawPersonaEdge[] edgesFrom) {
         this.edgesFrom = edgesFrom;
     }
 
-    public void setEdgesTo(PersonaEdge[] edgesTo) {
+    public void setEdgesTo(RawPersonaEdge[] edgesTo) {
         this.edgesTo = edgesTo;
     }
 
-    public PersonaEdge[] edgesTo() {
+    public RawPersonaEdge[] edgesTo() {
         return this.edgesTo;
     }
 
-    public PersonaEdge[] edgesFrom() {
+    public RawPersonaEdge[] edgesFrom() {
         return this.edgesFrom;
     }
 }

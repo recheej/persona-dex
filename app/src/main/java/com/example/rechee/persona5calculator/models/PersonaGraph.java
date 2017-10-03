@@ -1,9 +1,7 @@
 package com.example.rechee.persona5calculator.models;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +11,7 @@ import java.util.Objects;
 
 public class PersonaGraph {
 
-    private final HashMap<String, List<PersonaEdge>> personaTable;
+    private final HashMap<Integer, List<RawPersonaEdge>> personaTable;
 
     public PersonaGraph() {
         this.personaTable = new HashMap<>();
@@ -21,64 +19,64 @@ public class PersonaGraph {
 
     public void addEdge(Persona personaOne, Persona personaTwo, Persona result){
 
-        if(!personaTable.containsKey(result.name)){
-            personaTable.put(result.name, new ArrayList<PersonaEdge>());
+        if(!personaTable.containsKey(result.id)){
+            personaTable.put(result.id, new ArrayList<RawPersonaEdge>());
         }
 
-        PersonaEdge newEdge = new PersonaEdge();
-        newEdge.start = personaOne.name;
-        newEdge.end = result.name;
-        newEdge.pairPersona = personaTwo.name;
+        RawPersonaEdge newEdge = new RawPersonaEdge();
+        newEdge.start = personaOne.id;
+        newEdge.end = result.id;
+        newEdge.pairPersona = personaTwo.id;
 
-        if(personaTable.containsKey(personaOne.name)){
-            personaTable.get(personaOne.name).add(newEdge);
+        if(personaTable.containsKey(personaOne.id)){
+            personaTable.get(personaOne.id).add(newEdge);
         }
         else{
-            List<PersonaEdge> edges = new ArrayList<>();
+            List<RawPersonaEdge> edges = new ArrayList<>();
             edges.add(newEdge);
-            personaTable.put(personaOne.name, edges);
+            personaTable.put(personaOne.id, edges);
         }
 
-        PersonaEdge edgeTwo = new PersonaEdge();
-        edgeTwo.start = personaTwo.name;
-        edgeTwo.end = result.name;
-        edgeTwo.pairPersona = personaOne.name;
+        RawPersonaEdge edgeTwo = new RawPersonaEdge();
+        edgeTwo.start = personaTwo.id;
+        edgeTwo.end = result.id;
+        edgeTwo.pairPersona = personaOne.id;
 
-        if(personaTable.containsKey(personaTwo.name)){
-            personaTable.get(personaTwo.name).add(edgeTwo);
+        if(personaTable.containsKey(personaTwo.id)){
+            personaTable.get(personaTwo.id).add(edgeTwo);
         }
         else{
-            List<PersonaEdge> edges = new ArrayList<>();
+            List<RawPersonaEdge> edges = new ArrayList<>();
             edges.add(edgeTwo);
-            personaTable.put(personaTwo.name, edges);
+            personaTable.put(personaTwo.id, edges);
         }
     }
 
-    public PersonaEdge[] edgesFrom(Persona persona){
-        List<PersonaEdge> edgesFrom = this.personaTable.get(persona.name);
+    public RawPersonaEdge[] edgesFrom(Persona persona){
+        List<RawPersonaEdge> edgesFrom = this.personaTable.get(persona.id);
 
         if(edgesFrom == null){
-            return new PersonaEdge[0];
+            return new RawPersonaEdge[0];
         }
 
-        return edgesFrom.toArray(new PersonaEdge[edgesFrom.size()]);
+        return edgesFrom.toArray(new RawPersonaEdge[edgesFrom.size()]);
     }
 
-    public PersonaEdge[] edgesTo(Persona persona){
-        List<PersonaEdge> edgesTo = new ArrayList<>();
+    public RawPersonaEdge[] edgesTo(Persona persona){
+        List<RawPersonaEdge> edgesTo = new ArrayList<>();
 
-        for(String personaName: this.personaTable.keySet()){
-            if(Objects.equals(personaName, persona.name)){
+        for(int personaID: this.personaTable.keySet()){
+            if(personaID == persona.id ){
                 continue;
             }
 
-            for (PersonaEdge edgeForPersona: personaTable.get(personaName)){
+            for (RawPersonaEdge edgeForPersona: personaTable.get(personaID)){
                 if(Objects.equals(edgeForPersona.end, persona.name)){
                     edgesTo.add(edgeForPersona);
                 }
             }
         }
 
-        return edgesTo.toArray(new PersonaEdge[edgesTo.size()]);
+        return edgesTo.toArray(new RawPersonaEdge[edgesTo.size()]);
     }
 }

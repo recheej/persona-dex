@@ -29,10 +29,10 @@ import javax.inject.Inject;
 public class FusionListFragment extends BaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String IS_TO_LIST = "isToList";
-    private static final String PERSONA_NAME = "personaName";
+    private static final String PERSONA_ID = "personaName";
 
     private boolean isToList;
-    private String personaName;
+    private int personaID;
     private RecyclerView recyclerView;
 
     @Inject
@@ -50,11 +50,11 @@ public class FusionListFragment extends BaseFragment {
      * @param isToList Says whether you are creating a to list they are almost exactly the same
      * @return A new instance of fragment FusionListFragment.
      */
-    public static FusionListFragment newInstance(boolean isToList, String personaName) {
+    public static FusionListFragment newInstance(boolean isToList, int personaID) {
         FusionListFragment fragment = new FusionListFragment();
         Bundle args = new Bundle();
         args.putBoolean(IS_TO_LIST, isToList);
-        args.putString(PERSONA_NAME, personaName);
+        args.putInt(PERSONA_ID, personaID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,7 +65,7 @@ public class FusionListFragment extends BaseFragment {
 
         if (getArguments() != null) {
             isToList = getArguments().getBoolean(IS_TO_LIST);
-            personaName = getArguments().getString(PERSONA_NAME);
+            personaID = getArguments().getInt(PERSONA_ID);
         }
     }
 
@@ -103,20 +103,20 @@ public class FusionListFragment extends BaseFragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        PersonaStore personaStore = viewModel.getEdgesForPersona(personaName);
+        PersonaStore personaStore = viewModel.getEdgesForPersona(personaID);
 
         PersonaFusionListAdapter fusionListAdapter;
         TextView personaHeaderColumnOne = (TextView) baseView.findViewById(R.id.textView_fusion_column_one_label);
         TextView personaHeaderColumnTwo = (TextView) baseView.findViewById(R.id.textView_fusion_column_two_label);
 
         if(this.isToList){
-            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesTo(), personaName, true, recyclerView, viewModel);
+            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesTo(), personaID, true, recyclerView, viewModel);
 
             personaHeaderColumnOne.setText(R.string.persona_one);
             personaHeaderColumnTwo.setText(R.string.persona_two);
         }
         else{
-            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesFrom(), personaName, false, recyclerView, viewModel);
+            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesFrom(), personaID, false, recyclerView, viewModel);
             personaHeaderColumnOne.setText(R.string.persona_two);
             personaHeaderColumnTwo.setText(R.string.result);
         }

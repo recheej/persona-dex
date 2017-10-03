@@ -15,4 +15,5 @@ public class BasePersona {
     public boolean dlc;
     public boolean rare;
     public String arcanaName;
+    public int id;
 }

@@ -3,8 +3,8 @@ package com.example.rechee.persona5calculator.viewmodels;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.rechee.persona5calculator.models.Pair;
-import com.example.rechee.persona5calculator.models.Persona;
-import com.example.rechee.persona5calculator.models.PersonaEdge;
+import com.example.rechee.persona5calculator.models.PersonaStoreDisplay;
+import com.example.rechee.persona5calculator.models.RawPersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaStore;
 import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository;
 
@@ -26,30 +26,26 @@ public class PersonaFusionListViewModel extends ViewModel {
         this.personaListViewModel = personaListViewModel;
     }
 
-    public PersonaStore getEdgesForPersona(Persona persona) {
-        return this.getEdgesForPersona(persona.name);
-    }
+    public PersonaStoreDisplay getEdgesForPersona(int personaID) {
+        PersonaStoreDisplay personaStore = personaEdgeRepository.getEdgesForPersona(personaID);
 
-    public PersonaStore getEdgesForPersona(String personaName) {
-        PersonaStore personaStore = personaEdgeRepository.getEdgesForPersona(personaName);
-
-        personaStore.setEdgesFrom(filterOutDuplicateEdges(personaStore.edgesFrom(), personaName, false));
-        personaStore.setEdgesTo(filterOutDuplicateEdges(personaStore.edgesTo(), personaName, true));
+        personaStore.setEdgesFrom(filterOutDuplicateEdges(personaStore.edgesFrom(), personaID, false));
+        personaStore.setEdgesTo(filterOutDuplicateEdges(personaStore.edgesTo(), personaID, true));
 
         return personaStore;
     }
 
-    public static PersonaEdge[] filterOutDuplicateEdges(PersonaEdge[] edges, String personaName, boolean isToList){
-        HashSet<Pair<String, String>> personaSet = new HashSet<>(2000);
+    public static RawPersonaEdge[] filterOutDuplicateEdges(RawPersonaEdge[] edges, int personaID, boolean isToList){
+        HashSet<Pair<Integer, Integer>> personaSet = new HashSet<>(2000);
 
-        List<PersonaEdge> filteredEdges = new ArrayList<>(2000);
-        for (PersonaEdge edge : edges) {
-            Pair<String, String> pair;
+        List<RawPersonaEdge> filteredEdges = new ArrayList<>(2000);
+        for (RawPersonaEdge edge : edges) {
+            Pair<Integer, Integer> pair;
             if(isToList){
                 pair = new Pair<>(edge.start, edge.pairPersona);
             }
             else{
-                if(edge.start.equals(personaName)){
+                if(edge.start == personaID){
                     pair = new Pair<>(edge.pairPersona, edge.end);
                 }
                 else{
@@ -65,7 +61,7 @@ public class PersonaFusionListViewModel extends ViewModel {
             personaSet.add(pair);
         }
 
-        return filteredEdges.toArray(new PersonaEdge[filteredEdges.size()]);
+        return filteredEdges.toArray(new RawPersonaEdge[filteredEdges.size()]);
     }
 
     public void storePersonaForDetail(String personaName){
