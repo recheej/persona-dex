@@ -3,13 +3,17 @@ package com.example.rechee.persona5calculator;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.RawArcanaMap;
 import com.example.rechee.persona5calculator.models.RawPersona;
+import com.example.rechee.persona5calculator.models.RawRarePersonaMap;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.rechee.persona5calculator.models.Enumerations.*;
 
@@ -81,5 +85,18 @@ public class PersonaFileUtilities {
         }
 
         return personas;
+    }
+
+    public Map<String, int[]> rareCombos(InputStream rareComboFile) {
+        String personaFileContents = this.getFileContents(rareComboFile);
+        RawRarePersonaMap[] rawRarePersonaMaps = gson.fromJson(personaFileContents, RawRarePersonaMap[].class);
+
+        Map<String, int[]> rareComboMaps = new HashMap<>(21);
+
+        for (RawRarePersonaMap rawRarePersonaMap : rawRarePersonaMaps) {
+            rareComboMaps.put(rawRarePersonaMap.name, rawRarePersonaMap.modifiers);
+        }
+
+        return rareComboMaps;
     }
 }

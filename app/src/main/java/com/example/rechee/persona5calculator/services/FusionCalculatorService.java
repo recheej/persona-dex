@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,6 +43,9 @@ public class FusionCalculatorService extends IntentService {
     @Inject
     HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable;
 
+    @Inject
+    Map<String, int[]> rarePersonaCombos;
+
     private final static String SERVICE_NAME = "FusionCalculatorService";
 
     public final class Constants {
@@ -58,7 +62,7 @@ public class FusionCalculatorService extends IntentService {
                 .plus(new FusionServiceContextModule(this), new FusionArcanaDataModule());
         component.inject(this);
 
-        PersonaFuser personaFuser = new PersonaFuser(personaByLevel, arcanaTable);
+        PersonaFuser personaFuser = new PersonaFuser(personaByLevel, arcanaTable, rarePersonaCombos);
         PersonaGraph graph = this.makePersonaGraph(personaByLevel, personaFuser);
 
         this.personaEdgeRepository.markInit();
