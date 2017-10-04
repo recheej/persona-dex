@@ -15,6 +15,7 @@ import com.example.rechee.persona5calculator.models.RawPersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaGraph;
 import com.example.rechee.persona5calculator.models.PersonaStore;
 import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository;
+import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 
 import java.util.HashMap;
@@ -33,6 +34,10 @@ public class FusionCalculatorService extends IntentService {
 
     @Inject
     PersonaEdgesRepository personaEdgeRepository;
+
+    @Inject
+    PersonaTransferRepository personaTransferRepository;
+
     @Inject
     @Named("personaByLevel") Persona[] personaByLevel;
 
@@ -55,7 +60,8 @@ public class FusionCalculatorService extends IntentService {
                 .plus(new FusionServiceContextModule(this), new FusionArcanaDataModule());
         component.inject(this);
 
-        personaEdgeRepository.setPersonaIDs(personaByLevel);
+        this.personaTransferRepository.setPersonaIDs(personaByLevel);
+        this.personaTransferRepository.commit();
 
         PersonaFuser personaFuser = new PersonaFuser(personaByLevel, arcanaTable);
         PersonaGraph graph = this.makePersonaGraph(personaByLevel, personaFuser);

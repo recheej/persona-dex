@@ -24,14 +24,8 @@ public class ViewModelRepositoryModule {
 
     @Provides
     @ActivityScope
-    Gson gson() {
-        return new Gson();
-    }
-
-    @Provides
-    @ActivityScope
-    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences, @Named("fusionSharedPreferences") SharedPreferences fusionSharedPreferences, Gson gson){
-        return new PersonaTransferRepositorySharedPref(sharedPreferences, fusionSharedPreferences, gson);
+    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences, Gson gson){
+        return new PersonaTransferRepositorySharedPref(sharedPreferences, gson);
     }
 
     @Provides

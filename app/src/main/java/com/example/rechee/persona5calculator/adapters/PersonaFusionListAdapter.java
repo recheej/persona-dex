@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.activities.PersonaDetailActivity;
+import com.example.rechee.persona5calculator.models.PersonaEdgeDisplay;
 import com.example.rechee.persona5calculator.models.RawPersonaEdge;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 
@@ -24,11 +25,11 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
     private final RecyclerView recyclerView;
 
-    private final RawPersonaEdge[] edges;
+    private final PersonaEdgeDisplay[] edges;
     private final int personaID;
     private final boolean isToList;
     private final PersonaFusionListViewModel viewModel;
-    private RawPersonaEdge selectedPersonaEdge;
+    private PersonaEdgeDisplay selectedPersonaEdge;
     private int selectedPosition = -1;
 
 
@@ -42,7 +43,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
         private TextView textViewPersonaOneDetail;
         private TextView textViewPersonaTwoDetail;
 
-        private RawPersonaEdge personaEdge;
+        private PersonaEdgeDisplay personaEdge;
 
         ViewHolder(final View itemView, boolean isToList) {
             super(itemView);
@@ -85,7 +86,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
             return this.expandableLayout;
         }
 
-        RawPersonaEdge personaEdge() {
+        PersonaEdgeDisplay personaEdge() {
             return this.personaEdge;
         }
 
@@ -93,35 +94,15 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
             return this.expandImage;
         }
 
-        void bind(RawPersonaEdge edge){
-            if(edge != null && edge.start != 0){
-                String detailsFor = itemView.getContext().getString(R.string.details_for);
-                if(isToList){
-                    this.textViewPersonaNameOne.setText(edge.start);
-                    this.textViewPersonaNameTwo.setText(edge.pairPersona);
+        void bind(PersonaEdgeDisplay edge){
 
-                    this.textViewPersonaOneDetail.setText(detailsFor + ": " + edge.start);
-                    this.textViewPersonaTwoDetail.setText(detailsFor + ": " + edge.pairPersona);
-                } else {
-                    if (edge.start == personaID) {
-                        this.textViewPersonaNameOne.setText(edge.pairPersona);
+            this.textViewPersonaNameOne.setText(edge.left);
+            this.textViewPersonaNameTwo.setText(edge.right);
 
-                    } else {
-                        this.textViewPersonaNameOne.setText(edge.start);
+            String detailsFor = itemView.getContext().getString(R.string.details_for);
 
-                    }
-
-                    this.textViewPersonaNameOne.setText(edge.pairPersona);
-                    this.textViewPersonaNameTwo.setText(edge.end);
-
-                    this.textViewPersonaOneDetail.setText(detailsFor + ": " + edge.pairPersona);
-                    this.textViewPersonaTwoDetail.setText(detailsFor + ": " + edge.end);
-                }
-            }
-            else{
-                this.textViewPersonaNameOne.setText("-");
-                this.textViewPersonaNameTwo.setText("-");
-            }
+            this.textViewPersonaOneDetail.setText(detailsFor + ": " + edge.left);
+            this.textViewPersonaTwoDetail.setText(detailsFor + ": " + edge.right);
 
             personaEdge = edge;
             expandableLayout.collapse(false);
@@ -133,7 +114,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
         }
     }
 
-    public PersonaFusionListAdapter(RawPersonaEdge[] edges, int personaID, boolean isToList, RecyclerView recyclerView, PersonaFusionListViewModel viewModel){
+    public PersonaFusionListAdapter(PersonaEdgeDisplay[] edges, int personaID, boolean isToList, RecyclerView recyclerView, PersonaFusionListViewModel viewModel){
         this.edges = edges;
         this.personaID = personaID;
         this.isToList = isToList;
@@ -151,7 +132,8 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
     @Override
     public void onBindViewHolder(final PersonaFusionListAdapter.ViewHolder holder, final int position) {
-        holder.bind(edges[position]);
+        final int edgePosition = holder.getAdapterPosition();
+        holder.bind(edges[edgePosition]);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,8 +153,8 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
                 }
                 else{
                     holder.expandableLayout().expand();
-                    selectedPersonaEdge = edges[position];
-                    selectedPosition = position;
+                    selectedPersonaEdge = edges[edgePosition];
+                    selectedPosition = edgePosition;
                     holder.expandImage().setImageResource(R.drawable.ic_expand_less_white_24dp);
                 }
             }

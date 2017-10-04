@@ -8,6 +8,10 @@ public class PersonaStore {
     private RawPersonaEdge[] edgesFrom;
     private RawPersonaEdge[] edgesTo;
 
+    public PersonaStore(){
+
+    }
+
     public PersonaStore(RawPersonaEdge[] edgesFrom, RawPersonaEdge[] edgesTo){
         this.edgesFrom = edgesFrom;
         this.edgesTo = edgesTo;

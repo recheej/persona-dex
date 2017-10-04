@@ -71,7 +71,7 @@ public class PersonaGraph {
             }
 
             for (RawPersonaEdge edgeForPersona: personaTable.get(personaID)){
-                if(Objects.equals(edgeForPersona.end, persona.name)){
+                if(edgeForPersona.end == persona.id){
                     edgesTo.add(edgeForPersona);
                 }
             }

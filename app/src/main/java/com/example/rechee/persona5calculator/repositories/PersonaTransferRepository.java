@@ -12,4 +12,7 @@ public interface PersonaTransferRepository {
     Persona getDetailPersona();
     void storePersonaForFusion(Persona personaForFusion);
     int getPersonaForFusion();
+    String getPersonaName(int personaID);
+    void commit();
+    void setPersonaIDs(Persona[] personas);
 }

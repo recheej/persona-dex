@@ -2,7 +2,11 @@ package com.example.rechee.persona5calculator.dagger;
 
 import android.content.Context;
 
+import com.example.rechee.persona5calculator.adapters.PersonaStoreGsonAdapter;
+import com.example.rechee.persona5calculator.models.PersonaStore;
+import com.example.rechee.persona5calculator.models.RawPersonaEdge;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.inject.Named;
 
@@ -31,8 +35,10 @@ public class ApplicationContextModule {
 
     @Provides
     @ApplicationScope
-    @Named("applicationGson")
     Gson gson() {
-        return new Gson();
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(PersonaStore.class, new PersonaStoreGsonAdapter());
+
+        return builder.create();
     }
 }

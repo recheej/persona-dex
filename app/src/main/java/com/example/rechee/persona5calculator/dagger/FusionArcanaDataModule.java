@@ -53,10 +53,4 @@ public class FusionArcanaDataModule {
 
         return personsSortedByLevel;
     }
-
-    @Provides
-    @FusionServiceScope
-    Gson gson() {
-        return new Gson();
-    }
 }

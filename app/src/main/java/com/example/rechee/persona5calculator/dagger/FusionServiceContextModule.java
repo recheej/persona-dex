@@ -11,6 +11,8 @@ import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository
 import com.example.rechee.persona5calculator.repositories.PersonaEdgesSharedPrefRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaRepository;
 import com.example.rechee.persona5calculator.repositories.PersonaRepositoryFile;
+import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
+import com.example.rechee.persona5calculator.repositories.PersonaTransferRepositorySharedPref;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -45,7 +47,7 @@ public class FusionServiceContextModule {
 
     @Provides
     @FusionServiceScope
-    PersonaRepository provideRepository(@Named("applicationGson") Gson gson) {
+    PersonaRepository provideRepository(Gson gson) {
         InputStream stream = context.getResources().openRawResource(R.raw.person_data);
         PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(gson);
 
@@ -61,7 +63,20 @@ public class FusionServiceContextModule {
 
     @Provides
     @FusionServiceScope
-    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, @Named("applicationGson") Gson gson) {
+    @Named("transferSharedPreferences")
+    SharedPreferences transferSharedPreferences(){
+        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_TRANSFER_CONTENT, Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @FusionServiceScope
+    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson) {
         return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
+    }
+
+    @Provides
+    @FusionServiceScope
+    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences, Gson gson) {
+        return new PersonaTransferRepositorySharedPref(sharedPreferences, gson);
     }
 }

@@ -5,22 +5,22 @@ package com.example.rechee.persona5calculator.models;
  */
 
 public class PersonaStoreDisplay {
-    private PersonaStoreDisplay[] edgesFrom;
-    private PersonaStoreDisplay[] edgesTo;
+    private PersonaEdgeDisplay[] edgesFrom;
+    private PersonaEdgeDisplay[] edgesTo;
 
-    public void setEdgesFrom(PersonaStoreDisplay[] edgesFrom) {
+    public void setEdgesFrom(PersonaEdgeDisplay[] edgesFrom) {
         this.edgesFrom = edgesFrom;
     }
 
-    public void setEdgesTo(PersonaStoreDisplay[] edgesTo) {
+    public void setEdgesTo(PersonaEdgeDisplay[] edgesTo) {
         this.edgesTo = edgesTo;
     }
 
-    public PersonaStoreDisplay[] edgesTo() {
+    public PersonaEdgeDisplay[] edgesTo() {
         return this.edgesTo;
     }
 
-    public PersonaStoreDisplay[] edgesFrom() {
+    public PersonaEdgeDisplay[] edgesFrom() {
         return this.edgesFrom;
     }
 }

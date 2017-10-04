@@ -11,39 +11,59 @@ import com.google.gson.Gson;
 
 public class PersonaTransferRepositorySharedPref implements PersonaTransferRepository {
 
-    private final SharedPreferences sharedPreferences;
+    private final SharedPreferences transferSharedPreferences;
     private final Gson gson;
-    private final SharedPreferences fusionSharedPreferences;
+    private final SharedPreferences.Editor transferEditor;
 
-    public PersonaTransferRepositorySharedPref(SharedPreferences sharedPreferences, SharedPreferences fusionSharedPrefernces, Gson gson){
-        this.sharedPreferences = sharedPreferences;
-        this.fusionSharedPreferences = fusionSharedPrefernces;
+    public PersonaTransferRepositorySharedPref(SharedPreferences transferSharedPreferences, Gson gson){
+        this.transferSharedPreferences = transferSharedPreferences;
+        this.transferEditor = transferSharedPreferences.edit();
         this.gson = gson;
     }
 
     @Override
     public void storePersonaForDetail(Persona persona) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        SharedPreferences.Editor editor = transferSharedPreferences.edit();
         editor.putString("detailPersona", gson.toJson(persona, Persona.class));
         editor.commit();
     }
 
     @Override
     public Persona getDetailPersona() {
-        String personaDetailJson = sharedPreferences.getString("detailPersona", "");
+        String personaDetailJson = transferSharedPreferences.getString("detailPersona", "");
         return gson.fromJson(personaDetailJson, Persona.class);
     }
 
     @Override
     public void storePersonaForFusion(Persona personaForFusion) {
-        int personaID = fusionSharedPreferences.getInt(personaForFusion.name, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        int personaID = transferSharedPreferences.getInt(personaForFusion.name, 0);
+        SharedPreferences.Editor editor = transferSharedPreferences.edit();
         editor.putInt("personaForFusion", personaID);
         editor.commit();
     }
 
     @Override
     public int getPersonaForFusion() {
-        return sharedPreferences.getInt("personaForFusion", 0);
+        return transferSharedPreferences.getInt("personaForFusion", 0);
+    }
+
+    @Override
+    public String getPersonaName(int personaID) {
+        return transferSharedPreferences.getString(Integer.toString(personaID), "");
+    }
+
+    @Override
+    public void commit() {
+        transferEditor.apply();
+    }
+
+    public void setPersonaIDs(Persona[] personas){
+        for (int i = 0; i < personas.length; i++) {
+
+            transferEditor.putInt(personas[i].name, i);
+            transferEditor.putString(Integer.toString(i), personas[i].name);
+
+            personas[i].id = i;
+        }
     }
 }

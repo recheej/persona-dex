@@ -12,5 +12,4 @@ public interface PersonaEdgesRepository {
     void markFinished();
     void markInit();
     PersonaStore getEdgesForPersona(int personaID);
-    void setPersonaIDs(Persona[] personas);
 }

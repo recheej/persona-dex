@@ -21,6 +21,7 @@ import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.adapters.PersonaFusionListAdapter;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.models.PersonaStore;
+import com.example.rechee.persona5calculator.models.PersonaStoreDisplay;
 import com.example.rechee.persona5calculator.services.FusionCalculatorService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 
@@ -103,7 +104,7 @@ public class FusionListFragment extends BaseFragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        PersonaStore personaStore = viewModel.getEdgesForPersona(personaID);
+        PersonaStoreDisplay personaStore = viewModel.getEdgesForPersona(personaID);
 
         PersonaFusionListAdapter fusionListAdapter;
         TextView personaHeaderColumnOne = (TextView) baseView.findViewById(R.id.textView_fusion_column_one_label);
