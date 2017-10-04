@@ -31,4 +31,8 @@ public class PersonaDetailViewModel extends ViewModel {
     public int getPersonaForFusion(){
         return repository.getPersonaForFusion();
     }
+
+    public String getPersonaName(int personaID){
+        return this.repository.getPersonaName(personaID);
+    }
 }

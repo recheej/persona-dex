@@ -56,7 +56,8 @@ public class PersonaFusionActivity extends BaseActivity {
     }
 
     private void setUpToolbar(){
-        this.mainToolbar.setTitle(String.format("Fusions for: %s", "PLACEHOLDER"));
+        String personaName = viewModel.getPersonaName(personaForFusionID);
+        this.mainToolbar.setTitle(String.format("Fusions for: %s", personaName));
 
         setSupportActionBar(this.mainToolbar);
     }
