@@ -6,12 +6,11 @@
         android:summary="@string/pref_rare_persona_summary"
         android:defaultValue="true"
         />
-    <ListPreference
+
+    <MultiSelectListPreference
         android:key="pref_dlc_persona_owned"
         android:title="@string/dlc_persona_owned"
         android:summary="@string/dlc_persona_pref_summary"
-        android:dialogTitle="@string/dlc_persona_owned"
-        android:dialogMessage="@string/dlc_persona_pref_summary"
         android:entries="@array/dlc_persona"
         android:entryValues="@array/dlc_persona_values"
         android:defaultValue="@array/dlc_persona_values_default"

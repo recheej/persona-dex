@@ -166,6 +166,10 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 FilterDialogFragment dialogFragment = new FilterDialogFragment();
                 dialogFragment.show(getFragmentManager(), FILTER_DIALOG);
                 return true;
+            case R.id.action_settings:
+                Intent goToSettingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(goToSettingsIntent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
