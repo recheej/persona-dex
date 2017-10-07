@@ -13,4 +13,10 @@ public class PersonaFilterArgs {
         minLevel = 1;
         maxLevel = 99;
     }
+
+    public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana){
+        this.minLevel = minLevel;
+        this.maxLevel = maxLevel;
+        this.arcana = arcana;
+    }
 }

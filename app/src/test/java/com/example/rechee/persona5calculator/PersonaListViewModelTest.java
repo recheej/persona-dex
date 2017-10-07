@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator;
 
 import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Persona;
+import com.example.rechee.persona5calculator.models.PersonaFilterArgs;
 import com.example.rechee.persona5calculator.repositories.PersonaRepositoryFile;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 import com.google.gson.Gson;
@@ -72,7 +73,7 @@ public class PersonaListViewModelTest {
         Persona testPersonaTwo = new Persona();
         testPersonaTwo.name = "A";
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
-        testPersonaTwo.level = 2;
+        testPersonaTwo.level = 1;
 
         Persona[] personasToSort = new Persona[] {testPersona, testPersonaTwo};
 
@@ -104,5 +105,80 @@ public class PersonaListViewModelTest {
         viewModel.sortPersonasByLevel(personasToSort, false);
 
         assertEquals(testPersonaTwo, personasToSort[0]);
+    }
+
+    @Test
+    public void filterPersonas_handlesEmptyList() throws Exception {
+
+        Persona[] personasToFilter = new Persona[0];
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(personasToFilter);
+
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
+
+        PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
+        Persona[] filteredPersonas =  viewModel.filterPersonas(filterArgs, personasToFilter);
+
+        assertNotNull(filteredPersonas);
+        assertTrue(filteredPersonas.length == 0);
+    }
+
+    @Test
+    public void filterPersonas_filtersByArcana() throws Exception {
+
+        Persona testPersonaOne = new Persona();
+        testPersonaOne.name = "testPersonaOne";
+        testPersonaOne.arcana = Enumerations.Arcana.CHARIOT;
+        testPersonaOne.level = 1;
+
+        Persona testPersonaTwo = new Persona();
+        testPersonaTwo.name = "testPersonaTwo";
+        testPersonaTwo.arcana = Enumerations.Arcana.DEATH;
+        testPersonaTwo.level = 2;
+
+        Persona[] personasToFilter = new Persona[] {
+            testPersonaOne, testPersonaTwo
+        };
+
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(new Persona[0]);
+
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
+
+        PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
+        Persona[] filteredPersonas =  viewModel.filterPersonas(filterArgs, personasToFilter);
+
+        assertNotNull(filteredPersonas);
+        assertTrue(filteredPersonas.length == 1);
+        assertTrue(filteredPersonas[0].getArcana() == Enumerations.Arcana.CHARIOT);
+        assertTrue(filteredPersonas[0].name.equals(testPersonaOne.name));
+    }
+
+    @Test
+    public void filterPersonas_filtersByLevel() throws Exception {
+
+        Persona testPersonaOne = new Persona();
+        testPersonaOne.name = "testPersonaOne";
+        testPersonaOne.arcana = Enumerations.Arcana.CHARIOT;
+        testPersonaOne.level = 1;
+
+        Persona testPersonaTwo = new Persona();
+        testPersonaTwo.name = "testPersonaTwo";
+        testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
+        testPersonaTwo.level = 2;
+
+        Persona[] personasToFilter = new Persona[] {
+                testPersonaOne, testPersonaTwo
+        };
+
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(new Persona[0]);
+
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
+
+        PersonaFilterArgs filterArgs = new PersonaFilterArgs(testPersonaOne.level, testPersonaOne.level, Enumerations.Arcana.CHARIOT);
+        Persona[] filteredPersonas =  viewModel.filterPersonas(filterArgs, personasToFilter);
+
+        assertNotNull(filteredPersonas);
+        assertTrue(filteredPersonas.length == 1);
+        assertTrue(filteredPersonas[0].level == testPersonaOne.level);
+        assertTrue(filteredPersonas[0].name.equals(testPersonaOne.name));
     }
 }
