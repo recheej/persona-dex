@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.google.gson.Gson;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created by Rechee on 7/23/2017.
  */
@@ -14,10 +18,29 @@ public class PersonaTransferRepositorySharedPref implements PersonaTransferRepos
     private final SharedPreferences transferSharedPreferences;
     private final Gson gson;
     private final SharedPreferences.Editor transferEditor;
+    private final SharedPreferences dlcSharedPreferences;
+    private final SharedPreferences.Editor dlcEditor;
+    private final SharedPreferences defaultSharedPreferences;
+    private final String dlcPrefKey;
+    private final String rarePersonaInFusionKey;
 
-    public PersonaTransferRepositorySharedPref(SharedPreferences transferSharedPreferences, Gson gson){
+    public PersonaTransferRepositorySharedPref(SharedPreferences transferSharedPreferences,
+                                               SharedPreferences dlcSharedPreferences,
+                                               SharedPreferences defaultSharedPreferences,
+                                               Gson gson,
+                                               String dlcPrefKey,
+                                               String rarePersonaInFusionKey){
         this.transferSharedPreferences = transferSharedPreferences;
         this.transferEditor = transferSharedPreferences.edit();
+
+        this.dlcSharedPreferences = dlcSharedPreferences;
+        this.dlcEditor = dlcSharedPreferences.edit();
+
+        this.defaultSharedPreferences = defaultSharedPreferences;
+        this.dlcPrefKey = dlcPrefKey;
+
+        this.rarePersonaInFusionKey = rarePersonaInFusionKey;
+
         this.gson = gson;
     }
 
@@ -55,6 +78,7 @@ public class PersonaTransferRepositorySharedPref implements PersonaTransferRepos
     @Override
     public void commit() {
         transferEditor.apply();
+        dlcEditor.apply();
     }
 
     public void setPersonaIDs(Persona[] personas){
@@ -63,7 +87,24 @@ public class PersonaTransferRepositorySharedPref implements PersonaTransferRepos
             transferEditor.putInt(personas[i].name, i);
             transferEditor.putString(Integer.toString(i), personas[i].name);
 
+            if(personas[i].dlc){
+                dlcEditor.putInt(personas[i].name, i);
+            }
+
             personas[i].id = i;
         }
+    }
+
+    public Map<String, Integer> getDLCPersonaForSettings() {
+        return (Map<String, Integer>) dlcSharedPreferences.getAll();
+    }
+
+    public Set<String> getOwnedDlCPersonaIDs() {
+        return defaultSharedPreferences.getStringSet(dlcPrefKey, new HashSet<String>(1));
+    }
+
+    @Override
+    public boolean rarePersonaAllowedInFusions() {
+        return defaultSharedPreferences.getBoolean(rarePersonaInFusionKey, true);
     }
 }

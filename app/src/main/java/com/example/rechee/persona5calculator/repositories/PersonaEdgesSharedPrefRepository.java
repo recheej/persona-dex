@@ -35,10 +35,9 @@ public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository 
 
     @Override
     public void markInit() {
-        if(!sharedPreferences.contains("initialized")){
-            editor.putBoolean("initialized", true);
-            editor.commit();
-        }
+        editor.putBoolean("initialized", true);
+        editor.putBoolean("finished", false);
+        editor.commit();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator.dagger;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.example.rechee.persona5calculator.PersonaFileUtilities;
 import com.example.rechee.persona5calculator.PersonaUtilities;
@@ -80,13 +81,35 @@ public class FusionServiceContextModule {
 
     @Provides
     @FusionServiceScope
+    @Named("dlcSharedPreferences")
+    SharedPreferences dlcSharedPreferences(){
+        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @FusionServiceScope
+    @Named("defaultSharedPreferences")
+    SharedPreferences defaultSharedPreferences(){
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    @Provides
+    @FusionServiceScope
     PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson) {
         return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
     }
 
     @Provides
     @FusionServiceScope
-    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences, Gson gson) {
-        return new PersonaTransferRepositorySharedPref(sharedPreferences, gson);
+    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences,
+                                                 @Named("dlcSharedPreferences") SharedPreferences dlcSharedPreferences,
+                                                 @Named("defaultSharedPreferences") SharedPreferences defaultSharedPreferences,
+                                                 Gson gson) {
+        return new PersonaTransferRepositorySharedPref(sharedPreferences,
+                dlcSharedPreferences,
+                defaultSharedPreferences,
+                gson,
+                context.getString(R.string.pref_key_dlc),
+                context.getString(R.string.pref_key_rarePersona));
     }
 }

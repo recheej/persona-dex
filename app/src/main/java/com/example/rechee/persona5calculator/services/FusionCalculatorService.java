@@ -65,17 +65,22 @@ public class FusionCalculatorService extends IntentService {
                 .plus(new FusionServiceContextModule(this), new FusionArcanaDataModule());
         component.inject(this);
 
-
         this.personaTransferRepository.setPersonaIDs(personaByLevel);
         this.personaTransferRepository.commit();
 
-        PersonaFuser personaFuser = new PersonaFuser(personaByLevel, arcanaTable, rarePersonaCombos);
+        PersonaFuser.PersonaFusionArgs fuserArgs = new PersonaFuser.PersonaFusionArgs();
+        fuserArgs.personasByLevel = personaByLevel;
+        fuserArgs.arcanaTable = arcanaTable;
+        fuserArgs.rareComboMap = rarePersonaCombos;
+        fuserArgs.rarePersonaAllowedInFusion = personaTransferRepository.rarePersonaAllowedInFusions();
+        fuserArgs.ownedDLCPersonaIDs = personaTransferRepository.getOwnedDlCPersonaIDs();
+
+        PersonaFuser personaFuser = new PersonaFuser(fuserArgs);
+
         PersonaGraph graph = this.makePersonaGraph(personaByLevel, personaFuser);
 
         this.personaEdgeRepository.markInit();
 
-        SystemClock.sleep(30000);
-        
         for(Persona persona: personaByLevel){
             RawPersonaEdge[] edgesTo = graph.edgesTo(persona);
             edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.id, true);

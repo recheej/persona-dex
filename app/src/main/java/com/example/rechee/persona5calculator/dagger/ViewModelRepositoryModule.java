@@ -24,8 +24,18 @@ public class ViewModelRepositoryModule {
 
     @Provides
     @ActivityScope
-    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences, Gson gson){
-        return new PersonaTransferRepositorySharedPref(sharedPreferences, gson);
+    PersonaTransferRepository transferRepository(@Named("transferSharedPreferences") SharedPreferences sharedPreferences,
+                                                 @Named("dlcSharedPreferences") SharedPreferences dlcSharedPreferences,
+                                                 @Named("defaultSharedPreferences") SharedPreferences defaultSharedPreferences,
+                                                 Gson gson,
+                                                 @Named("dlcPrefKey") String dlcPrefKey,
+                                                 @Named("rarePersonaInFusionKey") String rarePersonaInFusionKey){
+        return new PersonaTransferRepositorySharedPref(sharedPreferences,
+                dlcSharedPreferences,
+                defaultSharedPreferences,
+                gson,
+                dlcPrefKey,
+                rarePersonaInFusionKey);
     }
 
     @Provides
