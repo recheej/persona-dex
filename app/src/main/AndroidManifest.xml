@@ -34,6 +34,8 @@
                 android:resource="@xml/persona_search_config" />
         </activity>
         <activity android:name=".activities.PersonaDetailActivity" />
+        <activity android:name=".activities.SettingsActivity"
+            android:parentActivityName=".activities.MainActivity"/>
 
         <provider
             android:name=".PersonaNameProvider"

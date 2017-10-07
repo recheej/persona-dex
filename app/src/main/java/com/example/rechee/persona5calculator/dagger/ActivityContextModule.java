@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator.dagger;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.example.rechee.persona5calculator.PersonaFileUtilities;
 import com.example.rechee.persona5calculator.PersonaUtilities;
@@ -49,6 +50,34 @@ public class ActivityContextModule {
     @Named("fusionSharedPreferences")
     SharedPreferences fusionSharedPreferences(){
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS, Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @ActivityScope
+    @Named("dlcSharedPreferences")
+    SharedPreferences dlcSharedPreferences(){
+        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
+    }
+
+    @Provides
+    @ActivityScope
+    @Named("defaultSharedPreferences")
+    SharedPreferences defaultSharedPreferences(){
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    @Provides
+    @ActivityScope
+    @Named("dlcPrefKey")
+    String dlcprefKey(){
+        return context.getString(R.string.pref_key_dlc);
+    }
+
+    @Provides
+    @ActivityScope
+    @Named("rarePersonaInFusionKey")
+    String rarePersonaInFusion(){
+        return context.getString(R.string.pref_key_rarePersona);
     }
 
     @Provides

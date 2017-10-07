@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="@string/pref_key_rarePersona"
+        android:title="@string/pref_rare_persona_title"
+        android:summary="@string/pref_rare_persona_summary"
+        android:defaultValue="true"
+        />
+
+    <MultiSelectListPreference
+        android:key="@string/pref_key_dlc"
+        android:title="@string/dlc_persona_owned"
+        android:summary="@string/dlc_persona_pref_summary"
+        />
+
+</PreferenceScreen>

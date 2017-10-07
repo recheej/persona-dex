@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * Created by Rechee on 10/3/2017.
+ * Storing the persona edges was really slow because of Gson's reflection.
+ * This adapter takes edges and stores it in an efficient json format. This improves the performance A LOT
  */
 
 public class PersonaStoreGsonAdapter extends TypeAdapter<PersonaStore> {
@@ -37,6 +39,7 @@ public class PersonaStoreGsonAdapter extends TypeAdapter<PersonaStore> {
         out.beginArray();
 
         for (RawPersonaEdge edge : edges) {
+            //store edge in format: id1;id2;id3
             String output = edge.start + ";" + edge.pairPersona + ";" + edge.end;
             out.value(output);
         }
@@ -53,14 +56,16 @@ public class PersonaStoreGsonAdapter extends TypeAdapter<PersonaStore> {
         while(in.hasNext()){
             String name = in.nextName();
 
-            if(name.equals("edgesFrom")){
-                store.setEdgesFrom(this.getPersonaArray(in));
-            }
-            else if(name.equals("edgesTo")) {
-                store.setEdgesTo(this.getPersonaArray(in));
-            }
-            else{
-                in.skipValue();
+            switch (name) {
+                case "edgesFrom":
+                    store.setEdgesFrom(this.getPersonaArray(in));
+                    break;
+                case "edgesTo":
+                    store.setEdgesTo(this.getPersonaArray(in));
+                    break;
+                default:
+                    in.skipValue();
+                    break;
             }
         }
 

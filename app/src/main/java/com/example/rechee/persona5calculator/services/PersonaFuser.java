@@ -8,9 +8,11 @@ import com.example.rechee.persona5calculator.models.Persona;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Created by Rechee on 9/24/2017.
@@ -19,6 +21,8 @@ import java.util.Objects;
 public class PersonaFuser {
 
     private final Persona[] personasByLevel;
+    private final boolean rarePersonaAllowedInFusion;
+    private final Set<Integer> ownedDLCPersonaIDs;
     private SparseArray<List<Persona>> personaByArcana;
     private HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable;
     private Map<String, int[]> rareComboMap;
@@ -26,11 +30,31 @@ public class PersonaFuser {
     private final String[] rarePersonas = {"Regent", "Queen's Necklace", "Stone of Scone",
             "Koh-i-Noor", "Orlov", "Emperor's Amulet", "Hope Diamond", "Crystal Skull"};
 
-    public PersonaFuser(Persona[] personasByLevel, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable, Map<String, int[]> rareComboMap){
-        this.arcanaTable = arcanaTable;
-        this.personasByLevel = personasByLevel;
-        this.rareComboMap = rareComboMap;
+    public PersonaFuser(PersonaFusionArgs args){
+        this.arcanaTable = args.arcanaTable;
+        this.personasByLevel = args.personasByLevel;
+        this.rareComboMap = args.rareComboMap;
+        this.rarePersonaAllowedInFusion = args.rarePersonaAllowedInFusion;
+        this.ownedDLCPersonaIDs = convertIDsToIntegers(args.ownedDLCPersonaIDs);
         this.personaByArcana = this.personaByArcana();
+    }
+
+    private Set<Integer> convertIDsToIntegers(Set<String> ids){
+        final int setSize = ids.size();
+        Set<Integer> integerSet = new HashSet<>(setSize);
+        for (String s : ids.toArray(new String[setSize])) {
+            integerSet.add(Integer.parseInt(s));
+        }
+
+        return integerSet;
+    }
+
+    public static class PersonaFusionArgs {
+        public Persona[] personasByLevel;
+        public HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable;
+        public Map<String, int[]> rareComboMap;
+        public boolean rarePersonaAllowedInFusion;
+        public Set<String> ownedDLCPersonaIDs;
     }
 
     private int getRarePersonaIndex(String personaName){
@@ -48,6 +72,7 @@ public class PersonaFuser {
 
     @Nullable
     private Persona fuseRare(Persona normalPersona, Persona rarePersona){
+
         int rarePersonaIndex = this.getRarePersonaIndex(rarePersona.name);
         int modifier = this.rareComboMap.get(normalPersona.arcanaName)[rarePersonaIndex];
 
@@ -133,11 +158,16 @@ public class PersonaFuser {
             return null;
         }
 
-        if(personaOne.rare){
-            return fuseRare(personaTwo, personaOne);
-        }
+        if(personaOne.rare || personaTwo.rare){
+            if(!rarePersonaAllowedInFusion){
+                return null;
+            }
 
-        if(personaTwo.rare){
+            if(personaOne.rare){
+                return fuseRare(personaTwo, personaOne);
+            }
+
+            //persona two has to be rare
             return fuseRare(personaOne, personaTwo);
         }
 
@@ -198,11 +228,25 @@ public class PersonaFuser {
     }
 
     private boolean personaIsValidInRecipe(Persona persona){
+        if(persona.dlc){
+            return ownedDLCPersonaIDs.contains(persona.id);
+        }
+
+        if(persona.rare){
+            return rarePersonaAllowedInFusion;
+        }
+
         return true;
     }
 
     private boolean personaIsValidInFusionResult(Persona persona){
-        return !persona.rare && !persona.special;
+        final boolean validInFusion = !persona.rare && !persona.special;
+
+        if(validInFusion && persona.dlc){
+            return ownedDLCPersonaIDs.contains(persona.id);
+        }
+
+        return validInFusion;
     }
 
     @Nullable

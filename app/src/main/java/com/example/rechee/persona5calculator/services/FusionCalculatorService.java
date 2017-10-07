@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 
@@ -67,10 +68,19 @@ public class FusionCalculatorService extends IntentService {
         this.personaTransferRepository.setPersonaIDs(personaByLevel);
         this.personaTransferRepository.commit();
 
-        PersonaFuser personaFuser = new PersonaFuser(personaByLevel, arcanaTable, rarePersonaCombos);
+        PersonaFuser.PersonaFusionArgs fuserArgs = new PersonaFuser.PersonaFusionArgs();
+        fuserArgs.personasByLevel = personaByLevel;
+        fuserArgs.arcanaTable = arcanaTable;
+        fuserArgs.rareComboMap = rarePersonaCombos;
+        fuserArgs.rarePersonaAllowedInFusion = personaTransferRepository.rarePersonaAllowedInFusions();
+        fuserArgs.ownedDLCPersonaIDs = personaTransferRepository.getOwnedDlCPersonaIDs();
+
+        PersonaFuser personaFuser = new PersonaFuser(fuserArgs);
+
         PersonaGraph graph = this.makePersonaGraph(personaByLevel, personaFuser);
 
         this.personaEdgeRepository.markInit();
+
         for(Persona persona: personaByLevel){
             RawPersonaEdge[] edgesTo = graph.edgesTo(persona);
             edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.id, true);

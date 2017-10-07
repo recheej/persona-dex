@@ -2,6 +2,7 @@ package com.example.rechee.persona5calculator.dagger;
 
 import android.app.Activity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ProgressBar;
 
 import com.example.rechee.persona5calculator.R;
 
@@ -24,5 +25,10 @@ public class LayoutModule {
     @Provides
     Toolbar mainToolbar() {
         return (Toolbar) activity.findViewById(R.id.main_toolbar);
+    }
+
+    @Provides
+    ProgressBar fusionsProgressBar() {
+        return (ProgressBar) activity.findViewById(R.id.progress_bar_fusions);
     }
 }

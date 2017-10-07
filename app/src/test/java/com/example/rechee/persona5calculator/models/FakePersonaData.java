@@ -1,4 +1,4 @@
-package com.example.rechee.persona5calculator;
+package com.example.rechee.persona5calculator.models;
 
 /**
  * Created by Rechee on 7/8/2017.
