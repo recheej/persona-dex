@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -43,6 +44,15 @@ public class FusionServiceContextModule {
         InputStream stream = context.getResources().openRawResource(R.raw.arcana_combo_data);
 
         return personaFileUtilities.getArcanaTable(stream);
+    }
+
+    @FusionServiceScope
+    @Provides
+    Map<String, int[]> rarePersonaCombos(Gson gson) {
+        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(gson);
+        InputStream stream = context.getResources().openRawResource(R.raw.rare_combos);
+
+        return personaFileUtilities.rareCombos(stream);
     }
 
     @Provides

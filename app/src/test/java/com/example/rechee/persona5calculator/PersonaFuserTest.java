@@ -5,6 +5,7 @@ import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.services.PersonaFuser;
 import com.google.gson.Gson;
 
+import org.apache.tools.ant.taskdefs.Input;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,23 +32,27 @@ public class PersonaFuserTest {
     private final Persona[] allPersonas;
     private final Persona[] personasByLevel;
     private final HashMap<Enumerations.Arcana, HashMap<Enumerations.Arcana, Enumerations.Arcana>> arcanaTable;
+    private final Map<String, int[]> rareCombos;
 
     public PersonaFuserTest() {
         ClassLoader classLoader = getClass().getClassLoader();
 
         InputStream personaDataStream = classLoader.getResourceAsStream("person_data.json");
         InputStream arcanaTableStream = classLoader.getResourceAsStream("arcana_combo_data.json");
+        InputStream rareComboSteam = classLoader.getResourceAsStream("rare_combos.json");
+
 
         PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(new Gson());
 
         this.allPersonas = personaFileUtilities.allPersonas(personaDataStream);
         this.personasByLevel = this.sortPersonasByLevel(allPersonas);
         this.arcanaTable = personaFileUtilities.getArcanaTable(arcanaTableStream);
+        this.rareCombos = personaFileUtilities.rareCombos(rareComboSteam);
     }
 
     @Test
     public void basicFusionTest() throws Exception {
-        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable);
+        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable, rareCombos);
 
         Persona personaOne = this.getPersonaByName("Apsaras");
         Persona personaTwo = this.getPersonaByName("Yaksini");
@@ -57,7 +63,7 @@ public class PersonaFuserTest {
 
     @Test
     public void basicFusionTestTwo() throws Exception {
-        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable);
+        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable, rareCombos);
 
         Persona personaOne = this.getPersonaByName("arsene");
         Persona personaTwo = this.getPersonaByName("pixie");
@@ -68,7 +74,7 @@ public class PersonaFuserTest {
 
     @Test
     public void basicFusionTestThree() throws Exception {
-        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable);
+        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable, rareCombos);
 
         Persona personaOne = this.getPersonaByName("orthrus");
         Persona personaTwo = this.getPersonaByName("matador");
@@ -79,7 +85,7 @@ public class PersonaFuserTest {
 
     @Test
     public void sameArcanaFusionTestSuccess() throws Exception {
-        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable);
+        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable, rareCombos);
 
         Persona personaOne = this.getPersonaByName("pixie");
         Persona personaTwo = this.getPersonaByName("Leanan Sidhe");
@@ -95,7 +101,7 @@ public class PersonaFuserTest {
     @Test
     public void rareCannotBeResultOfFusion() {
         //asserts that a rare persona cannot be fused from any fusion
-        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable);
+        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable, rareCombos);
 
         for (Persona personaOne : allPersonas) {
             for (Persona personaTwo : allPersonas) {
@@ -110,7 +116,7 @@ public class PersonaFuserTest {
     @Test
     public void specialCannotBeResultOfFusion() {
         //asserts that a special persona cannot be fused from any fusion.
-        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable);
+        PersonaFuser fuser = new PersonaFuser(personasByLevel, arcanaTable, rareCombos);
 
         for (Persona personaOne : allPersonas) {
             for (Persona personaTwo : allPersonas) {

@@ -11,15 +11,18 @@ import com.example.rechee.persona5calculator.dagger.FusionCalculatorServiceCompo
 import com.example.rechee.persona5calculator.dagger.FusionServiceContextModule;
 import com.example.rechee.persona5calculator.models.Pair;
 import com.example.rechee.persona5calculator.models.Persona;
-import com.example.rechee.persona5calculator.models.RawPersonaEdge;
+import com.example.rechee.persona5calculator.models.PersonaEdge;
 import com.example.rechee.persona5calculator.models.PersonaGraph;
 import com.example.rechee.persona5calculator.models.PersonaStore;
 import com.example.rechee.persona5calculator.repositories.PersonaEdgesRepository;
-import com.example.rechee.persona5calculator.repositories.PersonaTransferRepository;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,10 +37,6 @@ public class FusionCalculatorService extends IntentService {
 
     @Inject
     PersonaEdgesRepository personaEdgeRepository;
-
-    @Inject
-    PersonaTransferRepository personaTransferRepository;
-
     @Inject
     @Named("personaByLevel") Persona[] personaByLevel;
 
@@ -63,16 +62,16 @@ public class FusionCalculatorService extends IntentService {
         this.personaTransferRepository.setPersonaIDs(personaByLevel);
         this.personaTransferRepository.commit();
 
-        PersonaFuser personaFuser = new PersonaFuser(personaByLevel, arcanaTable);
+        PersonaFuser personaFuser = new PersonaFuser(personaByLevel, arcanaTable, rarePersonaCombos);
         PersonaGraph graph = this.makePersonaGraph(personaByLevel, personaFuser);
 
         this.personaEdgeRepository.markInit();
         for(Persona persona: personaByLevel){
-            RawPersonaEdge[] edgesTo = graph.edgesTo(persona);
-            edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.id, true);
+            PersonaEdge[] edgesTo = graph.edgesTo(persona);
+            edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.name, true);
 
-            RawPersonaEdge[] edgesFrom = graph.edgesFrom(persona);
-            edgesFrom = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesFrom, persona.id, false);
+            PersonaEdge[] edgesFrom = graph.edgesFrom(persona);
+            edgesFrom = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesFrom, persona.name, false);
 
             PersonaStore store = new PersonaStore(edgesFrom, edgesTo);
             this.personaEdgeRepository.addPersonaEdges(persona, store);
