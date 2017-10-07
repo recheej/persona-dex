@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -70,6 +71,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         );
         component.inject(this);
         this.component = component;
+
+        //sets default values for preferences only once in entire lifetime of application
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         SharedPreferences commonSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);

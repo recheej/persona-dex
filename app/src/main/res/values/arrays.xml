@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="dlc_persona">
+        <item>Orpheus + Orpheus Picaro</item>
+        <item>Izanagi + Izanagi Picaro</item>
+        <item>Thanatos + Thanatos Picaro</item>
+        <item>Magatsu-Izanagi + Magatsu-Izanagi Picaro</item>
+        <item>Kaguya + Kaguya Picaro</item>
+        <item>Ariadne + Ariadne Picaro</item>
+        <item>Asterius + Asterius Picaro</item>
+        <item>Tsukiyomi + Tsukiyomi Picaro</item>
+        <item>Messiah + Messiah Picaro</item>
+    </string-array>
+
+    <integer-array
+        name="dlc_persona_values">
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array
+        name="dlc_persona_values_default">
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+</resources>

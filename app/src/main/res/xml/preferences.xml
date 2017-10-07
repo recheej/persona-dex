@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="pref_include_rare"
+        android:title="@string/pref_rare_persona_title"
+        android:summary="@string/pref_rare_persona_summary"
+        android:defaultValue="true"
+        />
+    <ListPreference
+        android:key="pref_dlc_persona_owned"
+        android:title="@string/dlc_persona_owned"
+        android:summary="@string/dlc_persona_pref_summary"
+        android:dialogTitle="@string/dlc_persona_owned"
+        android:dialogMessage="@string/dlc_persona_pref_summary"
+        android:entries="@array/dlc_persona"
+        android:entryValues="@array/dlc_persona_values"
+        android:defaultValue="@array/dlc_persona_values_default"
+        />
+</PreferenceScreen>

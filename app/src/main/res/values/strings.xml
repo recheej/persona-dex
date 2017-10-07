@@ -46,4 +46,8 @@
     <string name="cancel">Cancel</string>
     <string name="filter">Filter</string>
     <string name="stats">Stats</string>
+    <string name="dlc_persona_owned">DLC Persona Owned</string>
+    <string name="dlc_persona_pref_summary">Choose the DLC persona you own and would like to include in fusions</string>
+    <string name="pref_rare_persona_title">Include rare personas in fusions</string>
+    <string name="pref_rare_persona_summary">Include rare persona in fusions (Note: Base level is used for rare persona)</string>
 </resources>
