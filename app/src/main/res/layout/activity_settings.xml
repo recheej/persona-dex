@@ -10,6 +10,13 @@
         android:layout_width="match_parent"
         />
 
+    <include android:id="@+id/progress_bar_fusions"
+        layout="@layout/progress_bar_fusions"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/main_toolbar"
+        />
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

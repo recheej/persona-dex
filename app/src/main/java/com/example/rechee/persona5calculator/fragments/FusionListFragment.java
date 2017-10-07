@@ -81,8 +81,6 @@ public class FusionListFragment extends BaseFragment {
         if(commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished")){
             registerCalculationFinishedReceiver();
 
-            progressBar = (ProgressBar) activity.findViewById(R.id.progress_bar_fusions);
-
             progressBar.setVisibility(ProgressBar.VISIBLE);
             recyclerView.setVisibility(View.INVISIBLE);
 
