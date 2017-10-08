@@ -112,6 +112,15 @@ public class PersonaListViewModel extends ViewModel {
     public Persona[] filterPersonas(PersonaFilterArgs filterArgs, Persona[] personasToFilter) {
         List<Persona> filteredPersonas = new ArrayList<>(personasToFilter.length);
         for (Persona persona : personasToFilter) {
+
+            if(persona.rare && !filterArgs.rarePersona){
+                continue;
+            }
+
+            if(persona.dlc && !filterArgs.dlcPersona){
+                continue;
+            }
+
             if(filterArgs.arcana != null){
                 if(persona.arcana != filterArgs.arcana){
                     continue;

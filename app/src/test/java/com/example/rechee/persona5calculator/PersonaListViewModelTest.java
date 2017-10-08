@@ -181,4 +181,68 @@ public class PersonaListViewModelTest {
         assertTrue(filteredPersonas[0].level == testPersonaOne.level);
         assertTrue(filteredPersonas[0].name.equals(testPersonaOne.name));
     }
+
+    @Test
+    public void filterPersonas_filtersOutDLC() throws Exception {
+
+        Persona testPersonaOne = new Persona();
+        testPersonaOne.name = "testPersonaOne";
+        testPersonaOne.arcana = Enumerations.Arcana.CHARIOT;
+        testPersonaOne.level = 1;
+        testPersonaOne.dlc = true;
+
+        Persona testPersonaTwo = new Persona();
+        testPersonaTwo.name = "testPersonaTwo";
+        testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
+        testPersonaTwo.level = 2;
+
+        Persona[] personasToFilter = new Persona[] {
+                testPersonaOne, testPersonaTwo
+        };
+
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(new Persona[0]);
+
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
+
+        PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
+                99,
+                Enumerations.Arcana.CHARIOT, true, false);
+        Persona[] filteredPersonas =  viewModel.filterPersonas(filterArgs, personasToFilter);
+
+        assertNotNull(filteredPersonas);
+        assertTrue(filteredPersonas.length == 1);
+        assertTrue(filteredPersonas[0].name.equals(testPersonaTwo.name));
+    }
+
+    @Test
+    public void filterPersonas_filtersOutRare() throws Exception {
+
+        Persona testPersonaOne = new Persona();
+        testPersonaOne.name = "testPersonaOne";
+        testPersonaOne.arcana = Enumerations.Arcana.CHARIOT;
+        testPersonaOne.level = 1;
+        testPersonaOne.rare = true;
+
+        Persona testPersonaTwo = new Persona();
+        testPersonaTwo.name = "testPersonaTwo";
+        testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
+        testPersonaTwo.level = 2;
+
+        Persona[] personasToFilter = new Persona[] {
+                testPersonaOne, testPersonaTwo
+        };
+
+        PersonaRepositoryFile personaRepositoryFile = new PersonaRepositoryFile(new Persona[0]);
+
+        PersonaListViewModel viewModel = new PersonaListViewModel(personaRepositoryFile, null);
+
+        PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
+                99,
+                Enumerations.Arcana.CHARIOT, false, true);
+        Persona[] filteredPersonas =  viewModel.filterPersonas(filterArgs, personasToFilter);
+
+        assertNotNull(filteredPersonas);
+        assertTrue(filteredPersonas.length == 1);
+        assertTrue(filteredPersonas[0].name.equals(testPersonaTwo.name));
+    }
 }

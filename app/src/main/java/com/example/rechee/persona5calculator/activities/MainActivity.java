@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
@@ -47,7 +48,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     private IndexFastScrollRecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private PersonaListAdapter personaListAdapter;
-    private DividerItemDecoration mDividerItemDecoration;
 
     @Inject
     Toolbar mainToolbar;
@@ -57,10 +57,12 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Inject
     PersonaListViewModel viewModel;
+    private PersonaFilterArgs latestFilterArgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         ActivityComponent component = Persona5Application.get(this).getComponent().plus(
@@ -163,8 +165,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 this.showSortPopup();
                 return true;
             case R.id.action_filter:
-                FilterDialogFragment dialogFragment = new FilterDialogFragment();
-                dialogFragment.show(getFragmentManager(), FILTER_DIALOG);
+                FilterDialogFragment dialogFragment = FilterDialogFragment.newInstance(latestFilterArgs);
+                dialogFragment.show(getSupportFragmentManager(), FILTER_DIALOG);
                 return true;
             case R.id.action_settings:
                 Intent goToSettingsIntent = new Intent(this, SettingsActivity.class);
@@ -219,7 +221,51 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Override
     public void onFilterSelected(PersonaFilterArgs filterArgs) {
+        this.latestFilterArgs = filterArgs;
+
+        if(filterArgs.arcana == null){
+            filterArgs.arcanaOrdinal = -1;
+        }
+        else{
+            filterArgs.arcanaOrdinal = filterArgs.arcana.ordinal();
+        }
+
         this.filteredPersonas = viewModel.filterPersonas(filterArgs, allPersonas);
         personaListAdapter.setPersonas(this.filteredPersonas);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if(latestFilterArgs != null){
+            outState.putBoolean("filter_rarePersona", latestFilterArgs.rarePersona);
+            outState.putBoolean("filter_dlcPersona", latestFilterArgs.dlcPersona);
+
+            if(latestFilterArgs.arcana == null){
+                //we're marking 'Any' arcana as -1
+                outState.putInt("filter_selectedArcana", -1);
+            }
+            else{
+                outState.putInt("filter_selectedArcana", latestFilterArgs.arcanaOrdinal);
+            }
+
+            outState.putInt("filter_minLevel", latestFilterArgs.minLevel);
+            outState.putInt("filter_maxLevel", latestFilterArgs.maxLevel);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if(savedInstanceState != null){
+            latestFilterArgs = new PersonaFilterArgs();
+            latestFilterArgs.rarePersona = savedInstanceState.getBoolean("filter_rarePersona");
+            latestFilterArgs.dlcPersona = savedInstanceState.getBoolean("filter_dlcPersona");
+            latestFilterArgs.arcanaOrdinal = savedInstanceState.getInt("filter_selectedArcana");
+            latestFilterArgs.minLevel = savedInstanceState.getInt("filter_minLevel");
+            latestFilterArgs.maxLevel = savedInstanceState.getInt("filter_maxLevel");
+        }
     }
 }

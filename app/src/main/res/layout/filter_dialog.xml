@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/arcana"
-            android:textSize="16sp"
-            android:layout_centerVertical="true"/>
+            android:textSize="16sp" />
 
         <Spinner
             android:id="@+id/spinner_arcana"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
-    <include layout="@layout/grid_divider_horizontal"/>
+    <include layout="@layout/grid_divider_horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,39 +37,59 @@
             android:id="@+id/textViewMinLevelLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Min Level"
-            android:textSize="16sp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/min_level"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText_minLevel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="10"
             android:inputType="number"
-            android:text="1"
-            android:layout_weight="1"/>
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:text="1" />
 
         <TextView
             android:id="@+id/textViewMaxLevelLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Max Level"
-            android:textSize="16sp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/max_level"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editText_maxLevel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="10"
             android:inputType="number"
-            android:text="99"
-            android:layout_weight="1"/>
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:text="99" />
 
     </LinearLayout>
 
-    <include layout="@layout/grid_divider_horizontal"/>
+    <include layout="@layout/grid_divider_horizontal" />
+
+    <CheckBox
+        android:id="@+id/checkbox_rarePersona"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:padding="16dp"
+        android:text="@string/rare_persona" />
+
+    <CheckBox
+        android:id="@+id/checkbox_dlcPersona"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:padding="16dp"
+        android:text="@string/dlc_persona" />
 
 
 </LinearLayout>

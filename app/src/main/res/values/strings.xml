@@ -54,5 +54,9 @@
 
     <string name="pref_key_dlc">pref_dlc_persona_owned</string>
     <string name="pref_key_rarePersona">pref_include_rare</string>
+    <string name="rare_persona">Rare Persona</string>
+    <string name="dlc_persona">DLC Persona</string>
+    <string name="max_level">Max Level</string>
+    <string name="min_level">Min Level</string>
 
 </resources>

@@ -1,23 +1,19 @@
 package com.example.rechee.persona5calculator.fragments;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
-import android.text.Layout;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 
 import com.example.rechee.persona5calculator.R;
@@ -36,6 +32,15 @@ import javax.inject.Inject;
 
 public class FilterDialogFragment extends DialogFragment {
 
+    private final int ANY_ARCANA_ORDINAL = -1;
+    private CheckBox rarePersonaCheckBox;
+    private CheckBox dlcPersonaCheckBox;
+    private EditText minLevelEditText;
+    private EditText maxLevelEditText;
+    private ArcanaMap selectedArcanaMap;
+    private Spinner arcanaSpinner;
+    private ArrayAdapter<ArcanaMap> arcanaMapArrayAdapter;
+
     public  interface OnFilterListener {
         void onFilterSelected(PersonaFilterArgs filterArgs);
     }
@@ -45,32 +50,54 @@ public class FilterDialogFragment extends DialogFragment {
 
     private BaseActivity activity;
 
+    public static FilterDialogFragment newInstance(PersonaFilterArgs args){
+        //used to restore the fragment's state since the fragment's onRestore and onSave aren't called
+        FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
+
+        if(args != null){
+            Bundle bundleArguments = new Bundle();
+
+            bundleArguments.putBoolean("rarePersona", args.rarePersona);
+            bundleArguments.putBoolean("dlcPersona", args.dlcPersona);
+            bundleArguments.putInt("selectedArcana", args.arcanaOrdinal);
+            bundleArguments.putInt("minLevel", args.minLevel);
+            bundleArguments.putInt("maxLevel", args.maxLevel);
+
+            filterDialogFragment.setArguments(bundleArguments);
+        }
+
+        return filterDialogFragment;
+    }
+
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         this.activity = (BaseActivity) getActivity();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = this.activity.getLayoutInflater();
+
+        View view = inflater.inflate(R.layout.filter_dialog, null);
+
         FragmentComponent component = activity.getComponent().plus();
         component.inject(this);
 
-        LayoutInflater inflater = activity.getLayoutInflater();
+        arcanaSpinner = (Spinner) view.findViewById(R.id.spinner_arcana);
 
-        final View view = inflater.inflate(R.layout.filter_dialog, null);
-
-        final Spinner arcanaSpinner = (Spinner) view.findViewById(R.id.spinner_arcana);
-
-        ArrayAdapter<ArcanaMap> arcanaMapArrayAdapter = new ArrayAdapter<>(activity,
+        arcanaMapArrayAdapter = new ArrayAdapter<>(activity,
                 R.layout.support_simple_spinner_dropdown_item, viewModel.getArcanaMaps());
         arcanaSpinner.setAdapter(arcanaMapArrayAdapter);
 
         InputFilter filter = new InputFilter.LengthFilter(2);
 
-        final EditText minLevelEditText = (EditText) view.findViewById(R.id.editText_minLevel);
-        final EditText maxLevelEditText = (EditText) view.findViewById(R.id.editText_maxLevel);
+        minLevelEditText = (EditText) view.findViewById(R.id.editText_minLevel);
+        maxLevelEditText = (EditText) view.findViewById(R.id.editText_maxLevel);
 
         minLevelEditText.setFilters(new InputFilter[]{filter});
         maxLevelEditText.setFilters(new InputFilter[]{filter});
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        rarePersonaCheckBox = (CheckBox) view.findViewById(R.id.checkbox_rarePersona);
+        dlcPersonaCheckBox = (CheckBox) view.findViewById(R.id.checkbox_dlcPersona);
 
         builder.setView(view)
                 .setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
@@ -79,9 +106,10 @@ public class FilterDialogFragment extends DialogFragment {
 
                         PersonaFilterArgs filterArgs = new PersonaFilterArgs();
 
-                        ArcanaMap selectedArcanaMap = (ArcanaMap) arcanaSpinner.getSelectedItem();
+                        selectedArcanaMap = (ArcanaMap) arcanaSpinner.getSelectedItem();
                         filterArgs.arcana = selectedArcanaMap.arcana;
-
+                        filterArgs.rarePersona = rarePersonaCheckBox.isChecked();
+                        filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
 
                         String minLevelText = minLevelEditText.getText().toString();
                         if(!minLevelText.isEmpty()){
@@ -115,6 +143,43 @@ public class FilterDialogFragment extends DialogFragment {
             }
         });
 
-        return  alertDialog;
+        Bundle arguments = getArguments();
+        if(arguments != null){
+            rarePersonaCheckBox.setChecked(arguments.getBoolean("rarePersona"));
+            dlcPersonaCheckBox.setChecked(arguments.getBoolean("dlcPersona"));
+
+            int arcanaOrdinal = arguments.getInt("selectedArcana");
+
+            if(arcanaOrdinal == ANY_ARCANA_ORDINAL){
+                this.setArcanaSpinner(null);
+            }
+            else{
+                this.setArcanaSpinner(Enumerations.Arcana.values()[arcanaOrdinal]);
+            }
+
+            minLevelEditText.setText(Integer.toString(arguments.getInt("minLevel")));
+            maxLevelEditText.setText(Integer.toString(arguments.getInt("maxLevel")));
+        }
+
+        return alertDialog;
+    }
+
+    private void setArcanaSpinner(Enumerations.Arcana arcanaSelected) {
+        if(arcanaSelected == null){
+            //if none of the arcana match, set the position to 0 as default
+            arcanaSpinner.setSelection(0);
+        }
+
+        for(int i = 0; i < arcanaSpinner.getCount(); i++){
+            ArcanaMap arcanaMap = (ArcanaMap) arcanaSpinner.getItemAtPosition(i);
+
+            if(arcanaMap.arcana == arcanaSelected){
+                arcanaSpinner.setSelection(i);
+                return;
+            }
+        }
+
+        //if none of the arcana match, set the position to 0 as default
+        arcanaSpinner.setSelection(0);
     }
 }
