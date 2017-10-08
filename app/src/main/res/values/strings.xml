@@ -58,5 +58,6 @@
     <string name="dlc_persona">DLC Persona</string>
     <string name="max_level">Max Level</string>
     <string name="min_level">Min Level</string>
+    <string name="reset">Reset</string>
 
 </resources>

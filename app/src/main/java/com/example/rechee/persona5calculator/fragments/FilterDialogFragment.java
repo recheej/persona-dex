@@ -100,6 +100,19 @@ public class FilterDialogFragment extends DialogFragment {
         dlcPersonaCheckBox = (CheckBox) view.findViewById(R.id.checkbox_dlcPersona);
 
         builder.setView(view)
+                .setNeutralButton(R.string.reset, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (dialog != null) {
+                            PersonaFilterArgs filterArgs = new PersonaFilterArgs();
+
+                            OnFilterListener listener = (OnFilterListener) activity;
+                            listener.onFilterSelected(filterArgs);
+
+                            dialog.dismiss();
+                        }
+                    }
+                })
                 .setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -140,6 +153,7 @@ public class FilterDialogFragment extends DialogFragment {
             public void onShow(DialogInterface dialog) {
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE);
                 alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
+                alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
             }
         });
 
