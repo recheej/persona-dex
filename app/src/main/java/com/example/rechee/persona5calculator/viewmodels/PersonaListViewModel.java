@@ -1,7 +1,5 @@
 package com.example.rechee.persona5calculator.viewmodels;
 
-import android.arch.lifecycle.ViewModel;
-
 import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.PersonaFilterArgs;
@@ -20,7 +18,7 @@ import javax.inject.Inject;
  * Created by Rechee on 7/3/2017.
  */
 
-public class PersonaListViewModel extends ViewModel {
+public class PersonaListViewModel {
 
     private final PersonaTransferRepository transferRepository;
     private final Persona[] allPersonas;

@@ -1,7 +1,5 @@
 package com.example.rechee.persona5calculator.viewmodels;
 
-import android.arch.lifecycle.ViewModel;
-
 import com.example.rechee.persona5calculator.models.Pair;
 import com.example.rechee.persona5calculator.models.PersonaEdgeDisplay;
 import com.example.rechee.persona5calculator.models.PersonaStoreDisplay;
@@ -19,7 +17,7 @@ import java.util.List;
  * Created by Rechee on 7/30/2017.
  */
 
-public class PersonaFusionListViewModel extends ViewModel {
+public class PersonaFusionListViewModel {
 
     private final PersonaEdgesRepository personaEdgeRepository;
     private final PersonaListViewModel personaListViewModel;

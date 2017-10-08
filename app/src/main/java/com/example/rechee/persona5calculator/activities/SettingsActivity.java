@@ -25,11 +25,8 @@ import com.example.rechee.persona5calculator.dagger.LayoutModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
 import com.example.rechee.persona5calculator.fragments.SettingsFragment;
-import com.example.rechee.persona5calculator.services.FusionCalculatorService;
+import com.example.rechee.persona5calculator.services.FusionCalculatorJobService;
 import com.example.rechee.persona5calculator.viewmodels.SettingsViewModel;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -93,7 +90,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     }
 
     private void registerCalculationFinishedReceiver() {
-        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorService.Constants.BROADCAST_ACTION);
+        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.Constants.BROADCAST_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, calculationFinishedIntentFilter);
     }
 
@@ -103,8 +100,10 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         public void onReceive(Context context, Intent intent) {
             if(SettingsActivity.this.resetService){
                 SettingsActivity.this.resetService = false;
-                startService(new Intent(SettingsActivity.this, FusionCalculatorService.class));
+                FusionCalculatorJobService.enqueueWork(SettingsActivity.this,
+                        new Intent(SettingsActivity.this, FusionCalculatorJobService.class));
             }
+
             fusionsProgressBar.setVisibility(ProgressBar.INVISIBLE);
             frameLayout.setVisibility(View.VISIBLE);
         }
@@ -134,7 +133,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
             this.resetService = true;
         }
         else{
-            startService(new Intent(this, FusionCalculatorService.class));
+            FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
         }
     }
 }

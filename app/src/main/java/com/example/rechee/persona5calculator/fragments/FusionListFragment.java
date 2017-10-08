@@ -22,7 +22,7 @@ import com.example.rechee.persona5calculator.adapters.PersonaFusionListAdapter;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.models.PersonaStore;
 import com.example.rechee.persona5calculator.models.PersonaStoreDisplay;
-import com.example.rechee.persona5calculator.services.FusionCalculatorService;
+import com.example.rechee.persona5calculator.services.FusionCalculatorJobService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
 
 import javax.inject.Inject;
@@ -76,7 +76,7 @@ public class FusionListFragment extends BaseFragment {
 
         SharedPreferences commonSharedPreferences = activity.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);
-        recyclerView = (RecyclerView) baseView.findViewById(R.id.recycler_view_persona_list);
+        recyclerView = baseView.findViewById(R.id.recycler_view_persona_list);
 
         if(commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished")){
             registerCalculationFinishedReceiver();
@@ -105,8 +105,8 @@ public class FusionListFragment extends BaseFragment {
         PersonaStoreDisplay personaStore = viewModel.getEdgesForPersona(personaID);
 
         PersonaFusionListAdapter fusionListAdapter;
-        TextView personaHeaderColumnOne = (TextView) baseView.findViewById(R.id.textView_fusion_column_one_label);
-        TextView personaHeaderColumnTwo = (TextView) baseView.findViewById(R.id.textView_fusion_column_two_label);
+        TextView personaHeaderColumnOne = baseView.findViewById(R.id.textView_fusion_column_one_label);
+        TextView personaHeaderColumnTwo = baseView.findViewById(R.id.textView_fusion_column_two_label);
 
         if(this.isToList){
             fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesTo(), personaID, true, recyclerView, viewModel);
@@ -133,7 +133,7 @@ public class FusionListFragment extends BaseFragment {
     };
 
     private void registerCalculationFinishedReceiver() {
-        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorService.Constants.BROADCAST_ACTION);
+        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.Constants.BROADCAST_ACTION);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, calculationFinishedIntentFilter);
     }
 

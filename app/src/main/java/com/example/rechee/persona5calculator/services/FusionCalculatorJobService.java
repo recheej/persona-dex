@@ -1,15 +1,17 @@
 package com.example.rechee.persona5calculator.services;
 
-import android.app.IntentService;
+
+import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.example.rechee.persona5calculator.Persona5Application;
 import com.example.rechee.persona5calculator.dagger.FusionArcanaDataModule;
 import com.example.rechee.persona5calculator.dagger.FusionCalculatorServiceComponent;
 import com.example.rechee.persona5calculator.dagger.FusionServiceContextModule;
+import com.example.rechee.persona5calculator.models.Enumerations;
 import com.example.rechee.persona5calculator.models.Pair;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.PersonaGraph;
@@ -26,13 +28,12 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static com.example.rechee.persona5calculator.models.Enumerations.Arcana;
-
 /**
- * Created by Rechee on 7/17/2017.
+ * Created by Rechee on 10/8/2017.
  */
 
-public class FusionCalculatorService extends IntentService {
+public class FusionCalculatorJobService extends JobIntentService {
+    private static final int JOB_ID = 1000;
 
     @Inject
     PersonaEdgesRepository personaEdgeRepository;
@@ -47,20 +48,22 @@ public class FusionCalculatorService extends IntentService {
     @Named("personaByLevel") Persona[] personaByLevel;
 
     @Inject
-    HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable;
+    HashMap<Enumerations.Arcana, HashMap<Enumerations.Arcana, Enumerations.Arcana>> arcanaTable;
 
-    private final static String SERVICE_NAME = "FusionCalculatorService";
+    private final static String SERVICE_NAME = "FusionCalculatorJobService";
 
     public final class Constants {
         // Defines a custom Intent action
         public static final String BROADCAST_ACTION =
                 "com.example.rechee.person5calculator.BROADCAST";
     }
-
-    public FusionCalculatorService(){super(SERVICE_NAME);}
+    
+    public static void enqueueWork(Context context, Intent work){
+        enqueueWork(context, FusionCalculatorJobService.class, JOB_ID, work);
+    }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    protected void onHandleWork(@NonNull Intent intent) {
         FusionCalculatorServiceComponent component = Persona5Application.get(this).getComponent()
                 .plus(new FusionServiceContextModule(this), new FusionArcanaDataModule());
         component.inject(this);
@@ -94,7 +97,7 @@ public class FusionCalculatorService extends IntentService {
 
         this.personaEdgeRepository.markFinished();
 
-        Intent fusionCalculationFishedIntent = new Intent(Constants.BROADCAST_ACTION);
+        Intent fusionCalculationFishedIntent = new Intent(FusionCalculatorJobService.Constants.BROADCAST_ACTION);
         LocalBroadcastManager.getInstance(this).sendBroadcast(fusionCalculationFishedIntent);
     }
 

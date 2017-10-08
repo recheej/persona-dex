@@ -35,7 +35,7 @@ import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
 import com.example.rechee.persona5calculator.fragments.FilterDialogFragment;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.PersonaFilterArgs;
-import com.example.rechee.persona5calculator.services.FusionCalculatorService;
+import com.example.rechee.persona5calculator.services.FusionCalculatorJobService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
 
 import javax.inject.Inject;
@@ -82,11 +82,11 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         SharedPreferences commonSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);
 
-        recyclerView = (IndexFastScrollRecyclerView) findViewById(R.id.persona_view);
+        recyclerView = findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
 
         if(!commonSharedPreferences.contains("initialized") || (commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished"))){
-            startService(new Intent(this, FusionCalculatorService.class));
+            FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
         }
 
         setSupportActionBar(this.mainToolbar);
@@ -134,29 +134,29 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         inflater.inflate(R.menu.persona_list_menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        final MenuItem settingsitem = menu.findItem(R.id.action_settings);
-        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+        final MenuItem settingsItem = menu.findItem(R.id.action_settings);
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
                 menu.setGroupVisible(R.id.menu_item_group_sorting, false);
-                settingsitem.setVisible(false);
-                return true;
+                settingsItem.setVisible(false);
+                return false;
             }
 
             @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
                 //restore all personas to list when you click the x button on search
                 MainActivity.this.filteredPersonas = MainActivity.this.allPersonas;
                 MainActivity.this.personaListAdapter.setPersonas(MainActivity.this.filteredPersonas);
 
                 menu.setGroupVisible(R.id.menu_item_group_sorting, true);
-                settingsitem.setVisible(true);
+                settingsItem.setVisible(true);
                 invalidateOptionsMenu();
-                return true;
+                return false;
             }
         });
 
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        SearchView searchView = (SearchView) searchItem.getActionView();
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         ComponentName componentName = getComponentName();

@@ -1,8 +1,6 @@
 package com.example.rechee.persona5calculator.dagger;
 
-import com.example.rechee.persona5calculator.services.FusionCalculatorService;
-
-import dagger.Component;
+import com.example.rechee.persona5calculator.services.FusionCalculatorJobService;
 import dagger.Subcomponent;
 
 /**
@@ -16,5 +14,5 @@ import dagger.Subcomponent;
     }
 )
 public interface FusionCalculatorServiceComponent {
-    void inject(FusionCalculatorService service);
+    void inject(FusionCalculatorJobService service);
 }

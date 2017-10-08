@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.rechee.persona5calculator"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".Persona5Application"
@@ -15,7 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service android:name=".services.FusionCalculatorService" />
+        <service
+            android:name=".services.FusionCalculatorJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            />
 
         <activity
             android:name=".activities.MainActivity"
