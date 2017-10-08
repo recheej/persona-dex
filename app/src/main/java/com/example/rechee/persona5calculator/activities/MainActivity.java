@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             public boolean onMenuItemActionExpand(MenuItem menuItem) {
                 menu.setGroupVisible(R.id.menu_item_group_sorting, false);
                 settingsItem.setVisible(false);
-                return false;
+                return true;
             }
 
             @Override
@@ -152,7 +152,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 menu.setGroupVisible(R.id.menu_item_group_sorting, true);
                 settingsItem.setVisible(true);
                 invalidateOptionsMenu();
-                return false;
+                return true;
             }
         });
 

@@ -1,0 +1,4 @@
+<adaptive-icon>
+    <background android:drawable="@color/colorAccent"/>
+    <foreground android:drawable="@mipmap/ic_app_icon"/>
+</adaptive-icon>
