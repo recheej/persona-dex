@@ -19,6 +19,9 @@ import com.example.rechee.persona5calculator.dagger.ViewModelModule;
 import com.example.rechee.persona5calculator.dagger.ViewModelRepositoryModule;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import javax.inject.Inject;
 
@@ -30,6 +33,8 @@ public class PersonaDetailActivity extends BaseActivity {
     @Inject
     PersonaDetailViewModel viewModel;
     private Persona detailPersona;
+
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class PersonaDetailActivity extends BaseActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+
+        initializeAd();
     }
 
     private void setUpToolbar(){
@@ -61,6 +68,14 @@ public class PersonaDetailActivity extends BaseActivity {
         this.mainToolbar.setSubtitle(String.format("Level: %d", this.detailPersona.level));
 
         setSupportActionBar(this.mainToolbar);
+    }
+
+    private void initializeAd() {
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
+
+        adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override

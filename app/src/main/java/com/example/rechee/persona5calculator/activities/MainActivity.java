@@ -37,6 +37,8 @@ import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.PersonaFilterArgs;
 import com.example.rechee.persona5calculator.services.FusionCalculatorJobService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaListViewModel;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import javax.inject.Inject;
@@ -76,8 +78,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         );
         component.inject(this);
         this.component = component;
-
-        MobileAds.initialize(this, getString(R.string.admob_app_id));
 
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
