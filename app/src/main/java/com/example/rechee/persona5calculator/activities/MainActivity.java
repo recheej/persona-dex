@@ -90,6 +90,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         }
 
         setSupportActionBar(this.mainToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mainToolbar.setLogo(R.drawable.ic_app_icon_fore);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
