@@ -59,6 +59,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     PersonaListViewModel viewModel;
     private PersonaFilterArgs latestFilterArgs;
 
+    private int selectedSortMenuItemID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,52 +191,66 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.menu_sort_name_asc:
-                        viewModel.sortPersonasByName(filteredPersonas, true);
-                        personaListAdapter.setPersonas(filteredPersonas);
-
-                        recyclerView.setIndexBarVisibility(true);
-                        return true;
-                    case R.id.menu_sort_name_desc:
-                        viewModel.sortPersonasByName(filteredPersonas, false);
-                        personaListAdapter.setPersonas(filteredPersonas);
-
-                        recyclerView.setIndexBarVisibility(true);
-                        return true;
-                    case R.id.menu_sort_level_asc:
-                        viewModel.sortPersonasByLevel(filteredPersonas, true);
-                        personaListAdapter.setPersonas(filteredPersonas);
-
-                        recyclerView.setIndexBarVisibility(false);
-                        return true;
-                    case R.id.menu_sort_level_desc:
-                        viewModel.sortPersonasByLevel(filteredPersonas, false);
-                        personaListAdapter.setPersonas(filteredPersonas);
-
-                        recyclerView.setIndexBarVisibility(false);
-                        return true;
-                    default:
-                        return false;
-                }
+                MainActivity.this.selectedSortMenuItemID = item.getItemId();
+                return handleSortClick();
             }
         });
 
         popupMenu.show();
     }
 
+    /**
+     * Handles when the sort menu item is clicked. Will sort the current persona items and
+     * set index bar visibility
+     * @return True if selected sort menu item matches one of menu item ids
+     */
+    private boolean handleSortClick() {
+        switch (selectedSortMenuItemID){
+            case R.id.menu_sort_name_asc:
+                viewModel.sortPersonasByName(filteredPersonas, true);
+                personaListAdapter.setPersonas(filteredPersonas);
+
+                recyclerView.setIndexBarVisibility(true);
+                return true;
+            case R.id.menu_sort_name_desc:
+                viewModel.sortPersonasByName(filteredPersonas, false);
+                personaListAdapter.setPersonas(filteredPersonas);
+
+                recyclerView.setIndexBarVisibility(true);
+                return true;
+            case R.id.menu_sort_level_asc:
+                viewModel.sortPersonasByLevel(filteredPersonas, true);
+                personaListAdapter.setPersonas(filteredPersonas);
+
+                recyclerView.setIndexBarVisibility(false);
+                return true;
+            case R.id.menu_sort_level_desc:
+                viewModel.sortPersonasByLevel(filteredPersonas, false);
+                personaListAdapter.setPersonas(filteredPersonas);
+
+                recyclerView.setIndexBarVisibility(false);
+                return true;
+            default:
+                return false;
+        }
+    }
+
     @Override
     public void onFilterSelected(PersonaFilterArgs filterArgs) {
         this.latestFilterArgs = filterArgs;
 
-        if(filterArgs.arcana == null){
-            filterArgs.arcanaOrdinal = -1;
+        filterPersonas();
+    }
+
+    private void filterPersonas() {
+        if(latestFilterArgs.arcana == null){
+            latestFilterArgs.arcanaOrdinal = -1;
         }
         else{
-            filterArgs.arcanaOrdinal = filterArgs.arcana.ordinal();
+            latestFilterArgs.arcanaOrdinal = latestFilterArgs.arcana.ordinal();
         }
 
-        this.filteredPersonas = viewModel.filterPersonas(filterArgs, allPersonas);
+        this.filteredPersonas = viewModel.filterPersonas(latestFilterArgs, allPersonas);
         personaListAdapter.setPersonas(this.filteredPersonas);
     }
 
@@ -242,21 +258,25 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if(latestFilterArgs != null){
-            outState.putBoolean("filter_rarePersona", latestFilterArgs.rarePersona);
-            outState.putBoolean("filter_dlcPersona", latestFilterArgs.dlcPersona);
-
-            if(latestFilterArgs.arcana == null){
-                //we're marking 'Any' arcana as -1
-                outState.putInt("filter_selectedArcana", -1);
-            }
-            else{
-                outState.putInt("filter_selectedArcana", latestFilterArgs.arcanaOrdinal);
-            }
-
-            outState.putInt("filter_minLevel", latestFilterArgs.minLevel);
-            outState.putInt("filter_maxLevel", latestFilterArgs.maxLevel);
+        if(latestFilterArgs == null){
+            latestFilterArgs = new PersonaFilterArgs();
         }
+
+        outState.putBoolean("filter_rarePersona", latestFilterArgs.rarePersona);
+        outState.putBoolean("filter_dlcPersona", latestFilterArgs.dlcPersona);
+
+        if(latestFilterArgs.arcana == null){
+            //we're marking 'Any' arcana as -1
+            outState.putInt("filter_selectedArcana", -1);
+        }
+        else{
+            outState.putInt("filter_selectedArcana", latestFilterArgs.arcanaOrdinal);
+        }
+
+        outState.putInt("filter_minLevel", latestFilterArgs.minLevel);
+        outState.putInt("filter_maxLevel", latestFilterArgs.maxLevel);
+
+        outState.putInt("sort_id", selectedSortMenuItemID);
     }
 
     @Override
@@ -270,6 +290,10 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             latestFilterArgs.arcanaOrdinal = savedInstanceState.getInt("filter_selectedArcana");
             latestFilterArgs.minLevel = savedInstanceState.getInt("filter_minLevel");
             latestFilterArgs.maxLevel = savedInstanceState.getInt("filter_maxLevel");
+            this.filterPersonas();
+
+            selectedSortMenuItemID = savedInstanceState.getInt("sort_id");
+            handleSortClick();
         }
     }
 }
