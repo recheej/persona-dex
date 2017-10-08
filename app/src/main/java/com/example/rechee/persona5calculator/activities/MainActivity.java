@@ -130,10 +130,12 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         inflater.inflate(R.menu.persona_list_menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
+        final MenuItem settingsitem = menu.findItem(R.id.action_settings);
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 menu.setGroupVisible(R.id.menu_item_group_sorting, false);
+                settingsitem.setVisible(false);
                 return true;
             }
 
@@ -144,6 +146,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 MainActivity.this.personaListAdapter.setPersonas(MainActivity.this.filteredPersonas);
 
                 menu.setGroupVisible(R.id.menu_item_group_sorting, true);
+                settingsitem.setVisible(true);
+                invalidateOptionsMenu();
                 return true;
             }
         });

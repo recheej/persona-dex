@@ -38,7 +38,7 @@
     <string name="effect_null">NULL</string>
     <string name="effect_repel">REPEL</string>
     <string name="effect_drain">DRAIN</string>
-    <string name="sort">sort</string>
+    <string name="sort">Sort</string>
     <string name="sort_asc">Sort by name A-Z</string>
     <string name="sort_desc">Sort by name Z-A</string>
     <string name="sort_level_asc">Sort by Level 1–99</string>
