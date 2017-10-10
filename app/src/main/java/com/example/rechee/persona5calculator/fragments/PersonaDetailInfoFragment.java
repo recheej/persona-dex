@@ -1,6 +1,5 @@
 package com.example.rechee.persona5calculator.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.rechee.persona5calculator.R;
-import com.example.rechee.persona5calculator.activities.PersonaFusionActivity;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
 import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.viewmodels.PersonaDetailViewModel;
@@ -61,7 +59,7 @@ public class PersonaDetailInfoFragment extends BaseFragment {
     }
 
     private void setTextViewText(View rootView, int textViewId, String text){
-        TextView view = (TextView) rootView.findViewById(textViewId);
+        TextView view = rootView.findViewById(textViewId);
         view.setText(text);
     }
 }

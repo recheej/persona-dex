@@ -20,7 +20,6 @@ import com.example.rechee.persona5calculator.PersonaUtilities;
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.adapters.PersonaFusionListAdapter;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
-import com.example.rechee.persona5calculator.models.PersonaStore;
 import com.example.rechee.persona5calculator.models.PersonaStoreDisplay;
 import com.example.rechee.persona5calculator.services.FusionCalculatorJobService;
 import com.example.rechee.persona5calculator.viewmodels.PersonaFusionListViewModel;
@@ -79,8 +78,6 @@ public class FusionListFragment extends BaseFragment {
         recyclerView = baseView.findViewById(R.id.recycler_view_persona_list);
 
         if(commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished")){
-            registerCalculationFinishedReceiver();
-
             progressBar.setVisibility(ProgressBar.VISIBLE);
             recyclerView.setVisibility(View.INVISIBLE);
 
@@ -93,6 +90,18 @@ public class FusionListFragment extends BaseFragment {
 
             setUpRecyclerView();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerCalculationFinishedReceiver();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
 
     private void setUpRecyclerView() {
@@ -135,12 +144,6 @@ public class FusionListFragment extends BaseFragment {
     private void registerCalculationFinishedReceiver() {
         IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.Constants.BROADCAST_ACTION);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, calculationFinishedIntentFilter);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
 
     @Override

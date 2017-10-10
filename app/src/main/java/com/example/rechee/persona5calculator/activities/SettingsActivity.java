@@ -112,6 +112,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     @Override
     protected void onResume() {
         super.onResume();
+        registerCalculationFinishedReceiver();
         defaultSharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -119,11 +120,6 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     protected void onPause() {
         super.onPause();
         defaultSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 

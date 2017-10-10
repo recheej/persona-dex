@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.rechee.persona5calculator.R;
 import com.example.rechee.persona5calculator.dagger.FragmentComponent;
-import com.example.rechee.persona5calculator.models.Persona;
 import com.example.rechee.persona5calculator.models.Skill;
 import com.example.rechee.persona5calculator.viewmodels.PersonaSkillsViewModel;
 
@@ -24,8 +23,6 @@ import javax.inject.Inject;
  * A simple {@link Fragment} subclass.
  */
 public class PersonaSkillsFragment extends BaseFragment {
-
-    private Persona detailPersona;
 
     @Inject
     PersonaSkillsViewModel viewModel;
@@ -46,18 +43,18 @@ public class PersonaSkillsFragment extends BaseFragment {
 
         this.skills = viewModel.getPersonaSkills();
 
-        LinearLayout skillsGrid = (LinearLayout) baseView.findViewById(R.id.skill_grid);
+        LinearLayout skillsGrid = baseView.findViewById(R.id.skill_grid);
 
         LayoutInflater inflater = activity.getLayoutInflater();
-        ViewGroup container = (ViewGroup) activity.findViewById(R.id.view_pager);
+        ViewGroup container = activity.findViewById(R.id.view_pager);
 
         for(Skill personaSkill: this.skills){
             View personaSkillRow = inflater.inflate(R.layout.persona_skil_row, container, false);
 
-            TextView textViewSkillName = (TextView) personaSkillRow.findViewById(R.id.textViewSkillName);
+            TextView textViewSkillName = personaSkillRow.findViewById(R.id.textViewSkillName);
             textViewSkillName.setText(personaSkill.getName());
 
-            TextView textViewSkillLevel = (TextView) personaSkillRow.findViewById(R.id.textViewSkillLevel);
+            TextView textViewSkillLevel = personaSkillRow.findViewById(R.id.textViewSkillLevel);
 
             if(personaSkill.getLevel() == 0){
                 textViewSkillLevel.setText("-");
