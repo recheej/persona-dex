@@ -37,4 +37,5 @@ dependencies {
     compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.8'
     testCompile 'org.robolectric:robolectric:3.4.2'
     compile 'com.google.android.gms:play-services-ads:11.2.0'
+    compile 'com.github.medyo:android-about-page:1.2.1'
 }

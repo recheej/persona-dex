@@ -47,6 +47,14 @@
             android:exported="false" />
 
         <activity android:name=".activities.PersonaFusionActivity" />
+
+        <activity android:name=".activities.AboutActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.rechee.persona5calculator.activities.AboutActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
