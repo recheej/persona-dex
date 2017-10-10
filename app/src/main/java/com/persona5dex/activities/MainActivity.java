@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
@@ -34,6 +35,7 @@ import com.persona5dex.viewmodels.PersonaListViewModel;
 import javax.inject.Inject;
 
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity implements FilterDialogFragment.OnFilterListener {
 
@@ -68,6 +70,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         );
         component.inject(this);
         this.component = component;
+
+        //init crashlytics
+        Fabric.with(this, new Crashlytics());
 
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
