@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.rechee.persona5calculator"
+    package="com.persona5dex"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -42,8 +42,8 @@
             android:parentActivityName=".activities.MainActivity"/>
 
         <provider
-            android:name=".PersonaNameProvider"
-            android:authorities="com.example.rechee.persona5calculator"
+            android:name="com.persona5dex.PersonaNameProvider"
+            android:authorities="com.persona5dex"
             android:exported="false" />
 
         <activity android:name=".activities.PersonaFusionActivity" />
@@ -51,7 +51,7 @@
         <activity android:name=".activities.AboutActivity"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.example.rechee.persona5calculator.activities.AboutActivity" />
+                <action android:name="com.persona5dex.activities.AboutActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

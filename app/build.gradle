@@ -5,7 +5,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.rechee.persona5calculator"
+        applicationId "com.persona5dex"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1

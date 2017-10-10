@@ -17,7 +17,7 @@
         android:key="about"
         android:title="@string/about"
         android:icon="@drawable/ic_info">
-        <intent android:action="com.example.rechee.persona5calculator.activities.AboutActivity"/>
+        <intent android:action="com.persona5dex.activities.AboutActivity"/>
     </Preference>
 
 </PreferenceScreen>

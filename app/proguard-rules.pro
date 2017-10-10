@@ -27,6 +27,6 @@
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
 
--keepclassmembers class com.example.rechee.persona5calculator.models**{ <fields>; }
+-keepclassmembers class com.persona5dex.models**{ <fields>; }
 
 -keep class android.support.v7.widget.SearchView { *; }

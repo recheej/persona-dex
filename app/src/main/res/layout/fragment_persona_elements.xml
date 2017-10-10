@@ -6,7 +6,7 @@
     android:paddingBottom="10dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    tools:context="com.example.rechee.persona5calculator.fragments.PersonaElementsFragment">
+    tools:context="com.persona5dex.fragments.PersonaElementsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
