@@ -60,5 +60,12 @@
     <string name="max_level">Max Level</string>
     <string name="min_level">Min Level</string>
     <string name="reset">Reset</string>
+    <string name="about">About</string>
+    <string name="about_contact_me">Contact me if you have any feedback or find any bugs.</string>
+    <string name="email_support">support@persona5dex.com</string>
+    <string name="developed_by">Developed by</string>
+    <string name="about_special_thanks">Special Thanks</string>
+    <string name="about_icon_designer">App Icon Designer</string>
+    <string name="version">Version</string>
 
 </resources>

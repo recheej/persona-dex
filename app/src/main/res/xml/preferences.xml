@@ -13,4 +13,11 @@
         android:summary="@string/dlc_persona_pref_summary"
         />
 
+    <Preference
+        android:key="about"
+        android:title="@string/about"
+        android:icon="@drawable/ic_info">
+        <intent android:action="com.example.rechee.persona5calculator.activities.AboutActivity"/>
+    </Preference>
+
 </PreferenceScreen>

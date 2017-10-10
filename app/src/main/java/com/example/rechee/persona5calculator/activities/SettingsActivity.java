@@ -72,6 +72,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         setSupportActionBar(this.mainToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.action_settings);
 
         defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
