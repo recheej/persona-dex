@@ -238,13 +238,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     }
 
     private void filterPersonas() {
-        if(latestFilterArgs.arcana == null){
-            latestFilterArgs.arcanaOrdinal = -1;
-        }
-        else{
-            latestFilterArgs.arcanaOrdinal = latestFilterArgs.arcana.ordinal();
-        }
-
         this.filteredPersonas = viewModel.filterPersonas(latestFilterArgs, allPersonas);
         personaListAdapter.setPersonas(this.filteredPersonas);
     }
@@ -259,15 +252,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         outState.putBoolean("filter_rarePersona", latestFilterArgs.rarePersona);
         outState.putBoolean("filter_dlcPersona", latestFilterArgs.dlcPersona);
-
-        if(latestFilterArgs.arcana == null){
-            //we're marking 'Any' arcana as -1
-            outState.putInt("filter_selectedArcana", -1);
-        }
-        else{
-            outState.putInt("filter_selectedArcana", latestFilterArgs.arcanaOrdinal);
-        }
-
+        outState.putInt("filter_selectedArcana", latestFilterArgs.adapterPosition);
         outState.putInt("filter_minLevel", latestFilterArgs.minLevel);
         outState.putInt("filter_maxLevel", latestFilterArgs.maxLevel);
 
@@ -282,7 +267,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             latestFilterArgs = new PersonaFilterArgs();
             latestFilterArgs.rarePersona = savedInstanceState.getBoolean("filter_rarePersona");
             latestFilterArgs.dlcPersona = savedInstanceState.getBoolean("filter_dlcPersona");
-            latestFilterArgs.arcanaOrdinal = savedInstanceState.getInt("filter_selectedArcana");
+            latestFilterArgs.adapterPosition = savedInstanceState.getInt("filter_selectedArcana");
             latestFilterArgs.minLevel = savedInstanceState.getInt("filter_minLevel");
             latestFilterArgs.maxLevel = savedInstanceState.getInt("filter_maxLevel");
             this.filterPersonas();

@@ -10,7 +10,7 @@ public class PersonaFilterArgs {
     public int minLevel;
     public int maxLevel;
     public Enumerations.Arcana arcana;
-    public int arcanaOrdinal;
+    public int adapterPosition = -1;
 
     public PersonaFilterArgs() {
         minLevel = 1;
