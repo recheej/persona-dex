@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 26
@@ -20,6 +20,10 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -38,4 +42,7 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.4.2'
     compile 'com.google.android.gms:play-services-ads:11.2.0'
     compile 'com.github.medyo:android-about-page:1.2.1'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
 }

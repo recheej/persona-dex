@@ -92,3 +92,4 @@ freeline/
 freeline_project_description.json
 /app/src/main/res/values/api_keys.xml
 /app/src/debug/res/values/api_keys.xml
+/app/src/main/AndroidManifest.xml
