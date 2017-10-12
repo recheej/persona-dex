@@ -8,7 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdSize;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaDetailFragmentPagerAdapter;
@@ -73,8 +76,22 @@ public class PersonaDetailActivity extends BaseActivity {
     private void initializeAd() {
         MobileAds.initialize(this, getString(R.string.admob_app_id));
 
-        adView = findViewById(R.id.adView);
+        adView = new AdView(this);
+
+        RelativeLayout.LayoutParams layoutParams =  new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+
+        adView.setLayoutParams(layoutParams);
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId(getString(R.string.admob_main_unit_id));
+
         AdRequest adRequest = new AdRequest.Builder().build();
+
+        RelativeLayout detailLayout = findViewById(R.id.detail_layout);
+        detailLayout.addView(adView);
+
         adView.loadAd(adRequest);
     }
 

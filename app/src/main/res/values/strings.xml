@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Persona 5 Dex: Persona 5 Compendium</string>
-    <string name="app_name_short">P5-Dex</string>
+    <string name="app_name">PersonaDex: Persona 5 Compendium</string>
+    <string name="app_name_short">PDex</string>
     <string name="level_label">Level:</string>
     <string name="action_search">search</string>
     <string name="personas">Persona</string>
