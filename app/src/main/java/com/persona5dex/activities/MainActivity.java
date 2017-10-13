@@ -184,8 +184,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     }
 
     private void showSortPopup(){
-        View sortMenuView = findViewById(R.id.action_sort);
-        PopupMenu popupMenu = new PopupMenu(this, sortMenuView);
+        View anchor = findViewById(R.id.action_search);
+        PopupMenu popupMenu = new PopupMenu(this, anchor);
         popupMenu.inflate(R.menu.sort_persona_menu);
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
