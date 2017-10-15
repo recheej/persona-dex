@@ -230,6 +230,18 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
                 recyclerView.setIndexBarVisibility(false);
                 return true;
+            case R.id.menu_sort_arcana_asc:
+                viewModel.sortPersonasByArcana(filteredPersonas, true);
+                personaListAdapter.setPersonas(filteredPersonas);
+
+                recyclerView.setIndexBarVisibility(false);
+                return true;
+            case R.id.menu_sort_arcana_desc:
+                viewModel.sortPersonasByArcana(filteredPersonas, false);
+                personaListAdapter.setPersonas(filteredPersonas);
+
+                recyclerView.setIndexBarVisibility(false);
+                return true;
             default:
                 return false;
         }

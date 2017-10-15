@@ -27,6 +27,8 @@ public class PersonaListViewModel {
     private final Comparator<Persona> sortByPersonaNameAsc;
     private final Comparator<Persona> sortByPersonaLevelAsc;
     private final Comparator<Persona> sortByPersonaLevelDesc;
+    private final Comparator<Persona> sortByPersonaArcanaAsc;
+    private final Comparator<Persona> sortByPersonaArcanaDesc;
 
     @Inject
     public PersonaListViewModel(PersonaRepository repository, PersonaTransferRepository transferRepository){
@@ -58,6 +60,22 @@ public class PersonaListViewModel {
             @Override
             public int compare(Persona o1, Persona o2) {
                 return Integer.compare(o1.level, o2.level) * -1;
+            }
+        };
+
+        sortByPersonaArcanaAsc = new Comparator<Persona>() {
+
+            @Override
+            public int compare(Persona o1, Persona o2) {
+                return o1.arcanaName.compareTo(o2.arcanaName);
+            }
+        };
+
+        sortByPersonaArcanaDesc = new Comparator<Persona>() {
+
+            @Override
+            public int compare(Persona o1, Persona o2) {
+                return o1.arcanaName.compareTo(o2.arcanaName) * -1;
             }
         };
     }
@@ -133,5 +151,18 @@ public class PersonaListViewModel {
         }
 
         return filteredPersonas.toArray(new Persona[filteredPersonas.size()]);
+    }
+
+    public void sortPersonasByArcana(Persona[] personas, boolean asc) {
+        if(personas.length == 1){
+            return;
+        }
+
+        if(asc){
+            Arrays.sort(personas, sortByPersonaArcanaAsc);
+        }
+        else{
+            Arrays.sort(personas, sortByPersonaArcanaDesc);
+        }
     }
 }

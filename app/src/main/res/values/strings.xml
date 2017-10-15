@@ -67,5 +67,7 @@
     <string name="about_special_thanks">Special Thanks</string>
     <string name="about_icon_designer">App Icon Designer</string>
     <string name="version">Version</string>
+    <string name="sort_arcana_asc">Sort by Arcana A-Z</string>
+    <string name="sort_arcana_desc">Sort by Arcana Z-A</string>
 
 </resources>
