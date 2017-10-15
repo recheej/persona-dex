@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
+import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
@@ -40,6 +41,8 @@ import io.fabric.sdk.android.Fabric;
 public class MainActivity extends BaseActivity implements FilterDialogFragment.OnFilterListener {
 
     private static final String FILTER_DIALOG = "FILTER_DIALOG";
+
+    //https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
     private IndexFastScrollRecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private PersonaListAdapter personaListAdapter;
@@ -72,7 +75,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         this.component = component;
 
         //init crashlytics
-        Fabric.with(this, new Crashlytics());
+        if(BuildConfig.ENABLE_CRASHLYTICS){
+            Fabric.with(this, new Crashlytics());
+        }
 
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -209,13 +214,19 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             case R.id.menu_sort_name_asc:
                 viewModel.sortPersonasByName(filteredPersonas, true);
                 personaListAdapter.setPersonas(filteredPersonas);
+                personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
 
+                personaListAdapter.notifyDataSetChanged();
+
+                recyclerView.setIndexbarWidth(20);
                 recyclerView.setIndexBarVisibility(true);
                 return true;
             case R.id.menu_sort_name_desc:
                 viewModel.sortPersonasByName(filteredPersonas, false);
                 personaListAdapter.setPersonas(filteredPersonas);
+                personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
 
+                recyclerView.setIndexbarWidth(20);
                 recyclerView.setIndexBarVisibility(true);
                 return true;
             case R.id.menu_sort_level_asc:
@@ -233,14 +244,22 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             case R.id.menu_sort_arcana_asc:
                 viewModel.sortPersonasByArcana(filteredPersonas, true);
                 personaListAdapter.setPersonas(filteredPersonas);
+                personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.ArcanaName);
 
-                recyclerView.setIndexBarVisibility(false);
+                personaListAdapter.notifyDataSetChanged();
+
+                recyclerView.setIndexbarWidth(40);
+                recyclerView.setIndexBarVisibility(true);
                 return true;
             case R.id.menu_sort_arcana_desc:
                 viewModel.sortPersonasByArcana(filteredPersonas, false);
                 personaListAdapter.setPersonas(filteredPersonas);
+                personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.ArcanaName);
 
-                recyclerView.setIndexBarVisibility(false);
+                personaListAdapter.notifyDataSetChanged();
+
+                recyclerView.setIndexbarWidth(40);
+                recyclerView.setIndexBarVisibility(true);
                 return true;
             default:
                 return false;

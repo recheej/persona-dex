@@ -36,6 +36,10 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            buildConfigField("boolean", "ENABLE_CRASHLYTICS", "true")
+        }
+        debug {
+            buildConfigField("boolean", "ENABLE_CRASHLYTICS", "false")
         }
     }
 }

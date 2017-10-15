@@ -12,22 +12,34 @@ import android.widget.TextView;
 
 import com.persona5dex.R;
 import com.persona5dex.activities.PersonaDetailActivity;
+import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.Persona;
 import com.persona5dex.viewmodels.PersonaListViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Rechee on 7/3/2017.
  */
 
-public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder> implements SectionIndexer{
+public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder> implements SectionIndexer {
 
     private List<Persona> personas;
     private final PersonaListViewModel viewModel;
     private ArrayList<Integer> mSectionPositions;
+    private boolean sectionAsc;
+
+    public enum IndexerType {
+        PersonaName,
+        ArcanaName
+    }
+
+    private IndexerType sectionIndexerType;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewPersonaName;
@@ -53,6 +65,8 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         this.personas = new ArrayList<>(personas.length);
         Collections.addAll(this.personas, personas);
         this.viewModel = viewModel;
+        this.sectionIndexerType = IndexerType.PersonaName;
+        this.sectionAsc = true;
     }
 
     @Override
@@ -99,6 +113,36 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
 
     @Override
     public Object[] getSections() {
+        switch (sectionIndexerType){
+            case PersonaName:
+                return getPersonaNameSections();
+            case ArcanaName:
+                return this.getArcanaNameSections();
+            default:
+                return new Object[0];
+        }
+    }
+
+    private Object[] getArcanaNameSections() {
+        int arcanaSize = Enumerations.Arcana.values().length;
+        List<String> sections = new ArrayList<>(arcanaSize);
+        mSectionPositions = new ArrayList<>(arcanaSize);
+        for (int i = 0; i < personas.size(); i++) {
+            String section = personas.get(i).arcanaName.toUpperCase();
+            if(section.length() > 5){
+                section = section.substring(0, 4);
+            }
+
+            if (!sections.contains(section)) {
+                sections.add(section);
+                mSectionPositions.add(i);
+            }
+        }
+
+        return sections.toArray(new String[0]);
+    }
+
+    private Object[] getPersonaNameSections() {
         List<String> sections = new ArrayList<>(26);
         mSectionPositions = new ArrayList<>(26);
         for (int i = 0, size = personas.size(); i < size; i++) {
@@ -119,5 +163,9 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
     @Override
     public int getSectionForPosition(int position) {
         return 0;
+    }
+
+    public void setIndexerType(IndexerType indexerType){
+        this.sectionIndexerType = indexerType;
     }
 }
