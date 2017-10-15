@@ -12,7 +12,7 @@
     <style name="PersonaStatsTheme">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/colorAccent</item>
+        <item name="android:background">?colorAccent</item>
         <item name="android:orientation">vertical</item>
     </style>
 
@@ -20,7 +20,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="PersonaStatsTextValue" parent="PersonaStatsTextLabel">
+    <style name="PersonaStatsTextLabel.PersonaStatsTextValue">
         <item name="android:textStyle">bold</item>
         <item name="android:textAlignment">3</item>
     </style>
@@ -52,7 +52,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
         <item name="android:textAlignment">viewEnd</item>
         <item name="android:gravity">center_vertical|end</item>
         <item name="android:paddingEnd">16dp</item>

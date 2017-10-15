@@ -24,6 +24,11 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+#crashlytics
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+#end crashlytics
+
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.stream.** { *; }
 

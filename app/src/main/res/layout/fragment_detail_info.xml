@@ -67,7 +67,7 @@
 
             <TextView
                 android:id="@+id/textViewStrengthStat"
-                style="@style/PersonaStatsTextValue"
+                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="16"
@@ -90,7 +90,7 @@
 
             <TextView
                 android:id="@+id/textViewMagicStat"
-                style="@style/PersonaStatsTextValue"
+                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="16"
@@ -113,7 +113,7 @@
 
             <TextView
                 android:id="@+id/textViewEnduranceStat"
-                style="@style/PersonaStatsTextValue"
+                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="16"
@@ -136,7 +136,7 @@
 
             <TextView
                 android:id="@+id/textViewAgilityStat"
-                style="@style/PersonaStatsTextValue"
+                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="16"
@@ -159,7 +159,7 @@
 
             <TextView
                 android:id="@+id/textViewLuckStat"
-                style="@style/PersonaStatsTextValue"
+                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="16"

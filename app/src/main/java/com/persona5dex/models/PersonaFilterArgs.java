@@ -9,14 +9,14 @@ public class PersonaFilterArgs {
     public boolean rarePersona;
     public int minLevel;
     public int maxLevel;
-    public Enumerations.Arcana arcana;
-    public int adapterPosition = -1;
+    public String arcanaName;
 
     public PersonaFilterArgs() {
         minLevel = 1;
         maxLevel = 99;
         rarePersona = true;
         dlcPersona = true;
+        arcanaName = "";
     }
 
     /**
@@ -29,7 +29,7 @@ public class PersonaFilterArgs {
     public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana, boolean rarePersona, boolean dlcPersona){
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
-        this.arcana = arcana;
+        this.arcanaName = arcana.name().replace("_", " ");
         this.rarePersona = rarePersona;
         this.dlcPersona = dlcPersona;
     }
@@ -42,7 +42,7 @@ public class PersonaFilterArgs {
     public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana){
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
-        this.arcana = arcana;
+        this.arcanaName = arcana.name().replace("_", " ");
         this.rarePersona = true;
         this.dlcPersona = true;
     }

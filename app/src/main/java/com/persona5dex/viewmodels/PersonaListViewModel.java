@@ -127,6 +127,15 @@ public class PersonaListViewModel {
 
     public Persona[] filterPersonas(PersonaFilterArgs filterArgs, Persona[] personasToFilter) {
         List<Persona> filteredPersonas = new ArrayList<>(personasToFilter.length);
+
+        String filterArcanaName;
+        if(filterArgs.arcanaName == null){
+            filterArcanaName = "";
+        }
+        else{
+            filterArcanaName = filterArgs.arcanaName.toLowerCase().replace("_", " ");
+        }
+
         for (Persona persona : personasToFilter) {
 
             if(persona.rare && !filterArgs.rarePersona){
@@ -137,8 +146,18 @@ public class PersonaListViewModel {
                 continue;
             }
 
-            if(filterArgs.arcana != null){
-                if(persona.arcana != filterArgs.arcana){
+            if(filterArgs.arcanaName != null && !filterArgs.arcanaName.isEmpty()){
+                String personaArcanaName;
+
+                if(persona.arcanaName == null){
+                    personaArcanaName = persona.arcana.name();
+                }
+                else{
+                    personaArcanaName = persona.arcanaName;
+                }
+
+                personaArcanaName = personaArcanaName.toLowerCase().replace("_", " ");
+                if(!personaArcanaName.equals(filterArcanaName)){
                     continue;
                 }
             }

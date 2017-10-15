@@ -218,7 +218,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
                 personaListAdapter.notifyDataSetChanged();
 
-                recyclerView.setIndexbarWidth(20);
                 recyclerView.setIndexBarVisibility(true);
                 return true;
             case R.id.menu_sort_name_desc:
@@ -226,7 +225,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 personaListAdapter.setPersonas(filteredPersonas);
                 personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
 
-                recyclerView.setIndexbarWidth(20);
                 recyclerView.setIndexBarVisibility(true);
                 return true;
             case R.id.menu_sort_level_asc:
@@ -248,7 +246,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
                 personaListAdapter.notifyDataSetChanged();
 
-                recyclerView.setIndexbarWidth(40);
                 recyclerView.setIndexBarVisibility(true);
                 return true;
             case R.id.menu_sort_arcana_desc:
@@ -258,7 +255,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
                 personaListAdapter.notifyDataSetChanged();
 
-                recyclerView.setIndexbarWidth(40);
                 recyclerView.setIndexBarVisibility(true);
                 return true;
             default:
@@ -288,7 +284,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         outState.putBoolean("filter_rarePersona", latestFilterArgs.rarePersona);
         outState.putBoolean("filter_dlcPersona", latestFilterArgs.dlcPersona);
-        outState.putInt("filter_selectedArcana", latestFilterArgs.adapterPosition);
+        outState.putString("filter_selectedArcana", latestFilterArgs.arcanaName);
         outState.putInt("filter_minLevel", latestFilterArgs.minLevel);
         outState.putInt("filter_maxLevel", latestFilterArgs.maxLevel);
 
@@ -303,7 +299,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             latestFilterArgs = new PersonaFilterArgs();
             latestFilterArgs.rarePersona = savedInstanceState.getBoolean("filter_rarePersona");
             latestFilterArgs.dlcPersona = savedInstanceState.getBoolean("filter_dlcPersona");
-            latestFilterArgs.adapterPosition = savedInstanceState.getInt("filter_selectedArcana");
+            latestFilterArgs.arcanaName = savedInstanceState.getString("filter_selectedArcana");
             latestFilterArgs.minLevel = savedInstanceState.getInt("filter_minLevel");
             latestFilterArgs.maxLevel = savedInstanceState.getInt("filter_maxLevel");
             this.filterPersonas();
