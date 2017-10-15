@@ -1,0 +1,23 @@
+[
+    { "result": "Alice", "sources": ["Nebiros", "Belial"] },
+    { "result": "Ardha", "sources": ["Parvati", "Shiva"] },
+    { "result": "Asura-Ou", "sources": ["Zouchouten", "Jikokuten", "Koumokuten", "Bishamonten"] },
+    { "result": "Black Frost", "sources": ["Jack O\"Lantern", "Jack Frost", "King Frost"] },
+    { "result": "Bugs", "sources": ["Pixie", "Pisaca", "Hariti"] },
+    { "result": "Chi You", "sources": ["Hecatoncheires", "White Rider", "Thor", "Yoshitsune", "Cu Chulainn"] },
+    { "result": "Flauros", "sources": ["Berith", "Andras", "Eligor"] },
+    { "result": "Kohryu", "sources": ["Genbu", "Seiryu", "Suzaku", "Byakko"] },
+    { "result": "Lucifer", "sources": ["Anubis", "Ananta", "Trumpeter", "Michael", "Metatron", "Satan"] },
+    { "result": "Metatron", "sources": ["Principality", "Power", "Dominion", "Melchizedek", "Sandalphon", "Michael"] },
+    { "result": "Michael", "sources": ["Raphael", "Gabriel", "Uriel"] },
+    { "result": "Neko Shogun", "sources": ["Kodama", "Sudama", "Anzu"] },
+    { "result": "Ongyo-Ki", "sources": ["Kin-Ki", "Sui-Ki", "Fuu-Ki"] },
+    { "result": "Satanael", "sources": ["Arsene", "Anzu", "Ishtar", "Satan", "Lucifer", "Michael"] },
+    { "result": "Seth", "sources": ["Isis", "Thoth", "Anubis", "Horus"] },
+    { "result": "Shiva", "sources": ["Rangda", "Barong"] },
+    { "result": "Sraosha", "sources": ["Mithra", "Mithras", "Melchizedek", "Lilith", "Gabriel"] },
+    { "result": "Throne", "sources": ["Power", "Melchizedek", "Dominion"] },
+    { "result": "Trumpeter", "sources": ["White Rider", "Red Rider", "Black Rider", "Pale Rider"] },
+    { "result": "Vasuki", "sources": ["Naga", "Raja Naga", "Ananta"] },
+    { "result": "Yoshitsune", "sources": ["Okuninushi", "Shiki-Ouji", "Arahabaki", "Yatagarasu", "Futsunushi"] }
+]
