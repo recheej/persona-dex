@@ -40,6 +40,8 @@ android {
         }
         debug {
             buildConfigField("boolean", "ENABLE_CRASHLYTICS", "false")
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
         }
     }
 }

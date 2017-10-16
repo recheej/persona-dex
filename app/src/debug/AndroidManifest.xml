@@ -43,7 +43,7 @@
 
         <provider
             android:name="com.persona5dex.PersonaNameProvider"
-            android:authorities="com.persona5dex"
+            android:authorities="${applicationId}"
             android:exported="false" />
 
         <activity android:name=".activities.PersonaFusionActivity" />
