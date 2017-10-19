@@ -80,7 +80,9 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
         registerCalculationFinishedReceiver();
 
-        if(fusionSharedPreferences.contains("initialized") && !fusionSharedPreferences.contains("finished")){
+        boolean isInitialized = fusionSharedPreferences.getBoolean("initialized", false);
+        boolean isFinished = fusionSharedPreferences.getBoolean("finished", false);
+        if(isInitialized && !isFinished){
 
             fusionsProgressBar.setVisibility(ProgressBar.VISIBLE);
             frameLayout.setVisibility(View.INVISIBLE);
@@ -123,7 +125,10 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(fusionSharedPreferences.contains("initialized") && !fusionSharedPreferences.contains("finished")){
+        boolean isInitialized = fusionSharedPreferences.getBoolean("initialized", false);
+        boolean isFinished = fusionSharedPreferences.getBoolean("finished", false);
+
+        if(isInitialized && !isFinished){
             this.resetService = true;
         }
         else{

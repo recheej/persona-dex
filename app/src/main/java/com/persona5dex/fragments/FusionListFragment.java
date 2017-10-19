@@ -37,7 +37,10 @@ public class FusionListFragment extends BaseFragment {
 
     @Inject
     PersonaFusionListViewModel viewModel;
+
     private ProgressBar progressBar;
+
+    private ViewGroup listHeader;
 
     public FusionListFragment() {
         // Required empty public constructor
@@ -76,19 +79,36 @@ public class FusionListFragment extends BaseFragment {
         SharedPreferences commonSharedPreferences = activity.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
                 Context.MODE_PRIVATE);
         recyclerView = baseView.findViewById(R.id.recycler_view_persona_list);
+        listHeader = baseView.findViewById(R.id.fusion_list_header);
+        progressBar = baseView.findViewById(R.id.progress_bar_fusions);
 
-        if(commonSharedPreferences.contains("initialized") && !commonSharedPreferences.contains("finished")){
-            progressBar.setVisibility(ProgressBar.VISIBLE);
-            recyclerView.setVisibility(View.INVISIBLE);
+        boolean isInitialized = commonSharedPreferences.getBoolean("initialized", false);
+        boolean isFinished = commonSharedPreferences.getBoolean("finished", false);
+        if(isInitialized && !isFinished){
 
             FragmentComponent component = activity.getComponent().plus();
             component.inject(this);
+
+            setProgressBarVisible(true);
         }
         else{
             FragmentComponent component = activity.getComponent().plus();
             component.inject(this);
 
             setUpRecyclerView();
+        }
+    }
+
+    private void setProgressBarVisible(boolean visible) {
+        if(visible){
+            recyclerView.setVisibility(View.GONE);
+            listHeader.setVisibility(View.GONE);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+        }
+        else{
+            progressBar.setVisibility(ProgressBar.GONE);
+            listHeader.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 

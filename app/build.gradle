@@ -26,8 +26,8 @@ android {
         applicationId "com.persona5dex"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.2.0"
+        versionCode 6
+        versionName "1.2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,11 +37,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
             buildConfigField("boolean", "ENABLE_CRASHLYTICS", "true")
+            resValue("string", "name_provider_auth", defaultConfig.applicationId + ".personanameprovider")
         }
         debug {
             buildConfigField("boolean", "ENABLE_CRASHLYTICS", "false")
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
+            resValue("string", "name_provider_auth", defaultConfig.applicationId + applicationIdSuffix + ".personanameprovider")
         }
     }
 }

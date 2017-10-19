@@ -5,7 +5,10 @@
     tools:context="com.persona5dex.fragments.FusionListFragment"
     android:orientation="vertical">
 
+    <include layout="@layout/progress_bar_fusions" />
+
     <LinearLayout
+        android:id="@+id/fusion_list_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

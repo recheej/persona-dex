@@ -6,12 +6,12 @@
     android:orientation="vertical"
     tools:context="com.persona5dex.activities.PersonaFusionActivity">
 
-    <include layout="@layout/toolbar_main"
+    <include
+        android:id="@+id/main_toolbar"
+        layout="@layout/toolbar_main"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         />
-
-    <include layout="@layout/progress_bar_fusions" />
 
     <android.support.v4.view.ViewPager
         android:layout_below="@id/main_toolbar"
