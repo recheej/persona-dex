@@ -73,4 +73,5 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
         transitive = true;
     }
+    compile "android.arch.persistence.room:runtime:1.0.0-rc1"
 }

@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
+import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.PersonaRepository;
 import com.persona5dex.repositories.PersonaRepositoryFile;
 import com.google.gson.Gson;

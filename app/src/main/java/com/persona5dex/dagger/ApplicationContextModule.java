@@ -2,11 +2,13 @@ package com.persona5dex.dagger;
 
 import android.content.Context;
 
+import com.persona5dex.Persona5Application;
 import com.persona5dex.adapters.PersonaStoreGsonAdapter;
 import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.RawPersonaEdge;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.persona5dex.models.room.PersonaDatabase;
 
 import javax.inject.Named;
 
@@ -40,5 +42,11 @@ public class ApplicationContextModule {
         builder.registerTypeAdapter(PersonaStore.class, new PersonaStoreGsonAdapter());
 
         return builder.create();
+    }
+
+    @Provides
+    @ApplicationScope
+    PersonaDatabase personaDatabase() {
+        return Persona5Application.getPersonaDatabase(context);
     }
 }
