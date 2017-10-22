@@ -110,7 +110,12 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
         @Override
         public void onExpansionUpdate(float expansionFraction, int state) {
-            recyclerView.smoothScrollToPosition(getAdapterPosition());
+            int scrollPosition = getAdapterPosition();
+            if(scrollPosition == RecyclerView.NO_POSITION){
+                scrollPosition = 0;
+            }
+
+            recyclerView.smoothScrollToPosition(scrollPosition);
         }
     }
 
