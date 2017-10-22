@@ -49,9 +49,9 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         public ViewHolder(View itemView) {
             super(itemView);
 
-            this.textViewPersonaName = (TextView) itemView.findViewById(R.id.textViewPersonaName);
-            this.textViewPersonaLevel = (TextView) itemView.findViewById(R.id.textViewPersonaLevel);
-            this.textViewPersonaArcana = (TextView) itemView.findViewById(R.id.textViewArcana);
+            this.textViewPersonaName = itemView.findViewById(R.id.textViewPersonaName);
+            this.textViewPersonaLevel = itemView.findViewById(R.id.textViewPersonaLevel);
+            this.textViewPersonaArcana = itemView.findViewById(R.id.textViewArcana);
         }
 
         public void bindPersona(Persona personaToBind){
@@ -79,7 +79,12 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Persona detailPersona = personas.get(viewHolder.getAdapterPosition());
+                int personaPosition = viewHolder.getAdapterPosition();
+                if(personaPosition == RecyclerView.NO_POSITION){
+                    personaPosition = 0;
+                }
+
+                Persona detailPersona = personas.get(personaPosition);
                 viewModel.storePersonaForDetail(detailPersona);
 
                 Context context = v.getContext();

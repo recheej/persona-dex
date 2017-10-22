@@ -49,10 +49,10 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
             super(itemView);
 
             this.isToList = isToList;
-            this.textViewPersonaNameOne = (TextView) itemView.findViewById(R.id.textView_personaNameOne);
-            this.textViewPersonaNameTwo = (TextView) itemView.findViewById(R.id.textView_personaNameTwo);
-            this.textViewPersonaOneDetail = (TextView) itemView.findViewById(R.id.persona_one_detail);
-            this.textViewPersonaTwoDetail = (TextView) itemView.findViewById(R.id.persona_two_detail);
+            this.textViewPersonaNameOne = itemView.findViewById(R.id.textView_personaNameOne);
+            this.textViewPersonaNameTwo = itemView.findViewById(R.id.textView_personaNameTwo);
+            this.textViewPersonaOneDetail = itemView.findViewById(R.id.persona_one_detail);
+            this.textViewPersonaTwoDetail = itemView.findViewById(R.id.persona_two_detail);
 
             this.textViewPersonaOneDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,9 +68,9 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
                 }
             });
 
-            this.expandImage = (ImageView) itemView.findViewById(R.id.expand_icon);
+            this.expandImage = itemView.findViewById(R.id.expand_icon);
 
-            this.expandableLayout = (ExpandableLayout) itemView.findViewById(R.id.expandable_fusion);
+            this.expandableLayout = itemView.findViewById(R.id.expandable_fusion);
             this.expandableLayout.setInterpolator(new OvershootInterpolator());
             this.expandableLayout.setOnExpansionUpdateListener(this);
         }
@@ -137,7 +137,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
     @Override
     public void onBindViewHolder(final PersonaFusionListAdapter.ViewHolder holder, final int position) {
-        final int edgePosition = holder.getAdapterPosition();
+        final int edgePosition = holder.getAdapterPosition() == RecyclerView.NO_POSITION ? 0 : holder.getAdapterPosition();
         holder.bind(edges[edgePosition]);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
