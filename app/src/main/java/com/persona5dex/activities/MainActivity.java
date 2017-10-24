@@ -130,8 +130,11 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             String personaName = intent.getDataString();
             viewModel.storePersonaForDetail(personaName);
 
-            Answers.getInstance().logSearch(new SearchEvent()
-                    .putQuery(personaName));
+            if(BuildConfig.ENABLE_CRASHLYTICS){
+                Answers.getInstance().logSearch(new SearchEvent()
+                        .putQuery(personaName));
+            }
+
 
             Intent startDetailIntent = new Intent(this, PersonaDetailActivity.class);
             startActivity(startDetailIntent);
