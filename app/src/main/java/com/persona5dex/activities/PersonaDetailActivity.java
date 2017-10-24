@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.AdSize;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
@@ -54,6 +57,14 @@ public class PersonaDetailActivity extends BaseActivity {
         this.component = component;
 
         this.detailPersona = viewModel.getDetailPersona();
+
+        //see how personas are being viewed in app
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Persona View")
+                .putContentType("Viewing screen")
+                .putContentId(this.detailPersona.name)
+        );
+
         setUpToolbar();
 
         ViewPager viewPager = findViewById(R.id.view_pager);

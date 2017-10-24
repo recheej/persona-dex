@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListAdapter;
@@ -57,6 +59,14 @@ public class PersonaFusionActivity extends BaseActivity {
 
     private void setUpToolbar(){
         String personaName = viewModel.getPersonaName(personaForFusionID);
+
+        //see how personas are being viewed in app
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Persona Fusion View")
+                .putContentType("Viewing screen")
+                .putContentId(personaName)
+        );
+
         this.mainToolbar.setTitle(String.format("Fusions for: %s", personaName));
 
         setSupportActionBar(this.mainToolbar);
