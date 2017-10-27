@@ -52,11 +52,11 @@ public class PersonaDetailActivity extends BaseActivity {
 
         if(BuildConfig.ENABLE_CRASHLYTICS){
             //see how personas are being viewed in app
-            Answers.getInstance().logContentView(new ContentViewEvent()
-                    .putContentName("View Persona Detail")
-                    .putContentType("View Persona Screen")
-                    .putContentId(this.detailPersona.name)
-            );
+//            Answers.getInstance().logContentView(new ContentViewEvent()
+//                    .putContentName("View Persona Detail")
+//                    .putContentType("View Persona Screen")
+//                    .putContentId(this.detailPersona.name)
+//            );
         }
 
         setUpToolbar();

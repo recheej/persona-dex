@@ -63,11 +63,11 @@ public class PersonaFusionActivity extends BaseActivity {
 
         if(BuildConfig.ENABLE_CRASHLYTICS){
             //see how personas are being viewed in app
-            Answers.getInstance().logContentView(new ContentViewEvent()
-                    .putContentName("View Persona Fusion")
-                    .putContentType("View Persona Screen")
-                    .putContentId(personaName)
-            );
+//            Answers.getInstance().logContentView(new ContentViewEvent()
+//                    .putContentName("View Persona Fusion")
+//                    .putContentType("View Persona Screen")
+//                    .putContentId(personaName)
+//            );
         }
 
         this.mainToolbar.setTitle(String.format("Fusions for: %s", personaName));
