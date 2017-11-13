@@ -5,7 +5,6 @@ import com.persona5dex.models.RawArcanaMap;
 import com.persona5dex.models.RawPersona;
 import com.persona5dex.models.RawRarePersonaMap;
 import com.google.gson.Gson;
-import com.persona5dex.PersonaUtilities;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,8 +78,9 @@ public class PersonaFileUtilities {
         RawPersona[] rawPersonas = gson.fromJson(personaFileContents, RawPersona[].class);
         Persona[] personas = new Persona[rawPersonas.length];
 
+        final HashMap<String, Arcana> arcanaHashMap = PersonaUtilities.arcanaHashMap();
         for (int i = 0; i < rawPersonas.length ; i++) {
-            personas[i] = Persona.mapFromRawPersona(rawPersonas[i]);
+            personas[i] = Persona.mapFromRawPersona(rawPersonas[i], arcanaHashMap);
         }
 
         return personas;
