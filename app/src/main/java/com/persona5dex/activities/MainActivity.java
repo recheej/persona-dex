@@ -57,6 +57,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Inject
     PersonaListViewModel viewModel;
+
     private PersonaFilterArgs latestFilterArgs;
 
     private int selectedSortMenuItemID;

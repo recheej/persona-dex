@@ -1,5 +1,6 @@
 package com.persona5dex.models.room;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -18,10 +19,13 @@ public class Persona {
     public int level;
     public String personality;
 
-    //stats
-    public int strength;
-    public int magic;
-    public int endurance;
-    public int agility;
-    public int luck;
+    public boolean special;
+    public boolean max;
+    public boolean dlc;
+    public boolean rare;
+
+    public String note;
+
+    @Embedded
+    public Stats stats;
 }

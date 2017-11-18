@@ -42,11 +42,7 @@ public class Persona5Application extends Application {
     }
 
     public PersonaDatabase getPersonaDatabase() {
-        if(this.database == null){
-            this.database = Room.databaseBuilder(this, PersonaDatabase.class, "persona-db").build();
-        }
-
-        return this.database;
+        return PersonaDatabase.getPersonaDatabase(this);
     }
 
     public Persona5ApplicationComponent getComponent() {

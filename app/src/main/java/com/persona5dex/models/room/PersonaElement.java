@@ -3,6 +3,7 @@ package com.persona5dex.models.room;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.persona5dex.models.Enumerations;
@@ -12,6 +13,9 @@ import com.persona5dex.models.Enumerations;
  */
 
 @Entity(tableName = "personaElements",
+    indices = {
+        @Index("persona_id")
+    },
     foreignKeys = {
             @ForeignKey(
                     entity = Persona.class,
@@ -21,6 +25,9 @@ import com.persona5dex.models.Enumerations;
     }
 )
 public class PersonaElement {
+
+    @PrimaryKey
+    public int id;
 
     @ColumnInfo(name = "persona_id")
     public int personaId;

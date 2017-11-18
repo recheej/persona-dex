@@ -13,5 +13,6 @@ public interface PersonaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public long[] insertPersonas(Persona... personas);
 
+    @Insert
     public long insertPersona(Persona persona);
 }
