@@ -32,7 +32,6 @@ import javax.inject.Inject;
 
 public class FilterDialogFragment extends DialogFragment {
 
-    private final int ANY_ARCANA_ORDINAL = -1;
     private CheckBox rarePersonaCheckBox;
     private CheckBox dlcPersonaCheckBox;
     private EditText minLevelEditText;

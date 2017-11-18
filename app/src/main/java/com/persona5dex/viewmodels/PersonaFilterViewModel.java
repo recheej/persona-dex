@@ -22,36 +22,31 @@ public class PersonaFilterViewModel {
     public ArcanaMap[] getArcanaMaps() {
         Enumerations.Arcana[] arcanas = Enumerations.Arcana.values();
 
-        int mapsSize = arcanas.length + 1;
-        ArcanaMap[] maps = new ArcanaMap[mapsSize];
-
-        maps[0] = new ArcanaMap();
-        maps[0].arcana = null;
-        maps[0].name = "Any";
+        ArcanaMap[] maps = new ArcanaMap[arcanas.length];
 
         for (int i = 0; i < arcanas.length; i++) {
             Enumerations.Arcana arcana = arcanas[i];
             String name = arcana.name();
 
             //we are iterating though all arcana enumns, but we are adding to the +1 index since we manulaly added one
-            maps[i + 1] = new ArcanaMap();
-            maps[i + 1].arcana = arcana;
-            maps[i + 1].name = name;
+            maps[i] = new ArcanaMap();
+            maps[i].arcana = arcana;
+            maps[i].name = name;
         }
 
         Arrays.sort(maps, new Comparator<ArcanaMap>() {
             @Override
             public int compare(ArcanaMap o1, ArcanaMap o2) {
 
-                if(o1.arcana == null && o2.arcana == null){
+                if(o1.arcana == Enumerations.Arcana.ANY && o2.arcana == Enumerations.Arcana.ANY){
                     return 0;
                 }
 
-                if(o1.arcana == null){
+                if(o1.arcana == Enumerations.Arcana.ANY){
                     return -1;
                 }
 
-                if(o2.arcana == null){
+                if(o2.arcana == Enumerations.Arcana.ANY){
                     return 1;
                 }
 

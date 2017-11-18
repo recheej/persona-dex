@@ -15,17 +15,19 @@ public class PersonaTypeConverters {
             return 0;
         }
 
-        return arcana.ordinal();
+        return arcana.value();
     }
 
     @TypeConverter
     public static Enumerations.Arcana toArcana(int arcana){
-        try{
-            return Enumerations.Arcana.values()[arcana];
+
+        for (Enumerations.Arcana arcana1 : Enumerations.Arcana.values()) {
+            if(arcana1.value() == arcana){
+                return arcana1;
+            }
         }
-        catch (IndexOutOfBoundsException e){
-            return Enumerations.Arcana.CHARIOT;
-        }
+
+        return Enumerations.Arcana.ANY;
     }
 
     @TypeConverter
@@ -34,16 +36,33 @@ public class PersonaTypeConverters {
             return 0;
         }
 
-        return elementEffect.ordinal();
+        return elementEffect.value();
     }
 
     @TypeConverter
     public static Enumerations.ElementEffect toElementEffect(int elementEffect){
-        try{
-            return Enumerations.ElementEffect.values()[elementEffect];
+        for (Enumerations.ElementEffect effect : Enumerations.ElementEffect.values()) {
+            if(effect.value() == elementEffect){
+                return effect;
+            }
         }
-        catch (IndexOutOfBoundsException e){
-            return Enumerations.ElementEffect.DRAIN;
+
+        return Enumerations.ElementEffect.WEAK;
+    }
+
+    @TypeConverter
+    public static Enumerations.Element toElement(int element){
+        for (Enumerations.Element element1 : Enumerations.Element.values()) {
+            if(element1.value() == element){
+                return element1;
+            }
         }
+
+        return Enumerations.Element.PHYSICAL;
+    }
+
+    @TypeConverter
+    public static int toInt(Enumerations.Element element){
+        return element.value();
     }
 }

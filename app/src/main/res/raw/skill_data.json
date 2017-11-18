@@ -1,0 +1,6248 @@
+[{
+    "name": "Absorb Bless",
+    "effect": "Absorb Bless attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Cybele",
+        "levelRequired": 77
+    }]
+}, {
+    "name": "Absorb Curse",
+    "effect": "Absorb Curse attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Attis",
+        "levelRequired": 86
+    }, {
+        "name": "Tsukiyomi",
+        "levelRequired": 0
+    }, {
+        "name": "Tsukiyomi Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Absorb Elec",
+    "effect": "Absorb Electric attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Absorb Fire",
+    "effect": "Absorb Fire attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Moloch",
+        "levelRequired": 64
+    }]
+}, {
+    "name": "Absorb Ice",
+    "effect": "Absorb Ice attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Satan",
+        "levelRequired": 98
+    }]
+}, {
+    "name": "Absorb Nuke",
+    "effect": "Absorb Nuclear attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kali",
+        "levelRequired": 82
+    }]
+}, {
+    "name": "Absorb Phys",
+    "effect": "Absorb Phys attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Abaddon",
+        "levelRequired": 79
+    }, {
+        "name": "Lucifer",
+        "levelRequired": 99
+    }, {
+        "name": "Messiah",
+        "levelRequired": 85
+    }]
+}, {
+    "name": "Absorb Psy",
+    "effect": "Absorb Psy attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Chi You",
+        "levelRequired": 90
+    }]
+}, {
+    "name": "Absorb Wind",
+    "effect": "Absorb Wind attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ishtar",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Adverse Resolve",
+    "effect": "Increase critical rate when being ambushed.",
+    "element": "passive",
+    "personas": [{
+        "name": "Arsene",
+        "levelRequired": 7
+    }, {
+        "name": "Jikokuten",
+        "levelRequired": 31
+    }, {
+        "name": "Rakshasa",
+        "levelRequired": 30
+    }, {
+        "name": "Raphael",
+        "levelRequired": 82
+    }, {
+        "name": "Thanatos Picaro",
+        "levelRequired": 73
+    }, {
+        "name": "Yamata-no-Orochi",
+        "levelRequired": 67
+    }]
+}, {
+    "name": "Agi",
+    "cost": 400,
+    "effect": "Deal weak Fire damage to 1 foe.",
+    "element": "fire",
+    "personas": [{
+        "name": "Hua Po",
+        "levelRequired": 0
+    }, {
+        "name": "Jack-o'-Lantern",
+        "levelRequired": 0
+    }, {
+        "name": "Onmoraki",
+        "levelRequired": 13
+    }, {
+        "name": "Succubus",
+        "levelRequired": 8
+    }]
+}, {
+    "name": "Agidyne",
+    "cost": 1200,
+    "effect": "Deal heavy Fire damage to 1 foe.",
+    "element": "fire",
+    "personas": [{
+        "name": "Baphomet",
+        "levelRequired": 0
+    }, {
+        "name": "Belial",
+        "levelRequired": 0
+    }, {
+        "name": "Cerberus",
+        "levelRequired": 0
+    }, {
+        "name": "Emperor's Amulet",
+        "levelRequired": 0
+    }, {
+        "name": "Mada",
+        "levelRequired": 0
+    }, {
+        "name": "Moloch",
+        "levelRequired": 62
+    }, {
+        "name": "Orpheus Picaro",
+        "levelRequired": 32
+    }, {
+        "name": "Queen Mab",
+        "levelRequired": 48
+    }, {
+        "name": "Seth",
+        "levelRequired": 0
+    }, {
+        "name": "Surt",
+        "levelRequired": 0
+    }, {
+        "name": "Yatagarasu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Agilao",
+    "cost": 800,
+    "effect": "Deal medium Fire damage to 1 foe.",
+    "element": "fire",
+    "personas": [{
+        "name": "Decarabia",
+        "levelRequired": 0
+    }, {
+        "name": "Hell Biker",
+        "levelRequired": 0
+    }, {
+        "name": "Isis",
+        "levelRequired": 0
+    }, {
+        "name": "Lamia",
+        "levelRequired": 0
+    }, {
+        "name": "Orpheus",
+        "levelRequired": 0
+    }, {
+        "name": "Orthrus",
+        "levelRequired": 0
+    }, {
+        "name": "Stone of Scone",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Agneyastra",
+    "cost": 24,
+    "effect": "Deal 1 to 3 times medium Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Ardha",
+        "levelRequired": 87
+    }, {
+        "name": "Messiah Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Ongyo-Ki",
+        "levelRequired": 81
+    }]
+}, {
+    "name": "Ailment Boost",
+    "effect": "Increase chance of inflicting all ailments.",
+    "element": "passive",
+    "personas": [{
+        "name": "Dionysus",
+        "levelRequired": 63
+    }, {
+        "name": "White Rider",
+        "levelRequired": 45
+    }]
+}, {
+    "name": "Ali Dance",
+    "effect": "Half hit rate of all incoming attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Futsunushi",
+        "levelRequired": 0
+    }, {
+        "name": "Gabriel",
+        "levelRequired": 79
+    }, {
+        "name": "Vishnu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Almighty Amp",
+    "effect": "Strengthen Almighty attacks by 50%.",
+    "element": "passive",
+    "note": "Available from Network Fusion",
+    "personas": []
+}, {
+    "name": "Almighty Boost",
+    "effect": "Strengthen Almighty attacks by 25%.",
+    "element": "passive",
+    "note": "Also available from Network Fusion",
+    "personas": [{
+        "name": "Messiah",
+        "levelRequired": 87
+    }, {
+        "name": "Messiah Picaro",
+        "levelRequired": 96
+    }]
+}, {
+    "name": "Ambient Aid",
+    "effect": "Greatly increase inflicting rate of all status effects under rainy day or special weather warning.",
+    "element": "passive",
+    "personas": [{
+        "name": "Black Ooze",
+        "levelRequired": 31
+    }, {
+        "name": "Black Rider",
+        "levelRequired": 60
+    }, {
+        "name": "Mothman",
+        "levelRequired": 36
+    }, {
+        "name": "Narcissus",
+        "levelRequired": 55
+    }, {
+        "name": "Pazuzu",
+        "levelRequired": 45
+    }, {
+        "name": "Sudama",
+        "levelRequired": 20
+    }]
+}, {
+    "name": "Amrita Drop",
+    "cost": 600,
+    "effect": "Cure all ailments of 1 ally except for unique status.",
+    "element": "healing",
+    "personas": [{
+        "name": "Fortuna",
+        "levelRequired": 50
+    }, {
+        "name": "Melchizedek",
+        "levelRequired": 65
+    }, {
+        "name": "Norn",
+        "levelRequired": 55
+    }, {
+        "name": "Seiryu",
+        "levelRequired": 66
+    }]
+}, {
+    "name": "Amrita Shower",
+    "cost": 1200,
+    "effect": "Cure all ailments of party except for unique status.",
+    "element": "healing",
+    "personas": [{
+        "name": "Dionysus",
+        "levelRequired": 66
+    }, {
+        "name": "Garuda",
+        "levelRequired": 0
+    }, {
+        "name": "Kaguya",
+        "levelRequired": 18
+    }, {
+        "name": "Kaguya Picaro",
+        "levelRequired": 27
+    }, {
+        "name": "Kushinada-Hime",
+        "levelRequired": 47
+    }, {
+        "name": "Lakshmi",
+        "levelRequired": 72
+    }, {
+        "name": "Mada",
+        "levelRequired": 88
+    }, {
+        "name": "Sandalphon",
+        "levelRequired": 0
+    }, {
+        "name": "Sraosha",
+        "levelRequired": 84
+    }]
+}, {
+    "name": "Angelic Grace",
+    "effect": "Double evasion against Fire/Ice/Elec/Wind/Nuke/Psy/Bless/Curse attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Sandalphon",
+        "levelRequired": 77
+    }, {
+        "name": "Sraosha",
+        "levelRequired": 83
+    }, {
+        "name": "Uriel",
+        "levelRequired": 85
+    }]
+}, {
+    "name": "Apt Pupil",
+    "effect": "Increase critical rate.",
+    "element": "passive",
+    "personas": [{
+        "name": "Andras",
+        "levelRequired": 13
+    }, {
+        "name": "Ariadne",
+        "levelRequired": 0
+    }, {
+        "name": "Ariadne Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Bicorn",
+        "levelRequired": 8
+    }, {
+        "name": "Futsunushi",
+        "levelRequired": 80
+    }, {
+        "name": "Sudama",
+        "levelRequired": 22
+    }]
+}, {
+    "name": "Arms Master",
+    "effect": "Half HP cost for physical skills.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ongyo-Ki",
+        "levelRequired": 77
+    }, {
+        "name": "Raphael",
+        "levelRequired": 83
+    }, {
+        "name": "Tsukiyomi",
+        "levelRequired": 56
+    }]
+}, {
+    "name": "Assault Dive",
+    "cost": 13,
+    "effect": "Deal heavy Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Anzu",
+        "levelRequired": 27
+    }, {
+        "name": "Flauros",
+        "levelRequired": 29
+    }, {
+        "name": "Koumokuten",
+        "levelRequired": 0
+    }, {
+        "name": "Nue",
+        "levelRequired": 25
+    }, {
+        "name": "Take-Minakata",
+        "levelRequired": 0
+    }, {
+        "name": "Unicorn",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Atomic Flare",
+    "cost": 4800,
+    "effect": "Deal severe Nuclear damage to 1 foe.",
+    "element": "nuclear",
+    "personas": [{
+        "name": "Asura-Ou",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Attack Master",
+    "effect": "Automatic Tarukaja at the start of battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ariadne",
+        "levelRequired": 31
+    }, {
+        "name": "Koumokuten",
+        "levelRequired": 51
+    }, {
+        "name": "Magatsu-Izanagi",
+        "levelRequired": 48
+    }, {
+        "name": "Scathach",
+        "levelRequired": 49
+    }, {
+        "name": "Thor",
+        "levelRequired": 70
+    }, {
+        "name": "Valkyrie",
+        "levelRequired": 45
+    }, {
+        "name": "Yaksini",
+        "levelRequired": 23
+    }, {
+        "name": "Zouchouten",
+        "levelRequired": 36
+    }]
+}, {
+    "name": "Auto-Maraku",
+    "effect": "Automatic Marakukaja at the start of battle. (Overwrites Defense Master)",
+    "element": "passive",
+    "personas": [{
+        "name": "Cybele",
+        "levelRequired": 76
+    }, {
+        "name": "Hope Diamond",
+        "levelRequired": 0
+    }, {
+        "name": "Throne",
+        "levelRequired": 76
+    }]
+}, {
+    "name": "Auto-Masuku",
+    "effect": "Automatic Masukukaja at the start of battle. (Overwrites Speed Master)",
+    "element": "passive",
+    "personas": [{
+        "name": "Ardha",
+        "levelRequired": 88
+    }, {
+        "name": "Asterius Picaro",
+        "levelRequired": 63
+    }, {
+        "name": "Hope Diamond",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Auto-Mataru",
+    "effect": "Automatic Matarukaja at the start of battle. (Overwrites Attack Master)",
+    "element": "passive",
+    "personas": [{
+        "name": "Ariadne Picaro",
+        "levelRequired": 43
+    }, {
+        "name": "Asterius",
+        "levelRequired": 57
+    }, {
+        "name": "Asura-Ou",
+        "levelRequired": 78
+    }, {
+        "name": "Bugs",
+        "levelRequired": 51
+    }, {
+        "name": "Hope Diamond",
+        "levelRequired": 0
+    }, {
+        "name": "King Frost",
+        "levelRequired": 64
+    }, {
+        "name": "Shiva",
+        "levelRequired": 87
+    }, {
+        "name": "Siegfried",
+        "levelRequired": 72
+    }]
+}, {
+    "name": "Bad Beat",
+    "cost": 21,
+    "effect": "Deal medium Phys damage and inflict Despair (low odds) to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Dakini",
+        "levelRequired": 0
+    }, {
+        "name": "Kin-Ki",
+        "levelRequired": 30
+    }, {
+        "name": "Pazuzu",
+        "levelRequired": 47
+    }]
+}, {
+    "name": "Baisudi",
+    "cost": 400,
+    "effect": "Cure Burn/Freeze/Shock of 1 ally.",
+    "element": "healing",
+    "personas": [{
+        "name": "Agathion",
+        "levelRequired": 0
+    }, {
+        "name": "Angel",
+        "levelRequired": 14
+    }, {
+        "name": "Jack Frost",
+        "levelRequired": 0
+    }, {
+        "name": "Nigi Mitama",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Abysmal Surge",
+    "cost": 1200,
+    "effect": "Inflict Despair (medium odds) to all foes.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Ananta",
+        "levelRequired": 45
+    }, {
+        "name": "Arahabaki",
+        "levelRequired": 0
+    }, {
+        "name": "Dionysus",
+        "levelRequired": 0
+    }, {
+        "name": "Pale Rider",
+        "levelRequired": 0
+    }, {
+        "name": "Pisaca",
+        "levelRequired": 32
+    }, {
+        "name": "Trumpeter",
+        "levelRequired": 0
+    }, {
+        "name": "Zaou-Gongen",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Black Viper",
+    "cost": 4800,
+    "effect": "Deal severe Almighty damage to 1 foe.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Satan",
+        "levelRequired": 94
+    }]
+}, {
+    "name": "Bless Amp",
+    "effect": "Strengthen (non instant death) Bless attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Cybele",
+        "levelRequired": 74
+    }, {
+        "name": "Metatron",
+        "levelRequired": 94
+    }, {
+        "name": "Throne",
+        "levelRequired": 74
+    }]
+}, {
+    "name": "Bless Boost",
+    "effect": "Strengthen (non instant death) Bless attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Daisoujou",
+        "levelRequired": 44
+    }, {
+        "name": "Mithra",
+        "levelRequired": 36
+    }, {
+        "name": "Principality",
+        "levelRequired": 34
+    }]
+}, {
+    "name": "Nocturnal Flash",
+    "cost": 1200,
+    "effect": "Inflict Dizzy (medium odds) to all foes.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Dominion",
+        "levelRequired": 0
+    }, {
+        "name": "Hariti",
+        "levelRequired": 42
+    }, {
+        "name": "Narcissus",
+        "levelRequired": 0
+    }, {
+        "name": "Norn",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Bloodbath",
+    "cost": 19,
+    "effect": "Deal heavy Phys damage and inflict Fear (low odds) to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Black Rider",
+        "levelRequired": 61
+    }, {
+        "name": "Chernobog",
+        "levelRequired": 0
+    }, {
+        "name": "Magatsu-Izanagi",
+        "levelRequired": 46
+    }, {
+        "name": "Magatsu-Izanagi Picaro",
+        "levelRequired": 50
+    }, {
+        "name": "Rangda",
+        "levelRequired": 0
+    }, {
+        "name": "Uriel",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Life Drain",
+    "cost": 300,
+    "effect": "Drains HP from 1 foe.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Choronzon",
+        "levelRequired": 0
+    }, {
+        "name": "Incubus",
+        "levelRequired": 0
+    }, {
+        "name": "Legion",
+        "levelRequired": 0
+    }, {
+        "name": "Tsukiyomi",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Brain Buster",
+    "cost": 21,
+    "effect": "Deal heavy Phys damage and inflict Brainwash (low odds) to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Kurama Tengu",
+        "levelRequired": 0
+    }, {
+        "name": "Trumpeter",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Brain Jack",
+    "cost": 1200,
+    "effect": "Inflict Brainwash (medium odds) to all foes.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Black Ooze",
+        "levelRequired": 34
+    }, {
+        "name": "Oberon",
+        "levelRequired": 0
+    }, {
+        "name": "Vasuki",
+        "levelRequired": 0
+    }, {
+        "name": "Yurlungur",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Brain Shake",
+    "cost": 9,
+    "effect": "Deal medium Phys damage and inflict Brainwash (medium odds) to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Inugami",
+        "levelRequired": 18
+    }, {
+        "name": "Pale Rider",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Brainwash Boost",
+    "effect": "Increase chance of inflicting Brainwash.",
+    "element": "passive",
+    "personas": [{
+        "name": "Succubus",
+        "levelRequired": 11
+    }, {
+        "name": "Vasuki",
+        "levelRequired": 72
+    }]
+}, {
+    "name": "Brave Blade",
+    "cost": 24,
+    "effect": "Deal grave Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Futsunushi",
+        "levelRequired": 82
+    }, {
+        "name": "Yoshitsune",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Bufu",
+    "cost": 400,
+    "effect": "Deal weak Ice damage to 1 foe.",
+    "element": "ice",
+    "personas": [{
+        "name": "Andras",
+        "levelRequired": 0
+    }, {
+        "name": "Apsaras",
+        "levelRequired": 0
+    }, {
+        "name": "Genbu",
+        "levelRequired": 0
+    }, {
+        "name": "Jack Frost",
+        "levelRequired": 0
+    }, {
+        "name": "Koropokkuru",
+        "levelRequired": 0
+    }, {
+        "name": "Kusi Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Saki Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Silky",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Bufudyne",
+    "cost": 1200,
+    "effect": "Deal heavy Ice damage to 1 foe.",
+    "element": "ice",
+    "personas": [{
+        "name": "Baphomet",
+        "levelRequired": 59
+    }, {
+        "name": "Byakko",
+        "levelRequired": 55
+    }, {
+        "name": "Emperor's Amulet",
+        "levelRequired": 0
+    }, {
+        "name": "King Frost",
+        "levelRequired": 0
+    }, {
+        "name": "Lakshmi",
+        "levelRequired": 0
+    }, {
+        "name": "Seiryu",
+        "levelRequired": 0
+    }, {
+        "name": "Skadi",
+        "levelRequired": 58
+    }]
+}, {
+    "name": "Bufula",
+    "cost": 800,
+    "effect": "Deal medium Ice damage to 1 foe.",
+    "element": "ice",
+    "personas": [{
+        "name": "Ame-no-Uzume",
+        "levelRequired": 0
+    }, {
+        "name": "Belphegor",
+        "levelRequired": 0
+    }, {
+        "name": "Lachesis",
+        "levelRequired": 0
+    }, {
+        "name": "Lilim",
+        "levelRequired": 0
+    }, {
+        "name": "Stone of Scone",
+        "levelRequired": 0
+    }, {
+        "name": "Sui-Ki",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Burn Boost",
+    "effect": "Increase chance of inflicting Burn.",
+    "element": "passive",
+    "personas": [{
+        "name": "Asterius",
+        "levelRequired": 0
+    }, {
+        "name": "Asterius Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Baphomet",
+        "levelRequired": 0
+    }, {
+        "name": "Hua Po",
+        "levelRequired": 15
+    }, {
+        "name": "Mada",
+        "levelRequired": 0
+    }, {
+        "name": "Orthrus",
+        "levelRequired": 22
+    }]
+}, {
+    "name": "Cadenza",
+    "cost": 2400,
+    "effect": "Restore 50% HP of party and increase evasion rate.",
+    "element": "healing",
+    "personas": [{
+        "name": "Orpheus",
+        "levelRequired": 0
+    }, {
+        "name": "Orpheus Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Cleave",
+    "cost": 6,
+    "effect": "Deal weak Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Arsene",
+        "levelRequired": 2
+    }, {
+        "name": "Berith",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Life Aid",
+    "effect": "Recover 8% HP and SP after a successful battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kohryu",
+        "levelRequired": 78
+    }, {
+        "name": "Lakshmi",
+        "levelRequired": 74
+    }, {
+        "name": "Messiah Picaro",
+        "levelRequired": 93
+    }, {
+        "name": "Trumpeter",
+        "levelRequired": 64
+    }]
+}, {
+    "name": "Cosmic Flare",
+    "cost": 5400,
+    "effect": "Deal severe Nuclear damage to all foes.",
+    "element": "nuclear",
+    "personas": [{
+        "name": "Ardha",
+        "levelRequired": 0
+    }, {
+        "name": "Michael",
+        "levelRequired": 92
+    }, {
+        "name": "Satanael",
+        "levelRequired": 96
+    }]
+}, {
+    "name": "Counter",
+    "effect": "10% chance of reflecting Phys attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ippon-Datara",
+        "levelRequired": 18
+    }, {
+        "name": "Jikokuten",
+        "levelRequired": 28
+    }, {
+        "name": "Oni",
+        "levelRequired": 0
+    }, {
+        "name": "Setanta",
+        "levelRequired": 0
+    }, {
+        "name": "Yaksini",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Counterstrike",
+    "effect": "15% chance of reflecting Phys attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Byakko",
+        "levelRequired": 0
+    }, {
+        "name": "Kaguya",
+        "levelRequired": 0
+    }, {
+        "name": "Kin-Ki",
+        "levelRequired": 31
+    }, {
+        "name": "Ose",
+        "levelRequired": 0
+    }, {
+        "name": "Rakshasa",
+        "levelRequired": 28
+    }, {
+        "name": "Rangda",
+        "levelRequired": 0
+    }, {
+        "name": "Valkyrie",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Cross Slash",
+    "cost": 20,
+    "effect": "Deal 2 times heavy Phys damage to 1 foe. High accuracy.",
+    "element": "phys",
+    "personas": [{
+        "name": "Izanagi",
+        "levelRequired": 0
+    }, {
+        "name": "Izanagi Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Curse Amp",
+    "effect": "Strengthen (non instant death) Curse attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Beelzebub",
+        "levelRequired": 85
+    }, {
+        "name": "Nebiros",
+        "levelRequired": 65
+    }, {
+        "name": "Thanatos",
+        "levelRequired": 66
+    }, {
+        "name": "Tsukiyomi",
+        "levelRequired": 53
+    }, {
+        "name": "Tsukiyomi Picaro",
+        "levelRequired": 58
+    }]
+}, {
+    "name": "Curse Boost",
+    "effect": "Strengthen (non instant death) Curse attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Choronzon",
+        "levelRequired": 32
+    }, {
+        "name": "Nue",
+        "levelRequired": 26
+    }, {
+        "name": "Pale Rider",
+        "levelRequired": 55
+    }]
+}, {
+    "name": "Sword Dance",
+    "cost": 21,
+    "effect": "Deal grave Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Metatron",
+        "levelRequired": 0
+    }, {
+        "name": "Michael",
+        "levelRequired": 89
+    }, {
+        "name": "Raphael",
+        "levelRequired": 0
+    }, {
+        "name": "Sandalphon",
+        "levelRequired": 79
+    }]
+}, {
+    "name": "Dazzler",
+    "cost": 500,
+    "effect": "Inflict Dizzy (high odds) to 1 foe.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Angel",
+        "levelRequired": 0
+    }, {
+        "name": "Archangel",
+        "levelRequired": 0
+    }, {
+        "name": "Jack-o'-Lantern",
+        "levelRequired": 5
+    }, {
+        "name": "Mokoi",
+        "levelRequired": 0
+    }, {
+        "name": "Naga",
+        "levelRequired": 27
+    }]
+}, {
+    "name": "Deadly Fury",
+    "cost": 18,
+    "effect": "Deal severe Phys damage to 1 foe. More powerful under Baton Pass .",
+    "element": "phys",
+    "personas": [{
+        "name": "Bishamonten",
+        "levelRequired": 68
+    }, {
+        "name": "Chernobog",
+        "levelRequired": 0
+    }, {
+        "name": "Cu Chulainn",
+        "levelRequired": 0
+    }, {
+        "name": "Koumokuten",
+        "levelRequired": 55
+    }]
+}, {
+    "name": "Deathbound",
+    "cost": 22,
+    "effect": "Deal 1 to 2 times medium Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Abaddon",
+        "levelRequired": 0
+    }, {
+        "name": "Chernobog",
+        "levelRequired": 64
+    }, {
+        "name": "Dakini",
+        "levelRequired": 53
+    }, {
+        "name": "Hanuman",
+        "levelRequired": 65
+    }, {
+        "name": "Pale Rider",
+        "levelRequired": 58
+    }, {
+        "name": "Uriel",
+        "levelRequired": 0
+    }, {
+        "name": "Valkyrie",
+        "levelRequired": 46
+    }, {
+        "name": "Yamata-no-Orochi",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Debilitate",
+    "cost": 3000,
+    "effect": "Decrease 1 foe's Attack, Defense and Agility for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Michael",
+        "levelRequired": 0
+    }, {
+        "name": "Mother Harlot",
+        "levelRequired": 85
+    }, {
+        "name": "Sraosha",
+        "levelRequired": 85
+    }, {
+        "name": "Trumpeter",
+        "levelRequired": 65
+    }]
+}, {
+    "name": "Defense Master",
+    "effect": "Automatic Rakukaja at the start of battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ananta",
+        "levelRequired": 0
+    }, {
+        "name": "Arahabaki",
+        "levelRequired": 39
+    }, {
+        "name": "Genbu",
+        "levelRequired": 12
+    }, {
+        "name": "Jikokuten",
+        "levelRequired": 0
+    }, {
+        "name": "Neko Shogun",
+        "levelRequired": 34
+    }, {
+        "name": "Take-Minakata",
+        "levelRequired": 32
+    }]
+}, {
+    "name": "Dekaja",
+    "cost": 1000,
+    "effect": "Negate all -kaja buff effects of all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Anzu",
+        "levelRequired": 28
+    }, {
+        "name": "Flauros",
+        "levelRequired": 0
+    }, {
+        "name": "Kumbhanda",
+        "levelRequired": 45
+    }, {
+        "name": "Obariyon",
+        "levelRequired": 12
+    }, {
+        "name": "Orobas",
+        "levelRequired": 0
+    }, {
+        "name": "Raphael",
+        "levelRequired": 0
+    }, {
+        "name": "Sarasvati",
+        "levelRequired": 52
+    }, {
+        "name": "Shiki-Ouji",
+        "levelRequired": 24
+    }, {
+        "name": "Succubus",
+        "levelRequired": 10
+    }]
+}, {
+    "name": "Dekunda",
+    "cost": 1000,
+    "effect": "Negate all -nda debuff effects of party.",
+    "element": "support",
+    "personas": [{
+        "name": "Alice",
+        "levelRequired": 0
+    }, {
+        "name": "Angel",
+        "levelRequired": 17
+    }, {
+        "name": "Anubis",
+        "levelRequired": 40
+    }, {
+        "name": "Cu Chulainn",
+        "levelRequired": 70
+    }, {
+        "name": "Jikokuten",
+        "levelRequired": 27
+    }, {
+        "name": "Mithra",
+        "levelRequired": 35
+    }, {
+        "name": "Mokoi",
+        "levelRequired": 14
+    }, {
+        "name": "Unicorn",
+        "levelRequired": 0
+    }, {
+        "name": "Yatagarasu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Devil Smile",
+    "cost": 1200,
+    "effect": "Inflict Fear (medium odds) to all foes.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Beelzebub",
+        "levelRequired": 0
+    }, {
+        "name": "Decarabia",
+        "levelRequired": 37
+    }, {
+        "name": "Lilim",
+        "levelRequired": 0
+    }, {
+        "name": "Moloch",
+        "levelRequired": 0
+    }, {
+        "name": "Pazuzu",
+        "levelRequired": 46
+    }]
+}, {
+    "name": "Evil Touch",
+    "cost": 500,
+    "effect": "Inflict Fear (high odds) to 1 foe.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Black Ooze",
+        "levelRequired": 0
+    }, {
+        "name": "Incubus",
+        "levelRequired": 0
+    }, {
+        "name": "Kodama",
+        "levelRequired": 13
+    }, {
+        "name": "Nekomata",
+        "levelRequired": 0
+    }, {
+        "name": "Skadi",
+        "levelRequired": 0
+    }, {
+        "name": "Slime",
+        "levelRequired": 0
+    }, {
+        "name": "White Rider",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Dia",
+    "cost": 300,
+    "effect": "Slightly restore 1 ally's HP.",
+    "element": "healing",
+    "personas": [{
+        "name": "Agathion",
+        "levelRequired": 0
+    }, {
+        "name": "Angel",
+        "levelRequired": 0
+    }, {
+        "name": "Pixie",
+        "levelRequired": 0
+    }, {
+        "name": "Silky",
+        "levelRequired": 7
+    }]
+}, {
+    "name": "Diamond Dust",
+    "cost": 4800,
+    "effect": "Deal severe Ice damage to 1 foe.",
+    "element": "ice",
+    "personas": [{
+        "name": "Black Frost",
+        "levelRequired": 72
+    }, {
+        "name": "Satan",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Diarahan",
+    "cost": 1800,
+    "effect": "Fully restore 1 ally's HP.",
+    "element": "healing",
+    "personas": [{
+        "name": "Bishamonten",
+        "levelRequired": 0
+    }, {
+        "name": "Daisoujou",
+        "levelRequired": 45
+    }, {
+        "name": "Kaguya",
+        "levelRequired": 21
+    }, {
+        "name": "Kaguya Picaro",
+        "levelRequired": 30
+    }, {
+        "name": "Lakshmi",
+        "levelRequired": 0
+    }, {
+        "name": "Norn",
+        "levelRequired": 54
+    }, {
+        "name": "Parvati",
+        "levelRequired": 58
+    }, {
+        "name": "Sarasvati",
+        "levelRequired": 54
+    }, {
+        "name": "Seiryu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Diarama",
+    "cost": 600,
+    "effect": "Moderately restore 1 ally's HP.",
+    "element": "healing",
+    "personas": [{
+        "name": "Ame-no-Uzume",
+        "levelRequired": 0
+    }, {
+        "name": "Phoenix",
+        "levelRequired": 23
+    }, {
+        "name": "High Pixie",
+        "levelRequired": 18
+    }, {
+        "name": "Horus",
+        "levelRequired": 0
+    }, {
+        "name": "Isis",
+        "levelRequired": 0
+    }, {
+        "name": "Mithra",
+        "levelRequired": 0
+    }, {
+        "name": "Neko Shogun",
+        "levelRequired": 0
+    }, {
+        "name": "Parvati",
+        "levelRequired": 0
+    }, {
+        "name": "Power",
+        "levelRequired": 44
+    }]
+}, {
+    "name": "Die For Me!",
+    "cost": 4400,
+    "effect": "High chance of instantly killing all foes.",
+    "element": "curse",
+    "personas": [{
+        "name": "Alice",
+        "levelRequired": 81
+    }]
+}, {
+    "name": "Despair Boost",
+    "effect": "Increase chance of inflicting Despair.",
+    "element": "passive",
+    "personas": [{
+        "name": "Lamia",
+        "levelRequired": 31
+    }, {
+        "name": "Pisaca",
+        "levelRequired": 33
+    }]
+}, {
+    "name": "Divine Grace",
+    "effect": "Effects of healing magic are increased by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ame-no-Uzume",
+        "levelRequired": 32
+    }, {
+        "name": "Kaguya",
+        "levelRequired": 17
+    }, {
+        "name": "Kaguya Picaro",
+        "levelRequired": 26
+    }, {
+        "name": "Kikuri-Hime",
+        "levelRequired": 45
+    }, {
+        "name": "Nigi Mitama",
+        "levelRequired": 22
+    }]
+}, {
+    "name": "Divine Judgement",
+    "cost": 4800,
+    "effect": "Half remaining HP of 1 foe.",
+    "element": "bless",
+    "personas": [{
+        "name": "Gabriel",
+        "levelRequired": 78
+    }, {
+        "name": "Metatron",
+        "levelRequired": 95
+    }, {
+        "name": "Michael",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Dizzy Boost",
+    "effect": "Increase chance of inflicting Dizzy.",
+    "element": "passive",
+    "personas": [{
+        "name": "Hariti",
+        "levelRequired": 45
+    }, {
+        "name": "Narcissus",
+        "levelRequired": 53
+    }]
+}, {
+    "name": "Dodge Bless",
+    "effect": "Double evasion rate against (non instant death) Bless attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Koh-i-Noor",
+        "levelRequired": 0
+    }, {
+        "name": "Lilim",
+        "levelRequired": 35
+    }]
+}, {
+    "name": "Dodge Curse",
+    "effect": "Double evasion rate against (non instant death) Curse attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Angel",
+        "levelRequired": 15
+    }, {
+        "name": "Incubus",
+        "levelRequired": 9
+    }, {
+        "name": "Koh-i-Noor",
+        "levelRequired": 0
+    }, {
+        "name": "Shiisaa",
+        "levelRequired": 20
+    }]
+}, {
+    "name": "Dodge Elec",
+    "effect": "Double evasion rate against Electric attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Agathion",
+        "levelRequired": 8
+    }, {
+        "name": "Choronzon",
+        "levelRequired": 30
+    }, {
+        "name": "Koh-i-Noor",
+        "levelRequired": 0
+    }, {
+        "name": "Makami",
+        "levelRequired": 20
+    }, {
+        "name": "Mokoi",
+        "levelRequired": 13
+    }, {
+        "name": "Nekomata",
+        "levelRequired": 22
+    }, {
+        "name": "Shiisaa",
+        "levelRequired": 21
+    }]
+}, {
+    "name": "Dodge Fire",
+    "effect": "Double evasion rate against Fire attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Atropos",
+        "levelRequired": 44
+    }, {
+        "name": "Belphegor",
+        "levelRequired": 0
+    }, {
+        "name": "Berith",
+        "levelRequired": 11
+    }, {
+        "name": "Koh-i-Noor",
+        "levelRequired": 0
+    }, {
+        "name": "Sui-Ki",
+        "levelRequired": 29
+    }]
+}, {
+    "name": "Dodge Ice",
+    "effect": "Double evasion rate against Ice attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Koh-i-Noor",
+        "levelRequired": 0
+    }, {
+        "name": "Koropokkuru",
+        "levelRequired": 11
+    }, {
+        "name": "Orthrus",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Dodge Nuke",
+    "effect": "Double evasion rate against Nuclear attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Koh-i-Noor",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Dodge Physical",
+    "effect": "Double evasion rate against Phys attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Flauros",
+        "levelRequired": 26
+    }, {
+        "name": "Izanagi",
+        "levelRequired": 22
+    }, {
+        "name": "Valkyrie",
+        "levelRequired": 49
+    }]
+}, {
+    "name": "Dodge Psy",
+    "effect": "Double evasion rate against Psy attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Jatayu",
+        "levelRequired": 33
+    }, {
+        "name": "Kin-Ki",
+        "levelRequired": 27
+    }, {
+        "name": "Koh-i-Noor",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Dodge Wind",
+    "effect": "Double evasion rate against Wind attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Fuu-Ki",
+        "levelRequired": 26
+    }, {
+        "name": "Koh-i-Noor",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Door of Hades",
+    "cost": 3200,
+    "effect": "Deal heavy Almighty damage to all foes with medium chance of instant kill.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Thanatos",
+        "levelRequired": 0
+    }, {
+        "name": "Thanatos Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Dormin Rush",
+    "cost": 16,
+    "effect": "Deal medium Phys damage and inflict Sleep (low odds) to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Flauros",
+        "levelRequired": 0
+    }, {
+        "name": "Sandman",
+        "levelRequired": 0
+    }, {
+        "name": "Setanta",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Dormina",
+    "cost": 500,
+    "effect": "Inflict Sleep (high odds) to 1 foe.",
+    "element": "ailment",
+    "personas": [{
+        "name": "High Pixie",
+        "levelRequired": 0
+    }, {
+        "name": "Hua Po",
+        "levelRequired": 0
+    }, {
+        "name": "Sandman",
+        "levelRequired": 0
+    }, {
+        "name": "Silky",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Double Fangs",
+    "cost": 10,
+    "effect": "Deal 2 times medium Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Berith",
+        "levelRequired": 10
+    }, {
+        "name": "Eligor",
+        "levelRequired": 18
+    }, {
+        "name": "Makami",
+        "levelRequired": 0
+    }, {
+        "name": "Naga",
+        "levelRequired": 0
+    }, {
+        "name": "Orthrus",
+        "levelRequired": 0
+    }, {
+        "name": "Shiisaa",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Dream Needle",
+    "cost": 8,
+    "effect": "Deal medium Phys damage and inflict Sleep (medium odds) to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Arsene",
+        "levelRequired": 5
+    }, {
+        "name": "Phoenix",
+        "levelRequired": 0
+    }, {
+        "name": "Inugami",
+        "levelRequired": 15
+    }, {
+        "name": "Pisaca",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Eiga",
+    "cost": 800,
+    "effect": "Deal medium Curse damage to 1 foe.",
+    "element": "curse",
+    "personas": [{
+        "name": "Anubis",
+        "levelRequired": 43
+    }, {
+        "name": "Choronzon",
+        "levelRequired": 31
+    }, {
+        "name": "Leanan Sidhe",
+        "levelRequired": 23
+    }, {
+        "name": "Stone of Scone",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Eigaon",
+    "cost": 1200,
+    "effect": "Deal heavy Curse damage to 1 foe.",
+    "element": "curse",
+    "personas": [{
+        "name": "Emperor's Amulet",
+        "levelRequired": 0
+    }, {
+        "name": "Nebiros",
+        "levelRequired": 0
+    }, {
+        "name": "Pale Rider",
+        "levelRequired": 0
+    }, {
+        "name": "Pazuzu",
+        "levelRequired": 48
+    }, {
+        "name": "Rangda",
+        "levelRequired": 49
+    }]
+}, {
+    "name": "Eiha",
+    "cost": 400,
+    "effect": "Deal weak Curse damage to 1 foe.",
+    "element": "curse",
+    "personas": [{
+        "name": "Arsene",
+        "levelRequired": 1
+    }, {
+        "name": "Incubus",
+        "levelRequired": 7
+    }, {
+        "name": "Slime",
+        "levelRequired": 11
+    }]
+}, {
+    "name": "Wild Thunder",
+    "cost": 5400,
+    "effect": "Deal severe Electric damage to all foes.",
+    "element": "electric",
+    "personas": [{
+        "name": "Odin",
+        "levelRequired": 84
+    }]
+}, {
+    "name": "Elec Amp",
+    "effect": "Strengthen Electric attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Oberon",
+        "levelRequired": 72
+    }, {
+        "name": "Odin",
+        "levelRequired": 87
+    }, {
+        "name": "Thor",
+        "levelRequired": 66
+    }, {
+        "name": "Yoshitsune",
+        "levelRequired": 84
+    }]
+}, {
+    "name": "Elec Boost",
+    "effect": "Strengthen Electric attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Atropos",
+        "levelRequired": 43
+    }, {
+        "name": "Naga",
+        "levelRequired": 26
+    }, {
+        "name": "Take-Minakata",
+        "levelRequired": 34
+    }, {
+        "name": "Yurlungur",
+        "levelRequired": 48
+    }]
+}, {
+    "name": "Elec Break",
+    "cost": 1500,
+    "effect": "Negate Electric resistances of all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Atropos",
+        "levelRequired": 0
+    }, {
+        "name": "Barong",
+        "levelRequired": 0
+    }, {
+        "name": "Raja Naga",
+        "levelRequired": 0
+    }, {
+        "name": "Take-Minakata",
+        "levelRequired": 0
+    }, {
+        "name": "Yurlungur",
+        "levelRequired": 45
+    }]
+}, {
+    "name": "Elec Wall",
+    "cost": 1800,
+    "effect": "Create a shield on 1 ally to reduce damage of Electric attacks for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Ananta",
+        "levelRequired": 0
+    }, {
+        "name": "Apsaras",
+        "levelRequired": 14
+    }, {
+        "name": "Lachesis",
+        "levelRequired": 36
+    }, {
+        "name": "Nekomata",
+        "levelRequired": 21
+    }]
+}, {
+    "name": "Endure",
+    "effect": "Survive one fatal blow with 1 HP remaining.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ganesha",
+        "levelRequired": 56
+    }, {
+        "name": "Hecatoncheires",
+        "levelRequired": 43
+    }, {
+        "name": "Hope Diamond",
+        "levelRequired": 0
+    }, {
+        "name": "Orpheus",
+        "levelRequired": 27
+    }, {
+        "name": "Orpheus Picaro",
+        "levelRequired": 30
+    }, {
+        "name": "Scathach",
+        "levelRequired": 50
+    }]
+}, {
+    "name": "Enduring Soul",
+    "effect": "Survive one fatal blow with HP completely recovered.",
+    "element": "passive",
+    "personas": [{
+        "name": "Attis",
+        "levelRequired": 84
+    }, {
+        "name": "Cerberus",
+        "levelRequired": 60
+    }, {
+        "name": "Cu Chulainn",
+        "levelRequired": 72
+    }, {
+        "name": "Koumokuten",
+        "levelRequired": 54
+    }, {
+        "name": "Mada",
+        "levelRequired": 90
+    }, {
+        "name": "Messiah",
+        "levelRequired": 83
+    }, {
+        "name": "Messiah Picaro",
+        "levelRequired": 92
+    }, {
+        "name": "Shiva",
+        "levelRequired": 0
+    }, {
+        "name": "Thanatos",
+        "levelRequired": 70
+    }, {
+        "name": "Thanatos Picaro",
+        "levelRequired": 74
+    }, {
+        "name": "Zaou-Gongen",
+        "levelRequired": 83
+    }]
+}, {
+    "name": "Energy Drop",
+    "cost": 400,
+    "effect": "Cure Confuse/Fear/Despair/Rage/Brainwash of 1 ally.",
+    "element": "healing",
+    "personas": [{
+        "name": "Kikuri-Hime",
+        "levelRequired": 0
+    }, {
+        "name": "Makami",
+        "levelRequired": 0
+    }, {
+        "name": "Mandrake",
+        "levelRequired": 0
+    }, {
+        "name": "Narcissus",
+        "levelRequired": 0
+    }, {
+        "name": "Saki Mitama",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Energy Shower",
+    "cost": 800,
+    "effect": "Cure Confuse/Fear/Despair/Rage/Brainwash of party.",
+    "element": "healing",
+    "personas": [{
+        "name": "Clotho",
+        "levelRequired": 30
+    }, {
+        "name": "Hariti",
+        "levelRequired": 0
+    }, {
+        "name": "Parvati",
+        "levelRequired": 57
+    }]
+}, {
+    "name": "Evade Bless",
+    "effect": "Triple evasion rate against (non instant death) Bless attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Nebiros",
+        "levelRequired": 66
+    }, {
+        "name": "Pale Rider",
+        "levelRequired": 57
+    }]
+}, {
+    "name": "Evade Curse",
+    "effect": "Triple evasion rate against (non instant death) Curse attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Dominion",
+        "levelRequired": 73
+    }, {
+        "name": "Gabriel",
+        "levelRequired": 80
+    }, {
+        "name": "Throne",
+        "levelRequired": 75
+    }]
+}, {
+    "name": "Evade Elec",
+    "effect": "Triple evasion rate against Electric attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Fortuna",
+        "levelRequired": 51
+    }, {
+        "name": "Garuda",
+        "levelRequired": 55
+    }]
+}, {
+    "name": "Evade Fire",
+    "effect": "Triple evasion rate against Fire attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Baphomet",
+        "levelRequired": 0
+    }, {
+        "name": "Byakko",
+        "levelRequired": 52
+    }]
+}, {
+    "name": "Evade Ice",
+    "effect": "Triple evasion rate against Ice attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kali",
+        "levelRequired": 79
+    }]
+}, {
+    "name": "Evade Nuke",
+    "effect": "Triple evasion rate against Nuclear attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Okuninushi",
+        "levelRequired": 47
+    }]
+}, {
+    "name": "Evade Physical",
+    "effect": "Triple evasion rate against Phys attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ariadne",
+        "levelRequired": 34
+    }, {
+        "name": "Ariadne Picaro",
+        "levelRequired": 46
+    }, {
+        "name": "Bugs",
+        "levelRequired": 54
+    }, {
+        "name": "Zaou-Gongen",
+        "levelRequired": 82
+    }]
+}, {
+    "name": "Evade Psy",
+    "effect": "Triple evasion rate against Psy attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Forneus",
+        "levelRequired": 68
+    }]
+}, {
+    "name": "Evade Wind",
+    "effect": "Triple evasion rate against Wind attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Raja Naga",
+        "levelRequired": 60
+    }, {
+        "name": "Vasuki",
+        "levelRequired": 70
+    }]
+}, {
+    "name": "Demonic Decree",
+    "cost": 4800,
+    "effect": "Half remaining HP of 1 foe.",
+    "element": "curse",
+    "personas": [{
+        "name": "Beelzebub",
+        "levelRequired": 87
+    }]
+}, {
+    "name": "Fast Heal",
+    "effect": "Half the time needed to recover from ailments.",
+    "element": "passive",
+    "personas": [{
+        "name": "Bugs",
+        "levelRequired": 55
+    }, {
+        "name": "Hope Diamond",
+        "levelRequired": 0
+    }, {
+        "name": "Odin",
+        "levelRequired": 86
+    }, {
+        "name": "Yoshitsune",
+        "levelRequired": 82
+    }]
+}, {
+    "name": "Fear Boost",
+    "effect": "Increase chance of inflicting Fear.",
+    "element": "passive",
+    "personas": [{
+        "name": "Chernobog",
+        "levelRequired": 66
+    }, {
+        "name": "Kodama",
+        "levelRequired": 15
+    }]
+}, {
+    "name": "Fire Amp",
+    "effect": "Strengthen Fire attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Asterius",
+        "levelRequired": 59
+    }, {
+        "name": "Asterius Picaro",
+        "levelRequired": 65
+    }, {
+        "name": "Mada",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Fire Boost",
+    "effect": "Strengthen Fire attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Decarabia",
+        "levelRequired": 35
+    }, {
+        "name": "Hell Biker",
+        "levelRequired": 40
+    }, {
+        "name": "Orpheus",
+        "levelRequired": 32
+    }, {
+        "name": "Orpheus Picaro",
+        "levelRequired": 35
+    }]
+}, {
+    "name": "Fire Break",
+    "cost": 1500,
+    "effect": "Negate Fire resistances of all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Orobas",
+        "levelRequired": 20
+    }, {
+        "name": "Seth",
+        "levelRequired": 54
+    }, {
+        "name": "Surt",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Fire Wall",
+    "cost": 1800,
+    "effect": "Create a shield on 1 ally to reduce damage of Fire attacks for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Atropos",
+        "levelRequired": 0
+    }, {
+        "name": "Koropokkuru",
+        "levelRequired": 13
+    }, {
+        "name": "Slime",
+        "levelRequired": 13
+    }]
+}, {
+    "name": "Firm Stance",
+    "effect": "Half all incoming damage by sacrificing evasion completely.",
+    "element": "passive",
+    "personas": [{
+        "name": "Futsunushi",
+        "levelRequired": 81
+    }, {
+        "name": "Mara",
+        "levelRequired": 78
+    }, {
+        "name": "Messiah Picaro",
+        "levelRequired": 94
+    }, {
+        "name": "Ongyo-Ki",
+        "levelRequired": 79
+    }]
+}, {
+    "name": "Flash Bomb",
+    "cost": 19,
+    "effect": "Deal medium Phys damage and inflict Dizzy (low odds) to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Black Ooze",
+        "levelRequired": 35
+    }, {
+        "name": "Black Rider",
+        "levelRequired": 0
+    }, {
+        "name": "Jatayu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Forget Boost",
+    "effect": "Increase chance of inflicting Forget.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kaiwan",
+        "levelRequired": 37
+    }, {
+        "name": "Kusi Mitama",
+        "levelRequired": 18
+    }]
+}, {
+    "name": "Foul Breath",
+    "cost": 800,
+    "effect": "Increase susceptibility to all ailments of 1 foe.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Girimehkala",
+        "levelRequired": 46
+    }, {
+        "name": "Hecatoncheires",
+        "levelRequired": 45
+    }, {
+        "name": "Lamia",
+        "levelRequired": 28
+    }, {
+        "name": "White Rider",
+        "levelRequired": 44
+    }]
+}, {
+    "name": "Freeze Boost",
+    "effect": "Increase chance of inflicting Freeze.",
+    "element": "passive",
+    "personas": [{
+        "name": "Baphomet",
+        "levelRequired": 63
+    }, {
+        "name": "Jack Frost",
+        "levelRequired": 15
+    }, {
+        "name": "King Frost",
+        "levelRequired": 62
+    }, {
+        "name": "Lilim",
+        "levelRequired": 34
+    }]
+}, {
+    "name": "Frei",
+    "cost": 400,
+    "effect": "Deal weak Nuclear damage to 1 foe.",
+    "element": "nuclear",
+    "personas": [{
+        "name": "Makami",
+        "levelRequired": 0
+    }, {
+        "name": "Suzaku",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Freidyne",
+    "cost": 1200,
+    "effect": "Deal heavy Nuclear damage to 1 foe.",
+    "element": "nuclear",
+    "personas": [{
+        "name": "Ananta",
+        "levelRequired": 48
+    }, {
+        "name": "Bishamonten",
+        "levelRequired": 0
+    }, {
+        "name": "Emperor's Amulet",
+        "levelRequired": 0
+    }, {
+        "name": "Mithras",
+        "levelRequired": 45
+    }, {
+        "name": "Titania",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Freila",
+    "cost": 800,
+    "effect": "Deal medium Nuclear damage to 1 foe.",
+    "element": "nuclear",
+    "personas": [{
+        "name": "Ara Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Phoenix",
+        "levelRequired": 0
+    }, {
+        "name": "Stone of Scone",
+        "levelRequired": 0
+    }, {
+        "name": "Thoth",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Garu",
+    "cost": 300,
+    "effect": "Deal weak Wind damage to 1 foe.",
+    "element": "wind",
+    "personas": [{
+        "name": "Bicorn",
+        "levelRequired": 6
+    }, {
+        "name": "High Pixie",
+        "levelRequired": 0
+    }, {
+        "name": "Kelpie",
+        "levelRequired": 0
+    }, {
+        "name": "Kodama",
+        "levelRequired": 0
+    }, {
+        "name": "Koppa Tengu",
+        "levelRequired": 0
+    }, {
+        "name": "Kusi Mitama",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Garudyne",
+    "cost": 1000,
+    "effect": "Deal heavy Wind damage to 1 foe.",
+    "element": "wind",
+    "personas": [{
+        "name": "Emperor's Amulet",
+        "levelRequired": 0
+    }, {
+        "name": "Fortuna",
+        "levelRequired": 47
+    }, {
+        "name": "Garuda",
+        "levelRequired": 0
+    }, {
+        "name": "Kurama Tengu",
+        "levelRequired": 57
+    }, {
+        "name": "Norn",
+        "levelRequired": 0
+    }, {
+        "name": "Quetzalcoatl",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Garula",
+    "cost": 600,
+    "effect": "Deal medium Wind damage to 1 foe.",
+    "element": "wind",
+    "personas": [{
+        "name": "Anzu",
+        "levelRequired": 0
+    }, {
+        "name": "Fuu-Ki",
+        "levelRequired": 0
+    }, {
+        "name": "Isis",
+        "levelRequired": 30
+    }, {
+        "name": "Jatayu",
+        "levelRequired": 0
+    }, {
+        "name": "Matador",
+        "levelRequired": 23
+    }, {
+        "name": "Sandman",
+        "levelRequired": 0
+    }, {
+        "name": "Stone of Scone",
+        "levelRequired": 0
+    }, {
+        "name": "Sudama",
+        "levelRequired": 23
+    }]
+}, {
+    "name": "Ghastly Wail",
+    "cost": 2800,
+    "effect": "Instantly kill all foes under Fear.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Black Rider",
+        "levelRequired": 63
+    }, {
+        "name": "Magatsu-Izanagi",
+        "levelRequired": 0
+    }, {
+        "name": "Magatsu-Izanagi Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Moloch",
+        "levelRequired": 63
+    }, {
+        "name": "Skadi",
+        "levelRequired": 56
+    }]
+}, {
+    "name": "Giant Slice",
+    "cost": 9,
+    "effect": "Deal medium Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Dakini",
+        "levelRequired": 0
+    }, {
+        "name": "Flauros",
+        "levelRequired": 0
+    }, {
+        "name": "Ganesha",
+        "levelRequired": 0
+    }, {
+        "name": "Inugami",
+        "levelRequired": 0
+    }, {
+        "name": "Oni",
+        "levelRequired": 21
+    }, {
+        "name": "Rakshasa",
+        "levelRequired": 0
+    }, {
+        "name": "Setanta",
+        "levelRequired": 0
+    }, {
+        "name": "Zouchouten",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Gigantomachia",
+    "cost": 25,
+    "effect": "Deal grave Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Abaddon",
+        "levelRequired": 80
+    }, {
+        "name": "Asterius",
+        "levelRequired": 62
+    }, {
+        "name": "Asterius Picaro",
+        "levelRequired": 68
+    }, {
+        "name": "Chi You",
+        "levelRequired": 0
+    }, {
+        "name": "Lucifer",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "God's Hand",
+    "cost": 25,
+    "effect": "Deal grave Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Ardha",
+        "levelRequired": 0
+    }, {
+        "name": "Bishamonten",
+        "levelRequired": 73
+    }, {
+        "name": "Melchizedek",
+        "levelRequired": 67
+    }, {
+        "name": "Messiah",
+        "levelRequired": 0
+    }, {
+        "name": "Zaou-Gongen",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Growth 1",
+    "effect": "Persona gains 1/4 EXP while inactive.",
+    "element": "passive",
+    "personas": [{
+        "name": "Koppa Tengu",
+        "levelRequired": 12
+    }, {
+        "name": "Saki Mitama",
+        "levelRequired": 7
+    }]
+}, {
+    "name": "Growth 2",
+    "effect": "Persona gains 1/2 EXP while inactive.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ananta",
+        "levelRequired": 46
+    }, {
+        "name": "Lachesis",
+        "levelRequired": 0
+    }, {
+        "name": "Thoth",
+        "levelRequired": 42
+    }]
+}, {
+    "name": "Growth 3",
+    "effect": "Persona gains full EXP even while inactive.",
+    "element": "passive",
+    "personas": [{
+        "name": "Izanagi",
+        "levelRequired": 25
+    }, {
+        "name": "Izanagi Picaro",
+        "levelRequired": 28
+    }, {
+        "name": "Kurama Tengu",
+        "levelRequired": 58
+    }, {
+        "name": "Narcissus",
+        "levelRequired": 52
+    }, {
+        "name": "Quetzalcoatl",
+        "levelRequired": 65
+    }, {
+        "name": "Raphael",
+        "levelRequired": 81
+    }]
+}, {
+    "name": "Hama",
+    "cost": 800,
+    "effect": "Small chance of instantly killing 1 foe.",
+    "element": "bless",
+    "personas": [{
+        "name": "Angel",
+        "levelRequired": 0
+    }, {
+        "name": "Archangel",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Hama Boost",
+    "effect": "Increase success rate of instant death by Bless skills.",
+    "element": "passive",
+    "personas": [{
+        "name": "Dominion",
+        "levelRequired": 71
+    }, {
+        "name": "Horus",
+        "levelRequired": 54
+    }, {
+        "name": "Melchizedek",
+        "levelRequired": 61
+    }, {
+        "name": "Metatron",
+        "levelRequired": 92
+    }, {
+        "name": "Parvati",
+        "levelRequired": 61
+    }, {
+        "name": "Sraosha",
+        "levelRequired": 0
+    }, {
+        "name": "Throne",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Hamaon",
+    "cost": 1500,
+    "effect": "Medium chance of instantly killing 1 foe.",
+    "element": "bless",
+    "personas": [{
+        "name": "Anubis",
+        "levelRequired": 0
+    }, {
+        "name": "Dominion",
+        "levelRequired": 0
+    }, {
+        "name": "Horus",
+        "levelRequired": 53
+    }, {
+        "name": "Melchizedek",
+        "levelRequired": 0
+    }, {
+        "name": "Parvati",
+        "levelRequired": 0
+    }, {
+        "name": "Power",
+        "levelRequired": 0
+    }, {
+        "name": "Unicorn",
+        "levelRequired": 44
+    }]
+}, {
+    "name": "Hassou Tobi",
+    "cost": 25,
+    "effect": "Deal 8 times weak Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Yoshitsune",
+        "levelRequired": 86
+    }]
+}, {
+    "name": "Headbutt",
+    "cost": 9,
+    "effect": "Deal medium Phys damage and inflict Forget (medium odds) to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Black Ooze",
+        "levelRequired": 32
+    }, {
+        "name": "Slime",
+        "levelRequired": 14
+    }, {
+        "name": "Sui-Ki",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Heat Riser",
+    "cost": 3000,
+    "effect": "Increase 1 ally's Attack, Defense and Agility for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Lucifer",
+        "levelRequired": 96
+    }, {
+        "name": "Magatsu-Izanagi",
+        "levelRequired": 50
+    }, {
+        "name": "Magatsu-Izanagi Picaro",
+        "levelRequired": 54
+    }, {
+        "name": "Raphael",
+        "levelRequired": 80
+    }, {
+        "name": "Satanael",
+        "levelRequired": 97
+    }]
+}, {
+    "name": "Heat Up",
+    "effect": "Recover 5% HP and 10 SP at the start of preemptive turn.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ariadne Picaro",
+        "levelRequired": 44
+    }, {
+        "name": "Belial",
+        "levelRequired": 72
+    }, {
+        "name": "Flauros",
+        "levelRequired": 30
+    }, {
+        "name": "Mara",
+        "levelRequired": 77
+    }, {
+        "name": "Thor",
+        "levelRequired": 68
+    }]
+}, {
+    "name": "Heat Wave",
+    "cost": 20,
+    "effect": "Deal heavy Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Dionysus",
+        "levelRequired": 0
+    }, {
+        "name": "Garuda",
+        "levelRequired": 0
+    }, {
+        "name": "Kurama Tengu",
+        "levelRequired": 0
+    }, {
+        "name": "Oberon",
+        "levelRequired": 0
+    }, {
+        "name": "Okuninushi",
+        "levelRequired": 49
+    }, {
+        "name": "Ose",
+        "levelRequired": 47
+    }]
+}, {
+    "name": "High Counter",
+    "effect": "20% chance of reflecting Phys attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Asura-Ou",
+        "levelRequired": 80
+    }, {
+        "name": "Cerberus",
+        "levelRequired": 57
+    }, {
+        "name": "Dakini",
+        "levelRequired": 52
+    }, {
+        "name": "Hope Diamond",
+        "levelRequired": 0
+    }, {
+        "name": "Kaguya Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Kali",
+        "levelRequired": 80
+    }, {
+        "name": "Siegfried",
+        "levelRequired": 0
+    }, {
+        "name": "Surt",
+        "levelRequired": 61
+    }, {
+        "name": "Thor",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Fortified Moxy",
+    "effect": "Increase critical rate when beginning battle with preemptive turn.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ardha",
+        "levelRequired": 89
+    }, {
+        "name": "Ariadne",
+        "levelRequired": 32
+    }, {
+        "name": "Hecatoncheires",
+        "levelRequired": 46
+    }, {
+        "name": "Lucifer",
+        "levelRequired": 97
+    }, {
+        "name": "Neko Shogun",
+        "levelRequired": 36
+    }, {
+        "name": "Thanatos",
+        "levelRequired": 69
+    }]
+}, {
+    "name": "Hysterical Slap",
+    "cost": 9,
+    "effect": "Deal medium Phys damage and inflict Rage (medium odds) to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Kumbhanda",
+        "levelRequired": 0
+    }, {
+        "name": "Kushinada-Hime",
+        "levelRequired": 0
+    }, {
+        "name": "Nekomata",
+        "levelRequired": 18
+    }, {
+        "name": "Yaksini",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Ice Age",
+    "cost": 5400,
+    "effect": "Deal severe Ice damage to all foes.",
+    "element": "ice",
+    "personas": [{
+        "name": "Mother Harlot",
+        "levelRequired": 81
+    }, {
+        "name": "Satan",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Ice Amp",
+    "effect": "Strengthen Ice attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Black Frost",
+        "levelRequired": 70
+    }, {
+        "name": "Gabriel",
+        "levelRequired": 82
+    }, {
+        "name": "King Frost",
+        "levelRequired": 67
+    }, {
+        "name": "Mother Harlot",
+        "levelRequired": 82
+    }]
+}, {
+    "name": "Ice Boost",
+    "effect": "Strengthen Ice attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Byakko",
+        "levelRequired": 51
+    }, {
+        "name": "Lachesis",
+        "levelRequired": 40
+    }]
+}, {
+    "name": "Ice Break",
+    "cost": 1500,
+    "effect": "Negate Ice resistances of all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Andras",
+        "levelRequired": 15
+    }, {
+        "name": "Belphegor",
+        "levelRequired": 39
+    }, {
+        "name": "Jack Frost",
+        "levelRequired": 0
+    }, {
+        "name": "King Frost",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Ice Wall",
+    "cost": 1800,
+    "effect": "Create a shield on 1 ally to reduce damage of Ice attacks for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Apsaras",
+        "levelRequired": 0
+    }, {
+        "name": "Bicorn",
+        "levelRequired": 7
+    }, {
+        "name": "Cu Chulainn",
+        "levelRequired": 0
+    }, {
+        "name": "Onmoraki",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Blazing Hell",
+    "cost": 5400,
+    "effect": "Deal severe Fire damage to all foes.",
+    "element": "fire",
+    "personas": [{
+        "name": "Attis",
+        "levelRequired": 88
+    }, {
+        "name": "Lucifer",
+        "levelRequired": 0
+    }, {
+        "name": "Mada",
+        "levelRequired": 87
+    }, {
+        "name": "Zaou-Gongen",
+        "levelRequired": 86
+    }]
+}, {
+    "name": "Inferno",
+    "cost": 4800,
+    "effect": "Deal severe Fire damage to 1 foe.",
+    "element": "fire",
+    "personas": [{
+        "name": "Surt",
+        "levelRequired": 64
+    }]
+}, {
+    "name": "Insta-Heal",
+    "effect": "Recover from an ailment in 1 turn.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ishtar",
+        "levelRequired": 87
+    }, {
+        "name": "Lucifer",
+        "levelRequired": 98
+    }, {
+        "name": "Messiah Picaro",
+        "levelRequired": 91
+    }]
+}, {
+    "name": "Invigorate 1",
+    "effect": "Recover 3 SP each turn in battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Clotho",
+        "levelRequired": 32
+    }, {
+        "name": "Neko Shogun",
+        "levelRequired": 31
+    }]
+}, {
+    "name": "Invigorate 2",
+    "effect": "Recover 5 SP each turn in battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Barong",
+        "levelRequired": 54
+    }, {
+        "name": "Hope Diamond",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Invigorate 3",
+    "effect": "Recover 7 SP each turn in battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ardha",
+        "levelRequired": 0
+    }, {
+        "name": "Messiah",
+        "levelRequired": 84
+    }, {
+        "name": "Satan",
+        "levelRequired": 95
+    }, {
+        "name": "Throne",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Kouga",
+    "cost": 800,
+    "effect": "Deal medium Bless damage to 1 foe.",
+    "element": "bless",
+    "personas": [{
+        "name": "Mithra",
+        "levelRequired": 0
+    }, {
+        "name": "Stone of Scone",
+        "levelRequired": 0
+    }, {
+        "name": "Unicorn",
+        "levelRequired": 43
+    }]
+}, {
+    "name": "Kougaon",
+    "cost": 1200,
+    "effect": "Deal heavy Bless damage to 1 foe.",
+    "element": "bless",
+    "personas": [{
+        "name": "Dominion",
+        "levelRequired": 0
+    }, {
+        "name": "Emperor's Amulet",
+        "levelRequired": 0
+    }, {
+        "name": "Horus",
+        "levelRequired": 0
+    }, {
+        "name": "Sraosha",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Kouha",
+    "cost": 400,
+    "effect": "Deal weak Bless damage to 1 foe.",
+    "element": "bless",
+    "personas": [{
+        "name": "Angel",
+        "levelRequired": 13
+    }]
+}, {
+    "name": "Lucky Punch",
+    "cost": 6,
+    "effect": "Deal minuscule Phys damage to 1 foe. High critical rate.",
+    "element": "phys",
+    "personas": [{
+        "name": "Inugami",
+        "levelRequired": 17
+    }, {
+        "name": "Obariyon",
+        "levelRequired": 9
+    }, {
+        "name": "Sudama",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Lullaby",
+    "cost": 1200,
+    "effect": "Inflict Sleep (medium odds) to all foes.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Kikuri-Hime",
+        "levelRequired": 0
+    }, {
+        "name": "Lakshmi",
+        "levelRequired": 0
+    }, {
+        "name": "Titania",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Lunge",
+    "cost": 5,
+    "effect": "Deal weak Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Agathion",
+        "levelRequired": 4
+    }, {
+        "name": "Bicorn",
+        "levelRequired": 0
+    }, {
+        "name": "Kelpie",
+        "levelRequired": 0
+    }, {
+        "name": "Mandrake",
+        "levelRequired": 4
+    }, {
+        "name": "Slime",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mabaisudi",
+    "cost": 800,
+    "effect": "Cure Burn/Freeze/Shock of party.",
+    "element": "healing",
+    "personas": [{
+        "name": "Hariti",
+        "levelRequired": 0
+    }, {
+        "name": "Lachesis",
+        "levelRequired": 0
+    }, {
+        "name": "Principality",
+        "levelRequired": 32
+    }]
+}, {
+    "name": "Mabufu",
+    "cost": 1000,
+    "effect": "Deal weak Ice damage to all foes.",
+    "element": "ice",
+    "personas": [{
+        "name": "Andras",
+        "levelRequired": 14
+    }, {
+        "name": "Genbu",
+        "levelRequired": 10
+    }, {
+        "name": "Jack Frost",
+        "levelRequired": 12
+    }, {
+        "name": "Koropokkuru",
+        "levelRequired": 14
+    }, {
+        "name": "Regent",
+        "levelRequired": 0
+    }, {
+        "name": "Sui-Ki",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mabufudyne",
+    "cost": 2200,
+    "effect": "Deal heavy Ice damage to all foes.",
+    "element": "ice",
+    "personas": [{
+        "name": "Black Frost",
+        "levelRequired": 0
+    }, {
+        "name": "Crystal Skull",
+        "levelRequired": 0
+    }, {
+        "name": "Gabriel",
+        "levelRequired": 0
+    }, {
+        "name": "Lilith",
+        "levelRequired": 0
+    }, {
+        "name": "Michael",
+        "levelRequired": 0
+    }, {
+        "name": "Mother Harlot",
+        "levelRequired": 0
+    }, {
+        "name": "Seiryu",
+        "levelRequired": 65
+    }, {
+        "name": "Yamata-no-Orochi",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mabufula",
+    "cost": 1600,
+    "effect": "Deal medium Ice damage to all foes.",
+    "element": "ice",
+    "personas": [{
+        "name": "Belphegor",
+        "levelRequired": 41
+    }, {
+        "name": "Byakko",
+        "levelRequired": 0
+    }, {
+        "name": "Kushinada-Hime",
+        "levelRequired": 0
+    }, {
+        "name": "Lachesis",
+        "levelRequired": 38
+    }, {
+        "name": "Lilim",
+        "levelRequired": 37
+    }, {
+        "name": "Orlov",
+        "levelRequired": 0
+    }, {
+        "name": "Skadi",
+        "levelRequired": 0
+    }, {
+        "name": "Sui-Ki",
+        "levelRequired": 28
+    }]
+}, {
+    "name": "Maeiga",
+    "cost": 1600,
+    "effect": "Deal medium Curse damage to all foes.",
+    "element": "curse",
+    "personas": [{
+        "name": "Arahabaki",
+        "levelRequired": 38
+    }, {
+        "name": "Orlov",
+        "levelRequired": 0
+    }, {
+        "name": "Pazuzu",
+        "levelRequired": 0
+    }, {
+        "name": "White Rider",
+        "levelRequired": 42
+    }]
+}, {
+    "name": "Maeigaon",
+    "cost": 2200,
+    "effect": "Deal heavy Curse damage to all foes.",
+    "element": "curse",
+    "personas": [{
+        "name": "Beelzebub",
+        "levelRequired": 0
+    }, {
+        "name": "Black Rider",
+        "levelRequired": 0
+    }, {
+        "name": "Crystal Skull",
+        "levelRequired": 0
+    }, {
+        "name": "Mara",
+        "levelRequired": 76
+    }, {
+        "name": "Nebiros",
+        "levelRequired": 64
+    }, {
+        "name": "Satanael",
+        "levelRequired": 0
+    }, {
+        "name": "Thanatos",
+        "levelRequired": 0
+    }, {
+        "name": "Thanatos Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Maeiha",
+    "cost": 1000,
+    "effect": "Deal weak Curse damage to all foes.",
+    "element": "curse",
+    "personas": [{
+        "name": "Choronzon",
+        "levelRequired": 29
+    }, {
+        "name": "Nue",
+        "levelRequired": 0
+    }, {
+        "name": "Regent",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mafrei",
+    "cost": 1000,
+    "effect": "Deal weak Nuclear damage to all foes.",
+    "element": "nuclear",
+    "personas": [{
+        "name": "Makami",
+        "levelRequired": 17
+    }, {
+        "name": "Regent",
+        "levelRequired": 0
+    }, {
+        "name": "Suzaku",
+        "levelRequired": 22
+    }]
+}, {
+    "name": "Mafreidyne",
+    "cost": 2200,
+    "effect": "Deal heavy Nuclear damage to all foes.",
+    "element": "nuclear",
+    "personas": [{
+        "name": "Asura-Ou",
+        "levelRequired": 79
+    }, {
+        "name": "Bishamonten",
+        "levelRequired": 69
+    }, {
+        "name": "Crystal Skull",
+        "levelRequired": 0
+    }, {
+        "name": "Titania",
+        "levelRequired": 58
+    }, {
+        "name": "Trumpeter",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mafreila",
+    "cost": 1600,
+    "effect": "Deal medium Nuclear damage to all foes.",
+    "element": "nuclear",
+    "personas": [{
+        "name": "Ananta",
+        "levelRequired": 0
+    }, {
+        "name": "Mithras",
+        "levelRequired": 0
+    }, {
+        "name": "Orlov",
+        "levelRequired": 0
+    }, {
+        "name": "Thoth",
+        "levelRequired": 40
+    }]
+}, {
+    "name": "Magaru",
+    "cost": 800,
+    "effect": "Deal small Wind damage to all foes.",
+    "element": "wind",
+    "personas": [{
+        "name": "High Pixie",
+        "levelRequired": 20
+    }, {
+        "name": "Nekomata",
+        "levelRequired": 0
+    }, {
+        "name": "Regent",
+        "levelRequired": 0
+    }, {
+        "name": "Sudama",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Magarudyne",
+    "cost": 2000,
+    "effect": "Deal heavy Wind damage to all foes.",
+    "element": "wind",
+    "personas": [{
+        "name": "Baal",
+        "levelRequired": 0
+    }, {
+        "name": "Crystal Skull",
+        "levelRequired": 0
+    }, {
+        "name": "Garuda",
+        "levelRequired": 57
+    }, {
+        "name": "Kurama Tengu",
+        "levelRequired": 60
+    }, {
+        "name": "Lilith",
+        "levelRequired": 62
+    }, {
+        "name": "Magatsu-Izanagi Picaro",
+        "levelRequired": 49
+    }, {
+        "name": "Quetzalcoatl",
+        "levelRequired": 67
+    }, {
+        "name": "Vishnu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Magarula",
+    "cost": 1400,
+    "effect": "Deal medium Wind damage to all foes.",
+    "element": "wind",
+    "personas": [{
+        "name": "Fortuna",
+        "levelRequired": 0
+    }, {
+        "name": "Narcissus",
+        "levelRequired": 0
+    }, {
+        "name": "Orlov",
+        "levelRequired": 0
+    }, {
+        "name": "Quetzalcoatl",
+        "levelRequired": 0
+    }, {
+        "name": "Sandman",
+        "levelRequired": 28
+    }, {
+        "name": "Scathach",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Magatsu Mandala",
+    "cost": 3000,
+    "effect": "Deal heavy Curse damage to all foes and inflict Confuse/Fear/Despair (medium odds).",
+    "element": "curse",
+    "personas": [{
+        "name": "Magatsu-Izanagi",
+        "levelRequired": 0
+    }, {
+        "name": "Magatsu-Izanagi Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Magic Ability",
+    "effect": "Strengthen all magical attacks by 25%.",
+    "element": "passive",
+    "note": "Available from Network Fusion",
+    "personas": []
+}, {
+    "name": "Mahama",
+    "cost": 1800,
+    "effect": "Small chance of instantly killing all foes.",
+    "element": "bless",
+    "personas": [{
+        "name": "Clotho",
+        "levelRequired": 0
+    }, {
+        "name": "Mithra",
+        "levelRequired": 0
+    }, {
+        "name": "Unicorn",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mahamaon",
+    "cost": 3400,
+    "effect": "medium chance of instantly killing all foes.",
+    "element": "bless",
+    "personas": [{
+        "name": "Asura-Ou",
+        "levelRequired": 0
+    }, {
+        "name": "Dominion",
+        "levelRequired": 72
+    }, {
+        "name": "Melchizedek",
+        "levelRequired": 64
+    }, {
+        "name": "Metatron",
+        "levelRequired": 0
+    }, {
+        "name": "Michael",
+        "levelRequired": 90
+    }, {
+        "name": "Sandalphon",
+        "levelRequired": 0
+    }, {
+        "name": "Sraosha",
+        "levelRequired": 0
+    }, {
+        "name": "Throne",
+        "levelRequired": 0
+    }, {
+        "name": "Vasuki",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Makajam",
+    "cost": 500,
+    "effect": "Inflict Forget (high odds) to 1 foe.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Clotho",
+        "levelRequired": 0
+    }, {
+        "name": "Kaiwan",
+        "levelRequired": 0
+    }, {
+        "name": "Koropokkuru",
+        "levelRequired": 0
+    }, {
+        "name": "Kusi Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Makami",
+        "levelRequired": 18
+    }]
+}, {
+    "name": "Makajamon",
+    "cost": 1200,
+    "effect": "Inflict Forget (medium odds) to all foes.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Clotho",
+        "levelRequired": 29
+    }, {
+        "name": "Kaiwan",
+        "levelRequired": 39
+    }, {
+        "name": "Mothman",
+        "levelRequired": 37
+    }, {
+        "name": "Ongyo-Ki",
+        "levelRequired": 0
+    }, {
+        "name": "Orobas",
+        "levelRequired": 21
+    }, {
+        "name": "Principality",
+        "levelRequired": 0
+    }, {
+        "name": "Queen Mab",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Makara Break",
+    "cost": 1800,
+    "effect": "Remove magic-repellent shields from all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Lilith",
+        "levelRequired": 0
+    }, {
+        "name": "Queen Mab",
+        "levelRequired": 46
+    }, {
+        "name": "Titania",
+        "levelRequired": 0
+    }, {
+        "name": "Yatagarasu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Makarakarn",
+    "cost": 3600,
+    "effect": "Create a shield on 1 ally to repel 1 magical attack.",
+    "element": "support",
+    "personas": [{
+        "name": "Abaddon",
+        "levelRequired": 0
+    }, {
+        "name": "Arahabaki",
+        "levelRequired": 0
+    }, {
+        "name": "Asterius Picaro",
+        "levelRequired": 66
+    }, {
+        "name": "Isis",
+        "levelRequired": 32
+    }, {
+        "name": "Raja Naga",
+        "levelRequired": 58
+    }, {
+        "name": "Seiryu",
+        "levelRequired": 67
+    }, {
+        "name": "Vasuki",
+        "levelRequired": 73
+    }]
+}, {
+    "name": "Makouga",
+    "cost": 1600,
+    "effect": "Deal medium Bless damage to all foes.",
+    "element": "bless",
+    "personas": [{
+        "name": "Daisoujou",
+        "levelRequired": 0
+    }, {
+        "name": "Mithra",
+        "levelRequired": 34
+    }, {
+        "name": "Orlov",
+        "levelRequired": 0
+    }, {
+        "name": "Power",
+        "levelRequired": 43
+    }, {
+        "name": "Principality",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Makougaon",
+    "cost": 2200,
+    "effect": "Deal heavy Bless damage to all foes.",
+    "element": "bless",
+    "personas": [{
+        "name": "Crystal Skull",
+        "levelRequired": 0
+    }, {
+        "name": "Cybele",
+        "levelRequired": 0
+    }, {
+        "name": "Dominion",
+        "levelRequired": 70
+    }, {
+        "name": "Metatron",
+        "levelRequired": 0
+    }, {
+        "name": "Sraosha",
+        "levelRequired": 81
+    }, {
+        "name": "Throne",
+        "levelRequired": 73
+    }]
+}, {
+    "name": "Makouha",
+    "cost": 1000,
+    "effect": "Deal weak Bless damage to all foes.",
+    "element": "bless",
+    "personas": [{
+        "name": "Anubis",
+        "levelRequired": 0
+    }, {
+        "name": "Archangel",
+        "levelRequired": 19
+    }, {
+        "name": "Nigi Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Regent",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mamudo",
+    "cost": 1800,
+    "effect": "Small chance of instantly killing all foes.",
+    "element": "curse",
+    "personas": [{
+        "name": "Leanan Sidhe",
+        "levelRequired": 21
+    }, {
+        "name": "Nue",
+        "levelRequired": 24
+    }, {
+        "name": "Pisaca",
+        "levelRequired": 30
+    }]
+}, {
+    "name": "Mamudoon",
+    "cost": 3400,
+    "effect": "medium chance of instantly killing all foes.",
+    "element": "curse",
+    "personas": [{
+        "name": "Alice",
+        "levelRequired": 0
+    }, {
+        "name": "Beelzebub",
+        "levelRequired": 0
+    }, {
+        "name": "Belial",
+        "levelRequired": 0
+    }, {
+        "name": "Black Rider",
+        "levelRequired": 0
+    }, {
+        "name": "Hell Biker",
+        "levelRequired": 44
+    }, {
+        "name": "Lilith",
+        "levelRequired": 64
+    }, {
+        "name": "Mother Harlot",
+        "levelRequired": 0
+    }, {
+        "name": "Nebiros",
+        "levelRequired": 0
+    }, {
+        "name": "Thanatos",
+        "levelRequired": 0
+    }, {
+        "name": "Thanatos Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mapsi",
+    "cost": 1000,
+    "effect": "Deal weak Psy damage to all foes.",
+    "element": "psy",
+    "personas": [{
+        "name": "Leanan Sidhe",
+        "levelRequired": 22
+    }, {
+        "name": "Regent",
+        "levelRequired": 0
+    }, {
+        "name": "Shiki-Ouji",
+        "levelRequired": 22
+    }]
+}, {
+    "name": "Mapsiodyne",
+    "cost": 2200,
+    "effect": "Deal heavy Psy damage to all foes.",
+    "element": "psy",
+    "personas": [{
+        "name": "Crystal Skull",
+        "levelRequired": 0
+    }, {
+        "name": "Forneus",
+        "levelRequired": 67
+    }, {
+        "name": "Kali",
+        "levelRequired": 81
+    }, {
+        "name": "Kohryu",
+        "levelRequired": 0
+    }, {
+        "name": "Parvati",
+        "levelRequired": 59
+    }]
+}, {
+    "name": "Mapsio",
+    "cost": 1600,
+    "effect": "Deal medium Psy damage to all foes.",
+    "element": "psy",
+    "personas": [{
+        "name": "Kaiwan",
+        "levelRequired": 40
+    }, {
+        "name": "Okuninushi",
+        "levelRequired": 0
+    }, {
+        "name": "Orlov",
+        "levelRequired": 0
+    }, {
+        "name": "Red Rider",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Maragi",
+    "cost": 1000,
+    "effect": "Deal weak Fire damage to all foes.",
+    "element": "fire",
+    "personas": [{
+        "name": "Eligor",
+        "levelRequired": 0
+    }, {
+        "name": "Hua Po",
+        "levelRequired": 13
+    }, {
+        "name": "Orobas",
+        "levelRequired": 0
+    }, {
+        "name": "Regent",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Maragidyne",
+    "cost": 2200,
+    "effect": "Deal heavy Fire damage to all foes.",
+    "element": "fire",
+    "personas": [{
+        "name": "Asterius",
+        "levelRequired": 0
+    }, {
+        "name": "Asterius Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Attis",
+        "levelRequired": 0
+    }, {
+        "name": "Belial",
+        "levelRequired": 71
+    }, {
+        "name": "Crystal Skull",
+        "levelRequired": 0
+    }, {
+        "name": "Dionysus",
+        "levelRequired": 65
+    }, {
+        "name": "Lilith",
+        "levelRequired": 65
+    }, {
+        "name": "Mara",
+        "levelRequired": 0
+    }, {
+        "name": "Surt",
+        "levelRequired": 60
+    }, {
+        "name": "Zaou-Gongen",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Maragion",
+    "cost": 1600,
+    "effect": "Deal medium Fire damage to all foes.",
+    "element": "fire",
+    "personas": [{
+        "name": "Decarabia",
+        "levelRequired": 33
+    }, {
+        "name": "Hell Biker",
+        "levelRequired": 42
+    }, {
+        "name": "Lamia",
+        "levelRequired": 30
+    }, {
+        "name": "Orlov",
+        "levelRequired": 0
+    }, {
+        "name": "Orpheus",
+        "levelRequired": 29
+    }, {
+        "name": "Orpheus Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Scathach",
+        "levelRequired": 46
+    }]
+}, {
+    "name": "Marakukaja",
+    "cost": 2400,
+    "effect": "Increase party's Defense for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Ananta",
+        "levelRequired": 47
+    }, {
+        "name": "Asura-Ou",
+        "levelRequired": 0
+    }, {
+        "name": "Kikuri-Hime",
+        "levelRequired": 0
+    }, {
+        "name": "Lachesis",
+        "levelRequired": 35
+    }, {
+        "name": "Naga",
+        "levelRequired": 29
+    }, {
+        "name": "Odin",
+        "levelRequired": 0
+    }, {
+        "name": "Orpheus",
+        "levelRequired": 30
+    }, {
+        "name": "Seiryu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Marakunda",
+    "cost": 2400,
+    "effect": "Decrease all foes' Defense for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Ara Mitama",
+        "levelRequired": 33
+    }, {
+        "name": "Girimehkala",
+        "levelRequired": 0
+    }, {
+        "name": "Kaiwan",
+        "levelRequired": 41
+    }, {
+        "name": "Orobas",
+        "levelRequired": 19
+    }]
+}, {
+    "name": "Marin Karin",
+    "cost": 500,
+    "effect": "Inflict Brainwash (high odds) to 1 foe.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Forneus",
+        "levelRequired": 0
+    }, {
+        "name": "Leanan Sidhe",
+        "levelRequired": 20
+    }, {
+        "name": "Mokoi",
+        "levelRequired": 11
+    }, {
+        "name": "Nebiros",
+        "levelRequired": 0
+    }, {
+        "name": "Succubus",
+        "levelRequired": 0
+    }, {
+        "name": "Suzaku",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Masukukaja",
+    "cost": 2400,
+    "effect": "Increase party's Agility for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Anzu",
+        "levelRequired": 0
+    }, {
+        "name": "Fortuna",
+        "levelRequired": 0
+    }, {
+        "name": "Garuda",
+        "levelRequired": 54
+    }, {
+        "name": "Horus",
+        "levelRequired": 52
+    }, {
+        "name": "Jatayu",
+        "levelRequired": 0
+    }, {
+        "name": "Neko Shogun",
+        "levelRequired": 0
+    }, {
+        "name": "Power",
+        "levelRequired": 45
+    }, {
+        "name": "Seth",
+        "levelRequired": 0
+    }, {
+        "name": "Siegfried",
+        "levelRequired": 0
+    }, {
+        "name": "White Rider",
+        "levelRequired": 43
+    }]
+}, {
+    "name": "Masukunda",
+    "cost": 2400,
+    "effect": "Decrease all foes' Agility for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Bugs",
+        "levelRequired": 0
+    }, {
+        "name": "Forneus",
+        "levelRequired": 0
+    }, {
+        "name": "Ganesha",
+        "levelRequired": 57
+    }, {
+        "name": "Kurama Tengu",
+        "levelRequired": 0
+    }, {
+        "name": "Lilim",
+        "levelRequired": 0
+    }, {
+        "name": "Thoth",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Matarukaja",
+    "cost": 2400,
+    "effect": "Increase party's Attack power for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Baal",
+        "levelRequired": 0
+    }, {
+        "name": "Cu Chulainn",
+        "levelRequired": 69
+    }, {
+        "name": "Futsunushi",
+        "levelRequired": 0
+    }, {
+        "name": "Jikokuten",
+        "levelRequired": 30
+    }, {
+        "name": "Koumokuten",
+        "levelRequired": 52
+    }, {
+        "name": "Kushinada-Hime",
+        "levelRequired": 44
+    }, {
+        "name": "Mot",
+        "levelRequired": 0
+    }, {
+        "name": "Oberon",
+        "levelRequired": 68
+    }, {
+        "name": "Okuninushi",
+        "levelRequired": 0
+    }, {
+        "name": "Orpheus Picaro",
+        "levelRequired": 33
+    }, {
+        "name": "Orthrus",
+        "levelRequired": 26
+    }, {
+        "name": "Ose",
+        "levelRequired": 45
+    }, {
+        "name": "Scathach",
+        "levelRequired": 48
+    }, {
+        "name": "Valkyrie",
+        "levelRequired": 47
+    }]
+}, {
+    "name": "Matarunda",
+    "cost": 2400,
+    "effect": "Decrease all foes' Attack power for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Belial",
+        "levelRequired": 0
+    }, {
+        "name": "Black Ooze",
+        "levelRequired": 0
+    }, {
+        "name": "Hanuman",
+        "levelRequired": 0
+    }, {
+        "name": "Orpheus Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Queen Mab",
+        "levelRequired": 44
+    }, {
+        "name": "Rangda",
+        "levelRequired": 51
+    }, {
+        "name": "Sarasvati",
+        "levelRequired": 53
+    }, {
+        "name": "Suzaku",
+        "levelRequired": 24
+    }]
+}, {
+    "name": "Mazio",
+    "cost": 1000,
+    "effect": "Deal weak Electric damage to all foes.",
+    "element": "electric",
+    "personas": [{
+        "name": "Ame-no-Uzume",
+        "levelRequired": 0
+    }, {
+        "name": "Regent",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Maziodyne",
+    "cost": 2200,
+    "effect": "Deal heavy Electric damage to all foes.",
+    "element": "electric",
+    "personas": [{
+        "name": "Barong",
+        "levelRequired": 57
+    }, {
+        "name": "Crystal Skull",
+        "levelRequired": 0
+    }, {
+        "name": "Gabriel",
+        "levelRequired": 0
+    }, {
+        "name": "Ishtar",
+        "levelRequired": 88
+    }, {
+        "name": "Magatsu-Izanagi",
+        "levelRequired": 45
+    }, {
+        "name": "Mot",
+        "levelRequired": 0
+    }, {
+        "name": "Oberon",
+        "levelRequired": 69
+    }, {
+        "name": "Raja Naga",
+        "levelRequired": 59
+    }, {
+        "name": "Shiva",
+        "levelRequired": 0
+    }, {
+        "name": "Thor",
+        "levelRequired": 67
+    }]
+}, {
+    "name": "Mazionga",
+    "cost": 1600,
+    "effect": "Deal medium Electric damage to all foes.",
+    "element": "electric",
+    "personas": [{
+        "name": "Atropos",
+        "levelRequired": 0
+    }, {
+        "name": "Izanagi",
+        "levelRequired": 24
+    }, {
+        "name": "Izanagi Picaro",
+        "levelRequired": 27
+    }, {
+        "name": "Mothman",
+        "levelRequired": 0
+    }, {
+        "name": "Naga",
+        "levelRequired": 28
+    }, {
+        "name": "Orlov",
+        "levelRequired": 0
+    }, {
+        "name": "Queen Mab",
+        "levelRequired": 0
+    }, {
+        "name": "Take-Minakata",
+        "levelRequired": 30
+    }, {
+        "name": "Yurlungur",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Me Patra",
+    "cost": 800,
+    "effect": "Cure Dizzy/Forget/Sleep/Hunger of party.",
+    "element": "healing",
+    "personas": [{
+        "name": "Clotho",
+        "levelRequired": 0
+    }, {
+        "name": "Daisoujou",
+        "levelRequired": 46
+    }, {
+        "name": "Nigi Mitama",
+        "levelRequired": 23
+    }, {
+        "name": "Sarasvati",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Media",
+    "cost": 700,
+    "effect": "Slightly restore party's HP.",
+    "element": "healing",
+    "personas": [{
+        "name": "Apsaras",
+        "levelRequired": 13
+    }, {
+        "name": "High Pixie",
+        "levelRequired": 0
+    }, {
+        "name": "Kusi Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Nigi Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Queen's Necklace",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Mediarahan",
+    "cost": 3000,
+    "effect": "Fully restore party's HP.",
+    "element": "healing",
+    "personas": [{
+        "name": "Cybele",
+        "levelRequired": 0
+    }, {
+        "name": "Ishtar",
+        "levelRequired": 0
+    }, {
+        "name": "Kohryu",
+        "levelRequired": 0
+    }, {
+        "name": "Lakshmi",
+        "levelRequired": 70
+    }, {
+        "name": "Titania",
+        "levelRequired": 61
+    }, {
+        "name": "Yatagarasu",
+        "levelRequired": 59
+    }]
+}, {
+    "name": "Mediarama",
+    "cost": 1200,
+    "effect": "Moderately restore party's HP.",
+    "element": "healing",
+    "personas": [{
+        "name": "Atropos",
+        "levelRequired": 41
+    }, {
+        "name": "Hariti",
+        "levelRequired": 44
+    }, {
+        "name": "Kaguya",
+        "levelRequired": 0
+    }, {
+        "name": "Kaguya Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Kikuri-Hime",
+        "levelRequired": 41
+    }, {
+        "name": "Kushinada-Hime",
+        "levelRequired": 0
+    }, {
+        "name": "Narcissus",
+        "levelRequired": 54
+    }, {
+        "name": "Principality",
+        "levelRequired": 31
+    }, {
+        "name": "Sarasvati",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Megaton Raid",
+    "cost": 16,
+    "effect": "Deal severe Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Cerberus",
+        "levelRequired": 0
+    }, {
+        "name": "King Frost",
+        "levelRequired": 0
+    }, {
+        "name": "Melchizedek",
+        "levelRequired": 0
+    }, {
+        "name": "Siegfried",
+        "levelRequired": 0
+    }, {
+        "name": "Surt",
+        "levelRequired": 0
+    }, {
+        "name": "Thor",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Megido",
+    "cost": 1500,
+    "effect": "Deal medium Almighty damage to all foes.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Horus",
+        "levelRequired": 0
+    }, {
+        "name": "Thoth",
+        "levelRequired": 37
+    }, {
+        "name": "Yurlungur",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Megidola",
+    "cost": 2400,
+    "effect": "Deal heavy Almighty damage to all foes.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Black Rider",
+        "levelRequired": 64
+    }, {
+        "name": "Magatsu-Izanagi",
+        "levelRequired": 0
+    }, {
+        "name": "Magatsu-Izanagi Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Mot",
+        "levelRequired": 0
+    }, {
+        "name": "Pale Rider",
+        "levelRequired": 54
+    }]
+}, {
+    "name": "Megidolaon",
+    "cost": 3800,
+    "effect": "Deal severe Almighty damage to all foes.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Alice",
+        "levelRequired": 82
+    }, {
+        "name": "Beelzebub",
+        "levelRequired": 89
+    }, {
+        "name": "Messiah",
+        "levelRequired": 0
+    }, {
+        "name": "Messiah Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Metatron",
+        "levelRequired": 91
+    }, {
+        "name": "Michael",
+        "levelRequired": 91
+    }, {
+        "name": "Mot",
+        "levelRequired": 76
+    }, {
+        "name": "Nebiros",
+        "levelRequired": 68
+    }, {
+        "name": "Satanael",
+        "levelRequired": 0
+    }, {
+        "name": "Shiva",
+        "levelRequired": 86
+    }, {
+        "name": "Uriel",
+        "levelRequired": 84
+    }, {
+        "name": "Vishnu",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Memory Blow",
+    "cost": 15,
+    "effect": "Deal light Phys damage and inflict Forget (low odds) to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Eligor",
+        "levelRequired": 20
+    }, {
+        "name": "Jikokuten",
+        "levelRequired": 0
+    }, {
+        "name": "Naga",
+        "levelRequired": 0
+    }, {
+        "name": "Oni",
+        "levelRequired": 23
+    }, {
+        "name": "Quetzalcoatl",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Concentrate",
+    "cost": 1500,
+    "effect": "Multiply user's next magical attack damage by 2.5.",
+    "element": "support",
+    "personas": [{
+        "name": "Alice",
+        "levelRequired": 83
+    }, {
+        "name": "Atropos",
+        "levelRequired": 45
+    }, {
+        "name": "Beelzebub",
+        "levelRequired": 86
+    }, {
+        "name": "Belphegor",
+        "levelRequired": 44
+    }, {
+        "name": "Chi You",
+        "levelRequired": 92
+    }, {
+        "name": "Kohryu",
+        "levelRequired": 79
+    }, {
+        "name": "Metatron",
+        "levelRequired": 93
+    }, {
+        "name": "Mot",
+        "levelRequired": 74
+    }, {
+        "name": "Odin",
+        "levelRequired": 85
+    }, {
+        "name": "Satan",
+        "levelRequired": 97
+    }]
+}, {
+    "name": "Mind Slice",
+    "cost": 19,
+    "effect": "Deal medium Phys damage and inflict Confuse (low odds) to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Rakshasa",
+        "levelRequired": 27
+    }]
+}, {
+    "name": "Miracle Punch",
+    "cost": 8,
+    "effect": "Deal medium Phys damage to 1 foe. High critical rate.",
+    "element": "phys",
+    "personas": [{
+        "name": "Ara Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Ariadne",
+        "levelRequired": 0
+    }, {
+        "name": "Ariadne Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Black Frost",
+        "levelRequired": 0
+    }, {
+        "name": "Bugs",
+        "levelRequired": 0
+    }, {
+        "name": "Ganesha",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Morning Star",
+    "cost": 5400,
+    "effect": "Deal severe Almighty damage to all foes.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Lucifer",
+        "levelRequired": 94
+    }]
+}, {
+    "name": "Mudo",
+    "cost": 800,
+    "effect": "Small chance of instantly killing 1 foe.",
+    "element": "curse",
+    "personas": [{
+        "name": "Nue",
+        "levelRequired": 21
+    }, {
+        "name": "Onmoraki",
+        "levelRequired": 0
+    }, {
+        "name": "Succubus",
+        "levelRequired": 12
+    }]
+}, {
+    "name": "Mudo Boost",
+    "effect": "Increase success rate of instant death by Curse skills.",
+    "element": "passive",
+    "personas": [{
+        "name": "Alice",
+        "levelRequired": 0
+    }, {
+        "name": "Mother Harlot",
+        "levelRequired": 0
+    }, {
+        "name": "Thanatos Picaro",
+        "levelRequired": 70
+    }]
+}, {
+    "name": "Mudoon",
+    "cost": 1500,
+    "effect": "medium chance of instantly killing 1 foe.",
+    "element": "curse",
+    "personas": [{
+        "name": "Anubis",
+        "levelRequired": 0
+    }, {
+        "name": "Chernobog",
+        "levelRequired": 0
+    }, {
+        "name": "Girimehkala",
+        "levelRequired": 0
+    }, {
+        "name": "Hell Biker",
+        "levelRequired": 0
+    }, {
+        "name": "Lilith",
+        "levelRequired": 0
+    }, {
+        "name": "Pazuzu",
+        "levelRequired": 0
+    }, {
+        "name": "Pisaca",
+        "levelRequired": 34
+    }, {
+        "name": "Rangda",
+        "levelRequired": 53
+    }]
+}, {
+    "name": "Negative Pile",
+    "cost": 12,
+    "effect": "Deal heavy Phys damage and inflict Despair (medium odds) to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Legion",
+        "levelRequired": 0
+    }, {
+        "name": "Red Rider",
+        "levelRequired": 42
+    }]
+}, {
+    "name": "Nuke Amp",
+    "effect": "Strengthen Nuclear attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Bishamonten",
+        "levelRequired": 71
+    }, {
+        "name": "Moloch",
+        "levelRequired": 65
+    }, {
+        "name": "Titania",
+        "levelRequired": 60
+    }]
+}, {
+    "name": "Nuke Boost",
+    "effect": "Strengthen Nuclear attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ananta",
+        "levelRequired": 49
+    }, {
+        "name": "Phoenix",
+        "levelRequired": 27
+    }]
+}, {
+    "name": "Nuke Break",
+    "cost": 1500,
+    "effect": "Negate Nuclear resistances of all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Mithras",
+        "levelRequired": 42
+    }]
+}, {
+    "name": "Nuke Wall",
+    "cost": 1800,
+    "effect": "Create a shield on 1 ally to reduce damage of Nuclear attacks for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Koumokuten",
+        "levelRequired": 53
+    }]
+}, {
+    "name": "Null Bless",
+    "effect": "Impart immunity against Bless attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Mother Harlot",
+        "levelRequired": 83
+    }]
+}, {
+    "name": "Null Brainwash",
+    "effect": "Impart immunity against Brainwash.",
+    "element": "passive",
+    "personas": [{
+        "name": "Arahabaki",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Null Curse",
+    "effect": "Impart immunity against Curse attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Power",
+        "levelRequired": 46
+    }]
+}, {
+    "name": "Null Despair",
+    "effect": "Impart immunity against Despair.",
+    "element": "passive",
+    "personas": [{
+        "name": "King Frost",
+        "levelRequired": 65
+    }, {
+        "name": "Skadi",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Null Dizzy",
+    "effect": "Impart immunity against Dizzy.",
+    "element": "passive",
+    "personas": [{
+        "name": "Legion",
+        "levelRequired": 42
+    }, {
+        "name": "Matador",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Null Elec",
+    "effect": "Impart immunity against Electric attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Barong",
+        "levelRequired": 55
+    }]
+}, {
+    "name": "Null Fear",
+    "effect": "Impart immunity against Fear.",
+    "element": "passive",
+    "personas": [{
+        "name": "Anubis",
+        "levelRequired": 39
+    }]
+}, {
+    "name": "Null Fire",
+    "effect": "Impart immunity against Fire attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Decarabia",
+        "levelRequired": 36
+    }]
+}, {
+    "name": "Null Forget",
+    "effect": "Impart immunity against Forget.",
+    "element": "passive",
+    "personas": [{
+        "name": "Anzu",
+        "levelRequired": 29
+    }]
+}, {
+    "name": "Null Ice",
+    "effect": "Impart immunity against Ice attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Null Nuke",
+    "effect": "Impart immunity against Nuclear attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Sui-Ki",
+        "levelRequired": 26
+    }]
+}, {
+    "name": "Null Confuse",
+    "effect": "Impart immunity against Confuse.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Null Phys",
+    "effect": "Impart immunity against Phys attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Izanagi Picaro",
+        "levelRequired": 25
+    }]
+}, {
+    "name": "Null Psy",
+    "effect": "Impart immunity against Psy attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Null Rage",
+    "effect": "Impart immunity against Rage.",
+    "element": "passive",
+    "personas": [{
+        "name": "Belphegor",
+        "levelRequired": 38
+    }, {
+        "name": "Byakko",
+        "levelRequired": 54
+    }, {
+        "name": "Daisoujou",
+        "levelRequired": 47
+    }]
+}, {
+    "name": "Null Sleep",
+    "effect": "Impart immunity against Sleep.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kushinada-Hime",
+        "levelRequired": 45
+    }, {
+        "name": "Sandman",
+        "levelRequired": 27
+    }, {
+        "name": "Sarasvati",
+        "levelRequired": 51
+    }]
+}, {
+    "name": "Null Wind",
+    "effect": "Impart immunity against Wind attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Yatagarasu",
+        "levelRequired": 62
+    }]
+}, {
+    "name": "One-shot Kill",
+    "cost": 17,
+    "effect": "Deal severe Gun damage to 1 foe. High critical rate.",
+    "element": "gun",
+    "personas": [{
+        "name": "Black Frost",
+        "levelRequired": 0
+    }, {
+        "name": "Mara",
+        "levelRequired": 0
+    }, {
+        "name": "Seth",
+        "levelRequired": 0
+    }, {
+        "name": "Thanatos",
+        "levelRequired": 68
+    }, {
+        "name": "Thanatos Picaro",
+        "levelRequired": 72
+    }]
+}, {
+    "name": "Oni Kagura",
+    "cost": 16,
+    "effect": "Deal medium Phys damage and inflict Rage (low odds) to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Cu Chulainn",
+        "levelRequired": 0
+    }, {
+        "name": "Ose",
+        "levelRequired": 0
+    }, {
+        "name": "Shiki-Ouji",
+        "levelRequired": 27
+    }, {
+        "name": "White Rider",
+        "levelRequired": 0
+    }, {
+        "name": "Yaksini",
+        "levelRequired": 22
+    }, {
+        "name": "Yamata-no-Orochi",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Oratorio",
+    "cost": 3800,
+    "effect": "Fully restore party's HP and negate all -nda debuffs.",
+    "element": "healing",
+    "personas": [{
+        "name": "Messiah",
+        "levelRequired": 0
+    }, {
+        "name": "Messiah Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Confuse Boost",
+    "effect": "Increase chance of inflicting Confuse.",
+    "element": "passive",
+    "personas": [{
+        "name": "Inugami",
+        "levelRequired": 19
+    }, {
+        "name": "Onmoraki",
+        "levelRequired": 15
+    }]
+}, {
+    "name": "Panta Rhei",
+    "cost": 4200,
+    "effect": "Deal severe Wind damage to 1 foe",
+    "element": "wind",
+    "personas": [{
+        "name": "Baal",
+        "levelRequired": 77
+    }]
+}, {
+    "name": "Patra",
+    "cost": 400,
+    "effect": "Cure Dizzy/Forget/Sleep/Hunger of 1 ally.",
+    "element": "healing",
+    "personas": [{
+        "name": "Genbu",
+        "levelRequired": 8
+    }, {
+        "name": "Pixie",
+        "levelRequired": 3
+    }, {
+        "name": "Silky",
+        "levelRequired": 9
+    }]
+}, {
+    "name": "Charge",
+    "cost": 1500,
+    "effect": "Multiply user's next Phys attack damage by 2.5.",
+    "element": "support",
+    "personas": [{
+        "name": "Ariadne",
+        "levelRequired": 36
+    }, {
+        "name": "Ariadne Picaro",
+        "levelRequired": 48
+    }, {
+        "name": "Baal",
+        "levelRequired": 79
+    }, {
+        "name": "Cu Chulainn",
+        "levelRequired": 71
+    }, {
+        "name": "Dakini",
+        "levelRequired": 55
+    }, {
+        "name": "Futsunushi",
+        "levelRequired": 78
+    }, {
+        "name": "Ganesha",
+        "levelRequired": 60
+    }, {
+        "name": "Hecatoncheires",
+        "levelRequired": 48
+    }, {
+        "name": "Mara",
+        "levelRequired": 74
+    }, {
+        "name": "Raphael",
+        "levelRequired": 0
+    }, {
+        "name": "Setanta",
+        "levelRequired": 34
+    }, {
+        "name": "Siegfried",
+        "levelRequired": 70
+    }, {
+        "name": "Vishnu",
+        "levelRequired": 86
+    }, {
+        "name": "Yoshitsune",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Pressing Stance",
+    "effect": "Reduce hit rate by 2/3 of all incoming attack when being ambushed.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ongyo-Ki",
+        "levelRequired": 0
+    }, {
+        "name": "Red Rider",
+        "levelRequired": 45
+    }, {
+        "name": "Yatagarasu",
+        "levelRequired": 60
+    }, {
+        "name": "Yoshitsune",
+        "levelRequired": 81
+    }]
+}, {
+    "name": "Psi",
+    "cost": 400,
+    "effect": "Deal weak Psy damage to 1 foe.",
+    "element": "psy",
+    "personas": [{
+        "name": "Archangel",
+        "levelRequired": 0
+    }, {
+        "name": "Kodama",
+        "levelRequired": 12
+    }, {
+        "name": "Matador",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Psy Amp",
+    "effect": "Strengthen Psy attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kohryu",
+        "levelRequired": 80
+    }]
+}, {
+    "name": "Psy Boost",
+    "effect": "Strengthen Psy attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Okuninushi",
+        "levelRequired": 45
+    }]
+}, {
+    "name": "Psy Break",
+    "cost": 1500,
+    "effect": "Negate Psy resistances of all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Okuninushi",
+        "levelRequired": 46
+    }, {
+        "name": "Red Rider",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Psy Wall",
+    "cost": 1800,
+    "effect": "Create a shield on 1 ally to reduce damage of Psy attacks for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Oberon",
+        "levelRequired": 70
+    }, {
+        "name": "Thoth",
+        "levelRequired": 39
+    }]
+}, {
+    "name": "Psycho Blast",
+    "cost": 5400,
+    "effect": "Deal severe Psy damage to all foes.",
+    "element": "psy",
+    "personas": [{
+        "name": "Chi You",
+        "levelRequired": 89
+    }, {
+        "name": "Shiva",
+        "levelRequired": 88
+    }]
+}, {
+    "name": "Psycho Force",
+    "cost": 4800,
+    "effect": "Deal severe Psy damage to 1 foe.",
+    "element": "psy",
+    "personas": [{
+        "name": "Chi You",
+        "levelRequired": 0
+    }, {
+        "name": "Kohryu",
+        "levelRequired": 0
+    }, {
+        "name": "Shiva",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Psiodyne",
+    "cost": 1200,
+    "effect": "Deal heavy Psy damage to 1 foe.",
+    "element": "psy",
+    "personas": [{
+        "name": "Bugs",
+        "levelRequired": 0
+    }, {
+        "name": "Dionysus",
+        "levelRequired": 0
+    }, {
+        "name": "Emperor's Amulet",
+        "levelRequired": 0
+    }, {
+        "name": "Forneus",
+        "levelRequired": 0
+    }, {
+        "name": "Kali",
+        "levelRequired": 0
+    }, {
+        "name": "Moloch",
+        "levelRequired": 0
+    }, {
+        "name": "Parvati",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Psio",
+    "cost": 800,
+    "effect": "Deal medium Psy damage to 1 foe.",
+    "element": "psy",
+    "personas": [{
+        "name": "Kaiwan",
+        "levelRequired": 0
+    }, {
+        "name": "Leanan Sidhe",
+        "levelRequired": 0
+    }, {
+        "name": "Legion",
+        "levelRequired": 39
+    }, {
+        "name": "Neko Shogun",
+        "levelRequired": 0
+    }, {
+        "name": "Shiki-Ouji",
+        "levelRequired": 26
+    }, {
+        "name": "Stone of Scone",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Pulinpa",
+    "cost": 500,
+    "effect": "Inflict Confuse (high odds) to 1 foe.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Choronzon",
+        "levelRequired": 0
+    }, {
+        "name": "Inugami",
+        "levelRequired": 0
+    }, {
+        "name": "Mandrake",
+        "levelRequired": 0
+    }, {
+        "name": "Nue",
+        "levelRequired": 22
+    }, {
+        "name": "Onmoraki",
+        "levelRequired": 14
+    }]
+}, {
+    "name": "Abyssal Wings",
+    "cost": 3000,
+    "effect": "Deal severe Curse damage to all foes.",
+    "element": "curse",
+    "personas": [{
+        "name": "Tsukiyomi",
+        "levelRequired": 0
+    }, {
+        "name": "Tsukiyomi Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Rage Boost",
+    "effect": "Increase chance of inflicting Rage.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ara Mitama",
+        "levelRequired": 35
+    }, {
+        "name": "Koppa Tengu",
+        "levelRequired": 14
+    }, {
+        "name": "Kumbhanda",
+        "levelRequired": 46
+    }, {
+        "name": "Red Rider",
+        "levelRequired": 46
+    }]
+}, {
+    "name": "Myriad Slashes",
+    "cost": 20,
+    "effect": "Deal 2 to 3 times medium Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Belial",
+        "levelRequired": 74
+    }, {
+        "name": "Chernobog",
+        "levelRequired": 67
+    }, {
+        "name": "Futsunushi",
+        "levelRequired": 0
+    }, {
+        "name": "Odin",
+        "levelRequired": 0
+    }, {
+        "name": "Ongyo-Ki",
+        "levelRequired": 0
+    }, {
+        "name": "Tsukiyomi",
+        "levelRequired": 0
+    }, {
+        "name": "Tsukiyomi Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Uriel",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Rainy Play",
+    "effect": "Greatly increase evasion under rainy day or special weather warning.",
+    "element": "passive",
+    "personas": [{
+        "name": "Choronzon",
+        "levelRequired": 33
+    }, {
+        "name": "Jatayu",
+        "levelRequired": 36
+    }, {
+        "name": "Lakshmi",
+        "levelRequired": 71
+    }, {
+        "name": "Nigi Mitama",
+        "levelRequired": 24
+    }]
+}, {
+    "name": "Rakukaja",
+    "cost": 800,
+    "effect": "Increase 1 ally's Defense for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Agathion",
+        "levelRequired": 6
+    }, {
+        "name": "Berith",
+        "levelRequired": 0
+    }, {
+        "name": "Izanagi Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Kin-Ki",
+        "levelRequired": 0
+    }, {
+        "name": "Lamia",
+        "levelRequired": 0
+    }, {
+        "name": "Queen's Necklace",
+        "levelRequired": 0
+    }, {
+        "name": "Saki Mitama",
+        "levelRequired": 8
+    }]
+}, {
+    "name": "Rakunda",
+    "cost": 800,
+    "effect": "Decrease 1 foe's Defense for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Andras",
+        "levelRequired": 0
+    }, {
+        "name": "Genbu",
+        "levelRequired": 0
+    }, {
+        "name": "Jack Frost",
+        "levelRequired": 13
+    }, {
+        "name": "Jack-o'-Lantern",
+        "levelRequired": 0
+    }, {
+        "name": "Jikokuten",
+        "levelRequired": 0
+    }, {
+        "name": "Kodama",
+        "levelRequired": 0
+    }, {
+        "name": "Koropokkuru",
+        "levelRequired": 12
+    }, {
+        "name": "Leanan Sidhe",
+        "levelRequired": 0
+    }, {
+        "name": "Queen's Necklace",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Rampage",
+    "cost": 13,
+    "effect": "Deal 1 to 3 times weak Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Choronzon",
+        "levelRequired": 0
+    }, {
+        "name": "Ippon-Datara",
+        "levelRequired": 15
+    }, {
+        "name": "Legion",
+        "levelRequired": 0
+    }, {
+        "name": "Oni",
+        "levelRequired": 0
+    }, {
+        "name": "Pisaca",
+        "levelRequired": 0
+    }, {
+        "name": "Shiisaa",
+        "levelRequired": 18
+    }]
+}, {
+    "name": "Rat Fang",
+    "cost": 10,
+    "effect": "Deal medium Phys damage to 1 foe. More powerful when being ambushed.",
+    "element": "phys",
+    "personas": [{
+        "name": "Neko Shogun",
+        "levelRequired": 33
+    }, {
+        "name": "Orthrus",
+        "levelRequired": 24
+    }]
+}, {
+    "name": "Rebellion",
+    "cost": 500,
+    "effect": "Increase 1 ally's critical rate for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Apsaras",
+        "levelRequired": 0
+    }, {
+        "name": "Ara Mitama",
+        "levelRequired": 32
+    }, {
+        "name": "Archangel",
+        "levelRequired": 18
+    }, {
+        "name": "Cerberus",
+        "levelRequired": 56
+    }, {
+        "name": "Dakini",
+        "levelRequired": 54
+    }, {
+        "name": "Ganesha",
+        "levelRequired": 0
+    }, {
+        "name": "Setanta",
+        "levelRequired": 32
+    }, {
+        "name": "Succubus",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Recarm",
+    "cost": 800,
+    "effect": "Revive 1 ally with 50% HP recovered.",
+    "element": "healing",
+    "personas": [{
+        "name": "Phoenix",
+        "levelRequired": 25
+    }, {
+        "name": "Queen's Necklace",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Regenerate 1",
+    "effect": "Restore 2% of max HP each turn in battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kin-Ki",
+        "levelRequired": 0
+    }, {
+        "name": "Kusi Mitama",
+        "levelRequired": 15
+    }, {
+        "name": "Rakshasa",
+        "levelRequired": 26
+    }]
+}, {
+    "name": "Regenerate 2",
+    "effect": "Recover 4% of max HP each turn in battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Cerberus",
+        "levelRequired": 58
+    }, {
+        "name": "Hecatoncheires",
+        "levelRequired": 0
+    }, {
+        "name": "Hope Diamond",
+        "levelRequired": 0
+    }, {
+        "name": "Koumokuten",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Regenerate 3",
+    "effect": "Recover 6% of max HP each turn in battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Futsunushi",
+        "levelRequired": 79
+    }, {
+        "name": "Hanuman",
+        "levelRequired": 69
+    }, {
+        "name": "Messiah",
+        "levelRequired": 82
+    }, {
+        "name": "Ongyo-Ki",
+        "levelRequired": 78
+    }, {
+        "name": "Quetzalcoatl",
+        "levelRequired": 66
+    }, {
+        "name": "Satan",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Repel Bless",
+    "effect": "Repel Bless attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Repel Curse",
+    "effect": "Repel Curse attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Sandalphon",
+        "levelRequired": 78
+    }]
+}, {
+    "name": "Repel Elec",
+    "effect": "Repel Electric attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Mot",
+        "levelRequired": 77
+    }]
+}, {
+    "name": "Repel Fire",
+    "effect": "Repel Fire attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Black Frost",
+        "levelRequired": 71
+    }, {
+        "name": "Vishnu",
+        "levelRequired": 87
+    }, {
+        "name": "Yamata-no-Orochi",
+        "levelRequired": 66
+    }]
+}, {
+    "name": "Repel Ice",
+    "effect": "Repel Ice attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Beelzebub",
+        "levelRequired": 88
+    }, {
+        "name": "Skadi",
+        "levelRequired": 60
+    }]
+}, {
+    "name": "Repel Nuke",
+    "effect": "Repel Nuclear attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Seiryu",
+        "levelRequired": 63
+    }, {
+        "name": "Uriel",
+        "levelRequired": 83
+    }]
+}, {
+    "name": "Repel Phys",
+    "effect": "Repel Phys attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Chi You",
+        "levelRequired": 0
+    }, {
+        "name": "Girimehkala",
+        "levelRequired": 51
+    }, {
+        "name": "Kaguya",
+        "levelRequired": 22
+    }, {
+        "name": "Kaguya Picaro",
+        "levelRequired": 31
+    }]
+}, {
+    "name": "Repel Psy",
+    "effect": "Repel Psy attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Repel Wind",
+    "effect": "Repel Wind attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Fortify Spirit",
+    "effect": "Reduce susceptibilities to all ailments.",
+    "element": "passive",
+    "personas": [{
+        "name": "Chi You",
+        "levelRequired": 88
+    }, {
+        "name": "Satan",
+        "levelRequired": 96
+    }, {
+        "name": "Seth",
+        "levelRequired": 56
+    }, {
+        "name": "Trumpeter",
+        "levelRequired": 61
+    }]
+}, {
+    "name": "Resist Bless",
+    "effect": "Reduce damage from Bless attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Anubis",
+        "levelRequired": 41
+    }]
+}, {
+    "name": "Resist Brainwash",
+    "effect": "Reduce susceptibility to Brainwash.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kelpie",
+        "levelRequired": 8
+    }]
+}, {
+    "name": "Resist Curse",
+    "effect": "Reduce damage from Curse attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Resist Despair",
+    "effect": "Reduce susceptibility to Despair.",
+    "element": "passive",
+    "personas": [{
+        "name": "Makami",
+        "levelRequired": 19
+    }]
+}, {
+    "name": "Resist Dizzy",
+    "effect": "Reduce susceptibility to Dizzy.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ippon-Datara",
+        "levelRequired": 0
+    }, {
+        "name": "Saki Mitama",
+        "levelRequired": 10
+    }]
+}, {
+    "name": "Resist Elec",
+    "effect": "Reduce damage from Electric attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Resist Fear",
+    "effect": "Reduce susceptibility to Fear.",
+    "element": "passive",
+    "personas": [{
+        "name": "Kodama",
+        "levelRequired": 17
+    }, {
+        "name": "Obariyon",
+        "levelRequired": 10
+    }, {
+        "name": "Onmoraki",
+        "levelRequired": 17
+    }, {
+        "name": "Zouchouten",
+        "levelRequired": 34
+    }]
+}, {
+    "name": "Resist Fire",
+    "effect": "Reduce damage from Fire attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Resist Forget",
+    "effect": "Reduce susceptibility to Forget.",
+    "element": "passive",
+    "personas": [{
+        "name": "Genbu",
+        "levelRequired": 11
+    }, {
+        "name": "Hua Po",
+        "levelRequired": 12
+    }, {
+        "name": "Isis",
+        "levelRequired": 27
+    }]
+}, {
+    "name": "Resist Ice",
+    "effect": "Reduce damage from Ice attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Resist Nuke",
+    "effect": "Reduce damage from Nuclear attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Resist Confuse",
+    "effect": "Reduce susceptibility to Confuse.",
+    "element": "passive",
+    "personas": [{
+        "name": "Pixie",
+        "levelRequired": 6
+    }, {
+        "name": "Red Rider",
+        "levelRequired": 44
+    }]
+}, {
+    "name": "Resist Phys",
+    "effect": "Reduce damage from Phys attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Resist Psy",
+    "effect": "Reduce damage from Psy attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Fuu-Ki",
+        "levelRequired": 27
+    }]
+}, {
+    "name": "Resist Rage",
+    "effect": "Reduce susceptibility to Rage.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Resist Sleep",
+    "effect": "Reduce susceptibility to Sleep.",
+    "element": "passive",
+    "personas": [{
+        "name": "Jack-o'-Lantern",
+        "levelRequired": 7
+    }]
+}, {
+    "name": "Resist Wind",
+    "effect": "Reduce damage from Wind attacks.",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Revolution",
+    "cost": 500,
+    "effect": "Increase all foes and allies' critical rate for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Baal",
+        "levelRequired": 0
+    }, {
+        "name": "Hanuman",
+        "levelRequired": 0
+    }, {
+        "name": "Koumokuten",
+        "levelRequired": 0
+    }, {
+        "name": "Kumbhanda",
+        "levelRequired": 47
+    }, {
+        "name": "Melchizedek",
+        "levelRequired": 62
+    }, {
+        "name": "Yurlungur",
+        "levelRequired": 44
+    }]
+}, {
+    "name": "Riot Gun",
+    "cost": 24,
+    "effect": "Deal severe Gun damage to all foes.",
+    "element": "gun",
+    "personas": [{
+        "name": "Satanael",
+        "levelRequired": 0
+    }, {
+        "name": "Shiva",
+        "levelRequired": 85
+    }, {
+        "name": "Vishnu",
+        "levelRequired": 90
+    }]
+}, {
+    "name": "Rising Slash",
+    "cost": 14,
+    "effect": "Deal heavy Phys damage to 1 foe. More powerful under Baton Pass .",
+    "element": "phys",
+    "personas": [{
+        "name": "Dakini",
+        "levelRequired": 0
+    }, {
+        "name": "Izanagi",
+        "levelRequired": 21
+    }, {
+        "name": "Izanagi Picaro",
+        "levelRequired": 24
+    }, {
+        "name": "Lamia",
+        "levelRequired": 0
+    }, {
+        "name": "Red Rider",
+        "levelRequired": 0
+    }, {
+        "name": "Setanta",
+        "levelRequired": 31
+    }, {
+        "name": "Valkyrie",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Salvation",
+    "cost": 4800,
+    "effect": "Fully restore HP and cure all ailments of party except for unique status.",
+    "element": "healing",
+    "personas": [{
+        "name": "Ardha",
+        "levelRequired": 90
+    }, {
+        "name": "Attis",
+        "levelRequired": 0
+    }, {
+        "name": "Cybele",
+        "levelRequired": 79
+    }, {
+        "name": "Gabriel",
+        "levelRequired": 83
+    }, {
+        "name": "Ishtar",
+        "levelRequired": 90
+    }]
+}, {
+    "name": "Samarecarm",
+    "cost": 1800,
+    "effect": "Revive 1 ally with all HP recovered.",
+    "element": "healing",
+    "personas": [{
+        "name": "Attis",
+        "levelRequired": 85
+    }, {
+        "name": "Cybele",
+        "levelRequired": 0
+    }, {
+        "name": "Hariti",
+        "levelRequired": 41
+    }, {
+        "name": "Ishtar",
+        "levelRequired": 0
+    }, {
+        "name": "Norn",
+        "levelRequired": 57
+    }, {
+        "name": "Oberon",
+        "levelRequired": 71
+    }, {
+        "name": "Sandalphon",
+        "levelRequired": 0
+    }, {
+        "name": "Unicorn",
+        "levelRequired": 41
+    }]
+}, {
+    "name": "Samsara",
+    "cost": 4400,
+    "effect": "High chance of instantly killing all foes.",
+    "element": "bless",
+    "personas": [{
+        "name": "Daisoujou",
+        "levelRequired": 43
+    }]
+}, {
+    "name": "Sharp Student",
+    "effect": "Lower odds of receiving critical hit.",
+    "element": "passive",
+    "personas": [{
+        "name": "Eligor",
+        "levelRequired": 0
+    }, {
+        "name": "Ippon-Datara",
+        "levelRequired": 16
+    }, {
+        "name": "Jack-o'-Lantern",
+        "levelRequired": 4
+    }, {
+        "name": "Oni",
+        "levelRequired": 22
+    }, {
+        "name": "Scathach",
+        "levelRequired": 0
+    }, {
+        "name": "Silky",
+        "levelRequired": 10
+    }, {
+        "name": "Sudama",
+        "levelRequired": 0
+    }, {
+        "name": "Zouchouten",
+        "levelRequired": 33
+    }]
+}, {
+    "name": "Snipe",
+    "effect": "Strengthen Gun attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Jatayu",
+        "levelRequired": 35
+    }, {
+        "name": "White Rider",
+        "levelRequired": 41
+    }]
+}, {
+    "name": "Shining Arrows",
+    "cost": 2200,
+    "effect": "Deal 4 to 8 times weak Bless damage to all foes.",
+    "element": "bless",
+    "personas": [{
+        "name": "Kaguya",
+        "levelRequired": 0
+    }, {
+        "name": "Kaguya Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Shock Boost",
+    "effect": "Increase chance of inflicting Shock.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ame-no-Uzume",
+        "levelRequired": 34
+    }, {
+        "name": "Baphomet",
+        "levelRequired": 62
+    }, {
+        "name": "Mothman",
+        "levelRequired": 0
+    }, {
+        "name": "Raja Naga",
+        "levelRequired": 57
+    }]
+}, {
+    "name": "Skull Cracker",
+    "cost": 10,
+    "effect": "Deal medium Phys damage and inflict Confuse (medium odds) to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Mandrake",
+        "levelRequired": 7
+    }, {
+        "name": "Mokoi",
+        "levelRequired": 0
+    }, {
+        "name": "Mothman",
+        "levelRequired": 0
+    }, {
+        "name": "Nue",
+        "levelRequired": 0
+    }, {
+        "name": "Shiisaa",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Sledgehammer",
+    "cost": 10,
+    "effect": "Deal medium Phys damage and inflict Dizzy (medium odds) to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Berith",
+        "levelRequired": 13
+    }, {
+        "name": "Ippon-Datara",
+        "levelRequired": 0
+    }, {
+        "name": "Kin-Ki",
+        "levelRequired": 28
+    }]
+}, {
+    "name": "Sleep Boost",
+    "effect": "Increase chance of inflicting Sleep.",
+    "element": "passive",
+    "personas": [{
+        "name": "Sandman",
+        "levelRequired": 29
+    }]
+}, {
+    "name": "Snap",
+    "cost": 9,
+    "effect": "Deal medium Gun damage to 1 foe.",
+    "element": "gun",
+    "personas": [{
+        "name": "Koppa Tengu",
+        "levelRequired": 0
+    }, {
+        "name": "Obariyon",
+        "levelRequired": 0
+    }, {
+        "name": "Oni",
+        "levelRequired": 0
+    }, {
+        "name": "Shiki-Ouji",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Soul Chain",
+    "effect": "Recover 20 SP when performing Baton Pass .",
+    "element": "passive",
+    "personas": []
+}, {
+    "name": "Speed Master",
+    "effect": "Automatic Sukukaja at the start of battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Hell Biker",
+        "levelRequired": 0
+    }, {
+        "name": "Jatayu",
+        "levelRequired": 38
+    }, {
+        "name": "Kaiwan",
+        "levelRequired": 38
+    }, {
+        "name": "Magatsu-Izanagi Picaro",
+        "levelRequired": 52
+    }, {
+        "name": "Suzaku",
+        "levelRequired": 23
+    }]
+}, {
+    "name": "Spell Master",
+    "effect": "Half SP cost for magic skills.",
+    "element": "passive",
+    "personas": [{
+        "name": "Ishtar",
+        "levelRequired": 89
+    }, {
+        "name": "Kohryu",
+        "levelRequired": 82
+    }, {
+        "name": "Lucifer",
+        "levelRequired": 95
+    }, {
+        "name": "Mada",
+        "levelRequired": 91
+    }, {
+        "name": "Tsukiyomi Picaro",
+        "levelRequired": 61
+    }, {
+        "name": "Uriel",
+        "levelRequired": 86
+    }]
+}, {
+    "name": "Spirit Drain",
+    "cost": 300,
+    "effect": "Drains SP from 1 foe.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Abaddon",
+        "levelRequired": 0
+    }, {
+        "name": "Arahabaki",
+        "levelRequired": 37
+    }, {
+        "name": "Daisoujou",
+        "levelRequired": 0
+    }, {
+        "name": "Hariti",
+        "levelRequired": 46
+    }, {
+        "name": "Lilim",
+        "levelRequired": 36
+    }, {
+        "name": "Lilith",
+        "levelRequired": 63
+    }, {
+        "name": "Skadi",
+        "levelRequired": 59
+    }, {
+        "name": "Tsukiyomi Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Stagnant Air",
+    "cost": 500,
+    "effect": "Increase susceptibility to all ailments of all foes and allies.",
+    "element": "almighty",
+    "personas": [{
+        "name": "Black Ooze",
+        "levelRequired": 0
+    }, {
+        "name": "Chernobog",
+        "levelRequired": 63
+    }, {
+        "name": "Forneus",
+        "levelRequired": 66
+    }, {
+        "name": "Kumbhanda",
+        "levelRequired": 0
+    }, {
+        "name": "Moloch",
+        "levelRequired": 0
+    }, {
+        "name": "Pisaca",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Beast Weaver",
+    "cost": 20,
+    "effect": "Deal grave Phys damage to 1 foe and user is debuffed with Tarunda.",
+    "element": "phys",
+    "personas": [{
+        "name": "Ariadne",
+        "levelRequired": 0
+    }, {
+        "name": "Ariadne Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Sukukaja",
+    "cost": 800,
+    "effect": "Increase 1 ally's Agility for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Isis",
+        "levelRequired": 0
+    }, {
+        "name": "Kelpie",
+        "levelRequired": 9
+    }, {
+        "name": "Matador",
+        "levelRequired": 0
+    }, {
+        "name": "Orobas",
+        "levelRequired": 0
+    }, {
+        "name": "Power",
+        "levelRequired": 0
+    }, {
+        "name": "Queen's Necklace",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Sukunda",
+    "cost": 800,
+    "effect": "Decrease 1 foe's Agility for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Arsene",
+        "levelRequired": 4
+    }, {
+        "name": "Eligor",
+        "levelRequired": 19
+    }, {
+        "name": "Mandrake",
+        "levelRequired": 5
+    }, {
+        "name": "Obariyon",
+        "levelRequired": 0
+    }, {
+        "name": "Queen's Necklace",
+        "levelRequired": 0
+    }, {
+        "name": "Sandman",
+        "levelRequired": 25
+    }]
+}, {
+    "name": "Survival Trick",
+    "effect": "Survive one instant death attack with 1 HP remaining.",
+    "element": "passive",
+    "personas": [{
+        "name": "Abaddon",
+        "levelRequired": 77
+    }, {
+        "name": "Alice",
+        "levelRequired": 84
+    }, {
+        "name": "Belial",
+        "levelRequired": 70
+    }, {
+        "name": "Forneus",
+        "levelRequired": 65
+    }, {
+        "name": "Satanael",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Swift Strike",
+    "cost": 17,
+    "effect": "Deal 3 to 4 times weak Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Byakko",
+        "levelRequired": 0
+    }, {
+        "name": "Girimehkala",
+        "levelRequired": 0
+    }, {
+        "name": "Hecatoncheires",
+        "levelRequired": 0
+    }, {
+        "name": "Matador",
+        "levelRequired": 20
+    }, {
+        "name": "Power",
+        "levelRequired": 42
+    }, {
+        "name": "Rangda",
+        "levelRequired": 0
+    }, {
+        "name": "Unicorn",
+        "levelRequired": 42
+    }, {
+        "name": "Zouchouten",
+        "levelRequired": 35
+    }]
+}, {
+    "name": "Tarukaja",
+    "cost": 800,
+    "effect": "Increase 1 ally's Attack power for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Andras",
+        "levelRequired": 11
+    }, {
+        "name": "Eligor",
+        "levelRequired": 0
+    }, {
+        "name": "Fuu-Ki",
+        "levelRequired": 0
+    }, {
+        "name": "Hecatoncheires",
+        "levelRequired": 0
+    }, {
+        "name": "Inugami",
+        "levelRequired": 0
+    }, {
+        "name": "Ippon-Datara",
+        "levelRequired": 0
+    }, {
+        "name": "Izanagi",
+        "levelRequired": 0
+    }, {
+        "name": "Kodama",
+        "levelRequired": 14
+    }, {
+        "name": "Mokoi",
+        "levelRequired": 0
+    }, {
+        "name": "Pixie",
+        "levelRequired": 5
+    }, {
+        "name": "Queen's Necklace",
+        "levelRequired": 0
+    }, {
+        "name": "Rakshasa",
+        "levelRequired": 0
+    }, {
+        "name": "Shiki-Ouji",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Tarunda",
+    "cost": 800,
+    "effect": "Decrease 1 foe's Attack power for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Bicorn",
+        "levelRequired": 0
+    }, {
+        "name": "Hua Po",
+        "levelRequired": 11
+    }, {
+        "name": "Incubus",
+        "levelRequired": 8
+    }, {
+        "name": "Orpheus",
+        "levelRequired": 0
+    }, {
+        "name": "Queen's Necklace",
+        "levelRequired": 0
+    }, {
+        "name": "Suzaku",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Taunt",
+    "cost": 500,
+    "effect": "Inflict Rage (high odds) to 1 foe.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Ara Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "High Pixie",
+        "levelRequired": 19
+    }, {
+        "name": "Koppa Tengu",
+        "levelRequired": 13
+    }, {
+        "name": "Shiki-Ouji",
+        "levelRequired": 0
+    }, {
+        "name": "Thoth",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Tempest Slash",
+    "cost": 17,
+    "effect": "Deal 3 to 5 times minuscule Phys damage to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Hanuman",
+        "levelRequired": 0
+    }, {
+        "name": "Kumbhanda",
+        "levelRequired": 43
+    }, {
+        "name": "Okuninushi",
+        "levelRequired": 0
+    }, {
+        "name": "Ose",
+        "levelRequired": 43
+    }, {
+        "name": "Scathach",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Tentarafoo",
+    "cost": 1200,
+    "effect": "Inflict Confuse (medium odds) to all foes.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Ame-no-Uzume",
+        "levelRequired": 31
+    }, {
+        "name": "Hell Biker",
+        "levelRequired": 41
+    }, {
+        "name": "Kali",
+        "levelRequired": 0
+    }, {
+        "name": "Mithras",
+        "levelRequired": 0
+    }, {
+        "name": "Mothman",
+        "levelRequired": 35
+    }, {
+        "name": "Pazuzu",
+        "levelRequired": 0
+    }, {
+        "name": "Raja Naga",
+        "levelRequired": 0
+    }, {
+        "name": "Sarasvati",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Terror Claw",
+    "cost": 8,
+    "effect": "Deal medium Phys damage and inflict Fear (medium odds) to 1 foe.",
+    "element": "phys",
+    "personas": [{
+        "name": "Kelpie",
+        "levelRequired": 10
+    }, {
+        "name": "Nekomata",
+        "levelRequired": 0
+    }, {
+        "name": "Zouchouten",
+        "levelRequired": 32
+    }]
+}, {
+    "name": "Tetra Break",
+    "cost": 1800,
+    "effect": "Remove physical-repellent shields from all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Fuu-Ki",
+        "levelRequired": 0
+    }, {
+        "name": "Hanuman",
+        "levelRequired": 67
+    }, {
+        "name": "Legion",
+        "levelRequired": 40
+    }, {
+        "name": "Mara",
+        "levelRequired": 0
+    }, {
+        "name": "Mithras",
+        "levelRequired": 41
+    }, {
+        "name": "Yurlungur",
+        "levelRequired": 47
+    }]
+}, {
+    "name": "Tetraja",
+    "cost": 2400,
+    "effect": "Create shields on party to nullify one instant death attack of Bless or Curse types.",
+    "element": "support",
+    "personas": [{
+        "name": "Baal",
+        "levelRequired": 78
+    }, {
+        "name": "Clotho",
+        "levelRequired": 27
+    }, {
+        "name": "Fortuna",
+        "levelRequired": 0
+    }, {
+        "name": "Ganesha",
+        "levelRequired": 55
+    }, {
+        "name": "Kikuri-Hime",
+        "levelRequired": 43
+    }, {
+        "name": "Norn",
+        "levelRequired": 56
+    }, {
+        "name": "Principality",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Tetrakarn",
+    "cost": 3600,
+    "effect": "Create a shield on 1 ally to repel 1 Phys attack.",
+    "element": "support",
+    "personas": [{
+        "name": "Asterius",
+        "levelRequired": 60
+    }, {
+        "name": "Bishamonten",
+        "levelRequired": 72
+    }, {
+        "name": "Decarabia",
+        "levelRequired": 38
+    }]
+}, {
+    "name": "Thermopylae",
+    "cost": 3000,
+    "effect": "Increase party's Attack, Defense and Agility for 3 turns. Only usable if the party is being ambushed.",
+    "element": "support",
+    "personas": [{
+        "name": "Attis",
+        "levelRequired": 0
+    }, {
+        "name": "Dionysus",
+        "levelRequired": 62
+    }, {
+        "name": "Mithra",
+        "levelRequired": 38
+    }]
+}, {
+    "name": "Thunder Reign",
+    "cost": 4800,
+    "effect": "Deal severe Electric damage to 1 foe.",
+    "element": "electric",
+    "personas": [{
+        "name": "Odin",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Ayamur",
+    "cost": 25,
+    "effect": "Deal 3 times medium Phys damage to 1 foe. High critical rate.",
+    "element": "phys",
+    "personas": [{
+        "name": "Baal",
+        "levelRequired": 80
+    }]
+}, {
+    "name": "Titanomachia",
+    "cost": 3400,
+    "effect": "Deal severe Fire damage to all foes and inflict Fear (high odds).",
+    "element": "fire",
+    "personas": [{
+        "name": "Asterius",
+        "levelRequired": 0
+    }, {
+        "name": "Asterius Picaro",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Touch n' Go",
+    "effect": "Apply Sukukaja when performing Baton Pass .",
+    "element": "passive",
+    "personas": [{
+        "name": "Fortuna",
+        "levelRequired": 49
+    }, {
+        "name": "Gabriel",
+        "levelRequired": 81
+    }, {
+        "name": "Horus",
+        "levelRequired": 51
+    }]
+}, {
+    "name": "Trigger Happy",
+    "effect": "Increase critical rate of Gun attacks.",
+    "element": "passive",
+    "personas": [{
+        "name": "Hell Biker",
+        "levelRequired": 43
+    }, {
+        "name": "Matador",
+        "levelRequired": 22
+    }, {
+        "name": "Vasuki",
+        "levelRequired": 71
+    }]
+}, {
+    "name": "Triple Down",
+    "cost": 16,
+    "effect": "Deal 3 times small Gun damage to all foes.",
+    "element": "gun",
+    "personas": [{
+        "name": "Bugs",
+        "levelRequired": 52
+    }, {
+        "name": "Vasuki",
+        "levelRequired": 0
+    }, {
+        "name": "White Rider",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Unshaken Will",
+    "effect": "Impart immunity against Confuse, Fear, and Rage.",
+    "element": "passive",
+    "personas": [{
+        "name": "Asura-Ou",
+        "levelRequired": 81
+    }, {
+        "name": "Mada",
+        "levelRequired": 86
+    }, {
+        "name": "Satanael",
+        "levelRequired": 98
+    }, {
+        "name": "Yamata-no-Orochi",
+        "levelRequired": 69
+    }]
+}, {
+    "name": "Vacuum Wave",
+    "cost": 4800,
+    "effect": "Deal severe Wind damage to all foes.",
+    "element": "wind",
+    "personas": [{
+        "name": "Vishnu",
+        "levelRequired": 85
+    }]
+}, {
+    "name": "Vajra Blast",
+    "cost": 14,
+    "effect": "Deal medium Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Archangel",
+        "levelRequired": 21
+    }, {
+        "name": "Kin-Ki",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Vicious Strike",
+    "cost": 18,
+    "effect": "Deal medium Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Mithras",
+        "levelRequired": 0
+    }, {
+        "name": "Yaksini",
+        "levelRequired": 24
+    }]
+}, {
+    "name": "Victory Cry",
+    "effect": "Recover full HP and SP after a successful battle.",
+    "element": "passive",
+    "personas": [{
+        "name": "Satanael",
+        "levelRequired": 99
+    }]
+}, {
+    "name": "Vorpal Blade",
+    "cost": 23,
+    "effect": "Deal severe Phys damage to all foes.",
+    "element": "phys",
+    "personas": [{
+        "name": "Kali",
+        "levelRequired": 0
+    }, {
+        "name": "Siegfried",
+        "levelRequired": 74
+    }, {
+        "name": "Tsukiyomi",
+        "levelRequired": 55
+    }, {
+        "name": "Tsukiyomi Picaro",
+        "levelRequired": 60
+    }]
+}, {
+    "name": "Wage War",
+    "cost": 1200,
+    "effect": "Inflict Rage (medium odds) to all foes.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Barong",
+        "levelRequired": 0
+    }, {
+        "name": "Girimehkala",
+        "levelRequired": 48
+    }, {
+        "name": "Koppa Tengu",
+        "levelRequired": 15
+    }, {
+        "name": "Kumbhanda",
+        "levelRequired": 0
+    }, {
+        "name": "Sui-Ki",
+        "levelRequired": 27
+    }, {
+        "name": "Yaksini",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Cripple",
+    "effect": "Strengthen Gun attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Seth",
+        "levelRequired": 53
+    }, {
+        "name": "Trumpeter",
+        "levelRequired": 62
+    }, {
+        "name": "Zaou-Gongen",
+        "levelRequired": 84
+    }]
+}, {
+    "name": "Wind Amp",
+    "effect": "Strengthen Wind attacks by 50%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Garuda",
+        "levelRequired": 59
+    }, {
+        "name": "Quetzalcoatl",
+        "levelRequired": 68
+    }, {
+        "name": "Vishnu",
+        "levelRequired": 88
+    }]
+}, {
+    "name": "Wind Boost",
+    "effect": "Strengthen Wind attacks by 25%.",
+    "element": "passive",
+    "personas": [{
+        "name": "Fuu-Ki",
+        "levelRequired": 25
+    }]
+}, {
+    "name": "Wind Break",
+    "cost": 1500,
+    "effect": "Negate Wind resistances of all foes.",
+    "element": "support",
+    "personas": [{
+        "name": "Anzu",
+        "levelRequired": 0
+    }, {
+        "name": "Nekomata",
+        "levelRequired": 20
+    }, {
+        "name": "Yatagarasu",
+        "levelRequired": 61
+    }]
+}, {
+    "name": "Wind Wall",
+    "cost": 1800,
+    "effect": "Create a shield on 1 ally to reduce damage of Wind attacks for 3 turns.",
+    "element": "support",
+    "personas": [{
+        "name": "Apsaras",
+        "levelRequired": 16
+    }, {
+        "name": "Kushinada-Hime",
+        "levelRequired": 46
+    }, {
+        "name": "Kusi Mitama",
+        "levelRequired": 16
+    }, {
+        "name": "Queen Mab",
+        "levelRequired": 0
+    }, {
+        "name": "Rakshasa",
+        "levelRequired": 0
+    }, {
+        "name": "Saki Mitama",
+        "levelRequired": 0
+    }, {
+        "name": "Sudama",
+        "levelRequired": 21
+    }]
+}, {
+    "name": "Ominous Words",
+    "cost": 500,
+    "effect": "Inflict Despair (high odds) to 1 foe.",
+    "element": "ailment",
+    "personas": [{
+        "name": "Decarabia",
+        "levelRequired": 0
+    }, {
+        "name": "Lamia",
+        "levelRequired": 27
+    }, {
+        "name": "Suzaku",
+        "levelRequired": 21
+    }]
+}, {
+    "name": "Zio",
+    "cost": 400,
+    "effect": "Deal weak Electric damage to 1 foe.",
+    "element": "electric",
+    "personas": [{
+        "name": "Agathion",
+        "levelRequired": 0
+    }, {
+        "name": "Pixie",
+        "levelRequired": 0
+    }, {
+        "name": "Shiisaa",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Ziodyne",
+    "cost": 1200,
+    "effect": "Deal heavy Electric damage to 1 foe.",
+    "element": "electric",
+    "personas": [{
+        "name": "Baphomet",
+        "levelRequired": 61
+    }, {
+        "name": "Barong",
+        "levelRequired": 0
+    }, {
+        "name": "Emperor's Amulet",
+        "levelRequired": 0
+    }, {
+        "name": "Norn",
+        "levelRequired": 0
+    }, {
+        "name": "Oberon",
+        "levelRequired": 0
+    }, {
+        "name": "Raja Naga",
+        "levelRequired": 0
+    }, {
+        "name": "Thor",
+        "levelRequired": 0
+    }, {
+        "name": "Yoshitsune",
+        "levelRequired": 0
+    }]
+}, {
+    "name": "Zionga",
+    "cost": 800,
+    "effect": "Deal medium Electric damage to 1 foe.",
+    "element": "electric",
+    "personas": [{
+        "name": "Hariti",
+        "levelRequired": 0
+    }, {
+        "name": "Isis",
+        "levelRequired": 29
+    }, {
+        "name": "Izanagi",
+        "levelRequired": 0
+    }, {
+        "name": "Izanagi Picaro",
+        "levelRequired": 0
+    }, {
+        "name": "Naga",
+        "levelRequired": 0
+    }, {
+        "name": "Stone of Scone",
+        "levelRequired": 0
+    }, {
+        "name": "Take-Minakata",
+        "levelRequired": 0
+    }, {
+        "name": "Zouchouten",
+        "levelRequired": 0
+    }]
+}]

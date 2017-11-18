@@ -70,8 +70,9 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.4.2'
     compile 'com.github.medyo:android-about-page:1.2.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
-        transitive = true;
+        transitive = true
     }
     compile "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    compile "android.arch.lifecycle:extensions:1.0.0"
 }

@@ -18,9 +18,10 @@ public class RawPersona extends BasePersona {
     public String personality;
     public int[] stats;
     public String[] elems;
+    public String note;
 
     public Persona toPersona() {
-        BasePersona basePersona = (BasePersona) this;
+        BasePersona basePersona = this;
         Persona persona = (Persona) basePersona;
         persona.stats = new Persona.Stats(stats);
 

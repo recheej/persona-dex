@@ -1,12 +1,15 @@
 package com.persona5dex.activities;
 
 import android.app.SearchManager;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
@@ -32,8 +35,12 @@ import com.persona5dex.dagger.ViewModelRepositoryModule;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.models.Persona;
 import com.persona5dex.models.PersonaFilterArgs;
+import com.persona5dex.models.MainListPersona;
 import com.persona5dex.services.FusionCalculatorJobService;
 import com.persona5dex.viewmodels.PersonaListViewModel;
+import com.persona5dex.viewmodels.PersonaMainListViewModel;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -57,6 +64,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Inject
     PersonaListViewModel viewModel;
+
+    private PersonaMainListViewModel mainListViewModel;
 
     private PersonaFilterArgs latestFilterArgs;
 
@@ -82,6 +91,16 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             Fabric.with(this, new Crashlytics());
         }
 
+        this.mainListViewModel = ViewModelProviders.of(this).get(PersonaMainListViewModel.class);
+
+        mainListViewModel.getMainListPersonas().observe(this, new Observer<List<MainListPersona>>() {
+            @Override
+            public void onChanged(@Nullable List<MainListPersona> mainListPersonas) {
+                personaListAdapter = new PersonaListAdapter(mainListPersonas);
+                recyclerView.setAdapter(personaListAdapter);
+            }
+        });
+
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
@@ -104,11 +123,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        this.filteredPersonas = viewModel.getAllPersonas();
-        this.allPersonas = this.filteredPersonas;
-
-        personaListAdapter = new PersonaListAdapter(this.filteredPersonas, viewModel);
-        recyclerView.setAdapter(personaListAdapter);
+//        this.filteredPersonas = viewModel.getAllPersonas();
+//        this.allPersonas = this.filteredPersonas;
 
         Intent intent = getIntent();
         handleIntent(intent);
@@ -125,7 +141,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             String query = intent.getStringExtra(SearchManager.QUERY);
 
             this.filteredPersonas = viewModel.filterPersonas(this.allPersonas, query);
-            personaListAdapter.setPersonas(this.filteredPersonas);
+            //personaListAdapter.setPersonas(this.filteredPersonas);
         }
         else if(Intent.ACTION_VIEW.equals(intent.getAction())){
             String personaName = intent.getDataString();
@@ -161,7 +177,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
                 //restore all personas to list when you click the x button on search
                 MainActivity.this.filteredPersonas = MainActivity.this.allPersonas;
-                MainActivity.this.personaListAdapter.setPersonas(MainActivity.this.filteredPersonas);
+                //MainActivity.this.personaListAdapter.setPersonas(MainActivity.this.filteredPersonas);
 
                 menu.setGroupVisible(R.id.menu_item_group_sorting, true);
                 settingsItem.setVisible(true);
@@ -224,7 +240,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         switch (selectedSortMenuItemID){
             case R.id.menu_sort_name_asc:
                 viewModel.sortPersonasByName(filteredPersonas, true);
-                personaListAdapter.setPersonas(filteredPersonas);
+                //personaListAdapter.setPersonas(filteredPersonas);
                 personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
 
                 personaListAdapter.notifyDataSetChanged();
@@ -233,26 +249,26 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 return true;
             case R.id.menu_sort_name_desc:
                 viewModel.sortPersonasByName(filteredPersonas, false);
-                personaListAdapter.setPersonas(filteredPersonas);
+                //personaListAdapter.setPersonas(filteredPersonas);
                 personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
 
                 recyclerView.setIndexBarVisibility(true);
                 return true;
             case R.id.menu_sort_level_asc:
                 viewModel.sortPersonasByLevel(filteredPersonas, true);
-                personaListAdapter.setPersonas(filteredPersonas);
+                //personaListAdapter.setPersonas(filteredPersonas);
 
                 recyclerView.setIndexBarVisibility(false);
                 return true;
             case R.id.menu_sort_level_desc:
                 viewModel.sortPersonasByLevel(filteredPersonas, false);
-                personaListAdapter.setPersonas(filteredPersonas);
+                //personaListAdapter.setPersonas(filteredPersonas);
 
                 recyclerView.setIndexBarVisibility(false);
                 return true;
             case R.id.menu_sort_arcana_asc:
                 viewModel.sortPersonasByArcana(filteredPersonas, true);
-                personaListAdapter.setPersonas(filteredPersonas);
+                //personaListAdapter.setPersonas(filteredPersonas);
                 personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.ArcanaName);
 
                 personaListAdapter.notifyDataSetChanged();
@@ -261,7 +277,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 return true;
             case R.id.menu_sort_arcana_desc:
                 viewModel.sortPersonasByArcana(filteredPersonas, false);
-                personaListAdapter.setPersonas(filteredPersonas);
+                //personaListAdapter.setPersonas(filteredPersonas);
                 personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.ArcanaName);
 
                 personaListAdapter.notifyDataSetChanged();
@@ -282,7 +298,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     private void filterPersonas() {
         this.filteredPersonas = viewModel.filterPersonas(latestFilterArgs, allPersonas);
-        personaListAdapter.setPersonas(this.filteredPersonas);
+        //personaListAdapter.setPersonas(this.filteredPersonas);
     }
 
     @Override

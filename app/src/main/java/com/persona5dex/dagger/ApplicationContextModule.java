@@ -3,12 +3,17 @@ package com.persona5dex.dagger;
 import android.content.Context;
 
 import com.persona5dex.Persona5Application;
+import com.persona5dex.PersonaFileUtilities;
+import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaStoreGsonAdapter;
 import com.persona5dex.models.PersonaStore;
-import com.persona5dex.models.RawPersonaEdge;
+import com.persona5dex.models.RawPersona;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.persona5dex.models.RawSkill;
 import com.persona5dex.models.room.PersonaDatabase;
+
+import java.io.InputStream;
 
 import javax.inject.Named;
 
@@ -42,6 +47,25 @@ public class ApplicationContextModule {
         builder.registerTypeAdapter(PersonaStore.class, new PersonaStoreGsonAdapter());
 
         return builder.create();
+    }
+
+
+    @Provides
+    @ApplicationScope
+    RawPersona[] rawPersonas(Gson gson) {
+        InputStream stream = context.getResources().openRawResource(R.raw.person_data);
+        PersonaFileUtilities utilities = new PersonaFileUtilities(gson);
+
+        return utilities.parseJsonFile(stream, RawPersona[].class);
+    }
+
+    @Provides
+    @ApplicationScope
+    RawSkill[] rawSkills(Gson gson){
+        InputStream stream = context.getResources().openRawResource(R.raw.skill_data);
+        PersonaFileUtilities utilities = new PersonaFileUtilities(gson);
+
+        return utilities.parseJsonFile(stream, RawSkill[].class);
     }
 
     @Provides

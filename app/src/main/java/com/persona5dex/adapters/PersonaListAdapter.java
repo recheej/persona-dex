@@ -13,15 +13,10 @@ import android.widget.TextView;
 import com.persona5dex.R;
 import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.models.Enumerations;
-import com.persona5dex.models.Persona;
-import com.persona5dex.viewmodels.PersonaListViewModel;
+import com.persona5dex.models.MainListPersona;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Rechee on 7/3/2017.
@@ -29,8 +24,7 @@ import java.util.Objects;
 
 public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder> implements SectionIndexer {
 
-    private List<Persona> personas;
-    private final PersonaListViewModel viewModel;
+    private List<MainListPersona> personas;
     private ArrayList<Integer> mSectionPositions;
     private boolean sectionAsc;
 
@@ -54,17 +48,15 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
             this.textViewPersonaArcana = itemView.findViewById(R.id.textViewArcana);
         }
 
-        public void bindPersona(Persona personaToBind){
+        public void bindPersona(MainListPersona personaToBind){
             this.textViewPersonaName.setText(personaToBind.name);
             this.textViewPersonaLevel.setText(Integer.toString(personaToBind.level));
-            this.textViewPersonaArcana.setText(personaToBind.arcanaName);
+            this.textViewPersonaArcana.setText(personaToBind.arcana);
         }
     }
 
-    public PersonaListAdapter(Persona[] personas, PersonaListViewModel viewModel){
-        this.personas = new ArrayList<>(personas.length);
-        Collections.addAll(this.personas, personas);
-        this.viewModel = viewModel;
+    public PersonaListAdapter(List<MainListPersona> mainListPersonas){
+        this.personas = mainListPersonas;
         this.sectionIndexerType = IndexerType.PersonaName;
         this.sectionAsc = true;
     }
@@ -84,8 +76,8 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
                     personaPosition = 0;
                 }
 
-                Persona detailPersona = personas.get(personaPosition);
-                viewModel.storePersonaForDetail(detailPersona);
+                //Persona detailPersona = personas.get(personaPosition);
+                //viewModel.storePersonaForDetail(detailPersona);
 
                 Context context = v.getContext();
                 Intent startDetailIntent = new Intent(context, PersonaDetailActivity.class);
@@ -104,12 +96,6 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
     @Override
     public int getItemCount() {
         return this.personas.size();
-    }
-
-    public void setPersonas(Persona[] newPersonas){
-        this.personas.clear();
-        Collections.addAll(this.personas, newPersonas);
-        this.notifyDataSetChanged();
     }
 
     /**
@@ -133,7 +119,7 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         List<String> sections = new ArrayList<>(arcanaSize);
         mSectionPositions = new ArrayList<>(arcanaSize);
         for (int i = 0; i < personas.size(); i++) {
-            String section = personas.get(i).arcanaName.toUpperCase();
+            String section = personas.get(i).arcana.toUpperCase();
             if(section.length() > 5){
                 section = section.substring(0, 4);
             }

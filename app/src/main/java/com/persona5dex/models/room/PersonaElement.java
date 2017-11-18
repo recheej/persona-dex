@@ -25,21 +25,18 @@ import com.persona5dex.models.Enumerations;
     }
 )
 public class PersonaElement {
+    public PersonaElement(int personaId, Enumerations.Element element, Enumerations.ElementEffect effect) {
+        this.personaId = personaId;
+        this.element = element;
+        this.effect = effect;
+    }
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
     @ColumnInfo(name = "persona_id")
     public int personaId;
 
-    public Enumerations.ElementEffect physical;
-    public Enumerations.ElementEffect gun;
-    public Enumerations.ElementEffect fire;
-    public Enumerations.ElementEffect ice;
-    public Enumerations.ElementEffect electric;
-    public Enumerations.ElementEffect wind;
-    public Enumerations.ElementEffect psychic;
-    public Enumerations.ElementEffect nuclear;
-    public Enumerations.ElementEffect bless;
-    public Enumerations.ElementEffect curse;
+    public Enumerations.Element element;
+    public Enumerations.ElementEffect effect;
 }

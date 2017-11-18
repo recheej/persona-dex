@@ -86,6 +86,11 @@ public class PersonaFileUtilities {
         return personas;
     }
 
+    public <T> T parseJsonFile(InputStream stream, Class<T> tClass){
+        String contents = this.getFileContents(stream);
+        return gson.fromJson(contents, tClass);
+    }
+
     public Map<String, int[]> rareCombos(InputStream rareComboFile) {
         String personaFileContents = this.getFileContents(rareComboFile);
         RawRarePersonaMap[] rawRarePersonaMaps = gson.fromJson(personaFileContents, RawRarePersonaMap[].class);

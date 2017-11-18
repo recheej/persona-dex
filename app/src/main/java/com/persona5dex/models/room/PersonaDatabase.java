@@ -30,4 +30,15 @@ public abstract class PersonaDatabase extends RoomDatabase {
 
         return INSTANCE;
     }
+
+    public static PersonaDatabase getPersonaDatabase(Context context, RoomDatabase.Callback callback){
+        if(INSTANCE == null){
+            INSTANCE = Room.databaseBuilder(context,
+                    PersonaDatabase.class, "perssona-db")
+                    .addCallback(callback)
+                    .build();
+        }
+
+        return INSTANCE;
+    }
 }

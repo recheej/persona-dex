@@ -76,7 +76,7 @@ public class PersonaFuser {
         int rarePersonaIndex = this.getRarePersonaIndex(rarePersona.name);
         int modifier = this.rareComboMap.get(normalPersona.arcanaName)[rarePersonaIndex];
 
-        List<Persona> personasOfSameArcana = personaByArcana.get(normalPersona.getArcana().ordinal());
+        List<Persona> personasOfSameArcana = personaByArcana.get(normalPersona.getArcana().value());
 
         int personaIndex = 0;
         final int arcanaSize = personasOfSameArcana.size();
@@ -128,13 +128,13 @@ public class PersonaFuser {
     private SparseArray<List<Persona>> personaByArcana(){
         SparseArray<List<Persona>> personaByArcana = new SparseArray<>(arcanaTable.size());
         for(Persona persona: personasByLevel){
-            int arcanaIndex = persona.getArcana().ordinal();
+            int arcanaIndex = persona.getArcana().value();
             List<Persona> personaList = personaByArcana.get(arcanaIndex);
 
             if(personaList == null){
                 personaList = new ArrayList<>();
                 personaList.add(persona);
-                personaByArcana.put(persona.getArcana().ordinal(), personaList);
+                personaByArcana.put(persona.getArcana().value(), personaList);
             }
             else{
                 personaList.add(persona);
@@ -186,7 +186,7 @@ public class PersonaFuser {
         int calculatedLevel = (personaOne.level + personaTwo.level) / 2;
         calculatedLevel += 1;
 
-        List<Persona> personaForResultArcana = personaByArcana.get(resultArcana.ordinal());
+        List<Persona> personaForResultArcana = personaByArcana.get(resultArcana.value());
 
         if(personaForResultArcana.size() == 0){
             //this should never happen, but hey you never know

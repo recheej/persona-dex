@@ -1,5 +1,8 @@
 package com.persona5dex.dagger;
 
+import com.persona5dex.dagger.AndroidViewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.dagger.AndroidViewModels.ViewModelComponent;
+
 import dagger.Component;
 
 /**
@@ -19,4 +22,5 @@ public interface Persona5ApplicationComponent {
                            ViewModelRepositoryModule viewModelRepositoryModule);
 
     FusionCalculatorServiceComponent plus(FusionServiceContextModule fusionServiceContextModule, FusionArcanaDataModule fusionArcanaDataModule);
+    ViewModelComponent plus(AndroidViewModelRepositoryModule androidViewModelRepositoryModule);
 }
