@@ -1,6 +1,5 @@
 package com.persona5dex.models;
 
-import com.persona5dex.PersonaUtilities;
 import com.persona5dex.models.Enumerations.Arcana;
 import com.persona5dex.models.Enumerations.ElementEffect;
 import com.persona5dex.models.Enumerations.Element;
@@ -56,6 +55,10 @@ public class Persona extends BasePersona {
     }
 
     public Arcana getArcana() {
+        if(arcana == null){
+            arcana = Arcana.WORLD;
+        }
+
         return arcana;
     }
 
@@ -75,7 +78,7 @@ public class Persona extends BasePersona {
         }
     }
 
-    public static Persona mapFromRawPersona(RawPersona rawPersona){
+    public static Persona mapFromRawPersona(RawPersona rawPersona, HashMap<String, Arcana> arcanaHashMap){
         Persona persona = new Persona();
         persona.name = rawPersona.name;
         persona.level = rawPersona.level;
@@ -138,9 +141,10 @@ public class Persona extends BasePersona {
             }
         }
 
-        String rawArcanaFormatted = rawPersona.arcana.replaceAll("\\s+", "").toLowerCase();
-
-        HashMap<String, Arcana> arcanaHashMap = PersonaUtilities.arcanaHashMap();
+        String rawArcanaFormatted = rawPersona.arcana
+                .replaceAll("\\s+", "")
+                .replaceAll("_", "")
+                .toLowerCase();
 
         if(arcanaHashMap.containsKey(rawArcanaFormatted)){
             persona.arcana = arcanaHashMap.get(rawArcanaFormatted);

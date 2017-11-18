@@ -21,13 +21,13 @@ android {
         }
     }
     compileSdkVersion 26
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.persona5dex"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 7
-        versionName "1.2.2"
+        versionCode 9
+        versionName "1.2.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -68,7 +68,6 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.8'
     testCompile 'org.robolectric:robolectric:3.4.2'
-    compile 'com.google.android.gms:play-services-ads:11.2.0'
     compile 'com.github.medyo:android-about-page:1.2.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
         transitive = true;

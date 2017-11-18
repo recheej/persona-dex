@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.SearchEvent;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaUtilities;
@@ -127,6 +129,12 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         else if(Intent.ACTION_VIEW.equals(intent.getAction())){
             String personaName = intent.getDataString();
             viewModel.storePersonaForDetail(personaName);
+
+            if(BuildConfig.ENABLE_CRASHLYTICS){
+                Answers.getInstance().logSearch(new SearchEvent()
+                        .putQuery(personaName));
+            }
+
 
             Intent startDetailIntent = new Intent(this, PersonaDetailActivity.class);
             startActivity(startDetailIntent);

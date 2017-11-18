@@ -8,10 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
-import com.google.android.gms.ads.AdSize;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaDetailFragmentPagerAdapter;
@@ -22,9 +22,6 @@ import com.persona5dex.dagger.ViewModelModule;
 import com.persona5dex.dagger.ViewModelRepositoryModule;
 import com.persona5dex.models.Persona;
 import com.persona5dex.viewmodels.PersonaDetailViewModel;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 import javax.inject.Inject;
 
@@ -36,8 +33,6 @@ public class PersonaDetailActivity extends BaseActivity {
     @Inject
     PersonaDetailViewModel viewModel;
     private Persona detailPersona;
-
-    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +49,16 @@ public class PersonaDetailActivity extends BaseActivity {
         this.component = component;
 
         this.detailPersona = viewModel.getDetailPersona();
+
+        if(BuildConfig.ENABLE_CRASHLYTICS){
+            //see how personas are being viewed in app
+//            Answers.getInstance().logContentView(new ContentViewEvent()
+//                    .putContentName("View Persona Detail")
+//                    .putContentType("View Persona Screen")
+//                    .putContentId(this.detailPersona.name)
+//            );
+        }
+
         setUpToolbar();
 
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -62,8 +67,6 @@ public class PersonaDetailActivity extends BaseActivity {
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-
-        initializeAd();
     }
 
     private void setUpToolbar(){
@@ -71,28 +74,6 @@ public class PersonaDetailActivity extends BaseActivity {
         this.mainToolbar.setSubtitle(String.format("Level: %d", this.detailPersona.level));
 
         setSupportActionBar(this.mainToolbar);
-    }
-
-    private void initializeAd() {
-        MobileAds.initialize(this, getString(R.string.admob_app_id));
-
-        adView = new AdView(this);
-
-        RelativeLayout.LayoutParams layoutParams =  new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-
-        adView.setLayoutParams(layoutParams);
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.admob_main_unit_id));
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        RelativeLayout detailLayout = findViewById(R.id.detail_layout);
-        detailLayout.addView(adView);
-
-        adView.loadAd(adRequest);
     }
 
     @Override

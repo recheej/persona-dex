@@ -74,7 +74,10 @@ public class RawPersona extends BasePersona {
             }
         }
 
-        String rawArcanaFormatted = this.arcana.replaceAll("\\s+", "").toLowerCase();
+        String rawArcanaFormatted = this.arcana
+                .replaceAll("\\s+", "")
+                .replaceAll("_", "")
+                .toLowerCase();
 
         HashMap<String, Arcana> arcanaHashMap = PersonaUtilities.arcanaHashMap();
 
