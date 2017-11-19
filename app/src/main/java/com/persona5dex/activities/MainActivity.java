@@ -88,6 +88,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         }
 
         this.viewModel = ViewModelProviders.of(this).get(PersonaMainListViewModel.class);
+        this.viewModel.inject(Persona5Application.get(this).getComponent());
 
         allPersonas = new ArrayList<>(250);
         filteredPersonas = new ArrayList<>(250);

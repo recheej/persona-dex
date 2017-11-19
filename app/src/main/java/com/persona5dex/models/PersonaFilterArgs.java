@@ -46,9 +46,8 @@ public class PersonaFilterArgs {
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
         this.arcanaName = arcana.name().replace("_", " ");
+        this.arcana = arcana;
         this.rarePersona = true;
         this.dlcPersona = true;
-
-
     }
 }

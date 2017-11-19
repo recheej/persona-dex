@@ -8,11 +8,13 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
+import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.dagger.AndroidViewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.dagger.Persona5ApplicationComponent;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
@@ -30,29 +32,30 @@ import javax.inject.Inject;
  * Created by Rechee on 11/18/2017.
  */
 
-public class PersonaMainListViewModel extends AndroidViewModel {
+public class PersonaMainListViewModel extends ViewModel{
     private MutableLiveData<List<MainListPersona>> mainListPersonas;
     private MutableLiveData<List<MainListPersona>> filterPersonas;
 
     @Inject
     MainPersonaRepository repository;
 
-    private final Comparator<MainListPersona> sortByPersonaNameDesc;
-    private final Comparator<MainListPersona> sortByPersonaNameAsc;
-    private final Comparator<MainListPersona> sortByPersonaLevelAsc;
-    private final Comparator<MainListPersona> sortByPersonaLevelDesc;
-    private final Comparator<MainListPersona> sortByPersonaArcanaAsc;
-    private final Comparator<MainListPersona> sortByPersonaArcanaDesc;
+    private Comparator<MainListPersona> sortByPersonaNameDesc;
+    private Comparator<MainListPersona> sortByPersonaNameAsc;
+    private Comparator<MainListPersona> sortByPersonaLevelAsc;
+    private Comparator<MainListPersona> sortByPersonaLevelDesc;
+    private Comparator<MainListPersona> sortByPersonaArcanaAsc;
+    private Comparator<MainListPersona> sortByPersonaArcanaDesc;
 
-    public PersonaMainListViewModel(@NonNull Application application) {
-        super(application);
+    public PersonaMainListViewModel(MainPersonaRepository repository){
+        this.repository = repository;
+        this.init();
+    }
 
-        Persona5Application persona5Application = (Persona5Application) application;
+    public PersonaMainListViewModel() {
+        this.init();
+    }
 
-        persona5Application.getComponent()
-                .plus(new AndroidViewModelRepositoryModule())
-                .inject(this);
-
+    public void init() {
         sortByPersonaNameAsc = new Comparator<MainListPersona>() {
             @Override
             public int compare(MainListPersona o1, MainListPersona o2) {
@@ -82,7 +85,6 @@ public class PersonaMainListViewModel extends AndroidViewModel {
         };
 
         sortByPersonaArcanaAsc = new Comparator<MainListPersona>() {
-
             @Override
             public int compare(MainListPersona o1, MainListPersona o2) {
                 return o1.arcanaName.compareTo(o2.arcanaName);
@@ -96,16 +98,24 @@ public class PersonaMainListViewModel extends AndroidViewModel {
                 return o1.arcanaName.compareTo(o2.arcanaName) * -1;
             }
         };
-
-        mainListPersonas = new MutableLiveData<>();
-        filterPersonas = new MutableLiveData<>();
     }
+
+    public void inject(Persona5ApplicationComponent component){
+        component
+                .plus(new AndroidViewModelRepositoryModule())
+                .inject(this);
+    }
+
 
     public LiveData<List<MainListPersona>> getMainListPersonas(){
 
         return Transformations.switchMap(repository.getPersonasForMainList(), new Function<List<MainListPersona>, LiveData<List<MainListPersona>>>() {
             @Override
             public LiveData<List<MainListPersona>> apply(List<MainListPersona> input) {
+
+                if(mainListPersonas == null){
+                    mainListPersonas = new MutableLiveData<>();
+                }
 
                 if(input == null){
                     mainListPersonas.setValue(new ArrayList<MainListPersona>());
@@ -124,6 +134,10 @@ public class PersonaMainListViewModel extends AndroidViewModel {
                             }
                         });
 
+                        if(filterPersonas == null){
+                            filterPersonas = new MutableLiveData<>();
+                        }
+
                         filterPersonas.setValue(input);
                         return input;
                     }
@@ -136,7 +150,7 @@ public class PersonaMainListViewModel extends AndroidViewModel {
 
         List<MainListPersona> finalValue = new ArrayList<>();
 
-        final List<MainListPersona> input = mainListPersonas.getValue();
+        final List<MainListPersona> input = getFilteredPersonas().getValue();
 
         if(input != null ){
 
@@ -157,80 +171,102 @@ public class PersonaMainListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<MainListPersona>> getFilteredPersonas() {
+        if(this.filterPersonas == null){
+            return getMainListPersonas();
+        }
         return this.filterPersonas;
     }
 
-    public void sortPersonasByName(boolean asc){
+    public void sortPersonasByName(final boolean asc){
 
-        List<MainListPersona> personas = filterPersonas.getValue();
+        getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
+            @Override
+            public void onChanged(@Nullable List<MainListPersona> personas) {
+                if(personas != null){
+                    if(personas.size() == 1){
+                        return;
+                    }
 
-        if(personas != null){
-            if(personas.size() == 1){
-                return;
+                    if(asc){
+
+                        Collections.sort(personas, sortByPersonaNameAsc);
+                    }
+                    else{
+                        Collections.sort(personas, sortByPersonaNameDesc);
+                    }
+                }
+
+                filterPersonas.setValue(personas);
+
+                getFilteredPersonas().removeObserver(this);
             }
+        });
 
-            if(asc){
 
-                Collections.sort(personas, sortByPersonaNameAsc);
-            }
-            else{
-                Collections.sort(personas, sortByPersonaNameDesc);
-            }
-        }
-
-        filterPersonas.setValue(personas);
     }
 
-    public void sortPersonasByLevel(boolean asc){
+    public void sortPersonasByLevel(final boolean asc){
 
-        List<MainListPersona> personas = filterPersonas.getValue();
+        getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
+            @Override
+            public void onChanged(@Nullable List<MainListPersona> personas) {
+                if(personas != null){
+                    if(personas.size() == 1){
+                        return;
+                    }
 
-        if(personas != null){
-            if(personas.size() == 1){
-                return;
+                    if(asc){
+                        Collections.sort(personas, sortByPersonaLevelAsc);
+                    }
+                    else{
+                        Collections.sort(personas, sortByPersonaLevelDesc);
+                    }
+                }
+
+                filterPersonas.setValue(personas);
+                getFilteredPersonas().removeObserver(this);
             }
+        });
 
-            if(asc){
-                Collections.sort(personas, sortByPersonaLevelAsc);
-            }
-            else{
-                Collections.sort(personas, sortByPersonaLevelDesc);
-            }
-        }
 
-        filterPersonas.setValue(personas);
     }
 
-    public void filterPersonas(PersonaFilterArgs filterArgs) {
-        List<MainListPersona> finalValue = new ArrayList<>();
+    public void filterPersonas(final PersonaFilterArgs filterArgs) {
 
-        final List<MainListPersona> personasToFilter = mainListPersonas.getValue();
 
-        if(personasToFilter != null){
-            for (MainListPersona persona : personasToFilter) {
+        getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
+            @Override
+            public void onChanged(@Nullable List<MainListPersona> personasToFilter) {
+                List<MainListPersona> finalValue = new ArrayList<>();
 
-                if(persona.rare && !filterArgs.rarePersona){
-                    continue;
+                if(personasToFilter != null){
+                    for (MainListPersona persona : personasToFilter) {
+
+                        if(persona.rare && !filterArgs.rarePersona){
+                            continue;
+                        }
+
+                        if(persona.dlc && !filterArgs.dlcPersona){
+                            continue;
+                        }
+
+                        if(filterArgs.arcana != Enumerations.Arcana.ANY && persona.arcana != filterArgs.arcana){
+                            continue;
+                        }
+
+                        if(persona.level < filterArgs.minLevel || persona.level > filterArgs.maxLevel){
+                            continue;
+                        }
+
+                        finalValue.add(persona);
+                    }
+
+                    filterPersonas.setValue(finalValue);
+
+                    getFilteredPersonas().removeObserver(this);
                 }
-
-                if(persona.dlc && !filterArgs.dlcPersona){
-                    continue;
-                }
-
-                if(filterArgs.arcana != Enumerations.Arcana.ANY && persona.arcana != filterArgs.arcana){
-                    continue;
-                }
-
-                if(persona.level < filterArgs.minLevel || persona.level > filterArgs.maxLevel){
-                    continue;
-                }
-
-                finalValue.add(persona);
             }
-        }
-
-
-        filterPersonas.setValue(finalValue);
+        });
     }
 
     public void sortPersonasByArcana(boolean asc) {

@@ -1,12 +1,8 @@
 package com.persona5dex;
 
-import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.FakePersonaTranserRepository;
 import com.persona5dex.models.Persona;
-import com.persona5dex.models.PersonaFilterArgs;
-import com.persona5dex.repositories.PersonaRepositoryFile;
 import com.persona5dex.repositories.PersonaTransferRepository;
-import com.persona5dex.viewmodels.PersonaListViewModel;
 import com.persona5dex.viewmodels.SettingsViewModel;
 
 import org.junit.Test;

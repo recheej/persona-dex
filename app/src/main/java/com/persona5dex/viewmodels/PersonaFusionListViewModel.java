@@ -1,5 +1,8 @@
 package com.persona5dex.viewmodels;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
+
 import com.persona5dex.models.Pair;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.models.PersonaStoreDisplay;
@@ -17,16 +20,14 @@ import java.util.List;
  * Created by Rechee on 7/30/2017.
  */
 
-public class PersonaFusionListViewModel {
+public class PersonaFusionListViewModel{
 
     private final PersonaEdgesRepository personaEdgeRepository;
-    private final PersonaListViewModel personaListViewModel;
     private final PersonaTransferRepository transferRepository;
 
-    public PersonaFusionListViewModel(PersonaEdgesRepository personaEdgeRepository, PersonaTransferRepository transferRepository, PersonaListViewModel personaListViewModel){
+    public PersonaFusionListViewModel(PersonaEdgesRepository personaEdgeRepository, PersonaTransferRepository transferRepository){
         this.personaEdgeRepository = personaEdgeRepository;
         this.transferRepository = transferRepository;
-        this.personaListViewModel = personaListViewModel;
     }
 
     public PersonaStoreDisplay getEdgesForPersona(int personaID) {
