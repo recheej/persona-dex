@@ -121,6 +121,6 @@ public class PersonaFusionListViewModel {
     }
 
     public void storePersonaForDetail(String personaName){
-        personaListViewModel.storePersonaForDetail(personaName);
+        //personaListViewModel.storePersonaForDetail(personaName);
     }
 }

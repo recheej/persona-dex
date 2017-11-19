@@ -1,14 +1,19 @@
 package com.persona5dex.repositories;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
 import com.persona5dex.models.RawPersona;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.room.PersonaDatabase;
+import com.persona5dex.services.CreateDatabaseJobService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,34 +30,35 @@ public class MainPersonaRoomRepository implements MainPersonaRepository {
 
     private final PersonaDatabase db;
     private final Lazy<RawPersona[]> rawPersonas;
+    private final Context applicationContext;
 
     @Inject
-    public MainPersonaRoomRepository(PersonaDatabase personaDatabase, Lazy<RawPersona[]> rawPersonas){
+    public MainPersonaRoomRepository(PersonaDatabase personaDatabase, Lazy<RawPersona[]> rawPersonas, Context applicationContext){
         this.db = personaDatabase;
         this.rawPersonas = rawPersonas;
+        this.applicationContext = applicationContext;
     }
 
     @Override
     public LiveData<List<MainListPersona>> getPersonasForMainList() {
-
-        final MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-
-        final LiveData<List<MainListPersona>> allPersonasForMainList = db.personaDao().getAllPersonasForMainList();
-
-        allPersonasForMainList.observeForever(new Observer<List<MainListPersona>>() {
+        return Transformations.switchMap(db.personaDao().getAllPersonasForMainList(), new Function<List<MainListPersona>, LiveData<List<MainListPersona>>>() {
             @Override
-            public void onChanged(@Nullable List<MainListPersona> mainListPersonas) {
-                if(mainListPersonas == null || mainListPersonas.size() == 0){
+            public LiveData<List<MainListPersona>> apply(List<MainListPersona> input) {
+                final MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+                if(input == null || input.size() == 0){
+                    CreateDatabaseJobService.enqueueWork(applicationContext,
+                            new Intent(applicationContext, CreateDatabaseJobService.class));
+
                     //for now, let's fall back to getting the personas from the file
                     new GetPersonasFromFileTask().execute(rawPersonas.get(), data);
                 }
                 else{
-                    data.setValue(allPersonasForMainList.getValue());
+                    data.setValue(input);
                 }
+
+                return data;
             }
         });
-
-        return data;
     }
 
     static public class GetPersonasFromFileTask extends AsyncTask<Object, Void, Void> {
@@ -65,7 +71,7 @@ public class MainPersonaRoomRepository implements MainPersonaRepository {
             List<MainListPersona> personaList = new ArrayList<>(rawPersonas.length);
             for (RawPersona rawPersona : rawPersonas) {
                 MainListPersona persona = new MainListPersona();
-                persona.arcana = rawPersona.arcana;
+                persona.arcanaName = rawPersona.arcana;
                 persona.name = rawPersona.name;
                 persona.level = rawPersona.level;
 

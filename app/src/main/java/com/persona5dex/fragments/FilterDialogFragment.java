@@ -65,7 +65,7 @@ public class FilterDialogFragment extends DialogFragment {
 
         bundleArguments.putBoolean("rarePersona", filterArgs.rarePersona);
         bundleArguments.putBoolean("dlcPersona", filterArgs.dlcPersona);
-        bundleArguments.putString("selectedArcana", filterArgs.arcanaName);
+        bundleArguments.putInt("selectedArcana", filterArgs.arcana.value());
         bundleArguments.putInt("minLevel", filterArgs.minLevel);
         bundleArguments.putInt("maxLevel", filterArgs.maxLevel);
 
@@ -135,6 +135,7 @@ public class FilterDialogFragment extends DialogFragment {
                         }
 
                         filterArgs.arcanaName = arcanaName;
+                        filterArgs.arcana = selectedArcanaMap.arcana;
                         filterArgs.rarePersona = rarePersonaCheckBox.isChecked();
                         filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
 
@@ -176,8 +177,8 @@ public class FilterDialogFragment extends DialogFragment {
             rarePersonaCheckBox.setChecked(arguments.getBoolean("rarePersona"));
             dlcPersonaCheckBox.setChecked(arguments.getBoolean("dlcPersona"));
 
-            String arcanaName = arguments.getString("selectedArcana");
-            arcanaSpinner.setSelection(this.getSpinnerPosition(arcanaName));
+            int arcana = arguments.getInt("selectedArcana");
+            arcanaSpinner.setSelection(this.getSpinnerPosition(arcana));
 
             minLevelEditText.setText(Integer.toString(arguments.getInt("minLevel")));
             maxLevelEditText.setText(Integer.toString(arguments.getInt("maxLevel")));
@@ -186,18 +187,13 @@ public class FilterDialogFragment extends DialogFragment {
         return alertDialog;
     }
 
-    private int getSpinnerPosition(String arcanaName) {
-        if(arcanaName == null || arcanaName.isEmpty()){
-            return 0;
-        }
+    private int getSpinnerPosition(int arcana) {
 
         for (int i = 0; i < arcanaMapArrayAdapter.getCount(); i++) {
             ArcanaMap arcanaMap = arcanaMapArrayAdapter.getItem(i);
 
-            if(arcanaMap != null){
-                if(Objects.equals(arcanaMap.name.toLowerCase().replace("_", " "), arcanaName.toLowerCase())){
-                    return i;
-                }
+            if(arcanaMap.arcana.value() == arcana){
+                return i;
             }
         }
 

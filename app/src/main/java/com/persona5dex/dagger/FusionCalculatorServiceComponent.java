@@ -1,5 +1,6 @@
 package com.persona5dex.dagger;
 
+import com.persona5dex.services.CreateDatabaseJobService;
 import com.persona5dex.services.FusionCalculatorJobService;
 import dagger.Subcomponent;
 
@@ -15,4 +16,5 @@ import dagger.Subcomponent;
 )
 public interface FusionCalculatorServiceComponent {
     void inject(FusionCalculatorJobService service);
+    void inject(CreateDatabaseJobService service);
 }

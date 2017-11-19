@@ -1,10 +1,15 @@
 package com.persona5dex.services;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
 
+import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaUtilities;
+import com.persona5dex.dagger.FusionArcanaDataModule;
+import com.persona5dex.dagger.FusionCalculatorServiceComponent;
+import com.persona5dex.dagger.FusionServiceContextModule;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.RawPersona;
 import com.persona5dex.models.RawSkill;
@@ -41,8 +46,16 @@ public class CreateDatabaseJobService extends JobIntentService {
     private PersonaDao dao;
     private HashMap<String, Integer> nameMap;
 
+    public static void enqueueWork(Context context, Intent work){
+        enqueueWork(context, CreateDatabaseJobService.class, JOB_ID, work);
+    }
+
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
+
+        FusionCalculatorServiceComponent component = Persona5Application.get(this).getComponent()
+                .plus(new FusionServiceContextModule(this), new FusionArcanaDataModule());
+        component.inject(this);
 
         dao = personaDatabase.personaDao();
 
@@ -83,6 +96,7 @@ public class CreateDatabaseJobService extends JobIntentService {
 
             if (arcanaHashMap.containsKey(rawArcanaFormatted)) {
                 newPersona.arcana = arcanaHashMap.get(rawArcanaFormatted);
+                newPersona.arcanaName = rawPersona.arcana;
             }
 
             nameMap.put(newPersona.name.toLowerCase(), i1);

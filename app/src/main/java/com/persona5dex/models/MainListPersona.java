@@ -7,6 +7,9 @@ package com.persona5dex.models;
 
 public class MainListPersona {
     public String name;
-    public String arcana;
+    public String arcanaName;
+    public Enumerations.Arcana arcana;
     public int level;
+    public boolean rare;
+    public boolean dlc;
 }

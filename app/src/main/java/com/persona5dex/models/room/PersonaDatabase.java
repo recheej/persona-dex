@@ -12,7 +12,7 @@ import android.content.Context;
 
 @Database(
         entities = {Persona.class, Skill.class, PersonaSkill.class, PersonaElement.class},
-        version = 1,
+        version = 2,
         exportSchema = false
 )
 @TypeConverters({PersonaTypeConverters.class})
@@ -24,18 +24,8 @@ public abstract class PersonaDatabase extends RoomDatabase {
     public static PersonaDatabase getPersonaDatabase(Context context){
         if(INSTANCE == null){
             INSTANCE = Room.databaseBuilder(context,
-                    PersonaDatabase.class, "perssona-db")
-                    .build();
-        }
-
-        return INSTANCE;
-    }
-
-    public static PersonaDatabase getPersonaDatabase(Context context, RoomDatabase.Callback callback){
-        if(INSTANCE == null){
-            INSTANCE = Room.databaseBuilder(context,
-                    PersonaDatabase.class, "perssona-db")
-                    .addCallback(callback)
+                    PersonaDatabase.class, "persona-db")
+                    .fallbackToDestructiveMigration()
                     .build();
         }
 

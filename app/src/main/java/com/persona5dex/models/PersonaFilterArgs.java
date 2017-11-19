@@ -5,6 +5,7 @@ package com.persona5dex.models;
  */
 
 public class PersonaFilterArgs {
+    public Enumerations.Arcana arcana;
     public boolean dlcPersona;
     public boolean rarePersona;
     public int minLevel;
@@ -17,6 +18,7 @@ public class PersonaFilterArgs {
         rarePersona = true;
         dlcPersona = true;
         arcanaName = "";
+        arcana = Enumerations.Arcana.ANY;
     }
 
     /**
@@ -30,6 +32,7 @@ public class PersonaFilterArgs {
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
         this.arcanaName = arcana.name().replace("_", " ");
+        this.arcana = arcana;
         this.rarePersona = rarePersona;
         this.dlcPersona = dlcPersona;
     }
@@ -45,5 +48,7 @@ public class PersonaFilterArgs {
         this.arcanaName = arcana.name().replace("_", " ");
         this.rarePersona = true;
         this.dlcPersona = true;
+
+
     }
 }

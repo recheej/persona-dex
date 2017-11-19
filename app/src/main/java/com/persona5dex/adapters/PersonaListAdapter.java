@@ -51,7 +51,7 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         public void bindPersona(MainListPersona personaToBind){
             this.textViewPersonaName.setText(personaToBind.name);
             this.textViewPersonaLevel.setText(Integer.toString(personaToBind.level));
-            this.textViewPersonaArcana.setText(personaToBind.arcana);
+            this.textViewPersonaArcana.setText(personaToBind.arcanaName);
         }
     }
 
@@ -119,7 +119,7 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         List<String> sections = new ArrayList<>(arcanaSize);
         mSectionPositions = new ArrayList<>(arcanaSize);
         for (int i = 0; i < personas.size(); i++) {
-            String section = personas.get(i).arcana.toUpperCase();
+            String section = personas.get(i).arcanaName.toUpperCase();
             if(section.length() > 5){
                 section = section.substring(0, 4);
             }

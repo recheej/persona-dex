@@ -20,6 +20,6 @@ public class AndroidViewModelRepositoryModule {
     @Provides
     @ViewModelScope
     MainPersonaRepository mainPersonaRepository(PersonaDatabase database, @Named("applicationContext") Context applicationContext, Lazy<RawPersona[]> rawPersonas){
-        return new MainPersonaRoomRepository(database, rawPersonas);
+        return new MainPersonaRoomRepository(database, rawPersonas, applicationContext);
     }
 }

@@ -25,7 +25,7 @@ public interface PersonaDao {
     @Insert
     long insertPersona(Persona persona);
 
-    @Query("select name, arcana, level from personas")
+    @Query("select name, arcanaName, arcana, level, rare, dlc from personas")
     LiveData<List<MainListPersona>> getAllPersonasForMainList();
 
     @Insert

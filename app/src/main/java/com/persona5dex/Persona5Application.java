@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.support.v4.app.JobIntentService;
 
 import com.persona5dex.dagger.ApplicationContextModule;
 import com.persona5dex.dagger.DaggerPersona5ApplicationComponent;
@@ -23,7 +24,7 @@ public class Persona5Application extends Application {
         return (Persona5Application) activity.getApplication();
     }
 
-    public static Persona5Application get(FusionCalculatorJobService service){
+    public static Persona5Application get(JobIntentService service){
         return (Persona5Application) service.getApplication();
     }
 

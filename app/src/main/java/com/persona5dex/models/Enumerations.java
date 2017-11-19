@@ -38,6 +38,16 @@ public class Enumerations {
         public int value() {
             return i;
         }
+
+        public static Arcana getArcana(int i){
+            for (Arcana arcana : Arcana.values()) {
+                if(arcana.value() == i){
+                    return arcana;
+                }
+            }
+
+            return Arcana.ANY;
+        }
     }
 
     public enum Personality {
