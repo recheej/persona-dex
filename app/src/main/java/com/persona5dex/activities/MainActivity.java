@@ -64,7 +64,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     private PersonaFilterArgs latestFilterArgs;
 
     private int selectedSortMenuItemID;
-    private List<MainListPersona> allPersonas;
     private List<MainListPersona> filteredPersonas;
 
     @Override
@@ -90,7 +89,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         this.viewModel = ViewModelProviders.of(this).get(PersonaMainListViewModel.class);
         this.viewModel.inject(Persona5Application.get(this).getComponent());
 
-        allPersonas = new ArrayList<>(250);
         filteredPersonas = new ArrayList<>(250);
 
         recyclerView = findViewById(R.id.persona_view);
@@ -99,17 +97,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         personaListAdapter = new PersonaListAdapter(filteredPersonas);
         recyclerView.setAdapter(personaListAdapter);
 
-        viewModel.getMainListPersonas().observe(this, new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> mainListPersonas) {
-                MainActivity.this.allPersonas.clear();
-
-                if(mainListPersonas != null){
-                    MainActivity.this.allPersonas.addAll(mainListPersonas);
-                }
-            }
-        });
-
         viewModel.getFilteredPersonas().observe(this, new Observer<List<MainListPersona>>() {
             @Override
             public void onChanged(@Nullable List<MainListPersona> mainListPersonas) {
@@ -117,8 +104,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
                 if(mainListPersonas != null){
                     MainActivity.this.filteredPersonas.addAll(mainListPersonas);
-                    personaListAdapter.notifyDataSetChanged();
                 }
+
+                personaListAdapter.notifyDataSetChanged();
             }
         });
 
