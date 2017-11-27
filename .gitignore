@@ -90,3 +90,6 @@ freeline_project_description.json
 /app/src/debug/res/values/api_keys.xml
 /app/src/main/AndroidManifest.xml
 /keystore.properties
+/app/app-release.apk
+app/app-release.apk
+/app/src/main/assets/databases/persona-db.db
