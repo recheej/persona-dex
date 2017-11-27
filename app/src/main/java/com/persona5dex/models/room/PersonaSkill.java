@@ -12,7 +12,8 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "personaSkills",
         indices = {
-            @Index("skill_id")
+            @Index(name = "ix_personaSkills_persona_id", value = {"persona_id"}),
+            @Index(name = "ix_personaSkills_skill_id", value = {"skill_id"})
         },
         primaryKeys = {"persona_id", "skill_id"},
         foreignKeys = {

@@ -5,6 +5,8 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.persona5dex.models.Enumerations;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by Rechee on 10/22/2017.
  */

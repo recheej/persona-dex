@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.database.Cursor;
 
 import com.persona5dex.models.MainListPersona;
 
@@ -33,4 +34,7 @@ public interface PersonaDao {
 
     @Insert
     long[] insertPersonaSkills(List<PersonaSkill> personaSkills);
+
+    @Query("select id, name, arcanaName, name from personas where name like :personaName")
+    Cursor getPersonaForSearch(String personaName);
 }

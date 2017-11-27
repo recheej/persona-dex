@@ -14,7 +14,7 @@ import com.persona5dex.models.Enumerations;
 
 @Entity(tableName = "personaElements",
     indices = {
-        @Index("persona_id")
+        @Index(name = "ix_personaElements_persona_id", value = {"persona_id"})
     },
     foreignKeys = {
             @ForeignKey(

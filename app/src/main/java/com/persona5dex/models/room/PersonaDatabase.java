@@ -1,10 +1,16 @@
 package com.persona5dex.models.room;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
+import android.support.annotation.NonNull;
+
+import com.huma.room_for_asset.RoomAsset;
+
 
 /**
  * Created by Rechee on 10/22/2017.
@@ -23,9 +29,14 @@ public abstract class PersonaDatabase extends RoomDatabase {
 
     public static PersonaDatabase getPersonaDatabase(Context context){
         if(INSTANCE == null){
-            INSTANCE = Room.databaseBuilder(context,
-                    PersonaDatabase.class, "persona-db")
-                    .fallbackToDestructiveMigration()
+            INSTANCE = RoomAsset.databaseBuilder(context.getApplicationContext(),
+                    PersonaDatabase.class, "persona-db.db")
+                    .addMigrations(new Migration(1, 2) {
+                        @Override
+                        public void migrate(@NonNull SupportSQLiteDatabase database) {
+
+                        }
+                    })
                     .build();
         }
 

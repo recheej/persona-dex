@@ -12,6 +12,7 @@ import com.persona5dex.dagger.DaggerPersonaNameProviderComponent;
 import com.persona5dex.dagger.NameProviderRepositoryModule;
 import com.persona5dex.dagger.PersonaNameProviderComponent;
 import com.persona5dex.models.Persona;
+import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.PersonaRepository;
 
 import javax.inject.Inject;
@@ -38,6 +39,8 @@ public class PersonaNameProvider extends ContentProvider {
 
         Context context = getContext();
         Persona5Application application = (Persona5Application) getContext().getApplicationContext();
+
+        PersonaDatabase db = PersonaDatabase.getPersonaDatabase(application);
         PersonaNameProviderComponent component = DaggerPersonaNameProviderComponent.builder()
                 .nameProviderRepositoryModule(new NameProviderRepositoryModule(context))
                 .build();
