@@ -92,3 +92,4 @@ freeline_project_description.json
 /keystore.properties
 /app/app-release.apk
 app/app-release.apk
+/app/src/main/assets/databases/persona-db.db
