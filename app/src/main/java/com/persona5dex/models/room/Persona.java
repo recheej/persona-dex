@@ -27,7 +27,7 @@ public class Persona {
 
     public String note;
 
-    
+
     @Embedded
     public Stats stats;
 }
