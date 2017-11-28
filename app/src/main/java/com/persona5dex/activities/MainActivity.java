@@ -34,6 +34,7 @@ import com.persona5dex.dagger.ViewModelModule;
 import com.persona5dex.dagger.ViewModelRepositoryModule;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.services.FusionCalculatorJobService;
@@ -46,6 +47,9 @@ import javax.inject.Inject;
 
 import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import io.fabric.sdk.android.Fabric;
+
+import static android.app.SearchManager.EXTRA_DATA_KEY;
+import static android.app.SearchManager.USER_QUERY;
 
 public class MainActivity extends BaseActivity implements FilterDialogFragment.OnFilterListener {
 
@@ -142,20 +146,44 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     private void handleIntent(Intent intent){
         if(Intent.ACTION_SEARCH.equals(intent.getAction())){
             String query = intent.getStringExtra(SearchManager.QUERY);
+
+            logSearchQuery(query);
+
             viewModel.filterPersonas(query);
         }
         else if(Intent.ACTION_VIEW.equals(intent.getAction())){
-            String personaName = intent.getDataString();
-            //viewModel.storePersonaForDetail(personaName);
+            String itemID = intent.getDataString();
 
-            if(BuildConfig.ENABLE_CRASHLYTICS){
-                Answers.getInstance().logSearch(new SearchEvent()
-                        .putQuery(personaName));
+            Bundle extras = intent.getExtras();
+            if(extras != null){
+                String userQuery = extras.getString(USER_QUERY, null);
+                String searchType = extras.getString(EXTRA_DATA_KEY, null);
+
+                if(userQuery != null){
+                    logSearchQuery(userQuery);
+                }
+
+                if(searchType != null){
+                    int searchTypeAsInt = Integer.parseInt(searchType);
+                    SearchResultType searchResultType = SearchResultType.getSearchResultType(searchTypeAsInt);
+
+                    if(searchResultType == SearchResultType.PERSONA){
+                        Intent startDetailIntent = new Intent(this, PersonaDetailActivity.class);
+                        startDetailIntent.putExtra("persona_id", Integer.parseInt(itemID));
+                        startActivity(startDetailIntent);
+                    }
+                    else{
+                        //TODO: implement going to a skill view
+                    }
+                }
             }
+        }
+    }
 
-
-            Intent startDetailIntent = new Intent(this, PersonaDetailActivity.class);
-            startActivity(startDetailIntent);
+    private void logSearchQuery(String query) {
+        if(BuildConfig.ENABLE_CRASHLYTICS){
+            Answers.getInstance().logSearch(new SearchEvent()
+                    .putQuery(query));
         }
     }
 

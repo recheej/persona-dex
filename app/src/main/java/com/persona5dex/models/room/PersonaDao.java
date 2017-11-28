@@ -34,7 +34,4 @@ public interface PersonaDao {
 
     @Insert
     long[] insertPersonaSkills(List<PersonaSkill> personaSkills);
-
-    @Query("select id, name, arcanaName, name from personas where name like :personaName")
-    Cursor getPersonaForSearch(String personaName);
 }

@@ -109,4 +109,31 @@ public class Enumerations {
             return i;
         }
     }
+
+    public enum SearchResultType {
+        PERSONA(1),
+        SKILL(2);
+
+        private int i;
+
+        SearchResultType(final int value) {
+            i = value;
+        }
+
+        public int value() {
+            return i;
+        }
+
+        public static SearchResultType getSearchResultType(int value){
+            for (SearchResultType searchResultType : SearchResultType.values()) {
+                if(searchResultType.value() == value){
+                    return searchResultType;
+                }
+            }
+
+            return SearchResultType.PERSONA;
+        }
+    }
+
+
 }

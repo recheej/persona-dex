@@ -2,20 +2,13 @@ package com.persona5dex;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.persona5dex.dagger.DaggerPersonaNameProviderComponent;
-import com.persona5dex.dagger.NameProviderRepositoryModule;
-import com.persona5dex.dagger.PersonaNameProviderComponent;
-import com.persona5dex.models.Persona;
 import com.persona5dex.models.room.PersonaDatabase;
-import com.persona5dex.repositories.PersonaRepository;
-
-import javax.inject.Inject;
+import com.persona5dex.models.room.SearchSuggestionDao;
 
 /**
  * Created by Rechee on 7/3/2017.
@@ -23,41 +16,22 @@ import javax.inject.Inject;
 
 public class PersonaNameProvider extends ContentProvider {
 
+    private SearchSuggestionDao dao;
+
     @Override
     public boolean onCreate() {
+        Persona5Application application = (Persona5Application) getContext().getApplicationContext();
+
+        PersonaDatabase db = PersonaDatabase.getPersonaDatabase(application);
+        dao = db.searchSuggestionDao();
         return true;
     }
-
-    @Inject
-    PersonaRepository personaRepository;
-
-    private Persona[] suggestions;
 
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-
-        Context context = getContext();
-        Persona5Application application = (Persona5Application) getContext().getApplicationContext();
-
-        PersonaDatabase db = PersonaDatabase.getPersonaDatabase(application);
-        PersonaNameProviderComponent component = DaggerPersonaNameProviderComponent.builder()
-                .nameProviderRepositoryModule(new NameProviderRepositoryModule(context))
-                .build();
-        component.inject(this);
-
-        if(this.suggestions == null){
-            this.suggestions = personaRepository.allPersonas();
-        }
-
         String query = uri.getLastPathSegment().toLowerCase();
-
-        if(!query.equals("search_suggest_query")){
-            Persona[] filteredPersonas = PersonaUtilities.filterPersonaByName(suggestions, query);
-            return new PersonaNameCursor(filteredPersonas);
-        }
-
-        return new PersonaNameCursor(new Persona[0]);
+        return dao.getSuggestions(String.format("%%%s%%", query));
     }
 
     @Nullable
