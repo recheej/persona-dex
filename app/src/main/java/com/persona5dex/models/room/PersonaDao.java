@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import android.database.Cursor;
 
 import com.persona5dex.models.MainListPersona;
+import com.persona5dex.models.PersonaDetailInfo;
 
 import java.util.List;
 
@@ -17,21 +18,9 @@ import java.util.List;
 
 @Dao
 public interface PersonaDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertPersonas(Persona... personas);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertPersonaElements(List<PersonaElement> personaElements);
-
-    @Insert
-    long insertPersona(Persona persona);
-
-    @Query("select name, arcanaName, arcana, level, rare, dlc from personas")
+    @Query("select id, name, arcanaName, arcana, level, rare, dlc from personas")
     LiveData<List<MainListPersona>> getAllPersonasForMainList();
 
-    @Insert
-    long[] insertSkills(Skill... skills);
-
-    @Insert
-    long[] insertPersonaSkills(List<PersonaSkill> personaSkills);
+    @Query("select name, arcanaName, level, endurance, agility, strength, magic, luck from personas where id = :personaID")
+    LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
 }

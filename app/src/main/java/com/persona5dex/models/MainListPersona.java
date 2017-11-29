@@ -6,6 +6,7 @@ package com.persona5dex.models;
  */
 
 public class MainListPersona {
+    public int id;
     public String name;
     public String arcanaName;
     public Enumerations.Arcana arcana;

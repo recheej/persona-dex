@@ -2,6 +2,7 @@ package com.persona5dex.dagger.AndroidViewModels;
 
 import com.persona5dex.dagger.FusionServiceScope;
 import com.persona5dex.dagger.ViewModelRepositoryModule;
+import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import dagger.Subcomponent;
@@ -17,4 +18,5 @@ import dagger.Subcomponent;
 )
 public interface ViewModelComponent {
     void inject(PersonaMainListViewModel viewModel);
+    void inject(PersonaDetailInfoViewModel viewModel);
 }

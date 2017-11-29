@@ -44,8 +44,7 @@ public class PersonaMainListViewModel extends ViewModel{
         this.init();
     }
 
-    public PersonaMainListViewModel() {
-    }
+    public PersonaMainListViewModel() {}
 
     public void init() {
         sortByPersonaNameAsc = new Comparator<MainListPersona>() {

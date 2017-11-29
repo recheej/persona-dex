@@ -1,16 +1,17 @@
 package com.persona5dex.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
@@ -18,10 +19,11 @@ import com.persona5dex.adapters.PersonaDetailFragmentPagerAdapter;
 import com.persona5dex.dagger.ActivityComponent;
 import com.persona5dex.dagger.ActivityContextModule;
 import com.persona5dex.dagger.LayoutModule;
+import com.persona5dex.dagger.Persona5ApplicationComponent;
 import com.persona5dex.dagger.ViewModelModule;
 import com.persona5dex.dagger.ViewModelRepositoryModule;
-import com.persona5dex.models.Persona;
-import com.persona5dex.viewmodels.PersonaDetailViewModel;
+import com.persona5dex.models.PersonaDetailInfo;
+import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
 
 import javax.inject.Inject;
 
@@ -30,16 +32,18 @@ public class PersonaDetailActivity extends BaseActivity {
     @Inject
     Toolbar mainToolbar;
 
-    @Inject
-    PersonaDetailViewModel viewModel;
-    private Persona detailPersona;
+    private PersonaDetailInfoViewModel viewModel;
+    private PersonaDetailInfo detailPersona;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persona_detail);
 
-        ActivityComponent component = Persona5Application.get(this).getComponent().plus(
+        final Persona5ApplicationComponent applicationComponent = Persona5Application.get(this)
+                .getComponent();
+
+        ActivityComponent component = applicationComponent.plus(
                 new LayoutModule(this),
                 new ActivityContextModule(this),
                 new ViewModelModule(),
@@ -47,8 +51,6 @@ public class PersonaDetailActivity extends BaseActivity {
         );
         component.inject(this);
         this.component = component;
-
-        this.detailPersona = viewModel.getDetailPersona();
 
         if(BuildConfig.ENABLE_CRASHLYTICS){
             //see how personas are being viewed in app
@@ -59,10 +61,23 @@ public class PersonaDetailActivity extends BaseActivity {
 //            );
         }
 
-        setUpToolbar();
+        int personaID = getIntent().getIntExtra("persona_id", 1);
+
+        viewModel = ViewModelProviders.of(this).get(PersonaDetailInfoViewModel.class);
+        viewModel.init(applicationComponent, personaID);
+
+        viewModel.getDetailsForPersona().observe(this, new Observer<PersonaDetailInfo>() {
+            @Override
+            public void onChanged(@Nullable PersonaDetailInfo personaDetailInfo) {
+                if(personaDetailInfo != null){
+                    PersonaDetailActivity.this.detailPersona = personaDetailInfo;
+                    setUpToolbar();
+                }
+            }
+        });
 
         ViewPager viewPager = findViewById(R.id.view_pager);
-        PersonaDetailFragmentPagerAdapter pagerAdapter = new PersonaDetailFragmentPagerAdapter(getSupportFragmentManager(), this);
+        PersonaDetailFragmentPagerAdapter pagerAdapter = new PersonaDetailFragmentPagerAdapter(getSupportFragmentManager(), this, personaID);
         viewPager.setAdapter(pagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -85,7 +100,7 @@ public class PersonaDetailActivity extends BaseActivity {
         fusionMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                viewModel.storePersonaForFusion(detailPersona);
+                //viewModel.storePersonaForFusion(detailPersona);
 
                 Intent startDetailIntent = new Intent(PersonaDetailActivity.this, PersonaFusionActivity.class);
                 startActivity(startDetailIntent);

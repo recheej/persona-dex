@@ -18,21 +18,25 @@ import com.persona5dex.models.Persona;
 public class PersonaDetailFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private final Context context;
+    private final int personaID;
 
-    public PersonaDetailFragmentPagerAdapter(FragmentManager fm, Context context) {
+    public PersonaDetailFragmentPagerAdapter(FragmentManager fm, Context context, int personaID) {
         super(fm);
         this.context = context;
+        this.personaID = personaID;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new PersonaDetailInfoFragment();
+                return PersonaDetailInfoFragment.newInstance(personaID);
             case 1:
-                return new PersonaElementsFragment();
+                return PersonaDetailInfoFragment.newInstance(personaID);
+                //return new PersonaElementsFragment();
             case 2:
-                return new PersonaSkillsFragment();
+                return PersonaDetailInfoFragment.newInstance(personaID);
+                //return new PersonaSkillsFragment();
             default:
                 return null;
         }

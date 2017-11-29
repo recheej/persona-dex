@@ -7,6 +7,8 @@ import com.persona5dex.models.RawPersona;
 import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.MainPersonaRoomRepository;
+import com.persona5dex.repositories.PersonaDetailRepository;
+import com.persona5dex.repositories.PersonaDetailRoomRepository;
 
 import javax.inject.Named;
 
@@ -21,5 +23,11 @@ public class AndroidViewModelRepositoryModule {
     @ViewModelScope
     MainPersonaRepository mainPersonaRepository(PersonaDatabase database, @Named("applicationContext") Context applicationContext, Lazy<RawPersona[]> rawPersonas){
         return new MainPersonaRoomRepository(database, rawPersonas, applicationContext);
+    }
+
+    @Provides
+    @ViewModelScope
+    PersonaDetailRepository personaDetailRepository(PersonaDatabase database){
+        return new PersonaDetailRoomRepository(database.personaDao());
     }
 }

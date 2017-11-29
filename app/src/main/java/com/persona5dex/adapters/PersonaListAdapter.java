@@ -76,11 +76,11 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
                     personaPosition = 0;
                 }
 
-                //Persona detailPersona = personas.get(personaPosition);
-                //viewModel.storePersonaForDetail(detailPersona);
+                MainListPersona detailPersona = personas.get(personaPosition);
 
                 Context context = v.getContext();
                 Intent startDetailIntent = new Intent(context, PersonaDetailActivity.class);
+                startDetailIntent.putExtra("persona_id", detailPersona.id);
                 context.startActivity(startDetailIntent);
             }
         });
