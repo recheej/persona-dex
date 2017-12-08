@@ -35,7 +35,6 @@ public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository 
 
     @Override
     public void markInit() {
-        editor.putBoolean("initialized", true);
         editor.putBoolean("finished", false);
         editor.commit();
     }
@@ -50,5 +49,10 @@ public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository 
     public PersonaStore getEdgesForPersona(int personaID) {
         final String jsonString = sharedPreferences.getString(Integer.toString(personaID), "");
         return gson.fromJson(jsonString, PersonaStore.class);
+    }
+
+    @Override
+    public boolean edgesStored() {
+        return sharedPreferences.getBoolean("finished", false);
     }
 }
