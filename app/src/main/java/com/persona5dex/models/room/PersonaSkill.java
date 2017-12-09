@@ -38,10 +38,4 @@ public class PersonaSkill {
 
     @ColumnInfo(name = "level_required")
     public int levelRequired;
-
-    public PersonaSkill(int personaID, int skillID, int levelRequired) {
-        this.personaID = personaID;
-        this.skillID = skillID;
-        this.levelRequired = levelRequired;
-    }
 }

@@ -1,6 +1,8 @@
 package com.persona5dex.fragments;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,11 +12,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.dagger.FragmentComponent;
+import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.Skill;
+import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
 import com.persona5dex.viewmodels.PersonaSkillsViewModel;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -23,53 +30,69 @@ import javax.inject.Inject;
  * A simple {@link Fragment} subclass.
  */
 public class PersonaSkillsFragment extends BaseFragment {
-
-    @Inject
-    PersonaSkillsViewModel viewModel;
-
-    private Skill[] skills;
+    PersonaDetailSkillsViewModel viewModel;
+    private int personaID;
 
     public PersonaSkillsFragment() {
         // Required empty public constructor
         super();
     }
 
+    public static PersonaSkillsFragment newInstance(int personaID){
+        PersonaSkillsFragment elementsFragment = new PersonaSkillsFragment();
+        Bundle args = new Bundle();
+        args.putInt("persona_id", personaID);
+        elementsFragment.setArguments(args);
+        return elementsFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        personaID = getArguments().getInt("persona_id", 1);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        FragmentComponent component = activity.getComponent().plus();
-        component.inject(this);
+        Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
 
-        this.skills = viewModel.getPersonaSkills();
+        viewModel = ViewModelProviders.of(this).get(PersonaDetailSkillsViewModel.class);
+        viewModel.init(component, personaID);
 
-        LinearLayout skillsGrid = baseView.findViewById(R.id.skill_grid);
+        viewModel.getElementsForPersona(personaID).observe(this, new Observer<List<PersonaDetailSkill>>() {
+            @Override
+            public void onChanged(@Nullable List<PersonaDetailSkill> personaDetailSkills) {
+                LinearLayout skillsGrid = baseView.findViewById(R.id.skill_grid);
 
-        LayoutInflater inflater = activity.getLayoutInflater();
-        ViewGroup container = activity.findViewById(R.id.view_pager);
+                LayoutInflater inflater = activity.getLayoutInflater();
+                ViewGroup container = activity.findViewById(R.id.view_pager);
 
-        for(Skill personaSkill: this.skills){
-            View personaSkillRow = inflater.inflate(R.layout.persona_skil_row, container, false);
+                for(PersonaDetailSkill personaSkill: personaDetailSkills){
+                    View personaSkillRow = inflater.inflate(R.layout.persona_skil_row, container, false);
 
-            TextView textViewSkillName = personaSkillRow.findViewById(R.id.textViewSkillName);
-            textViewSkillName.setText(personaSkill.getName());
+                    TextView textViewSkillName = personaSkillRow.findViewById(R.id.textViewSkillName);
+                    textViewSkillName.setText(personaSkill.name);
 
-            TextView textViewSkillLevel = personaSkillRow.findViewById(R.id.textViewSkillLevel);
+                    TextView textViewSkillLevel = personaSkillRow.findViewById(R.id.textViewSkillLevel);
 
-            if(personaSkill.getLevel() == 0){
-                textViewSkillLevel.setText("-");
+                    if(personaSkill.levelRequired == 0){
+                        textViewSkillLevel.setText("-");
+                    }
+                    else{
+                        textViewSkillLevel.setText(String.format(Locale.getDefault(), "%d", personaSkill.levelRequired));
+                    }
+
+                    View horizontalDivider = inflater.inflate(R.layout.grid_divider_horizontal, container, false);
+
+                    skillsGrid.addView(personaSkillRow);
+                    skillsGrid.addView(horizontalDivider);
+                }
+
+                skillsGrid.removeViewAt(skillsGrid.getChildCount() - 1); //remove hanging divider
             }
-            else{
-                textViewSkillLevel.setText(String.format(Locale.getDefault(), "%d", personaSkill.getLevel()));
-            }
-
-            View horizontalDivider = inflater.inflate(R.layout.grid_divider_horizontal, container, false);
-
-            skillsGrid.addView(personaSkillRow);
-            skillsGrid.addView(horizontalDivider);
-        }
-
-        skillsGrid.removeViewAt(skillsGrid.getChildCount() - 1); //remove hanging divider
+        });
     }
 
     @Override

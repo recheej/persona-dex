@@ -9,6 +9,7 @@ import android.database.Cursor;
 
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailInfo;
+import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.PersonaForFusionService;
 
 import java.util.List;
@@ -33,4 +34,11 @@ public interface PersonaDao {
 
     @Query("select * from personaElements where persona_id = :personaID")
     LiveData<List<PersonaElement>> getElementsForPersona(int personaID);
+
+    @Query(
+            "select personaSkills.level_required as levelRequired, skills.name from personaSkills " +
+                    "inner join skills on skills.id = personaSkills.skill_id " +
+                    "where personaSkills.persona_id = :personaID"
+    )
+    LiveData<List<PersonaDetailSkill>> getPersonaSkillsForDetail(int personaID);
 }

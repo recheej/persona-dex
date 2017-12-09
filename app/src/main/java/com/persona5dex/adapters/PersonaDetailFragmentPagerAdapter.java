@@ -35,8 +35,7 @@ public class PersonaDetailFragmentPagerAdapter extends FragmentPagerAdapter {
                 return PersonaElementsFragment.newInstance(personaID);
                 //return new PersonaElementsFragment();
             case 2:
-                return PersonaDetailInfoFragment.newInstance(personaID);
-                //return new PersonaSkillsFragment();
+                return PersonaSkillsFragment.newInstance(personaID);
             default:
                 return null;
         }
