@@ -37,12 +37,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
             buildConfigField("boolean", "ENABLE_CRASHLYTICS", "true")
-            buildConfigField("boolean", "ENABLE_STETHO", "false")
             resValue("string", "name_provider_auth", defaultConfig.applicationId + ".personanameprovider")
         }
         debug {
             buildConfigField("boolean", "ENABLE_CRASHLYTICS", "false")
-            buildConfigField("boolean", "ENABLE_STETHO", "true")
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
             resValue("string", "name_provider_auth", defaultConfig.applicationId + applicationIdSuffix + ".personanameprovider")
@@ -78,5 +76,5 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     compile "android.arch.lifecycle:extensions:1.0.0"
     compile 'com.github.humazed:RoomAsset:v1.0'
-    compile 'com.facebook.stetho:stetho:1.5.0'
+    debugCompile 'com.facebook.stetho:stetho:1.5.0'
 }

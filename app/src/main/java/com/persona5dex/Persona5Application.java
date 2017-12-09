@@ -34,10 +34,6 @@ public class Persona5Application extends Application {
         this.component = DaggerPersona5ApplicationComponent.builder()
                 .applicationContextModule(new ApplicationContextModule(this))
                 .build();
-
-        if(BuildConfig.ENABLE_STETHO){
-            Stetho.initializeWithDefaults(this);
-        }
     }
 
     public static PersonaDatabase getPersonaDatabase(Context context) {
