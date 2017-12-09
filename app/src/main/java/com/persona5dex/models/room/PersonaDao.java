@@ -23,4 +23,7 @@ public interface PersonaDao {
 
     @Query("select name, arcanaName, level, endurance, agility, strength, magic, luck from personas where id = :personaID")
     LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertPersonaFusion(PersonaFusion personaFusion);
 }
