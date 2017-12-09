@@ -9,6 +9,7 @@ import android.database.Cursor;
 
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailInfo;
+import com.persona5dex.models.PersonaForFusionService;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public interface PersonaDao {
 
     @Query("select name, arcanaName, level, endurance, agility, strength, magic, luck from personas where id = :personaID")
     LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
+
+    @Query("select id, arcana, arcanaName, name, level, rare, dlc, special from personas order by level")
+    PersonaForFusionService[] getPersonasByLevel();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPersonaFusion(PersonaFusion personaFusion);

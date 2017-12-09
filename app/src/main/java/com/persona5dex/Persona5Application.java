@@ -2,15 +2,14 @@ package com.persona5dex;
 
 import android.app.Activity;
 import android.app.Application;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.v4.app.JobIntentService;
 
+import com.facebook.stetho.Stetho;
 import com.persona5dex.dagger.ApplicationContextModule;
 import com.persona5dex.dagger.DaggerPersona5ApplicationComponent;
 import com.persona5dex.dagger.Persona5ApplicationComponent;
 import com.persona5dex.models.room.PersonaDatabase;
-import com.persona5dex.services.FusionCalculatorJobService;
 
 /**
  * Created by Rechee on 7/1/2017.
@@ -35,6 +34,10 @@ public class Persona5Application extends Application {
         this.component = DaggerPersona5ApplicationComponent.builder()
                 .applicationContextModule(new ApplicationContextModule(this))
                 .build();
+
+        if(BuildConfig.ENABLE_STETHO){
+            Stetho.initializeWithDefaults(this);
+        }
     }
 
     public static PersonaDatabase getPersonaDatabase(Context context) {

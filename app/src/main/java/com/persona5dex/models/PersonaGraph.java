@@ -17,7 +17,7 @@ public class PersonaGraph {
         this.personaTable = new HashMap<>();
     }
 
-    public void addEdge(Persona personaOne, Persona personaTwo, Persona result){
+    public void addEdge(PersonaForFusionService personaOne, PersonaForFusionService personaTwo, PersonaForFusionService result){
 
         if(!personaTable.containsKey(result.id)){
             personaTable.put(result.id, new ArrayList<RawPersonaEdge>());
@@ -52,7 +52,7 @@ public class PersonaGraph {
         }
     }
 
-    public RawPersonaEdge[] edgesFrom(Persona persona){
+    public RawPersonaEdge[] edgesFrom(PersonaForFusionService persona){
         List<RawPersonaEdge> edgesFrom = this.personaTable.get(persona.id);
 
         if(edgesFrom == null){
@@ -62,7 +62,7 @@ public class PersonaGraph {
         return edgesFrom.toArray(new RawPersonaEdge[edgesFrom.size()]);
     }
 
-    public RawPersonaEdge[] edgesTo(Persona persona){
+    public RawPersonaEdge[] edgesTo(PersonaForFusionService persona){
         List<RawPersonaEdge> edgesTo = new ArrayList<>();
 
         for(int personaID: this.personaTable.keySet()){

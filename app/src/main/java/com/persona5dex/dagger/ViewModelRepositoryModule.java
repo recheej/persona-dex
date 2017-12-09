@@ -2,6 +2,7 @@ package com.persona5dex.dagger;
 
 import android.content.SharedPreferences;
 
+import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaEdgesSharedPrefRepository;
 import com.persona5dex.repositories.PersonaRepository;
@@ -40,7 +41,7 @@ public class ViewModelRepositoryModule {
 
     @Provides
     @ActivityScope
-    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson){
-        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
+    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson, PersonaDatabase database){
+        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson, database.personaDao());
     }
 }

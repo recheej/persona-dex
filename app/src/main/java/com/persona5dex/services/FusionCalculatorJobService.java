@@ -14,6 +14,7 @@ import com.persona5dex.dagger.FusionServiceContextModule;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.Pair;
 import com.persona5dex.models.Persona;
+import com.persona5dex.models.PersonaForFusionService;
 import com.persona5dex.models.PersonaGraph;
 import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.RawPersonaEdge;
@@ -23,6 +24,7 @@ import com.persona5dex.viewmodels.PersonaFusionListViewModel;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -45,7 +47,8 @@ public class FusionCalculatorJobService extends JobIntentService {
     Map<String, int[]> rarePersonaCombos;
 
     @Inject
-    @Named("personaByLevel") Persona[] personaByLevel;
+    @Named("personaByLevel")
+    PersonaForFusionService[] personaByLevel;
 
     @Inject
     HashMap<Enumerations.Arcana, HashMap<Enumerations.Arcana, Enumerations.Arcana>> arcanaTable;
@@ -69,8 +72,6 @@ public class FusionCalculatorJobService extends JobIntentService {
         component.inject(this);
 
         if(!personaEdgeRepository.edgesStored()){
-            this.personaTransferRepository.setPersonaIDs(personaByLevel);
-            this.personaTransferRepository.commit();
 
             PersonaFuser.PersonaFusionArgs fuserArgs = new PersonaFuser.PersonaFusionArgs();
             fuserArgs.personasByLevel = personaByLevel;
@@ -85,7 +86,7 @@ public class FusionCalculatorJobService extends JobIntentService {
 
             this.personaEdgeRepository.markInit();
 
-            for(Persona persona: personaByLevel){
+            for(PersonaForFusionService persona: personaByLevel){
                 RawPersonaEdge[] edgesTo = graph.edgesTo(persona);
                 edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.id, true);
 
@@ -93,7 +94,7 @@ public class FusionCalculatorJobService extends JobIntentService {
                 edgesFrom = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesFrom, persona.id, false);
 
                 PersonaStore store = new PersonaStore(edgesFrom, edgesTo);
-                this.personaEdgeRepository.addPersonaEdges(persona, store);
+                this.personaEdgeRepository.addPersonaEdges(store);
             }
 
             this.personaEdgeRepository.markFinished();
@@ -103,20 +104,20 @@ public class FusionCalculatorJobService extends JobIntentService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(fusionCalculationFishedIntent);
     }
 
-    private PersonaGraph makePersonaGraph(Persona[] personas, PersonaFuser personaFuser){
+    private PersonaGraph makePersonaGraph(PersonaForFusionService[] personas, PersonaFuser personaFuser){
 
-        HashSet<Pair<Persona, Persona>> pairSet = new HashSet<>(20000);
+        HashSet<Pair<PersonaForFusionService, PersonaForFusionService>> pairSet = new HashSet<>(20000);
         PersonaGraph graph = new PersonaGraph();
 
-        for (Persona personaOne: personas){
-            for (Persona personaTwo: personas){
+        for (PersonaForFusionService personaOne: personas){
+            for (PersonaForFusionService personaTwo: personas){
 
-                Pair<Persona, Persona> personaPair = new Pair<>(personaOne, personaTwo);
+                Pair<PersonaForFusionService, PersonaForFusionService> personaPair = new Pair<>(personaOne, personaTwo);
                 if(pairSet.contains(personaPair)){
                     continue;
                 }
 
-                Persona result = personaFuser.fuseNormal(personaOne, personaTwo);
+                PersonaForFusionService result = personaFuser.fuseNormal(personaOne, personaTwo);
 
                 if(result != null) {
                     graph.addEdge(personaOne, personaTwo, result);

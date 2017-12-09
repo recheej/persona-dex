@@ -16,8 +16,6 @@ public interface PersonaTransferRepository {
     void storePersonaForFusion(Persona personaForFusion);
     int getPersonaForFusion();
     String getPersonaName(int personaID);
-    void commit();
-    void setPersonaIDs(Persona[] personas);
     Map<String, Integer> getDLCPersonaForSettings();
     Set<String> getOwnedDlCPersonaIDs();
     boolean rarePersonaAllowedInFusions();

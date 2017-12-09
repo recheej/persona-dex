@@ -75,26 +75,6 @@ public class PersonaTransferRepositorySharedPref implements PersonaTransferRepos
         return transferSharedPreferences.getString(Integer.toString(personaID), "");
     }
 
-    @Override
-    public void commit() {
-        transferEditor.apply();
-        dlcEditor.apply();
-    }
-
-    public void setPersonaIDs(Persona[] personas){
-        for (int i = 0; i < personas.length; i++) {
-
-            transferEditor.putInt(personas[i].name, i);
-            transferEditor.putString(Integer.toString(i), personas[i].name);
-
-            if(personas[i].dlc){
-                dlcEditor.putInt(personas[i].name, i);
-            }
-
-            personas[i].id = i;
-        }
-    }
-
     public Map<String, Integer> getDLCPersonaForSettings() {
         return (Map<String, Integer>) dlcSharedPreferences.getAll();
     }

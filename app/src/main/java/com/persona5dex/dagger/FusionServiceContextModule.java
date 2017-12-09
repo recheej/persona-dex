@@ -8,6 +8,7 @@ import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
 import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaEdgesSharedPrefRepository;
 import com.persona5dex.repositories.PersonaRepository;
@@ -95,8 +96,8 @@ public class FusionServiceContextModule {
 
     @Provides
     @FusionServiceScope
-    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson) {
-        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson);
+    PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson, PersonaDatabase database) {
+        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson, database.personaDao());
     }
 
     @Provides

@@ -1,6 +1,7 @@
 package com.persona5dex.repositories;
 
 import com.persona5dex.models.Persona;
+import com.persona5dex.models.PersonaForFusionService;
 import com.persona5dex.models.PersonaStore;
 
 /**
@@ -8,7 +9,7 @@ import com.persona5dex.models.PersonaStore;
  */
 
 public interface PersonaEdgesRepository {
-    void addPersonaEdges(Persona persona, PersonaStore personaStore);
+    void addPersonaEdges(PersonaStore personaStore);
     void markFinished();
     void markInit();
     PersonaStore getEdgesForPersona(int personaID);

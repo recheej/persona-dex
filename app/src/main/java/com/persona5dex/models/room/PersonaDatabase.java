@@ -17,7 +17,7 @@ import com.huma.room_for_asset.RoomAsset;
  */
 
 @Database(
-        entities = {Persona.class, Skill.class, PersonaSkill.class, PersonaElement.class, SearchSuggestion.class},
+        entities = {Persona.class, Skill.class, PersonaSkill.class, PersonaElement.class, SearchSuggestion.class, PersonaFusion.class},
         version = 2,
         exportSchema = false
 )
