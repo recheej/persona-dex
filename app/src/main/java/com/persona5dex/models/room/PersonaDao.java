@@ -30,4 +30,7 @@ public interface PersonaDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPersonaFusion(PersonaFusion personaFusion);
+
+    @Query("select * from personaElements where persona_id = :personaID")
+    LiveData<List<PersonaElement>> getElementsForPersona(int personaID);
 }

@@ -9,6 +9,8 @@ import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.MainPersonaRoomRepository;
 import com.persona5dex.repositories.PersonaDetailRepository;
 import com.persona5dex.repositories.PersonaDetailRoomRepository;
+import com.persona5dex.repositories.PersonaElementsRepository;
+import com.persona5dex.repositories.PersonaElementsRoomRepository;
 
 import javax.inject.Named;
 
@@ -29,5 +31,11 @@ public class AndroidViewModelRepositoryModule {
     @ViewModelScope
     PersonaDetailRepository personaDetailRepository(PersonaDatabase database){
         return new PersonaDetailRoomRepository(database.personaDao());
+    }
+
+    @Provides
+    @ViewModelScope
+    PersonaElementsRepository elementsRepository(PersonaDatabase database){
+        return new PersonaElementsRoomRepository(database.personaDao());
     }
 }
