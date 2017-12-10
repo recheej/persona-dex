@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.persona5dex.R;
 import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.models.PersonaEdgeDisplay;
-import com.persona5dex.models.RawPersonaEdge;
 import com.persona5dex.viewmodels.PersonaFusionListViewModel;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -96,13 +95,13 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
         void bind(PersonaEdgeDisplay edge){
 
-            this.textViewPersonaNameOne.setText(edge.left);
-            this.textViewPersonaNameTwo.setText(edge.right);
+            this.textViewPersonaNameOne.setText(edge.leftPersonaName);
+            this.textViewPersonaNameTwo.setText(edge.rightPersonaName);
 
             String detailsFor = itemView.getContext().getString(R.string.details_for);
 
-            this.textViewPersonaOneDetail.setText(detailsFor + ": " + edge.left);
-            this.textViewPersonaTwoDetail.setText(detailsFor + ": " + edge.right);
+            this.textViewPersonaOneDetail.setText(detailsFor + ": " + edge.leftPersonaName);
+            this.textViewPersonaTwoDetail.setText(detailsFor + ": " + edge.rightPersonaName);
 
             personaEdge = edge;
             expandableLayout.collapse(false);

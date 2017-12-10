@@ -46,7 +46,7 @@ public class PersonaFusionActivity extends BaseActivity {
         component.inject(this);
         this.component = component;
 
-        personaForFusionID = viewModel.getPersonaForFusion();
+        personaForFusionID = getIntent().getIntExtra("persona_id", 1);
 
         setUpToolbar();
 

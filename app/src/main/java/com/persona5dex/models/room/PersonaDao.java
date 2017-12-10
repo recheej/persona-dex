@@ -10,6 +10,7 @@ import android.database.Cursor;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.PersonaDetailSkill;
+import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.models.PersonaForFusionService;
 
 import java.util.List;
@@ -41,4 +42,21 @@ public interface PersonaDao {
                     "where personaSkills.persona_id = :personaID"
     )
     LiveData<List<PersonaDetailSkill>> getPersonaSkillsForDetail(int personaID);
+
+    @Query(
+            "select p1.name as leftPersonaName, p2.name as rightPersonaName from personaFusions " +
+                    "inner join persona as p1 on persona.id = personaFusions.result" +
+                    "inner join persona as p2 on persona.id = personaFusions.persona_one " +
+                    "where personaFusions.result = :personaID"
+    )
+
+    LiveData<List<PersonaEdgeDisplay>> getEdgesToPersona(int personaID);
+
+    @Query(
+            "select p1.name as leftPersonaName, p2.name as rightPersonaName from personaFusions " +
+                    "inner join persona as p1 on persona.id = personaFusions.result" +
+                    "inner join persona as p2 on persona.id = personaFusions.persona_one " +
+                    "where personaFusions.result = :personaID"
+    )
+    LiveData<List<PersonaEdgeDisplay>> getEdgesFromPersona(int personaID);
 }

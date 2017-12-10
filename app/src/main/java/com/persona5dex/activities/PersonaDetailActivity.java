@@ -34,6 +34,7 @@ public class PersonaDetailActivity extends BaseActivity {
 
     private PersonaDetailInfoViewModel viewModel;
     private PersonaDetailInfo detailPersona;
+    private int personaID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class PersonaDetailActivity extends BaseActivity {
 //            );
         }
 
-        int personaID = getIntent().getIntExtra("persona_id", 1);
+        this.personaID = getIntent().getIntExtra("persona_id", 1);
 
         viewModel = ViewModelProviders.of(this).get(PersonaDetailInfoViewModel.class);
         viewModel.init(applicationComponent, personaID);
@@ -103,6 +104,7 @@ public class PersonaDetailActivity extends BaseActivity {
                 //viewModel.storePersonaForFusion(detailPersona);
 
                 Intent startDetailIntent = new Intent(PersonaDetailActivity.this, PersonaFusionActivity.class);
+                startDetailIntent.putExtra("persona_id", personaID);
                 startActivity(startDetailIntent);
 
                 return true;

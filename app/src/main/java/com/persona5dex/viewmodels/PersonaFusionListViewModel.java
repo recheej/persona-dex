@@ -1,8 +1,5 @@
 package com.persona5dex.viewmodels;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProviders;
-
 import com.persona5dex.models.Pair;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.models.PersonaStoreDisplay;
@@ -12,7 +9,6 @@ import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaTransferRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -69,8 +65,8 @@ public class PersonaFusionListViewModel{
             }
             right = transferRepository.getPersonaName(rawPersonaEdge.end);
 
-            edgeDisplay.left = left;
-            edgeDisplay.right = right;
+            edgeDisplay.leftPersonaName = left;
+            edgeDisplay.rightPersonaName = right;
 
             edgesFrom[i] = edgeDisplay;
         }
@@ -80,8 +76,8 @@ public class PersonaFusionListViewModel{
 
             PersonaEdgeDisplay edgeDisplay = new PersonaEdgeDisplay();
 
-            edgeDisplay.left = transferRepository.getPersonaName(rawPersonaEdge.start);
-            edgeDisplay.right = transferRepository.getPersonaName(rawPersonaEdge.pairPersona);
+            edgeDisplay.leftPersonaName = transferRepository.getPersonaName(rawPersonaEdge.start);
+            edgeDisplay.rightPersonaName = transferRepository.getPersonaName(rawPersonaEdge.pairPersona);
 
             edgesTo[i] = edgeDisplay;
         }
