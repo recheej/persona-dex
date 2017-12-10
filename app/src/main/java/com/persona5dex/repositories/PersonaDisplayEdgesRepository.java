@@ -13,4 +13,5 @@ import java.util.List;
 public interface PersonaDisplayEdgesRepository {
     LiveData<List<PersonaEdgeDisplay>> getEdgesToPersona(int personaID);
     LiveData<List<PersonaEdgeDisplay>> getEdgesFromPersona(int personaID);
+    LiveData<String> getPersonaName(int personaID);
 }

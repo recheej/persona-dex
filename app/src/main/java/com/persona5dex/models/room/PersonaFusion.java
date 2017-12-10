@@ -11,12 +11,6 @@ import android.arch.persistence.room.PrimaryKey;
  */
 
 @Entity(tableName = "personaFusions",
-        indices = {
-                @Index(name = "ix_personaFusions_persona_one", value = {"persona_one"}),
-                @Index(name = "ix_personaFusions_persona_two", value = {"persona_two"}),
-                @Index(name = "ix_personaFusions_result", value = {"result"}),
-
-        },
         foreignKeys = {
                 @ForeignKey(
                         entity = Persona.class,

@@ -44,19 +44,28 @@ public interface PersonaDao {
     LiveData<List<PersonaDetailSkill>> getPersonaSkillsForDetail(int personaID);
 
     @Query(
-            "select p1.name as leftPersonaName, p2.name as rightPersonaName from personaFusions " +
-                    "inner join persona as p1 on persona.id = personaFusions.result" +
-                    "inner join persona as p2 on persona.id = personaFusions.persona_one " +
+            "select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
+                    "p2.name as rightPersonaName, p2.id as rightPersonaID, " +
+                    "null as resultPersonaName, 0 as resultPersonaID " +
+                    "from personaFusions " +
+                    "inner join personas as p1 on p1.id = personaFusions.persona_one " +
+                    "inner join personas as p2 on p2.id = personaFusions.persona_two " +
                     "where personaFusions.result = :personaID"
     )
-
     LiveData<List<PersonaEdgeDisplay>> getEdgesToPersona(int personaID);
 
     @Query(
-            "select p1.name as leftPersonaName, p2.name as rightPersonaName from personaFusions " +
-                    "inner join persona as p1 on persona.id = personaFusions.result" +
-                    "inner join persona as p2 on persona.id = personaFusions.persona_one " +
-                    "where personaFusions.result = :personaID"
+            "select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
+                    "p2.name as rightPersonaName, p2.id as rightPersonaID, " +
+                    "p3.name as resultPersonaName, p3.id as resultPersonaID " +
+                    "from personaFusions " +
+                    "inner join personas as p1 on p1.id = personaFusions.persona_one " +
+                    "inner join personas as p2 on p2.id = personaFusions.persona_two " +
+                    "inner join personas as p3 on p3.id = personaFusions.result " +
+                    "where personaFusions.persona_one = :personaID or personaFusions.persona_two == :personaID"
     )
     LiveData<List<PersonaEdgeDisplay>> getEdgesFromPersona(int personaID);
+
+    @Query("select name from personas where id = :personaID")
+    LiveData<String> getPersonaName(int personaID);
 }

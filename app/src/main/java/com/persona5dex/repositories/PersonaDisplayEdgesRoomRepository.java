@@ -28,4 +28,9 @@ public class PersonaDisplayEdgesRoomRepository implements  PersonaDisplayEdgesRe
     public LiveData<List<PersonaEdgeDisplay>> getEdgesFromPersona(int personaID) {
         return personaDao.getEdgesFromPersona(personaID);
     }
+
+    @Override
+    public LiveData<String> getPersonaName(int personaID) {
+        return personaDao.getPersonaName(personaID);
+    }
 }

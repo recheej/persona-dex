@@ -93,16 +93,6 @@ public class PersonaSettingsViewModelTest {
             }
 
             @Override
-            public void commit() {
-
-            }
-
-            @Override
-            public void setPersonaIDs(Persona[] personas) {
-
-            }
-
-            @Override
             public Map<String, Integer> getDLCPersonaForSettings() {
                 return new HashMap<>();
             }
@@ -158,16 +148,6 @@ public class PersonaSettingsViewModelTest {
             @Override
             public String getPersonaName(int personaID) {
                 return null;
-            }
-
-            @Override
-            public void commit() {
-
-            }
-
-            @Override
-            public void setPersonaIDs(Persona[] personas) {
-
             }
 
             @Override

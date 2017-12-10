@@ -1,5 +1,8 @@
 package com.persona5dex.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -16,9 +19,11 @@ import com.persona5dex.adapters.PersonaFusionListPagerAdapter;
 import com.persona5dex.dagger.ActivityComponent;
 import com.persona5dex.dagger.ActivityContextModule;
 import com.persona5dex.dagger.LayoutModule;
+import com.persona5dex.dagger.Persona5ApplicationComponent;
 import com.persona5dex.dagger.ViewModelModule;
 import com.persona5dex.dagger.ViewModelRepositoryModule;
 import com.persona5dex.viewmodels.PersonaDetailViewModel;
+import com.persona5dex.viewmodels.PersonaFusionViewModel;
 
 import javax.inject.Inject;
 
@@ -27,8 +32,7 @@ public class PersonaFusionActivity extends BaseActivity {
     @Inject
     Toolbar mainToolbar;
 
-    @Inject
-    PersonaDetailViewModel viewModel;
+    PersonaFusionViewModel viewModel;
 
     private int personaForFusionID;
 
@@ -48,6 +52,10 @@ public class PersonaFusionActivity extends BaseActivity {
 
         personaForFusionID = getIntent().getIntExtra("persona_id", 1);
 
+        Persona5ApplicationComponent applicationComponent = Persona5Application.get(this).getComponent();
+        viewModel = ViewModelProviders.of(this).get(PersonaFusionViewModel.class);
+        viewModel.init(applicationComponent, personaForFusionID, false);
+
         setUpToolbar();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_fusion);
@@ -59,7 +67,6 @@ public class PersonaFusionActivity extends BaseActivity {
     }
 
     private void setUpToolbar(){
-        String personaName = viewModel.getPersonaName(personaForFusionID);
 
         if(BuildConfig.ENABLE_CRASHLYTICS){
             //see how personas are being viewed in app
@@ -70,8 +77,13 @@ public class PersonaFusionActivity extends BaseActivity {
 //            );
         }
 
-        this.mainToolbar.setTitle(String.format("Fusions for: %s", personaName));
-
         setSupportActionBar(this.mainToolbar);
+
+        viewModel.getPersonaName(personaForFusionID).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String personaName) {
+                mainToolbar.setTitle(String.format("Fusions for: %s", personaName));
+            }
+        });
     }
 }

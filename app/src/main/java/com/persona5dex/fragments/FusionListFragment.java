@@ -1,10 +1,11 @@
 package com.persona5dex.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -16,15 +17,16 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.persona5dex.PersonaUtilities;
+import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListAdapter;
-import com.persona5dex.dagger.FragmentComponent;
-import com.persona5dex.models.PersonaStoreDisplay;
+import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.services.FusionCalculatorJobService;
-import com.persona5dex.viewmodels.PersonaFusionListViewModel;
+import com.persona5dex.viewmodels.PersonaFusionViewModel;
 
-import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FusionListFragment extends BaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,12 +37,14 @@ public class FusionListFragment extends BaseFragment {
     private int personaID;
     private RecyclerView recyclerView;
 
-    @Inject
-    PersonaFusionListViewModel viewModel;
+    PersonaFusionViewModel viewModel;
 
     private ProgressBar progressBar;
 
     private ViewGroup listHeader;
+
+    private List<PersonaEdgeDisplay> edgeDisplays;
+    private PersonaFusionListAdapter fusionListAdapter;
 
     public FusionListFragment() {
         // Required empty public constructor
@@ -66,24 +70,30 @@ public class FusionListFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        registerCalculationFinishedReceiver();
         if (getArguments() != null) {
             isToList = getArguments().getBoolean(IS_TO_LIST);
             personaID = getArguments().getInt(PERSONA_ID);
         }
+
+        this.edgeDisplays = new ArrayList<>(500);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        SharedPreferences commonSharedPreferences = activity.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
-                Context.MODE_PRIVATE);
+        Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
+        viewModel = ViewModelProviders.of(this).get(PersonaFusionViewModel.class);
+        viewModel.init(component, personaID, isToList);
+
         recyclerView = baseView.findViewById(R.id.recycler_view_persona_list);
+
+        fusionListAdapter = new PersonaFusionListAdapter(edgeDisplays, recyclerView);
+        recyclerView.setAdapter(fusionListAdapter);
+
         listHeader = baseView.findViewById(R.id.fusion_list_header);
         progressBar = baseView.findViewById(R.id.progress_bar_fusions);
-
-        FragmentComponent component = activity.getComponent().plus();
-        component.inject(this);
 
         setProgressBarVisible(true);
         FusionCalculatorJobService.enqueueWork(getContext(), new Intent(getContext(), FusionCalculatorJobService.class));
@@ -121,24 +131,30 @@ public class FusionListFragment extends BaseFragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        PersonaStoreDisplay personaStore = viewModel.getEdgesForPersona(personaID);
-
-        PersonaFusionListAdapter fusionListAdapter;
         TextView personaHeaderColumnOne = baseView.findViewById(R.id.textView_fusion_column_one_label);
         TextView personaHeaderColumnTwo = baseView.findViewById(R.id.textView_fusion_column_two_label);
 
-        if(this.isToList){
-            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesTo(), personaID, true, recyclerView, viewModel);
-
+        if(isToList){
             personaHeaderColumnOne.setText(R.string.persona_one);
             personaHeaderColumnTwo.setText(R.string.persona_two);
         }
         else{
-            fusionListAdapter = new PersonaFusionListAdapter(personaStore.edgesFrom(), personaID, false, recyclerView, viewModel);
             personaHeaderColumnOne.setText(R.string.persona_two);
             personaHeaderColumnTwo.setText(R.string.result);
         }
-        recyclerView.setAdapter(fusionListAdapter);
+
+        viewModel.getEdges().observe(this, new Observer<List<PersonaEdgeDisplay>>() {
+            @Override
+            public void onChanged(@Nullable List<PersonaEdgeDisplay> personaEdgeDisplays) {
+                edgeDisplays.clear();
+
+                if(personaEdgeDisplays != null){
+                    edgeDisplays.addAll(personaEdgeDisplays);
+                }
+
+                fusionListAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     // Define the callback for what to do when fusion calculation service is finished

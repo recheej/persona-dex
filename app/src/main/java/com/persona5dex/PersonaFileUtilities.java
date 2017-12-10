@@ -72,6 +72,11 @@ public class PersonaFileUtilities {
         return arcanaTable;
     }
 
+    public RawPersona[] getRawPersonas(InputStream personaFile){
+        String personaFileContents = this.getFileContents(personaFile);
+        return gson.fromJson(personaFileContents, RawPersona[].class);
+    }
+
     public Persona[] allPersonas(InputStream personaFile) {
         String personaFileContents = this.getFileContents(personaFile);
 

@@ -6,5 +6,9 @@ package com.persona5dex.models;
 
 public class PersonaEdgeDisplay {
     public String leftPersonaName;
+    public int leftPersonaID;
     public String rightPersonaName;
+    public int rightPersonaID;
+    public String resultPersonaName;
+    public int resultPersonaID;
 }

@@ -13,18 +13,16 @@ import com.persona5dex.dagger.FusionCalculatorServiceComponent;
 import com.persona5dex.dagger.FusionServiceContextModule;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.Pair;
-import com.persona5dex.models.Persona;
 import com.persona5dex.models.PersonaForFusionService;
 import com.persona5dex.models.PersonaGraph;
 import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.RawPersonaEdge;
 import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaTransferRepository;
-import com.persona5dex.viewmodels.PersonaFusionListViewModel;
+import com.persona5dex.viewmodels.PersonaFusionViewModel;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -88,10 +86,10 @@ public class FusionCalculatorJobService extends JobIntentService {
 
             for(PersonaForFusionService persona: personaByLevel){
                 RawPersonaEdge[] edgesTo = graph.edgesTo(persona);
-                edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.id, true);
+                edgesTo = PersonaFusionViewModel.filterOutDuplicateEdges(edgesTo, persona.getId(), true);
 
                 RawPersonaEdge[] edgesFrom = graph.edgesFrom(persona);
-                edgesFrom = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesFrom, persona.id, false);
+                edgesFrom = PersonaFusionViewModel.filterOutDuplicateEdges(edgesFrom, persona.getId(), false);
 
                 PersonaStore store = new PersonaStore(edgesFrom, edgesTo);
                 this.personaEdgeRepository.addPersonaEdges(store);
@@ -106,13 +104,13 @@ public class FusionCalculatorJobService extends JobIntentService {
 
     private PersonaGraph makePersonaGraph(PersonaForFusionService[] personas, PersonaFuser personaFuser){
 
-        HashSet<Pair<PersonaForFusionService, PersonaForFusionService>> pairSet = new HashSet<>(20000);
+        HashSet<Pair<Integer, Integer>> pairSet = new HashSet<>(20000);
         PersonaGraph graph = new PersonaGraph();
 
         for (PersonaForFusionService personaOne: personas){
             for (PersonaForFusionService personaTwo: personas){
 
-                Pair<PersonaForFusionService, PersonaForFusionService> personaPair = new Pair<>(personaOne, personaTwo);
+                Pair<Integer, Integer> personaPair = new Pair<>(personaOne.getId(), personaTwo.getId());
                 if(pairSet.contains(personaPair)){
                     continue;
                 }

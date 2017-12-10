@@ -97,7 +97,7 @@ public class FusionServiceContextModule {
     @Provides
     @FusionServiceScope
     PersonaEdgesRepository edgesRepository(@Named("fusionSharedPreferences") SharedPreferences sharedPreferences, Gson gson, PersonaDatabase database) {
-        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson, database.personaDao());
+        return new PersonaEdgesSharedPrefRepository(sharedPreferences, gson, database);
     }
 
     @Provides

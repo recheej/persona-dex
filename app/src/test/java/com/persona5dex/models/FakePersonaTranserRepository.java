@@ -37,16 +37,6 @@ public class FakePersonaTranserRepository implements PersonaTransferRepository {
     }
 
     @Override
-    public void commit() {
-
-    }
-
-    @Override
-    public void setPersonaIDs(Persona[] personas) {
-
-    }
-
-    @Override
     public Map<String, Integer> getDLCPersonaForSettings() {
         Map<String, Integer> output = new HashMap<>(10);
         output.put("PersonaTwo", 1);

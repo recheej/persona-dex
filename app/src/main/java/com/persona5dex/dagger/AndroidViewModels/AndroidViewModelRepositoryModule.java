@@ -11,6 +11,8 @@ import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.MainPersonaRoomRepository;
 import com.persona5dex.repositories.PersonaDetailRepository;
 import com.persona5dex.repositories.PersonaDetailRoomRepository;
+import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
+import com.persona5dex.repositories.PersonaDisplayEdgesRoomRepository;
 import com.persona5dex.repositories.PersonaElementsRepository;
 import com.persona5dex.repositories.PersonaElementsRoomRepository;
 import com.persona5dex.repositories.PersonaSkillsRepository;
@@ -49,5 +51,11 @@ public class AndroidViewModelRepositoryModule {
     @ViewModelScope
     PersonaSkillsRepository skillsRepository(PersonaDatabase database){
         return new PersonaSkillsRoomRepository(database.personaDao());
+    }
+
+    @Provides
+    @ViewModelScope
+    PersonaDisplayEdgesRepository edgesRepository(PersonaDatabase database){
+        return new PersonaDisplayEdgesRoomRepository(database.personaDao());
     }
 }

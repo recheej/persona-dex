@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
 import com.persona5dex.models.Enumerations.Arcana;
-import com.persona5dex.models.Persona;
 import com.persona5dex.models.PersonaForFusionService;
 
 import java.util.ArrayList;
@@ -74,10 +73,10 @@ public class PersonaFuser {
     @Nullable
     private PersonaForFusionService fuseRare(PersonaForFusionService normalPersona, PersonaForFusionService rarePersona){
 
-        int rarePersonaIndex = this.getRarePersonaIndex(rarePersona.name);
-        int modifier = this.rareComboMap.get(normalPersona.arcanaName)[rarePersonaIndex];
+        int rarePersonaIndex = this.getRarePersonaIndex(rarePersona.getName());
+        int modifier = this.rareComboMap.get(normalPersona.getArcanaName())[rarePersonaIndex];
 
-        List<PersonaForFusionService> personasOfSameArcana = personaByArcana.get(normalPersona.arcana.value());
+        List<PersonaForFusionService> personasOfSameArcana = personaByArcana.get(normalPersona.getArcana().value());
 
         int personaIndex = 0;
         final int arcanaSize = personasOfSameArcana.size();
@@ -85,7 +84,7 @@ public class PersonaFuser {
         for (int i = 0; i < arcanaSize; i++) {
             PersonaForFusionService otherPersona = personasOfSameArcana.get(i);
 
-            if(otherPersona.name.equals(normalPersona.name)){
+            if(otherPersona.getName().equals(normalPersona.getName())){
                 personaIndex = i;
                 break;
             }
@@ -129,13 +128,13 @@ public class PersonaFuser {
     private SparseArray<List<PersonaForFusionService>> personaByArcana(){
         SparseArray<List<PersonaForFusionService>> personaByArcana = new SparseArray<>(arcanaTable.size());
         for(PersonaForFusionService persona: personasByLevel){
-            int arcanaIndex = persona.arcana.value();
+            int arcanaIndex = persona.getArcana().value();
             List<PersonaForFusionService> personaList = personaByArcana.get(arcanaIndex);
 
             if(personaList == null){
                 personaList = new ArrayList<>();
                 personaList.add(persona);
-                personaByArcana.put(persona.arcana.value(), personaList);
+                personaByArcana.put(persona.getArcana().value(), personaList);
             }
             else{
                 personaList.add(persona);
@@ -155,16 +154,16 @@ public class PersonaFuser {
             return null;
         }
 
-        if(personaOne.rare && personaTwo.rare){
+        if(personaOne.isRare() && personaTwo.isRare()){
             return null;
         }
 
-        if(personaOne.rare || personaTwo.rare){
+        if(personaOne.isRare() || personaTwo.isRare()){
             if(!rarePersonaAllowedInFusion){
                 return null;
             }
 
-            if(personaOne.rare){
+            if(personaOne.isRare()){
                 return fuseRare(personaTwo, personaOne);
             }
 
@@ -173,18 +172,18 @@ public class PersonaFuser {
         }
 
         Arcana resultArcana;
-        if(personaOne.arcana == personaTwo.arcana){
-            resultArcana = personaOne.arcana;
+        if(personaOne.getArcana() == personaTwo.getArcana()){
+            resultArcana = personaOne.getArcana();
         }
         else{
-            resultArcana = getResultArcana(personaOne.arcana, personaTwo.arcana, arcanaTable);
+            resultArcana = getResultArcana(personaOne.getArcana(), personaTwo.getArcana(), arcanaTable);
         }
 
         if(resultArcana == null){
             return null;
         }
 
-        int calculatedLevel = (personaOne.level + personaTwo.level) / 2;
+        int calculatedLevel = (personaOne.getLevel() + personaTwo.getLevel()) / 2;
         calculatedLevel += 1;
 
         List<PersonaForFusionService> personaForResultArcana = personaByArcana.get(resultArcana.value());
@@ -194,7 +193,7 @@ public class PersonaFuser {
             return null;
         }
 
-        if(personaOne.arcana == personaTwo.arcana){
+        if(personaOne.getArcana() == personaTwo.getArcana()){
             //fusion theory according to this: http://persona4.wikidot.com/fusiontutor
             //https://github.com/chinhodado/persona5_calculator/blob/master/src/FusionCalculator.js
             //https://www.gamefaqs.com/ps2/932312-shin-megami-tensei-persona-3/faqs/49926
@@ -202,8 +201,8 @@ public class PersonaFuser {
             for(int i = personaForResultArcana.size() - 1; i >= 0; i--){
                 PersonaForFusionService persona = personaForResultArcana.get(i);
 
-                if(persona.level < calculatedLevel){
-                    if(!this.personaIsValidInFusionResult(persona)|| Objects.equals(persona.name, personaOne.name) || Objects.equals(persona.name, personaTwo.name)){
+                if(persona.getLevel() < calculatedLevel){
+                    if(!this.personaIsValidInFusionResult(persona)|| Objects.equals(persona.getName(), personaOne.getName()) || Objects.equals(persona.getName(), personaTwo.getName())){
                         continue;
                     }
 
@@ -215,8 +214,8 @@ public class PersonaFuser {
         }
         else{
             for (PersonaForFusionService persona : personaForResultArcana) {
-                if (persona.level >= calculatedLevel) {
-                    if(!this.personaIsValidInFusionResult(persona) || persona.name.equals(personaOne.name) || persona.name.equals(personaTwo.name)){
+                if (persona.getLevel() >= calculatedLevel) {
+                    if(!this.personaIsValidInFusionResult(persona) || persona.getName().equals(personaOne.getName()) || persona.getName().equals(personaTwo.getName())){
                         continue;
                     }
 
@@ -229,11 +228,11 @@ public class PersonaFuser {
     }
 
     private boolean personaIsValidInRecipe(PersonaForFusionService persona){
-        if(persona.dlc){
-            return ownedDLCPersonaIDs.contains(persona.id);
+        if(persona.isDlc()){
+            return ownedDLCPersonaIDs.contains(persona.getId());
         }
 
-        if(persona.rare){
+        if(persona.isRare()){
             return rarePersonaAllowedInFusion;
         }
 
@@ -241,10 +240,10 @@ public class PersonaFuser {
     }
 
     private boolean personaIsValidInFusionResult(PersonaForFusionService persona){
-        final boolean validInFusion = !persona.rare && !persona.special;
+        final boolean validInFusion = !persona.isRare() && !persona.isSpecial();
 
-        if(validInFusion && persona.dlc){
-            return ownedDLCPersonaIDs.contains(persona.id);
+        if(validInFusion && persona.isDlc()){
+            return ownedDLCPersonaIDs.contains(persona.getId());
         }
 
         return validInFusion;

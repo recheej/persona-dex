@@ -48,6 +48,27 @@ public class Enumerations {
 
             return Arcana.ANY;
         }
+
+        private static String formatArcanaName(String arcanaName){
+            if(arcanaName == null || arcanaName.isEmpty()){
+                return "";
+            }
+
+            return arcanaName.replaceAll("\\s+", "")
+                    .replaceAll("_", "").toLowerCase();
+        }
+
+        public static Arcana getArcana(String arcanaName){
+            String arcanaStringFormatted = formatArcanaName(arcanaName);
+
+            for (Arcana arcana : Arcana.values()) {
+                if(formatArcanaName(arcana.name()).equals(arcanaStringFormatted)){
+                    return arcana;
+                }
+            }
+
+            return Arcana.ANY;
+        }
     }
 
     public enum Personality {

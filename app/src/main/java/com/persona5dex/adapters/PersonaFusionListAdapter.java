@@ -16,6 +16,8 @@ import com.persona5dex.viewmodels.PersonaFusionListViewModel;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import java.util.List;
+
 /**
  * Created by Rechee on 7/30/2017.
  */
@@ -24,16 +26,12 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
     private final RecyclerView recyclerView;
 
-    private final PersonaEdgeDisplay[] edges;
-    private final int personaID;
-    private final boolean isToList;
-    private final PersonaFusionListViewModel viewModel;
+    private final List<PersonaEdgeDisplay> edges;
     private PersonaEdgeDisplay selectedPersonaEdge;
     private int selectedPosition = -1;
 
 
     class ViewHolder extends RecyclerView.ViewHolder implements ExpandableLayout.OnExpansionUpdateListener {
-        private final boolean isToList;
         private final ExpandableLayout expandableLayout;
         private TextView textViewPersonaNameOne;
         private TextView textViewPersonaNameTwo;
@@ -44,28 +42,8 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
         private PersonaEdgeDisplay personaEdge;
 
-        ViewHolder(final View itemView, boolean isToList) {
+        ViewHolder(final View itemView) {
             super(itemView);
-
-            this.isToList = isToList;
-            this.textViewPersonaNameOne = itemView.findViewById(R.id.textView_personaNameOne);
-            this.textViewPersonaNameTwo = itemView.findViewById(R.id.textView_personaNameTwo);
-            this.textViewPersonaOneDetail = itemView.findViewById(R.id.persona_one_detail);
-            this.textViewPersonaTwoDetail = itemView.findViewById(R.id.persona_two_detail);
-
-            this.textViewPersonaOneDetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goToPersonaDetail(textViewPersonaNameOne.getText().toString());
-                }
-            });
-
-            this.textViewPersonaTwoDetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goToPersonaDetail(textViewPersonaNameTwo.getText().toString());
-                }
-            });
 
             this.expandImage = itemView.findViewById(R.id.expand_icon);
 
@@ -74,10 +52,9 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
             this.expandableLayout.setOnExpansionUpdateListener(this);
         }
 
-        private void goToPersonaDetail(String personaName){
-            viewModel.storePersonaForDetail(personaName);
-
+        private void goToPersonaDetail(int personaID){
             Intent startDetailIntent = new Intent(itemView.getContext(), PersonaDetailActivity.class);
+            startDetailIntent.putExtra("persona_id", 0);
             itemView.getContext().startActivity(startDetailIntent);
         }
 
@@ -93,10 +70,29 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
             return this.expandImage;
         }
 
-        void bind(PersonaEdgeDisplay edge){
+        void bind(final PersonaEdgeDisplay edge){
+
+            this.textViewPersonaNameOne = itemView.findViewById(R.id.textView_personaNameOne);
+            this.textViewPersonaNameTwo = itemView.findViewById(R.id.textView_personaNameTwo);
+            this.textViewPersonaOneDetail = itemView.findViewById(R.id.persona_one_detail);
+            this.textViewPersonaTwoDetail = itemView.findViewById(R.id.persona_two_detail);
 
             this.textViewPersonaNameOne.setText(edge.leftPersonaName);
             this.textViewPersonaNameTwo.setText(edge.rightPersonaName);
+
+            this.textViewPersonaOneDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToPersonaDetail(edge.leftPersonaID);
+                }
+            });
+
+            this.textViewPersonaTwoDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToPersonaDetail(edge.rightPersonaID);
+                }
+            });
 
             String detailsFor = itemView.getContext().getString(R.string.details_for);
 
@@ -118,12 +114,9 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
         }
     }
 
-    public PersonaFusionListAdapter(PersonaEdgeDisplay[] edges, int personaID, boolean isToList, RecyclerView recyclerView, PersonaFusionListViewModel viewModel){
+    public PersonaFusionListAdapter(List<PersonaEdgeDisplay> edges, RecyclerView recyclerView){
         this.edges = edges;
-        this.personaID = personaID;
-        this.isToList = isToList;
         this.recyclerView = recyclerView;
-        this.viewModel = viewModel;
     }
 
     @Override
@@ -131,13 +124,13 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_personafusion, parent, false);
 
-        return new ViewHolder(view, isToList);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final PersonaFusionListAdapter.ViewHolder holder, final int position) {
         final int edgePosition = holder.getAdapterPosition() == RecyclerView.NO_POSITION ? 0 : holder.getAdapterPosition();
-        holder.bind(edges[edgePosition]);
+        holder.bind(edges.get(edgePosition));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +150,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
                 }
                 else{
                     holder.expandableLayout().expand();
-                    selectedPersonaEdge = edges[edgePosition];
+                    selectedPersonaEdge = edges.get(edgePosition);
                     selectedPosition = edgePosition;
                     holder.expandImage().setImageResource(R.drawable.ic_expand_less_white_24dp);
                 }
@@ -167,6 +160,6 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
     @Override
     public int getItemCount() {
-        return this.edges.length;
+        return this.edges.size();
     }
 }

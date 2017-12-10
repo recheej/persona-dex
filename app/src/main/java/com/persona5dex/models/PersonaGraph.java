@@ -3,7 +3,6 @@ package com.persona5dex.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by Rechee on 7/10/2017.
@@ -19,41 +18,41 @@ public class PersonaGraph {
 
     public void addEdge(PersonaForFusionService personaOne, PersonaForFusionService personaTwo, PersonaForFusionService result){
 
-        if(!personaTable.containsKey(result.id)){
-            personaTable.put(result.id, new ArrayList<RawPersonaEdge>());
+        if(!personaTable.containsKey(result.getId())){
+            personaTable.put(result.getId(), new ArrayList<RawPersonaEdge>());
         }
 
         RawPersonaEdge newEdge = new RawPersonaEdge();
-        newEdge.start = personaOne.id;
-        newEdge.end = result.id;
-        newEdge.pairPersona = personaTwo.id;
+        newEdge.start = personaOne.getId();
+        newEdge.end = result.getId();
+        newEdge.pairPersona = personaTwo.getId();
 
-        if(personaTable.containsKey(personaOne.id)){
-            personaTable.get(personaOne.id).add(newEdge);
+        if(personaTable.containsKey(personaOne.getId())){
+            personaTable.get(personaOne.getId()).add(newEdge);
         }
         else{
             List<RawPersonaEdge> edges = new ArrayList<>();
             edges.add(newEdge);
-            personaTable.put(personaOne.id, edges);
+            personaTable.put(personaOne.getId(), edges);
         }
 
         RawPersonaEdge edgeTwo = new RawPersonaEdge();
-        edgeTwo.start = personaTwo.id;
-        edgeTwo.end = result.id;
-        edgeTwo.pairPersona = personaOne.id;
+        edgeTwo.start = personaTwo.getId();
+        edgeTwo.end = result.getId();
+        edgeTwo.pairPersona = personaOne.getId();
 
-        if(personaTable.containsKey(personaTwo.id)){
-            personaTable.get(personaTwo.id).add(edgeTwo);
+        if(personaTable.containsKey(personaTwo.getId())){
+            personaTable.get(personaTwo.getId()).add(edgeTwo);
         }
         else{
             List<RawPersonaEdge> edges = new ArrayList<>();
             edges.add(edgeTwo);
-            personaTable.put(personaTwo.id, edges);
+            personaTable.put(personaTwo.getId(), edges);
         }
     }
 
     public RawPersonaEdge[] edgesFrom(PersonaForFusionService persona){
-        List<RawPersonaEdge> edgesFrom = this.personaTable.get(persona.id);
+        List<RawPersonaEdge> edgesFrom = this.personaTable.get(persona.getId());
 
         if(edgesFrom == null){
             return new RawPersonaEdge[0];
@@ -66,12 +65,12 @@ public class PersonaGraph {
         List<RawPersonaEdge> edgesTo = new ArrayList<>();
 
         for(int personaID: this.personaTable.keySet()){
-            if(personaID == persona.id ){
+            if(personaID == persona.getId()){
                 continue;
             }
 
             for (RawPersonaEdge edgeForPersona: personaTable.get(personaID)){
-                if(edgeForPersona.end == persona.id){
+                if(edgeForPersona.end == persona.getId()){
                     edgesTo.add(edgeForPersona);
                 }
             }
