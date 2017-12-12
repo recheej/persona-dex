@@ -69,7 +69,8 @@ public class FusionCalculatorJobService extends JobIntentService {
                 .plus(new FusionServiceContextModule(this), new FusionArcanaDataModule());
         component.inject(this);
 
-        if(!personaEdgeRepository.edgesStored()){
+        final boolean forceReset = intent.getBooleanExtra("forceReset", false);
+        if(forceReset || !personaEdgeRepository.edgesStored()){
 
             PersonaFuser.PersonaFusionArgs fuserArgs = new PersonaFuser.PersonaFusionArgs();
             fuserArgs.personasByLevel = personaByLevel;

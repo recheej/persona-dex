@@ -39,12 +39,8 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     @Inject
     ProgressBar fusionsProgressBar;
 
-    @Inject
-    SettingsViewModel viewModel;
-
     private SharedPreferences defaultSharedPreferences;
     private View frameLayout;
-    private SharedPreferences fusionSharedPreferences;
     private boolean resetService;
 
     @Override
@@ -61,8 +57,8 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         component.inject(this);
         this.component = component;
 
-        SettingsFragment settingsFragment = SettingsFragment.newInstance(viewModel.getDLCPersonaForSettings());
-        getFragmentManager().beginTransaction()
+        SettingsFragment settingsFragment = new SettingsFragment();
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, settingsFragment)
                 .commit();
 
@@ -73,20 +69,12 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
         defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        fusionSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
-                Context.MODE_PRIVATE);
-
         frameLayout = findViewById(R.id.container);
 
-        registerCalculationFinishedReceiver();
+        FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
 
-        boolean isInitialized = fusionSharedPreferences.getBoolean("initialized", false);
-        boolean isFinished = fusionSharedPreferences.getBoolean("finished", false);
-        if(isInitialized && !isFinished){
-
-            fusionsProgressBar.setVisibility(ProgressBar.VISIBLE);
-            frameLayout.setVisibility(View.INVISIBLE);
-        }
+        fusionsProgressBar.setVisibility(ProgressBar.VISIBLE);
+        frameLayout.setVisibility(View.INVISIBLE);
     }
 
     private void registerCalculationFinishedReceiver() {
@@ -99,9 +87,14 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         @Override
         public void onReceive(Context context, Intent intent) {
             if(SettingsActivity.this.resetService){
+                //it's possible that the user changed the dlc values while the service is running so reset again
                 SettingsActivity.this.resetService = false;
+                final Intent work = new Intent(SettingsActivity.this,
+                        FusionCalculatorJobService.class);
+                work.putExtra("forceReset", true);
+
                 FusionCalculatorJobService.enqueueWork(SettingsActivity.this,
-                        new Intent(SettingsActivity.this, FusionCalculatorJobService.class));
+                        work);
             }
 
             fusionsProgressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -125,14 +118,10 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        boolean isInitialized = fusionSharedPreferences.getBoolean("initialized", false);
-        boolean isFinished = fusionSharedPreferences.getBoolean("finished", false);
+        this.resetService = true;
 
-        if(isInitialized && !isFinished){
-            this.resetService = true;
-        }
-        else{
-            FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
-        }
+        final Intent work = new Intent(this, FusionCalculatorJobService.class);
+        work.putExtra("forceReset", true);
+        FusionCalculatorJobService.enqueueWork(this, work);
     }
 }

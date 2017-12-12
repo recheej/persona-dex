@@ -3,6 +3,7 @@ package com.persona5dex.repositories;
 import android.arch.lifecycle.LiveData;
 
 import com.persona5dex.models.MainListPersona;
+import com.persona5dex.models.room.Persona;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ import java.util.List;
 
 public interface MainPersonaRepository {
     LiveData<List<MainListPersona>> getPersonasForMainList();
+    LiveData<List<Persona>> getDLCPersonas();
 }

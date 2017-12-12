@@ -3,32 +3,17 @@ package com.persona5dex;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
-import com.persona5dex.dagger.ActivityComponent;
-import com.persona5dex.dagger.ActivityContextModule;
-import com.persona5dex.dagger.AndroidViewModels.AndroidViewModelRepositoryModule;
-import com.persona5dex.dagger.AndroidViewModels.ViewModelComponent;
-import com.persona5dex.dagger.FusionArcanaDataModule;
-import com.persona5dex.dagger.FusionCalculatorServiceComponent;
-import com.persona5dex.dagger.FusionServiceContextModule;
-import com.persona5dex.dagger.LayoutModule;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
-import com.persona5dex.dagger.ViewModelModule;
-import com.persona5dex.dagger.ViewModelRepositoryModule;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.FakeMainPersonaRepository;
 import com.persona5dex.models.MainListPersona;
-import com.persona5dex.models.Persona;
 import com.persona5dex.models.PersonaFilterArgs;
-import com.persona5dex.repositories.PersonaRepositoryFile;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

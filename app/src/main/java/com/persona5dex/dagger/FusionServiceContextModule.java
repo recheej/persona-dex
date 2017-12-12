@@ -11,8 +11,6 @@ import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaEdgesSharedPrefRepository;
-import com.persona5dex.repositories.PersonaRepository;
-import com.persona5dex.repositories.PersonaRepositoryFile;
 import com.persona5dex.repositories.PersonaTransferRepository;
 import com.persona5dex.repositories.PersonaTransferRepositorySharedPref;
 import com.google.gson.Gson;
@@ -55,15 +53,6 @@ public class FusionServiceContextModule {
         InputStream stream = context.getResources().openRawResource(R.raw.rare_combos);
 
         return personaFileUtilities.rareCombos(stream);
-    }
-
-    @Provides
-    @FusionServiceScope
-    PersonaRepository provideRepository(Gson gson) {
-        InputStream stream = context.getResources().openRawResource(R.raw.person_data);
-        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(gson);
-
-        return new PersonaRepositoryFile(personaFileUtilities.allPersonas(stream));
     }
 
     @Provides

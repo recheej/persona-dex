@@ -70,7 +70,6 @@ public class FusionListFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        registerCalculationFinishedReceiver();
         if (getArguments() != null) {
             isToList = getArguments().getBoolean(IS_TO_LIST);
             personaID = getArguments().getInt(PERSONA_ID);

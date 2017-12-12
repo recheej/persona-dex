@@ -30,6 +30,9 @@ public interface PersonaDao {
     @Query("select id, arcana, arcanaName, name, level, rare, dlc, special from personas order by level")
     PersonaForFusionService[] getPersonasByLevel();
 
+    @Query("select * from personas where dlc = 1")
+    LiveData<List<Persona>> getDLCPersonas();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPersonaFusion(PersonaFusion personaFusion);
 

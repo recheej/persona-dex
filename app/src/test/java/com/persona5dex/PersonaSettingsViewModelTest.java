@@ -1,180 +1,166 @@
 package com.persona5dex;
 
-import com.persona5dex.models.FakePersonaTranserRepository;
-import com.persona5dex.models.Persona;
-import com.persona5dex.repositories.PersonaTransferRepository;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
+
+import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.room.Persona;
+import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.viewmodels.SettingsViewModel;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Rechee on 8/13/2017.
  */
 
+@RunWith(RobolectricTestRunner.class)
 public class PersonaSettingsViewModelTest {
+
+    private SettingsViewModel viewModel;
+    private MutableLiveData<List<Persona>> dlcPersonas;
+
+    @Before
+    public void init() {
+        Persona testPersona = new Persona();
+        testPersona.name = "testName";
+        testPersona.id = 1;
+        testPersona.arcana = Enumerations.Arcana.CHARIOT;
+        testPersona.arcanaName = "Chariot";
+        testPersona.dlc = true;
+        testPersona.level = 1;
+
+        Persona testPersonaTwo = new Persona();
+        testPersonaTwo.name = "testNameTwo";
+        testPersonaTwo.id = 2;
+        testPersonaTwo.arcana = Enumerations.Arcana.HANGED_MAN;
+        testPersonaTwo.arcanaName = "Hanged Man";
+        testPersonaTwo.dlc = true;
+        testPersonaTwo.level = 2;
+
+        List<Persona> personas = new ArrayList<>();
+        personas.add(testPersona);
+        personas.add(testPersonaTwo);
+
+        dlcPersonas = new MutableLiveData<>();
+        dlcPersonas.setValue(personas);
+
+        MainPersonaRepository mainPersonaRepository = mock(MainPersonaRepository.class);
+        when(mainPersonaRepository.getDLCPersonas()).thenReturn(dlcPersonas);
+
+        this.viewModel = new SettingsViewModel(mainPersonaRepository);
+    }
+
     @Test
     public void getDLCForSettings_NoError() throws Exception {
+        viewModel.getDLCPersonaForSettings().observeForever(new Observer<String[][]>() {
+            @Override
+            public void onChanged(@Nullable String[][] output) {
+                assertNotNull(output);
+                assertTrue(output.length == 2);
 
-        PersonaTransferRepository transferRepository = new FakePersonaTranserRepository();
-
-        SettingsViewModel viewModel = new SettingsViewModel(transferRepository);
-
-        String[][] output = viewModel.getDLCPersonaForSettings();
-        assertNotNull(output);
-        assertTrue(output.length == 2);
-
-        assertNotNull(output[0]);
-        assertTrue(output[0].length != 0);
-        assertNotNull(output[1]);
-        assertTrue(output[1].length != 0);
+                assertNotNull(output[0]);
+                assertTrue(output[0].length != 0);
+                assertNotNull(output[1]);
+                assertTrue(output[1].length != 0);
+            }
+        });
     }
 
     @Test
     public void getDLCForSettings_IsSorted() throws Exception {
 
-        PersonaTransferRepository transferRepository = new FakePersonaTranserRepository();
+        Persona testPersona = new Persona();
+        testPersona.name = "b";
+        testPersona.id = 1;
+        testPersona.arcana = Enumerations.Arcana.CHARIOT;
+        testPersona.arcanaName = "Chariot";
+        testPersona.dlc = true;
+        testPersona.level = 1;
 
-        SettingsViewModel viewModel = new SettingsViewModel(transferRepository);
+        Persona testPersonaTwo = new Persona();
+        testPersonaTwo.name = "a";
+        testPersonaTwo.id = 2;
+        testPersonaTwo.arcana = Enumerations.Arcana.HANGED_MAN;
+        testPersonaTwo.arcanaName = "Hanged Man";
+        testPersonaTwo.dlc = true;
+        testPersonaTwo.level = 2;
 
-        String[][] output = viewModel.getDLCPersonaForSettings();
-        assertTrue(output[0][0].compareTo(output[0][1]) < 0);
+        List<Persona> personas = new ArrayList<>();
+        personas.add(testPersona);
+        personas.add(testPersonaTwo);
+
+        dlcPersonas.setValue(personas);
+
+        viewModel.getDLCPersonaForSettings().observeForever(new Observer<String[][]>() {
+            @Override
+            public void onChanged(@Nullable String[][] output) {
+                assertTrue(output[0][0].compareTo(output[0][1]) < 0);
+            }
+        });
     }
-
+//
     @Test
     public void getDLCForSettings_LengthsEqual() throws Exception {
 
-        PersonaTransferRepository transferRepository = new FakePersonaTranserRepository();
+        viewModel.getDLCPersonaForSettings().observeForever(new Observer<String[][]>() {
+            @Override
+            public void onChanged(@Nullable String[][] output) {
+                assertNotNull(output);
+                assertTrue(output.length == 2);
 
-        SettingsViewModel viewModel = new SettingsViewModel(transferRepository);
+                assertEquals(output[0].length, output[1].length);
+            }
+        });
 
-        String[][] output = viewModel.getDLCPersonaForSettings();
-        assertNotNull(output);
-        assertTrue(output.length == 2);
-
-        assertEquals(output[0].length, output[1].length);
     }
-
+//
     @Test
     public void getDLCForSettings_HandlesNoDLC() throws Exception {
 
-        //fake repository with 0 dlc
-        PersonaTransferRepository transferRepository = new PersonaTransferRepository() {
+        dlcPersonas.setValue(new ArrayList<Persona>(1));
+        viewModel.getDLCPersonaForSettings().observeForever(new Observer<String[][]>() {
             @Override
-            public void storePersonaForDetail(Persona persona) {
+            public void onChanged(@Nullable String[][] output) {
+                assertNotNull(output);
+                assertTrue(output.length == 2);
 
+                assertNotNull(output[0]);
+                assertTrue(output[0].length == 0);
+                assertNotNull(output[1]);
+                assertTrue(output[1].length == 0);
             }
-
-            @Override
-            public Persona getDetailPersona() {
-                return null;
-            }
-
-            @Override
-            public void storePersonaForFusion(Persona personaForFusion) {
-
-            }
-
-            @Override
-            public int getPersonaForFusion() {
-                return 0;
-            }
-
-            @Override
-            public String getPersonaName(int personaID) {
-                return null;
-            }
-
-            @Override
-            public Map<String, Integer> getDLCPersonaForSettings() {
-                return new HashMap<>();
-            }
-
-            @Override
-            public Set<String> getOwnedDlCPersonaIDs() {
-                return null;
-            }
-
-            @Override
-            public boolean rarePersonaAllowedInFusions() {
-                return false;
-            }
-        };
-
-        SettingsViewModel viewModel = new SettingsViewModel(transferRepository);
-
-        String[][] output = viewModel.getDLCPersonaForSettings();
-        assertNotNull(output);
-        assertTrue(output.length == 2);
-
-        assertNotNull(output[0]);
-        assertTrue(output[0].length == 0);
-        assertNotNull(output[1]);
-        assertTrue(output[1].length == 0);
+        });
     }
 
     @Test
     public void getDLCForSettings_HandlesNullDLC() throws Exception {
 
-        //fake repository that returns a null map for dlc
-        PersonaTransferRepository transferRepository = new PersonaTransferRepository() {
+        dlcPersonas.setValue(null);
+        viewModel.getDLCPersonaForSettings().observeForever(new Observer<String[][]>() {
             @Override
-            public void storePersonaForDetail(Persona persona) {
+            public void onChanged(@Nullable String[][] output) {
+                assertNotNull(output);
+                assertTrue(output.length == 2);
 
+                assertNotNull(output[0]);
+                assertTrue(output[0].length == 0);
+                assertNotNull(output[1]);
+                assertTrue(output[1].length == 0);
             }
-
-            @Override
-            public Persona getDetailPersona() {
-                return null;
-            }
-
-            @Override
-            public void storePersonaForFusion(Persona personaForFusion) {
-
-            }
-
-            @Override
-            public int getPersonaForFusion() {
-                return 0;
-            }
-
-            @Override
-            public String getPersonaName(int personaID) {
-                return null;
-            }
-
-            @Override
-            public Map<String, Integer> getDLCPersonaForSettings() {
-                return null;
-            }
-
-            @Override
-            public Set<String> getOwnedDlCPersonaIDs() {
-                return null;
-            }
-
-            @Override
-            public boolean rarePersonaAllowedInFusions() {
-                return false;
-            }
-        };
-
-        SettingsViewModel viewModel = new SettingsViewModel(transferRepository);
-
-        String[][] output = viewModel.getDLCPersonaForSettings();
-        assertNotNull(output);
-        assertTrue(output.length == 2);
-
-        assertNotNull(output[0]);
-        assertTrue(output[0].length == 0);
-        assertNotNull(output[1]);
-        assertTrue(output[1].length == 0);
+        });
     }
 }

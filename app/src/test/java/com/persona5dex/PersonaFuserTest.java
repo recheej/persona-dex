@@ -2,13 +2,11 @@ package com.persona5dex;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.persona5dex.models.Enumerations;
-import com.persona5dex.models.Persona;
 import com.persona5dex.models.PersonaForFusionService;
 import com.persona5dex.models.RawPersona;
-import com.persona5dex.models.room.PersonaTypeConverters;
 import com.persona5dex.services.PersonaFuser;
-import com.google.gson.Gson;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +26,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

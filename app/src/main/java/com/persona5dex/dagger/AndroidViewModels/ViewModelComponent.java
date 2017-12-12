@@ -7,6 +7,7 @@ import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
+import com.persona5dex.viewmodels.SettingsViewModel;
 
 import dagger.Subcomponent;
 
@@ -25,4 +26,5 @@ public interface ViewModelComponent {
     void inject(PersonaElementsViewModel viewModel);
     void inject(PersonaDetailSkillsViewModel viewModel);
     void inject(PersonaFusionViewModel viewModel);
+    void inject(SettingsViewModel viewModel);
 }
