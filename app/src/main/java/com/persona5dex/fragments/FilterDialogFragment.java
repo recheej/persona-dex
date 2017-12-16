@@ -141,12 +141,22 @@ public class FilterDialogFragment extends DialogFragment {
 
                         String minLevelText = minLevelEditText.getText().toString();
                         if(!minLevelText.isEmpty()){
-                            filterArgs.minLevel = Integer.parseInt(minLevelText);
+                            try{
+                                filterArgs.minLevel = Integer.parseInt(minLevelText);
+                            }
+                            catch (NumberFormatException e){
+                                filterArgs.minLevel = 1;
+                            }
                         }
 
                         String maxLevelText = maxLevelEditText.getText().toString();
                         if(!minLevelText.isEmpty()){
-                            filterArgs.maxLevel = Integer.parseInt(maxLevelText);
+                            try{
+                                filterArgs.maxLevel = Integer.parseInt(maxLevelText);
+                            }
+                            catch (NumberFormatException e){
+                                filterArgs.maxLevel = 99;
+                            }
                         }
 
                         OnFilterListener listener = (OnFilterListener) activity;
