@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Persona5Calculator.iml" filepath="$PROJECT_DIR$/Persona5Calculator.iml" />
+      <module fileurl="file://C:\dev\android\persona5app\Persona5Calculator.iml" filepath="C:\dev\android\persona5app\Persona5Calculator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\dev\android\persona5app\app\app.iml" filepath="C:\dev\android\persona5app\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/persona5app.iml" filepath="$PROJECT_DIR$/persona5app.iml" />
       <module fileurl="file://D:\Dev\Android\Persona5Calculator\persona5app.iml" filepath="D:\Dev\Android\Persona5Calculator\persona5app.iml" />
     </modules>
   </component>

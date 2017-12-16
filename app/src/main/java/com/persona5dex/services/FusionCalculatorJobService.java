@@ -68,34 +68,36 @@ public class FusionCalculatorJobService extends JobIntentService {
                 .plus(new FusionServiceContextModule(this), new FusionArcanaDataModule());
         component.inject(this);
 
-        this.personaTransferRepository.setPersonaIDs(personaByLevel);
-        this.personaTransferRepository.commit();
+        if(!personaEdgeRepository.edgesStored()){
+            this.personaTransferRepository.setPersonaIDs(personaByLevel);
+            this.personaTransferRepository.commit();
 
-        PersonaFuser.PersonaFusionArgs fuserArgs = new PersonaFuser.PersonaFusionArgs();
-        fuserArgs.personasByLevel = personaByLevel;
-        fuserArgs.arcanaTable = arcanaTable;
-        fuserArgs.rareComboMap = rarePersonaCombos;
-        fuserArgs.rarePersonaAllowedInFusion = personaTransferRepository.rarePersonaAllowedInFusions();
-        fuserArgs.ownedDLCPersonaIDs = personaTransferRepository.getOwnedDlCPersonaIDs();
+            PersonaFuser.PersonaFusionArgs fuserArgs = new PersonaFuser.PersonaFusionArgs();
+            fuserArgs.personasByLevel = personaByLevel;
+            fuserArgs.arcanaTable = arcanaTable;
+            fuserArgs.rareComboMap = rarePersonaCombos;
+            fuserArgs.rarePersonaAllowedInFusion = personaTransferRepository.rarePersonaAllowedInFusions();
+            fuserArgs.ownedDLCPersonaIDs = personaTransferRepository.getOwnedDlCPersonaIDs();
 
-        PersonaFuser personaFuser = new PersonaFuser(fuserArgs);
+            PersonaFuser personaFuser = new PersonaFuser(fuserArgs);
 
-        PersonaGraph graph = this.makePersonaGraph(personaByLevel, personaFuser);
+            PersonaGraph graph = this.makePersonaGraph(personaByLevel, personaFuser);
 
-        this.personaEdgeRepository.markInit();
+            this.personaEdgeRepository.markInit();
 
-        for(Persona persona: personaByLevel){
-            RawPersonaEdge[] edgesTo = graph.edgesTo(persona);
-            edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.id, true);
+            for(Persona persona: personaByLevel){
+                RawPersonaEdge[] edgesTo = graph.edgesTo(persona);
+                edgesTo = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesTo, persona.id, true);
 
-            RawPersonaEdge[] edgesFrom = graph.edgesFrom(persona);
-            edgesFrom = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesFrom, persona.id, false);
+                RawPersonaEdge[] edgesFrom = graph.edgesFrom(persona);
+                edgesFrom = PersonaFusionListViewModel.filterOutDuplicateEdges(edgesFrom, persona.id, false);
 
-            PersonaStore store = new PersonaStore(edgesFrom, edgesTo);
-            this.personaEdgeRepository.addPersonaEdges(persona, store);
+                PersonaStore store = new PersonaStore(edgesFrom, edgesTo);
+                this.personaEdgeRepository.addPersonaEdges(persona, store);
+            }
+
+            this.personaEdgeRepository.markFinished();
         }
-
-        this.personaEdgeRepository.markFinished();
 
         Intent fusionCalculationFishedIntent = new Intent(FusionCalculatorJobService.Constants.BROADCAST_ACTION);
         LocalBroadcastManager.getInstance(this).sendBroadcast(fusionCalculationFishedIntent);

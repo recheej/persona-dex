@@ -82,21 +82,11 @@ public class FusionListFragment extends BaseFragment {
         listHeader = baseView.findViewById(R.id.fusion_list_header);
         progressBar = baseView.findViewById(R.id.progress_bar_fusions);
 
-        boolean isInitialized = commonSharedPreferences.getBoolean("initialized", false);
-        boolean isFinished = commonSharedPreferences.getBoolean("finished", false);
-        if(isInitialized && !isFinished){
+        FragmentComponent component = activity.getComponent().plus();
+        component.inject(this);
 
-            FragmentComponent component = activity.getComponent().plus();
-            component.inject(this);
-
-            setProgressBarVisible(true);
-        }
-        else{
-            FragmentComponent component = activity.getComponent().plus();
-            component.inject(this);
-
-            setUpRecyclerView();
-        }
+        setProgressBarVisible(true);
+        FusionCalculatorJobService.enqueueWork(getContext(), new Intent(getContext(), FusionCalculatorJobService.class));
     }
 
     private void setProgressBarVisible(boolean visible) {
@@ -156,8 +146,7 @@ public class FusionListFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             setUpRecyclerView();
-            progressBar.setVisibility(ProgressBar.INVISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
+            setProgressBarVisible(false);
         }
     };
 

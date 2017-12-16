@@ -90,11 +90,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         recyclerView = findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
 
-        boolean isInitialized = commonSharedPreferences.getBoolean("initialized", false);
-        boolean isFinished = commonSharedPreferences.getBoolean("finished", false);
-        if(!isInitialized || !isFinished){
-            FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
-        }
+        FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
 
         setSupportActionBar(this.mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
