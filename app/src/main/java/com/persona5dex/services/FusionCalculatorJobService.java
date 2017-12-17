@@ -105,24 +105,16 @@ public class FusionCalculatorJobService extends JobIntentService {
 
     private PersonaGraph makePersonaGraph(PersonaForFusionService[] personas, PersonaFuser personaFuser){
 
-        HashSet<Pair<Integer, Integer>> pairSet = new HashSet<>(20000);
         PersonaGraph graph = new PersonaGraph();
 
         for (PersonaForFusionService personaOne: personas){
             for (PersonaForFusionService personaTwo: personas){
-
-                Pair<Integer, Integer> personaPair = new Pair<>(personaOne.getId(), personaTwo.getId());
-                if(pairSet.contains(personaPair)){
-                    continue;
-                }
 
                 PersonaForFusionService result = personaFuser.fuseNormal(personaOne, personaTwo);
 
                 if(result != null) {
                     graph.addEdge(personaOne, personaTwo, result);
                 }
-
-                pairSet.add(personaPair);
             }
         }
 

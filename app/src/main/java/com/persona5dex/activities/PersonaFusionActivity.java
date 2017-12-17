@@ -53,11 +53,11 @@ public class PersonaFusionActivity extends BaseActivity {
 
         setUpToolbar();
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_fusion);
+        ViewPager viewPager = findViewById(R.id.view_pager_fusion);
         PersonaFusionListPagerAdapter pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(), this, personaForFusionID);
         viewPager.setAdapter(pagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_fusions);
+        TabLayout tabLayout = findViewById(R.id.tab_layout_fusions);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -73,6 +73,7 @@ public class PersonaFusionActivity extends BaseActivity {
         }
 
         setSupportActionBar(this.mainToolbar);
+        mainToolbar.setTitle(R.string.loading_data);
 
         viewModel.getPersonaName(personaForFusionID).observe(this, new Observer<String>() {
             @Override

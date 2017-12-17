@@ -37,8 +37,14 @@ public class PairTest {
     public void testPairEquals(){
         Pair<Integer, Integer> pairOne = new Pair<>(1, 2);
         Pair<Integer, Integer> pairTwo = new Pair<>(1, 2);
+        Pair<Integer, Integer> pairThree = new Pair<>(2, 1);
 
         assertTrue(pairOne.equals(pairTwo));
+        assertTrue(pairTwo.equals(pairOne));
+        assertTrue(pairOne.equals(pairThree));
+        assertTrue(pairThree.equals(pairOne));
+        assertTrue(pairThree.equals(pairTwo));
+        assertTrue(pairTwo.equals(pairThree));
     }
 
     @Test
