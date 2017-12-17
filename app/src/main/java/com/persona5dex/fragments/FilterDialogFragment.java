@@ -17,12 +17,10 @@ import android.widget.Spinner;
 
 import com.persona5dex.R;
 import com.persona5dex.activities.BaseActivity;
-import com.persona5dex.dagger.FragmentComponent;
+import com.persona5dex.dagger.fragment.FragmentComponent;
 import com.persona5dex.models.ArcanaMap;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.viewmodels.PersonaFilterViewModel;
-
-import java.util.Objects;
 
 import javax.inject.Inject;
 

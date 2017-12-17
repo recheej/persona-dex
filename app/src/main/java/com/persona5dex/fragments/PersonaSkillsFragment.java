@@ -14,17 +14,12 @@ import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.dagger.FragmentComponent;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.PersonaDetailSkill;
-import com.persona5dex.models.Skill;
 import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
-import com.persona5dex.viewmodels.PersonaSkillsViewModel;
 
 import java.util.List;
 import java.util.Locale;
-
-import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.

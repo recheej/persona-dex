@@ -1,7 +1,8 @@
-package com.persona5dex.dagger;
+package com.persona5dex.dagger.activity;
 
 import android.content.SharedPreferences;
 
+import com.persona5dex.dagger.activity.ActivityScope;
 import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaEdgesSharedPrefRepository;

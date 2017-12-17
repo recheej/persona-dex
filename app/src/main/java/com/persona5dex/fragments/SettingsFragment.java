@@ -11,7 +11,7 @@ import android.support.v14.preference.MultiSelectListPreference;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.activities.BaseActivity;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.viewmodels.SettingsViewModel;
 
 /**

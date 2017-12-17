@@ -1,4 +1,4 @@
-package com.persona5dex.dagger;
+package com.persona5dex.dagger.fusionService;
 
 import android.content.Context;
 import android.content.SharedPreferences;

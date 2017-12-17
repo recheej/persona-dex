@@ -14,16 +14,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.persona5dex.Persona5Application;
-import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
-import com.persona5dex.dagger.ActivityComponent;
-import com.persona5dex.dagger.ActivityContextModule;
+import com.persona5dex.dagger.activity.ActivityComponent;
+import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.LayoutModule;
-import com.persona5dex.dagger.ViewModelModule;
-import com.persona5dex.dagger.ViewModelRepositoryModule;
+import com.persona5dex.dagger.activity.ViewModelModule;
+import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.fragments.SettingsFragment;
 import com.persona5dex.services.FusionCalculatorJobService;
-import com.persona5dex.viewmodels.SettingsViewModel;
 
 import javax.inject.Inject;
 

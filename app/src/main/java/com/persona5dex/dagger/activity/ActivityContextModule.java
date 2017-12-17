@@ -1,15 +1,11 @@
-package com.persona5dex.dagger;
+package com.persona5dex.dagger.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
-import com.google.gson.Gson;
-
-import java.io.InputStream;
 
 import javax.inject.Named;
 

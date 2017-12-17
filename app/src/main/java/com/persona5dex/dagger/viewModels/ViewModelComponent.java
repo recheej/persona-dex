@@ -1,7 +1,5 @@
-package com.persona5dex.dagger.AndroidViewModels;
+package com.persona5dex.dagger.viewModels;
 
-import com.persona5dex.dagger.FusionServiceScope;
-import com.persona5dex.dagger.ViewModelRepositoryModule;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
 import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;

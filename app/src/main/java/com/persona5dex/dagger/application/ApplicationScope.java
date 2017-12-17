@@ -1,4 +1,4 @@
-package com.persona5dex.dagger.AndroidViewModels;
+package com.persona5dex.dagger.application;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,7 +11,7 @@ import javax.inject.Scope;
 
 @Scope
 @Retention(RetentionPolicy.CLASS)
-public @interface ViewModelScope
+public @interface ApplicationScope
 {
 
 }

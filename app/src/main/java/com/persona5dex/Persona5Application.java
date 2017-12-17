@@ -5,10 +5,9 @@ import android.app.Application;
 import android.content.Context;
 import android.support.v4.app.JobIntentService;
 
-import com.facebook.stetho.Stetho;
-import com.persona5dex.dagger.ApplicationContextModule;
-import com.persona5dex.dagger.DaggerPersona5ApplicationComponent;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.dagger.application.ApplicationContextModule;
+import com.persona5dex.dagger.application.DaggerPersona5ApplicationComponent;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.room.PersonaDatabase;
 
 /**

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListAdapter;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.services.FusionCalculatorJobService;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;

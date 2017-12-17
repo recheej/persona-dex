@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.room.Stats;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;

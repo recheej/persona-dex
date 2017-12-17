@@ -2,18 +2,16 @@ package com.persona5dex.viewmodels;
 
 import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
-import com.persona5dex.dagger.AndroidViewModels.AndroidViewModelRepositoryModule;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.Pair;
-import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.models.RawPersonaEdge;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
-import com.persona5dex.repositories.PersonaEdgesRepository;
-import com.persona5dex.repositories.PersonaSkillsRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,22 +110,25 @@ public class PersonaFusionViewModel extends ViewModel {
     }
 
     public LiveData<List<PersonaEdgeDisplay>> getEdges(){
+
+        LiveData<List<PersonaEdgeDisplay>> dataToReturn = new MutableLiveData<>();
+
         if(isToList){
             if(personaToEdges == null){
                 personaToEdges = repository.getEdgesToPersona(personaID);
+                dataToReturn = personaToEdges;
             }
-            return personaToEdges;
         }
         else{
             if(personaFromEdges == null){
                 personaFromEdges = repository.getEdgesFromPersona(personaID);
+                dataToReturn = personaFromEdges;
             }
 
-            return  Transformations.map(personaFromEdges, new Function<List<PersonaEdgeDisplay>, List<PersonaEdgeDisplay>>() {
+            dataToReturn = Transformations.map(dataToReturn, new Function<List<PersonaEdgeDisplay>, List<PersonaEdgeDisplay>>() {
                 @Override
                 public List<PersonaEdgeDisplay> apply(List<PersonaEdgeDisplay> input) {
 
-                    input = filterOutDuplicateEdges(input, personaID, isToList);
                     for (PersonaEdgeDisplay edgeDisplay : input) {
                         //we want the left to be the persona that's not the current persona's
 
@@ -168,6 +169,27 @@ public class PersonaFusionViewModel extends ViewModel {
                 }
             });
         }
+
+        return Transformations.map(dataToReturn, new Function<List<PersonaEdgeDisplay>, List<PersonaEdgeDisplay>>() {
+            @Override
+            public List<PersonaEdgeDisplay> apply(List<PersonaEdgeDisplay> input) {
+
+                input = filterOutDuplicateEdges(input, personaID, isToList);
+
+                Collections.sort(input, new Comparator<PersonaEdgeDisplay>() {
+                    @Override
+                    public int compare(PersonaEdgeDisplay one, PersonaEdgeDisplay two) {
+                        if(one.leftPersonaID == two.leftPersonaID){
+                            return one.rightPersonaName.compareTo(two.rightPersonaName);
+                        }
+
+                        return one.leftPersonaName.compareTo(two.leftPersonaName);
+                    }
+                });
+
+                return input;
+            }
+        });
     }
 
     public LiveData<String> getPersonaName(int personaID){

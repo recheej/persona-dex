@@ -8,9 +8,9 @@ import android.support.v4.app.JobIntentService;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.persona5dex.Persona5Application;
-import com.persona5dex.dagger.FusionArcanaDataModule;
-import com.persona5dex.dagger.FusionCalculatorServiceComponent;
-import com.persona5dex.dagger.FusionServiceContextModule;
+import com.persona5dex.dagger.fusionService.FusionArcanaDataModule;
+import com.persona5dex.dagger.fusionService.FusionCalculatorServiceComponent;
+import com.persona5dex.dagger.fusionService.FusionServiceContextModule;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.Pair;
 import com.persona5dex.models.PersonaForFusionService;

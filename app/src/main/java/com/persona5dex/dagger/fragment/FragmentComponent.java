@@ -1,8 +1,5 @@
-package com.persona5dex.dagger;
+package com.persona5dex.dagger.fragment;
 
-import com.persona5dex.activities.MainActivity;
-import com.persona5dex.activities.PersonaDetailActivity;
-import com.persona5dex.dagger.FragmentScope;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.fragments.FusionListFragment;
 import com.persona5dex.fragments.PersonaDetailInfoFragment;

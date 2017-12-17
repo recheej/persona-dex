@@ -11,17 +11,10 @@ import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.dagger.FragmentComponent;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
-import com.persona5dex.models.Enumerations;
-import com.persona5dex.models.Persona;
-import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
-import com.persona5dex.viewmodels.PersonaDetailViewModel;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;
 
 import java.util.HashMap;
-
-import javax.inject.Inject;
 
 import static com.persona5dex.models.Enumerations.Element;
 import static com.persona5dex.models.Enumerations.ElementEffect;

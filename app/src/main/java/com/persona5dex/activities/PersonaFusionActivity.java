@@ -6,23 +6,18 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.adapters.PersonaFusionListAdapter;
 import com.persona5dex.adapters.PersonaFusionListPagerAdapter;
-import com.persona5dex.dagger.ActivityComponent;
-import com.persona5dex.dagger.ActivityContextModule;
+import com.persona5dex.dagger.activity.ActivityComponent;
+import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.LayoutModule;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
-import com.persona5dex.dagger.ViewModelModule;
-import com.persona5dex.dagger.ViewModelRepositoryModule;
-import com.persona5dex.viewmodels.PersonaDetailViewModel;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
+import com.persona5dex.dagger.activity.ViewModelModule;
+import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
 
 import javax.inject.Inject;

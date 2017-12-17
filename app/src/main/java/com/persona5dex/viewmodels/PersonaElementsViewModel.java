@@ -5,12 +5,10 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
-import com.persona5dex.dagger.AndroidViewModels.AndroidViewModelRepositoryModule;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.Enumerations;
-import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.room.PersonaElement;
-import com.persona5dex.repositories.PersonaDetailRepository;
 import com.persona5dex.repositories.PersonaElementsRepository;
 
 import java.util.HashMap;

@@ -1,5 +1,6 @@
-package com.persona5dex.dagger;
+package com.persona5dex.dagger.activity;
 
+import com.persona5dex.dagger.activity.ActivityScope;
 import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaTransferRepository;
 import com.persona5dex.viewmodels.PersonaDetailViewModel;

@@ -1,4 +1,4 @@
-package com.persona5dex.dagger;
+package com.persona5dex.dagger.application;
 
 import android.content.Context;
 

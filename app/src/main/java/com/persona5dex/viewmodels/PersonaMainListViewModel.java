@@ -6,8 +6,8 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.Nullable;
 
-import com.persona5dex.dagger.AndroidViewModels.AndroidViewModelRepositoryModule;
-import com.persona5dex.dagger.Persona5ApplicationComponent;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;

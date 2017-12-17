@@ -1,4 +1,4 @@
-package com.persona5dex.dagger;
+package com.persona5dex.dagger.fusionService;
 import com.persona5dex.services.FusionCalculatorJobService;
 import dagger.Subcomponent;
 

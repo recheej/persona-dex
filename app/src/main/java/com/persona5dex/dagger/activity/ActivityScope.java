@@ -1,4 +1,4 @@
-package com.persona5dex.dagger;
+package com.persona5dex.dagger.activity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,7 +11,7 @@ import javax.inject.Scope;
 
 @Scope
 @Retention(RetentionPolicy.CLASS)
-public @interface ApplicationScope
+public @interface ActivityScope
 {
 
 }
