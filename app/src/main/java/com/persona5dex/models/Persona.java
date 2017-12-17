@@ -149,6 +149,9 @@ public class Persona extends BasePersona {
         if(arcanaHashMap.containsKey(rawArcanaFormatted)){
             persona.arcana = arcanaHashMap.get(rawArcanaFormatted);
         }
+        else{
+            persona.arcana = Arcana.CHARIOT;
+        }
 
         return persona;
     }
