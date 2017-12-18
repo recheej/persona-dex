@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
@@ -15,6 +16,7 @@ import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.room.Stats;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Rechee on 7/24/2017.
@@ -63,6 +65,11 @@ public class PersonaDetailInfoFragment extends BaseFragment {
                     setTextViewText(baseView, R.id.textViewLuckStat, Integer.toString(personaStats.luck));
 
                     setTextViewText(baseView, R.id.textView_arcanaName, personaDetailInfo.arcanaName);
+                    ImageView personaPictureView = baseView.findViewById(R.id.imageView_persona);
+                    Picasso
+                            .with(PersonaDetailInfoFragment.this.getContext())
+                            .load(personaDetailInfo.imageUrl)
+                            .into(personaPictureView);
                 }
             }
         });

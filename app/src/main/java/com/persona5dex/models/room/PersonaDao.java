@@ -24,7 +24,7 @@ public interface PersonaDao {
     @Query("select id, name, arcanaName, arcana, level, rare, dlc from personas")
     LiveData<List<MainListPersona>> getAllPersonasForMainList();
 
-    @Query("select name, arcanaName, level, endurance, agility, strength, magic, luck from personas where id = :personaID")
+    @Query("select name, arcanaName, level, endurance, agility, strength, magic, luck, imageUrl from personas where id = :personaID")
     LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
 
     @Query("select id, arcana, arcanaName, name, level, rare, dlc, special from personas order by level")

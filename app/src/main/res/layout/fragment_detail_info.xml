@@ -166,4 +166,10 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView_persona"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/persona_picture" />
 </RelativeLayout>

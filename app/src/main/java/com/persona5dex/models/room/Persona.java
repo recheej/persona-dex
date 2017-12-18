@@ -27,6 +27,7 @@ public class Persona {
 
     public String note;
 
+    public String imageUrl;
 
     @Embedded
     public Stats stats;
