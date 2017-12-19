@@ -9,21 +9,20 @@
 
     <LinearLayout
         android:id="@+id/personaDetailHeader"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="5dp"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textView_arcanaLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/arcana"
+            android:textColor="?android:textColorPrimary"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="?android:textColorPrimary"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView_arcanaName"
@@ -42,134 +41,147 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/personaDetailHeader"
         android:text="@string/stats"
+        android:textColor="?android:textColorPrimary"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="?android:textColorPrimary"/>
+        android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        style="@style/PersonaStatsTheme"
+    <ScrollView
+        android:layout_below="@id/textView_StatLabel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView_StatLabel">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textViewStrengthLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/skill_strength" />
-
-            <TextView
-                android:id="@+id/textViewStrengthStat"
-                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                style="@style/PersonaStatsTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="16"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
+                >
 
-        <include layout="@layout/grid_divider_horizontal" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
+                    <TextView
+                        android:id="@+id/textViewStrengthLabel"
+                        style="@style/PersonaStatsTextLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/skill_strength" />
 
-            <TextView
-                android:id="@+id/textViewMagicLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/skill_magic" />
+                    <TextView
+                        android:id="@+id/textViewStrengthStat"
+                        style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="16"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewMagicStat"
-                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
+                <include layout="@layout/grid_divider_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/textViewMagicLabel"
+                        style="@style/PersonaStatsTextLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/skill_magic" />
+
+                    <TextView
+                        android:id="@+id/textViewMagicStat"
+                        style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="16"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+                <include layout="@layout/grid_divider_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/textViewEnduranceLabel"
+                        style="@style/PersonaStatsTextLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/skill_endurance" />
+
+                    <TextView
+                        android:id="@+id/textViewEnduranceStat"
+                        style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="16"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+                <include layout="@layout/grid_divider_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/textViewAgilityLabel"
+                        style="@style/PersonaStatsTextLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/skill_agility" />
+
+                    <TextView
+                        android:id="@+id/textViewAgilityStat"
+                        style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="16"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+
+                <include layout="@layout/grid_divider_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/textViewLuckLabel"
+                        style="@style/PersonaStatsTextLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/skill_luck" />
+
+                    <TextView
+                        android:id="@+id/textViewLuckStat"
+                        style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="16"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.github.chrisbanes.photoview.PhotoView
+                android:id="@+id/imageView_persona"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="16"
-                tools:ignore="HardcodedText" />
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
+    </ScrollView>
 
-        <include layout="@layout/grid_divider_horizontal" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/textViewEnduranceLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/skill_endurance" />
-
-            <TextView
-                android:id="@+id/textViewEnduranceStat"
-                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="16"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-
-        <include layout="@layout/grid_divider_horizontal" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/textViewAgilityLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/skill_agility" />
-
-            <TextView
-                android:id="@+id/textViewAgilityStat"
-                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="16"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-
-        <include layout="@layout/grid_divider_horizontal" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/textViewLuckLabel"
-                style="@style/PersonaStatsTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/skill_luck" />
-
-            <TextView
-                android:id="@+id/textViewLuckStat"
-                style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="16"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView_persona"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/persona_picture" />
 </RelativeLayout>

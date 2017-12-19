@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.chrisbanes.photoview.PhotoView;
+import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
@@ -65,10 +67,15 @@ public class PersonaDetailInfoFragment extends BaseFragment {
                     setTextViewText(baseView, R.id.textViewLuckStat, Integer.toString(personaStats.luck));
 
                     setTextViewText(baseView, R.id.textView_arcanaName, personaDetailInfo.arcanaName);
-                    ImageView personaPictureView = baseView.findViewById(R.id.imageView_persona);
-                    Picasso
-                            .with(PersonaDetailInfoFragment.this.getContext())
+                    PhotoView personaPictureView = baseView.findViewById(R.id.imageView_persona);
+                    Picasso picasso = Picasso
+                            .with(PersonaDetailInfoFragment.this.getContext());
+
+                    //green = memory, blue = disk, red = network
+                    picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
+                    picasso
                             .load(personaDetailInfo.imageUrl)
+                            .placeholder(R.drawable.placeholder)
                             .into(personaPictureView);
                 }
             }
