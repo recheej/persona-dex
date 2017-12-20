@@ -76,6 +76,8 @@ public class PersonaDetailInfoFragment extends BaseFragment {
                     picasso
                             .load(personaDetailInfo.imageUrl)
                             .placeholder(R.drawable.placeholder)
+                            .fit()
+                            .centerInside()
                             .into(personaPictureView);
                 }
             }
