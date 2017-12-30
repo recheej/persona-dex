@@ -150,7 +150,7 @@ public class PersonaListViewModel {
                 String personaArcanaName;
 
                 if(persona.arcanaName == null){
-                    personaArcanaName = persona.arcana.name();
+                    personaArcanaName = persona.arcana.getName();
                 }
                 else{
                     personaArcanaName = persona.arcanaName;

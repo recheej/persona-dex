@@ -38,7 +38,7 @@ public class PersonaUtilities {
     public static HashMap<String, Enumerations.Arcana> arcanaHashMap() {
         HashMap<String, Enumerations.Arcana> arcanaHashMap = new HashMap<>();
         for(Arcana arcana: Arcana.values()){
-            String arcanaStringFormatted = arcana.name().replaceAll("\\s+", "")
+            String arcanaStringFormatted = arcana.getName().replaceAll("\\s+", "")
                     .replaceAll("_", "").toLowerCase();
 
             arcanaHashMap.put(arcanaStringFormatted, arcana);

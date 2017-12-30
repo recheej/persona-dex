@@ -31,7 +31,7 @@ public class PersonaFilterViewModel {
 
         for (int i = 0; i < arcanas.length; i++) {
             Enumerations.Arcana arcana = arcanas[i];
-            String name = arcana.name();
+            String name = arcana.getName();
 
             //we are iterating though all arcana enumns, but we are adding to the +1 index since we manulaly added one
             maps[i + 1] = new ArcanaMap();
