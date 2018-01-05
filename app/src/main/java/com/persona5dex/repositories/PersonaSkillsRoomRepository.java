@@ -4,6 +4,8 @@ import android.arch.lifecycle.LiveData;
 
 import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.room.PersonaDao;
+import com.persona5dex.models.room.Skill;
+import com.persona5dex.models.room.SkillDao;
 
 import java.util.List;
 
@@ -13,14 +15,19 @@ import java.util.List;
 
 public class PersonaSkillsRoomRepository implements PersonaSkillsRepository {
 
-    private final PersonaDao personaDao;
+    private final SkillDao skillDao;
 
-    public PersonaSkillsRoomRepository(PersonaDao personaDao){
-        this.personaDao = personaDao;
+    public PersonaSkillsRoomRepository(SkillDao skillDao){
+        this.skillDao = skillDao;
     }
 
     @Override
     public LiveData<List<PersonaDetailSkill>> getPersonaSkillsForDetail(int personaID) {
-        return personaDao.getPersonaSkillsForDetail(personaID);
+        return skillDao.getPersonaSkills(personaID);
+    }
+
+    @Override
+    public LiveData<Skill> getSkill(Integer skillID) {
+        return skillDao.getSkill(skillID);
     }
 }

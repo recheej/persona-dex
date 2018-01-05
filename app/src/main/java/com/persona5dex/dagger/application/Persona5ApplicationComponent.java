@@ -24,11 +24,6 @@ import dagger.Component;
     }
 )
 public interface Persona5ApplicationComponent {
-    ActivityComponent plus(LayoutModule layoutModule,
-                           ActivityContextModule activityContextModule,
-                           ViewModelModule viewModelModule,
-                           ViewModelRepositoryModule viewModelRepositoryModule);
-
     FusionCalculatorServiceComponent plus(FusionServiceContextModule fusionServiceContextModule, FusionArcanaDataModule fusionArcanaDataModule);
-    ViewModelComponent plus(AndroidViewModelRepositoryModule androidViewModelRepositoryModule);
+    ViewModelComponent viewModelComponent(AndroidViewModelRepositoryModule androidViewModelRepositoryModule);
 }

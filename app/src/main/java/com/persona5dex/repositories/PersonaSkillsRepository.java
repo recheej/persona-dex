@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.room.PersonaElement;
+import com.persona5dex.models.room.Skill;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ import java.util.List;
 
 public interface PersonaSkillsRepository {
     LiveData<List<PersonaDetailSkill>> getPersonaSkillsForDetail(int personaID);
+    LiveData<Skill> getSkill(Integer skillID);
 }

@@ -20,6 +20,7 @@ import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.LayoutModule;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.fragments.SettingsFragment;
 import com.persona5dex.services.FusionCalculatorJobService;
 
@@ -46,7 +47,9 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        ActivityComponent component = Persona5Application.get(this).getComponent().plus(
+        ActivityComponent component = Persona5Application.get(this).getComponent()
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
+                .activityComponent(
                 new LayoutModule(this),
                 new ActivityContextModule(this),
                 new ViewModelModule(),

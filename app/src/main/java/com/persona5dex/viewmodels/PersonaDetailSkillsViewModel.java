@@ -2,12 +2,14 @@ package com.persona5dex.viewmodels;
 
 import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.PersonaDetailSkill;
+import com.persona5dex.models.room.Skill;
 import com.persona5dex.repositories.PersonaSkillsRepository;
 
 import java.util.Collections;
@@ -22,36 +24,40 @@ import javax.inject.Inject;
 
 public class PersonaDetailSkillsViewModel extends ViewModel {
 
-    @Inject
     PersonaSkillsRepository repository;
 
-    private LiveData<List<PersonaDetailSkill>> personaElements;
-    private int personaID;
+    private LiveData<List<PersonaDetailSkill>> personaSkills;
+    private MutableLiveData<Integer> personaID;
+    private MutableLiveData<Integer> skillID;
+    private LiveData<Skill> skill;
 
-    public PersonaDetailSkillsViewModel(PersonaSkillsRepository repository){
+    public PersonaDetailSkillsViewModel(final PersonaSkillsRepository repository){
         this.repository = repository;
+
+        personaID = new MutableLiveData<>();
+        skillID = new MutableLiveData<>();
+
+        personaSkills = Transformations.switchMap(personaID, new Function<Integer, LiveData<List<PersonaDetailSkill>>>() {
+            @Override
+            public LiveData<List<PersonaDetailSkill>> apply(Integer input) {
+                return repository.getPersonaSkillsForDetail(input);
+            }
+        });
+
+        skill = Transformations.switchMap(skillID, new Function<Integer, LiveData<Skill>>() {
+            @Override
+            public LiveData<Skill> apply(Integer input) {
+                return repository.getSkill(input);
+            }
+        });
     }
 
-    public PersonaDetailSkillsViewModel() {}
-
-    public void init(Persona5ApplicationComponent component, int personaID) {
-        component
-                .plus(new AndroidViewModelRepositoryModule())
-                .inject(this);
-
-        this.personaID = personaID;
-
-        if(personaElements == null){
-            personaElements = repository.getPersonaSkillsForDetail(personaID);
-        }
+    public void setPersonaID(int newPersonaID){
+        this.personaID.setValue(newPersonaID);
     }
 
-    public LiveData<List<PersonaDetailSkill>> getElementsForPersona(int personaID){
-        if(personaElements == null){
-            personaElements = repository.getPersonaSkillsForDetail(personaID);
-        }
-
-        return Transformations.map(personaElements, new Function<List<PersonaDetailSkill>, List<PersonaDetailSkill>>() {
+    public LiveData<List<PersonaDetailSkill>> getSkillsForPersona(){
+        return Transformations.map(personaSkills, new Function<List<PersonaDetailSkill>, List<PersonaDetailSkill>>() {
             @Override
             public List<PersonaDetailSkill> apply(List<PersonaDetailSkill> input) {
 
@@ -74,5 +80,13 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
                 return input;
             }
         });
+    }
+
+    public void setSkillID(int newSkillID){
+        this.skillID.setValue(newSkillID);
+    }
+
+    public LiveData<Skill> getSkill() {
+        return skill;
     }
 }

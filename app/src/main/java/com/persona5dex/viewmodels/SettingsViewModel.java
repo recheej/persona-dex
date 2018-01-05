@@ -36,7 +36,7 @@ public class SettingsViewModel extends ViewModel {
 
     public void init(Persona5ApplicationComponent component) {
         component
-                .plus(new AndroidViewModelRepositoryModule())
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .inject(this);
 
         this.dlcPersonas = repository.getDLCPersonas();

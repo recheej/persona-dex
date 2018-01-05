@@ -3,6 +3,7 @@ package com.persona5dex.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,19 +15,31 @@ import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.dagger.application.Persona5ApplicationComponent;
+import com.persona5dex.activities.SkillDetailActivity;
+import com.persona5dex.dagger.LayoutModule;
+import com.persona5dex.dagger.activity.ActivityContextModule;
+import com.persona5dex.dagger.activity.ViewModelModule;
+import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
+import com.persona5dex.viewmodels.ViewModelFactory;
 
 import java.util.List;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PersonaSkillsFragment extends BaseFragment {
+    public static final String SKILL_ID = "skill_id";
     PersonaDetailSkillsViewModel viewModel;
     private int personaID;
+
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     public PersonaSkillsFragment() {
         // Required empty public constructor
@@ -51,12 +64,19 @@ public class PersonaSkillsFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
+        Persona5Application.get(activity).getComponent()
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
+                .activityComponent(new LayoutModule(activity),
+                        new ActivityContextModule(activity),
+                        new ViewModelModule(),
+                        new ViewModelRepositoryModule())
+                .inject(this);
 
-        viewModel = ViewModelProviders.of(this).get(PersonaDetailSkillsViewModel.class);
-        viewModel.init(component, personaID);
+        viewModel = ViewModelProviders.of(this,
+                viewModelFactory).get(PersonaDetailSkillsViewModel.class);
 
-        viewModel.getElementsForPersona(personaID).observe(this, new Observer<List<PersonaDetailSkill>>() {
+        viewModel.setPersonaID(personaID);
+        viewModel.getSkillsForPersona().observe(this, new Observer<List<PersonaDetailSkill>>() {
             @Override
             public void onChanged(@Nullable List<PersonaDetailSkill> personaDetailSkills) {
                 LinearLayout skillsGrid = baseView.findViewById(R.id.skill_grid);
@@ -64,7 +84,7 @@ public class PersonaSkillsFragment extends BaseFragment {
                 LayoutInflater inflater = activity.getLayoutInflater();
                 ViewGroup container = activity.findViewById(R.id.view_pager);
 
-                for(PersonaDetailSkill personaSkill: personaDetailSkills){
+                for(final PersonaDetailSkill personaSkill: personaDetailSkills){
                     View personaSkillRow = inflater.inflate(R.layout.persona_skil_row, container, false);
 
                     TextView textViewSkillName = personaSkillRow.findViewById(R.id.textViewSkillName);
@@ -80,6 +100,15 @@ public class PersonaSkillsFragment extends BaseFragment {
                     }
 
                     View horizontalDivider = inflater.inflate(R.layout.grid_divider_horizontal, container, false);
+
+                    personaSkillRow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent personaDetailIntent = new Intent(getContext(), SkillDetailActivity.class);
+                            personaDetailIntent.putExtra(SKILL_ID, personaSkill.skillID);
+                            startActivity(personaDetailIntent);
+                        }
+                    });
 
                     skillsGrid.addView(personaSkillRow);
                     skillsGrid.addView(horizontalDivider);

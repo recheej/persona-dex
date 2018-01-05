@@ -45,7 +45,7 @@ public class AndroidViewModelRepositoryModule {
     @Provides
     @ViewModelScope
     PersonaSkillsRepository skillsRepository(PersonaDatabase database){
-        return new PersonaSkillsRoomRepository(database.personaDao());
+        return new PersonaSkillsRoomRepository(database.skillDao());
     }
 
     @Provides

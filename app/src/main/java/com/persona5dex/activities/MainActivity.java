@@ -32,7 +32,9 @@ import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.LayoutModule;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.fragments.FilterDialogFragment;
+import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.PersonaFilterArgs;
@@ -76,7 +78,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         setContentView(R.layout.activity_main);
 
-        ActivityComponent component = Persona5Application.get(this).getComponent().plus(
+        ActivityComponent component = Persona5Application.get(this).getComponent()
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
+                .activityComponent(
                 new LayoutModule(this),
                 new ActivityContextModule(this),
                 new ViewModelModule(),
@@ -172,7 +176,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                         startActivity(startDetailIntent);
                     }
                     else{
-                        //TODO: implement going to a skill view
+                        Intent skillDetailIntent = new Intent(this, SkillDetailActivity.class);
+                        skillDetailIntent.putExtra(PersonaSkillsFragment.SKILL_ID, Integer.parseInt(itemID));
+                        startActivity(skillDetailIntent);
                     }
                 }
             }

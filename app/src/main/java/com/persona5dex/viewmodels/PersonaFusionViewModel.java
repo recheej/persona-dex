@@ -44,7 +44,7 @@ public class PersonaFusionViewModel extends ViewModel {
 
     public void init(Persona5ApplicationComponent component, int personaID, boolean isToList) {
         component
-                .plus(new AndroidViewModelRepositoryModule())
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .inject(this);
 
         this.personaID = personaID;

@@ -24,6 +24,7 @@ import com.huma.room_for_asset.RoomAsset;
 @TypeConverters({PersonaTypeConverters.class})
 public abstract class PersonaDatabase extends RoomDatabase {
     public abstract PersonaDao personaDao();
+    public abstract SkillDao skillDao();
     public abstract SearchSuggestionDao searchSuggestionDao();
 
     private static PersonaDatabase INSTANCE;

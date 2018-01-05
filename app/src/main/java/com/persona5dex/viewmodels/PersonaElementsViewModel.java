@@ -36,7 +36,7 @@ public class PersonaElementsViewModel extends ViewModel {
 
     public void init(Persona5ApplicationComponent component, int personaID) {
         component
-                .plus(new AndroidViewModelRepositoryModule())
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .inject(this);
 
         this.personaID = personaID;

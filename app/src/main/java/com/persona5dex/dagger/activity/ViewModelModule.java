@@ -1,13 +1,14 @@
 package com.persona5dex.dagger.activity;
 
-import com.persona5dex.dagger.activity.ActivityScope;
 import com.persona5dex.repositories.PersonaEdgesRepository;
+import com.persona5dex.repositories.PersonaSkillsRepository;
 import com.persona5dex.repositories.PersonaTransferRepository;
 import com.persona5dex.viewmodels.PersonaDetailViewModel;
 import com.persona5dex.viewmodels.PersonaFilterViewModel;
 import com.persona5dex.viewmodels.PersonaFusionListViewModel;
-import com.persona5dex.viewmodels.PersonaSkillsViewModel;
+import com.persona5dex.viewmodels.ViewModelFactory;
 
+import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
 
@@ -31,8 +32,8 @@ public class ViewModelModule {
 
     @Provides
     @ActivityScope
-    PersonaSkillsViewModel personaSkillsViewModel(PersonaTransferRepository transferRepository) {
-        return new PersonaSkillsViewModel(transferRepository);
+    ViewModelFactory viewModelFactory(Lazy<PersonaSkillsRepository> skillsRepositoryLazy) {
+        return new ViewModelFactory(skillsRepositoryLazy);
     }
 
     @Provides

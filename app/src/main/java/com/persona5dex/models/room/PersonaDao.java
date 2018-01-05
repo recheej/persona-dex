@@ -40,13 +40,6 @@ public interface PersonaDao {
     LiveData<List<PersonaElement>> getElementsForPersona(int personaID);
 
     @Query(
-            "select personaSkills.level_required as levelRequired, skills.name from personaSkills " +
-                    "inner join skills on skills.id = personaSkills.skill_id " +
-                    "where personaSkills.persona_id = :personaID"
-    )
-    LiveData<List<PersonaDetailSkill>> getPersonaSkillsForDetail(int personaID);
-
-    @Query(
             "select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
                     "p2.name as rightPersonaName, p2.id as rightPersonaID, " +
                     "null as resultPersonaName, 0 as resultPersonaID " +
@@ -71,4 +64,6 @@ public interface PersonaDao {
 
     @Query("select name from personas where id = :personaID")
     LiveData<String> getPersonaName(int personaID);
+
+
 }

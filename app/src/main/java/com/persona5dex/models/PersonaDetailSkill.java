@@ -6,6 +6,6 @@ package com.persona5dex.models;
 
 public class PersonaDetailSkill {
     public String name;
-
     public int levelRequired;
+    public int skillID;
 }

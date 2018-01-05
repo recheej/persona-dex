@@ -104,7 +104,7 @@ public class PersonaMainListViewModel extends ViewModel{
 
     public void inject(Persona5ApplicationComponent component){
         component
-                .plus(new AndroidViewModelRepositoryModule())
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .inject(this);
         this.init();
     }

@@ -71,5 +71,9 @@
     <string name="sort_arcana_desc">Sort by Arcana Z-A</string>
     <string name="loading_data">Loading data...</string>
     <string name="persona_picture">Persona Picture</string>
+    <string name="effect">Effect</string>
+    <string name="element">Element</string>
+    <string name="note">Note</string>
+    <string name="cost">Cost</string>
 
 </resources>

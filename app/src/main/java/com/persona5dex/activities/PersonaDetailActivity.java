@@ -22,6 +22,7 @@ import com.persona5dex.dagger.LayoutModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
 
@@ -44,7 +45,9 @@ public class PersonaDetailActivity extends BaseActivity {
         final Persona5ApplicationComponent applicationComponent = Persona5Application.get(this)
                 .getComponent();
 
-        ActivityComponent component = applicationComponent.plus(
+        ActivityComponent component = applicationComponent
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
+                .activityComponent(
                 new LayoutModule(this),
                 new ActivityContextModule(this),
                 new ViewModelModule(),
