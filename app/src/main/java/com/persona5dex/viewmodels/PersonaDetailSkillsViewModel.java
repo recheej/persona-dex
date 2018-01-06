@@ -24,7 +24,7 @@ import javax.inject.Inject;
 
 public class PersonaDetailSkillsViewModel extends ViewModel {
 
-    PersonaSkillsRepository repository;
+    private PersonaSkillsRepository repository;
 
     public PersonaDetailSkillsViewModel(final PersonaSkillsRepository repository){
         this.repository = repository;
