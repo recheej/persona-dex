@@ -29,7 +29,7 @@ import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaListAdapter;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.LayoutModule;
+import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;

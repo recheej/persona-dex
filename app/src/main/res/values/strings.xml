@@ -75,5 +75,6 @@
     <string name="element">Element</string>
     <string name="note">Note</string>
     <string name="cost">Cost</string>
+    <string name="persona_skill">Persona Skill</string>
 
 </resources>

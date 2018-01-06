@@ -4,8 +4,8 @@ import com.persona5dex.activities.MainActivity;
 import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.activities.PersonaFusionActivity;
 import com.persona5dex.activities.SettingsActivity;
+import com.persona5dex.activities.SkillDetailActivity;
 import com.persona5dex.dagger.fragment.FragmentComponent;
-import com.persona5dex.dagger.LayoutModule;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 
 import dagger.Subcomponent;
@@ -29,6 +29,7 @@ public interface ActivityComponent {
     void inject(PersonaFusionActivity activity);
     void inject(SettingsActivity activity);
     void inject(PersonaSkillsFragment fragment);
+    void inject(SkillDetailActivity activity);
 
     FragmentComponent plus();
 }
