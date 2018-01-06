@@ -31,6 +31,7 @@ public class Enumerations {
         ANY(-1);
 
         private int i;
+
         Arcana(int value) {
             i = value;
         }
@@ -39,9 +40,62 @@ public class Enumerations {
             return i;
         }
 
-        public static Arcana getArcana(int i){
+        public String getName() {
+            switch (i){
+                case 0:
+                    return "Fool";
+                case 1:
+                    return "Magician";
+                case 2:
+                    return "Priestess";
+                case 3:
+                    return "Empress";
+                case 4:
+                    return "Emperor";
+                case 5:
+                    return "Hierophant";
+                case 6:
+                    return "Lovers";
+                case 7:
+                    return "Chariot";
+                case 8:
+                    return "Justice";
+                case 9:
+                    return "Hermit";
+                case 10:
+                    return "Fortune";
+                case 11:
+                    return "Hanged Man";
+                case 12:
+                    return "Death";
+                case 13:
+                    return "Temperance";
+                case 14:
+                    return "Devil";
+                case 15:
+                    return "Tower";
+                case 16:
+                    return "Star";
+                case 17:
+                    return "Moon";
+                case 18:
+                    return "Sun";
+                case 19:
+                    return "Judgement";
+                case 20:
+                    return "World";
+                case 21:
+                    return "Strength";
+                case -1:
+                    return "Any";
+                 default:
+                     return "Any";
+            }
+        }
+
+        public static Arcana getArcana(int i) {
             for (Arcana arcana : Arcana.values()) {
-                if(arcana.value() == i){
+                if (arcana.value() == i) {
                     return arcana;
                 }
             }
@@ -49,8 +103,8 @@ public class Enumerations {
             return Arcana.ANY;
         }
 
-        private static String formatArcanaName(String arcanaName){
-            if(arcanaName == null || arcanaName.isEmpty()){
+        private static String formatArcanaName(String arcanaName) {
+            if (arcanaName == null || arcanaName.isEmpty()) {
                 return "";
             }
 
@@ -58,11 +112,12 @@ public class Enumerations {
                     .replaceAll("_", "").toLowerCase();
         }
 
-        public static Arcana getArcana(String arcanaName){
+
+        public static Arcana getArcana(String arcanaName) {
             String arcanaStringFormatted = formatArcanaName(arcanaName);
 
             for (Arcana arcana : Arcana.values()) {
-                if(formatArcanaName(arcana.name()).equals(arcanaStringFormatted)){
+                if (formatArcanaName(arcana.getName()).equals(arcanaStringFormatted)) {
                     return arcana;
                 }
             }
