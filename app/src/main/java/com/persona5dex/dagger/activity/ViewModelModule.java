@@ -1,5 +1,6 @@
 package com.persona5dex.dagger.activity;
 
+import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaSkillsRepository;
 import com.persona5dex.repositories.PersonaTransferRepository;
@@ -32,8 +33,8 @@ public class ViewModelModule {
 
     @Provides
     @ActivityScope
-    ViewModelFactory viewModelFactory(Lazy<PersonaSkillsRepository> skillsRepositoryLazy) {
-        return new ViewModelFactory(skillsRepositoryLazy);
+    ViewModelFactory viewModelFactory(Lazy<PersonaSkillsRepository> skillsRepositoryLazy, Lazy<MainPersonaRepository> mainPersonaRepositoryLazy) {
+        return new ViewModelFactory(skillsRepositoryLazy, mainPersonaRepositoryLazy);
     }
 
     @Provides

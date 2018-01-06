@@ -41,6 +41,7 @@ import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.services.FusionCalculatorJobService;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
+import com.persona5dex.viewmodels.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Inject
     Toolbar mainToolbar;
+
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     private PersonaMainListViewModel viewModel;
 
@@ -94,8 +98,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             Fabric.with(this, new Crashlytics());
         }
 
-        this.viewModel = ViewModelProviders.of(this).get(PersonaMainListViewModel.class);
-        this.viewModel.inject(Persona5Application.get(this).getComponent());
+        this.viewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(PersonaMainListViewModel.class);
 
         filteredPersonas = new ArrayList<>(250);
 

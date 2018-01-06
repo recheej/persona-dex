@@ -53,7 +53,7 @@ public class FakeMainPersonaRepository implements MainPersonaRepository {
     }
 
     @Override
-    public LiveData<List<MainListPersona>> getPersonasForMainList() {
+    public LiveData<List<MainListPersona>> getAllPersonasForMainList() {
         MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
         data.setValue(fakeData);
         return data;

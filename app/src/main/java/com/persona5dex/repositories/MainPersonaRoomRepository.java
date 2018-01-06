@@ -28,7 +28,7 @@ public class MainPersonaRoomRepository implements MainPersonaRepository {
     }
 
     @Override
-    public LiveData<List<MainListPersona>> getPersonasForMainList() {
+    public LiveData<List<MainListPersona>> getAllPersonasForMainList() {
         return db.personaDao().getAllPersonasForMainList();
     }
 
