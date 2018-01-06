@@ -99,6 +99,9 @@ public class PersonaSkillsFragment extends BaseFragment {
                         textViewSkillLevel.setText(String.format(Locale.getDefault(), "%d", personaSkill.levelRequired));
                     }
 
+                    TextView textViewEffect = personaSkillRow.findViewById(R.id.textView_effect);
+                    textViewEffect.setText(personaSkill.effect);
+
                     View horizontalDivider = inflater.inflate(R.layout.grid_divider_horizontal, container, false);
 
                     personaSkillRow.setOnClickListener(new View.OnClickListener() {

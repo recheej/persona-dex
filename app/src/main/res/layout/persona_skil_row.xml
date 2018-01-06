@@ -1,23 +1,40 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:padding="5dp">
+    android:layout_height="48dp">
 
     <TextView
         android:id="@+id/textViewSkillName"
-        style="@style/PersonaStatsTextLabel"
+        style="@style/DenseListTextPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="@string/element_curse"
-        android:layout_gravity="center_vertical"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textViewSkillLevel"
         style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:text="16"
-        android:layout_gravity="center_vertical"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewSkillName" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView_effect"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/textViewSkillName"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkillName"
+        />
+
+</android.support.constraint.ConstraintLayout>
 

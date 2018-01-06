@@ -5,11 +5,9 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import android.database.Cursor;
 
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailInfo;
-import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.models.PersonaForFusionService;
 

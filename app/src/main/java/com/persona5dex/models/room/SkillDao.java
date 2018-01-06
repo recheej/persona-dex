@@ -19,7 +19,8 @@ public interface SkillDao {
     LiveData<Skill> getSkill(Integer skillID);
 
     @Query(
-            "select personaSkills.level_required as levelRequired, skills.name, skills.id as skillID from personaSkills " +
+            "select personaSkills.level_required as levelRequired, skills.name, skills.effect, " +
+                    "skills.id as skillID from personaSkills " +
                     "inner join skills on skills.id = personaSkills.skill_id " +
                     "where personaSkills.persona_id = :personaID"
     )
