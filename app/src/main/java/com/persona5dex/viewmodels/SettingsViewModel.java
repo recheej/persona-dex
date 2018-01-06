@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
+import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.room.Persona;
 import com.persona5dex.repositories.MainPersonaRepository;
 
@@ -25,7 +26,7 @@ public class SettingsViewModel extends ViewModel {
     @Inject
     MainPersonaRepository repository;
 
-    private LiveData<List<Persona>> dlcPersonas;
+    private LiveData<List<MainListPersona>> dlcPersonas;
 
     public SettingsViewModel(MainPersonaRepository repository){
         this.repository = repository;
@@ -50,17 +51,17 @@ public class SettingsViewModel extends ViewModel {
         //key: persona name, value persona id
         //Map<String, Integer> dlcPersonaMap = transferRepository.getDLCPersonaForSettings();
 
-        return Transformations.map(dlcPersonas, new Function<List<Persona>, String[][]>() {
+        return Transformations.map(dlcPersonas, new Function<List<MainListPersona>, String[][]>() {
             @Override
-            public String[][] apply(List<Persona> input) {
+            public String[][] apply(List<MainListPersona> input) {
 
                 if(input == null || input.size() == 0){
                     return new String[2][0];
                 }
 
-                Collections.sort(input, new Comparator<Persona>() {
+                Collections.sort(input, new Comparator<MainListPersona>() {
                     @Override
-                    public int compare(Persona p1, Persona p2) {
+                    public int compare(MainListPersona p1, MainListPersona p2) {
                         return p1.name.compareTo(p2.name);
                     }
                 });
@@ -68,7 +69,7 @@ public class SettingsViewModel extends ViewModel {
                 String[][] output = new String[2][input.size()];
 
                 for (int i = 0; i < input.size(); i++) {
-                    Persona persona = input.get(i);
+                    MainListPersona persona = input.get(i);
                     output[0][i] = persona.name;
                     output[1][i] = String.valueOf(persona.id);
                 }

@@ -20,6 +20,7 @@ import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
+import com.persona5dex.viewmodels.ViewModelFactory;
 
 import javax.inject.Inject;
 
@@ -28,7 +29,10 @@ public class PersonaFusionActivity extends BaseActivity {
     @Inject
     Toolbar mainToolbar;
 
-    PersonaFusionViewModel viewModel;
+    @Inject
+    ViewModelFactory viewModelFactory;
+
+    private PersonaFusionViewModel viewModel;
 
     private int personaForFusionID;
 
@@ -36,6 +40,8 @@ public class PersonaFusionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persona_fusion);
+
+        personaForFusionID = getIntent().getIntExtra("persona_id", 1);
 
         ActivityComponent component = Persona5Application.get(this).getComponent()
                 .viewModelComponent(new AndroidViewModelRepositoryModule())
@@ -48,16 +54,15 @@ public class PersonaFusionActivity extends BaseActivity {
         component.inject(this);
         this.component = component;
 
-        personaForFusionID = getIntent().getIntExtra("persona_id", 1);
-
-        Persona5ApplicationComponent applicationComponent = Persona5Application.get(this).getComponent();
-        viewModel = ViewModelProviders.of(this).get(PersonaFusionViewModel.class);
-        viewModel.init(applicationComponent, personaForFusionID, false);
-
         setUpToolbar();
 
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaFusionViewModel.class);
+
+        boolean personaIsAdvanced = viewModel.personaIsAdvanced(personaForFusionID);
+
         ViewPager viewPager = findViewById(R.id.view_pager_fusion);
-        PersonaFusionListPagerAdapter pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(), this, personaForFusionID);
+        PersonaFusionListPagerAdapter pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(),
+                this, personaForFusionID);
         viewPager.setAdapter(pagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout_fusions);
@@ -78,11 +83,7 @@ public class PersonaFusionActivity extends BaseActivity {
         setSupportActionBar(this.mainToolbar);
         mainToolbar.setTitle(R.string.loading_data);
 
-        viewModel.getPersonaName(personaForFusionID).observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String personaName) {
-                mainToolbar.setTitle(String.format("Fusions for: %s", personaName));
-            }
-        });
+        viewModel.getPersonaName(personaForFusionID).observe(this,
+                personaName -> mainToolbar.setTitle(String.format("Fusions for: %s", personaName)));
     }
 }

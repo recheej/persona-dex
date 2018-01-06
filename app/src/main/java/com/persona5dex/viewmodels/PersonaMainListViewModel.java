@@ -1,11 +1,9 @@
 package com.persona5dex.viewmodels;
 
-import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.Nullable;
 
@@ -18,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Created by Rechee on 11/18/2017.
@@ -34,8 +30,7 @@ public class PersonaMainListViewModel extends ViewModel{
     private MutableLiveData<Boolean> personasByArcana;
     private MutableLiveData<PersonaFilterArgs> personaFilterArgs;
 
-    @Inject
-    MainPersonaRepository repository;
+    private MainPersonaRepository repository;
 
     private Comparator<MainListPersona> sortByPersonaNameDesc;
     private Comparator<MainListPersona> sortByPersonaNameAsc;
@@ -45,15 +40,13 @@ public class PersonaMainListViewModel extends ViewModel{
     private Comparator<MainListPersona> sortByPersonaArcanaDesc;
 
     public PersonaMainListViewModel(final MainPersonaRepository repository){
-        this.repository = repository;
+        setUpViewModel(repository);
+    }
 
+
+    private void setUpViewModel(MainPersonaRepository repository) {
         allPersonas = new MutableLiveData<>();
         filteredPersonas = new MediatorLiveData<>();
-
-        filteredPersonas.addSource(repository.getAllPersonasForMainList(), value -> {
-            allPersonas.setValue(value);
-            filteredPersonas.setValue(value);
-        });
 
         personaSearchName = new MutableLiveData<>();
         personasByName = new MutableLiveData<>();
@@ -234,6 +227,12 @@ public class PersonaMainListViewModel extends ViewModel{
             });
         });
 
+        this.repository = repository;
+
+        repository.getAllPersonasForMainList().observeForever(personas -> {
+            allPersonas.setValue(personas);
+            filteredPersonas.setValue(personas);
+        });
     }
 
     public void filterPersonas(final String personaNameQuery){

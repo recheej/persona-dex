@@ -33,7 +33,7 @@ public class MainPersonaRoomRepository implements MainPersonaRepository {
     }
 
     @Override
-    public LiveData<List<Persona>> getDLCPersonas() {
+    public LiveData<List<MainListPersona>> getDLCPersonas() {
         return db.personaDao().getDLCPersonas();
     }
 }

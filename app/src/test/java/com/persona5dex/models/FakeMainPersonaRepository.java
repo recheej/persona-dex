@@ -60,7 +60,7 @@ public class FakeMainPersonaRepository implements MainPersonaRepository {
     }
 
     @Override
-    public LiveData<List<Persona>> getDLCPersonas() {
+    public LiveData<List<MainListPersona>> getDLCPersonas() {
         return null;
     }
 }

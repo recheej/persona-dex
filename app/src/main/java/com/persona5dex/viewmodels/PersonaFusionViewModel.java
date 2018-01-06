@@ -27,28 +27,14 @@ import javax.inject.Inject;
 
 public class PersonaFusionViewModel extends ViewModel {
 
-    @Inject
-    PersonaDisplayEdgesRepository repository;
+    private PersonaDisplayEdgesRepository repository;
 
     private LiveData<List<PersonaEdgeDisplay>> personaToEdges;
     private LiveData<List<PersonaEdgeDisplay>> personaFromEdges;
-    private int personaID;
-    private boolean isToList;
     private LiveData<String> personaName;
 
     public PersonaFusionViewModel(PersonaDisplayEdgesRepository repository){
         this.repository = repository;
-    }
-
-    public PersonaFusionViewModel() {}
-
-    public void init(Persona5ApplicationComponent component, int personaID, boolean isToList) {
-        component
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
-                .inject(this);
-
-        this.personaID = personaID;
-        this.isToList = isToList;
     }
 
     public static List<PersonaEdgeDisplay> filterOutDuplicateEdges(List<PersonaEdgeDisplay>  edges, int personaID, boolean isToList){
@@ -109,7 +95,7 @@ public class PersonaFusionViewModel extends ViewModel {
         return filteredEdges.toArray(new RawPersonaEdge[filteredEdges.size()]);
     }
 
-    public LiveData<List<PersonaEdgeDisplay>> getEdges(){
+    public LiveData<List<PersonaEdgeDisplay>> getEdges(int personaID, boolean isToList){
 
         LiveData<List<PersonaEdgeDisplay>> dataToReturn = new MutableLiveData<>();
 
@@ -190,6 +176,10 @@ public class PersonaFusionViewModel extends ViewModel {
                 return input;
             }
         });
+    }
+
+    public boolean personaIsAdvanced(int personaID){
+        return this.repository.personaIsAdvanced(personaID);
     }
 
     public LiveData<String> getPersonaName(int personaID){

@@ -13,5 +13,5 @@ import java.util.List;
 
 public interface MainPersonaRepository {
     LiveData<List<MainListPersona>> getAllPersonasForMainList();
-    LiveData<List<Persona>> getDLCPersonas();
+    LiveData<List<MainListPersona>> getDLCPersonas();
 }

@@ -76,5 +76,7 @@
     <string name="note">Note</string>
     <string name="cost">Cost</string>
     <string name="persona_skill">Persona Skill</string>
+    <string name="advanced_fusion">Advanced Fusion</string>
+    <string name="advanced_fusion_prompt">%s can be fused by acquiring all of the following personas:</string>
 
 </resources>

@@ -28,8 +28,8 @@ public interface PersonaDao {
     @Query("select id, arcana, arcanaName, name, level, rare, dlc, special from personas order by level")
     PersonaForFusionService[] getPersonasByLevel();
 
-    @Query("select * from personas where dlc = 1")
-    LiveData<List<Persona>> getDLCPersonas();
+    @Query("select id, name, arcanaName, arcana, level, rare, dlc from personas where dlc = 1")
+    LiveData<List<MainListPersona>> getDLCPersonas();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPersonaFusion(PersonaFusion personaFusion);
@@ -64,4 +64,6 @@ public interface PersonaDao {
     LiveData<String> getPersonaName(int personaID);
 
 
+    @Query("select special from personas where id = :personaID")
+    boolean personaIsAdvanced(int personaID);
 }
