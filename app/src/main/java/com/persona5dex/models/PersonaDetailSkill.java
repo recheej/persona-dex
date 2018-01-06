@@ -9,4 +9,11 @@ public class PersonaDetailSkill {
     public int levelRequired;
     public String effect;
     public int skillID;
+
+    public PersonaDetailSkill(String name, int levelRequired, String effect, int skillID) {
+        this.name = name;
+        this.levelRequired = levelRequired;
+        this.effect = effect;
+        this.skillID = skillID;
+    }
 }
