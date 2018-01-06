@@ -26,38 +26,12 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
 
     PersonaSkillsRepository repository;
 
-    private LiveData<List<PersonaDetailSkill>> personaSkills;
-    private MutableLiveData<Integer> personaID;
-    private MutableLiveData<Integer> skillID;
-    private LiveData<Skill> skill;
-
     public PersonaDetailSkillsViewModel(final PersonaSkillsRepository repository){
         this.repository = repository;
-
-        personaID = new MutableLiveData<>();
-        skillID = new MutableLiveData<>();
-
-        personaSkills = Transformations.switchMap(personaID, new Function<Integer, LiveData<List<PersonaDetailSkill>>>() {
-            @Override
-            public LiveData<List<PersonaDetailSkill>> apply(Integer input) {
-                return repository.getPersonaSkillsForDetail(input);
-            }
-        });
-
-        skill = Transformations.switchMap(skillID, new Function<Integer, LiveData<Skill>>() {
-            @Override
-            public LiveData<Skill> apply(Integer input) {
-                return repository.getSkill(input);
-            }
-        });
     }
 
-    public void setPersonaID(int newPersonaID){
-        this.personaID.setValue(newPersonaID);
-    }
-
-    public LiveData<List<PersonaDetailSkill>> getSkillsForPersona(){
-        return Transformations.map(personaSkills, new Function<List<PersonaDetailSkill>, List<PersonaDetailSkill>>() {
+    public LiveData<List<PersonaDetailSkill>> getSkillsForPersona(int personaID){
+        return Transformations.map(repository.getPersonaSkillsForDetail(personaID), new Function<List<PersonaDetailSkill>, List<PersonaDetailSkill>>() {
             @Override
             public List<PersonaDetailSkill> apply(List<PersonaDetailSkill> input) {
 
@@ -82,11 +56,7 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
         });
     }
 
-    public void setSkillID(int newSkillID){
-        this.skillID.setValue(newSkillID);
-    }
-
-    public LiveData<Skill> getSkill() {
-        return skill;
+    public LiveData<Skill> getSkill(int skillID) {
+        return repository.getSkill(skillID);
     }
 }

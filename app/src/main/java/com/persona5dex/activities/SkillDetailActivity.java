@@ -63,8 +63,7 @@ public class SkillDetailActivity extends BaseActivity {
         this.viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(PersonaDetailSkillsViewModel.class);
 
-        this.viewModel.setSkillID(skillID);
-        this.viewModel.getSkill().observe(this, new Observer<Skill>() {
+        this.viewModel.getSkill(skillID).observe(this, new Observer<Skill>() {
             @Override
             public void onChanged(@Nullable Skill skill) {
 
@@ -87,7 +86,7 @@ public class SkillDetailActivity extends BaseActivity {
                     noteTextView.setText(skill.note);
                 }
 
-                costTextView.setText(Integer.toString(skill.cost));
+                costTextView.setText(skill.costFriendly());
             }
         });
     }

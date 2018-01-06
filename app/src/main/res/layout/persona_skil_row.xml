@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp">
+    android:layout_height="wrap_content"
+    android:minHeight="48dp">
 
     <TextView
         android:id="@+id/textViewSkillName"
@@ -12,9 +13,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:text="@string/element_curse"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewSkillLevel"
@@ -33,8 +34,7 @@
         android:layout_marginTop="2dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/textViewSkillName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSkillName"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textViewSkillName" />
 
 </android.support.constraint.ConstraintLayout>
 

@@ -76,24 +76,5 @@ public class SettingsViewModel extends ViewModel {
                 return output;
             }
         });
-
-
-//        if(dlcPersonaMap == null){
-//            return new String[2][0];
-//        }
-//
-//        final Set<String> entries = dlcPersonaMap.keySet();
-//        String[] personaNamesSorted = entries.toArray(new String[entries.size()]);
-//        Arrays.sort(personaNamesSorted);
-//
-//        String[][] output = new String[2][personaNamesSorted.length];
-//
-//        for (int i = 0; i < personaNamesSorted.length; i++) {
-//            String personaName = personaNamesSorted[i];
-//            output[0][i] = personaName;
-//            output[1][i] = dlcPersonaMap.get(personaName).toString();
-//        }
-
-       // return output;
     }
 }

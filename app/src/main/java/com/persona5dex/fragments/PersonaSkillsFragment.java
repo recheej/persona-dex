@@ -75,8 +75,8 @@ public class PersonaSkillsFragment extends BaseFragment {
         viewModel = ViewModelProviders.of(this,
                 viewModelFactory).get(PersonaDetailSkillsViewModel.class);
 
-        viewModel.setPersonaID(personaID);
-        viewModel.getSkillsForPersona().observe(this, new Observer<List<PersonaDetailSkill>>() {
+        viewModel.getSkillsForPersona(personaID)
+                .observe(this, new Observer<List<PersonaDetailSkill>>() {
             @Override
             public void onChanged(@Nullable List<PersonaDetailSkill> personaDetailSkills) {
                 LinearLayout skillsGrid = baseView.findViewById(R.id.skill_grid);
