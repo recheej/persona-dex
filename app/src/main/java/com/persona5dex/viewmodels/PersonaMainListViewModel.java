@@ -53,12 +53,7 @@ public class PersonaMainListViewModel extends ViewModel{
         personasByArcana = new MutableLiveData<>();
         personaFilterArgs = new MutableLiveData<>();
 
-        sortByPersonaNameAsc = new Comparator<MainListPersona>() {
-            @Override
-            public int compare(MainListPersona o1, MainListPersona o2) {
-                return o1.name.compareTo(o2.name);
-            }
-        };
+        sortByPersonaNameAsc = (o1, o2) -> o1.name.compareTo(o2.name);
 
         sortByPersonaNameDesc = new Comparator<MainListPersona>() {
             @Override
@@ -67,39 +62,16 @@ public class PersonaMainListViewModel extends ViewModel{
             }
         };
 
-        sortByPersonaLevelAsc = new Comparator<MainListPersona>() {
-            @Override
-            public int compare(MainListPersona o1, MainListPersona o2) {
-                return Integer.compare(o1.level, o2.level);
-            }
-        };
-
-        sortByPersonaLevelDesc = new Comparator<MainListPersona>() {
-            @Override
-            public int compare(MainListPersona o1, MainListPersona o2) {
-                return Integer.compare(o1.level, o2.level) * -1;
-            }
-        };
-
-        sortByPersonaArcanaAsc = new Comparator<MainListPersona>() {
-            @Override
-            public int compare(MainListPersona o1, MainListPersona o2) {
-                return o1.arcanaName.compareTo(o2.arcanaName);
-            }
-        };
-
-        sortByPersonaArcanaDesc = new Comparator<MainListPersona>() {
-
-            @Override
-            public int compare(MainListPersona o1, MainListPersona o2) {
-                return o1.arcanaName.compareTo(o2.arcanaName) * -1;
-            }
-        };
+        sortByPersonaLevelAsc = (o1, o2) -> Integer.compare(o1.level, o2.level);
+        sortByPersonaLevelDesc = (o1, o2) -> Integer.compare(o1.level, o2.level) * -1;
+        sortByPersonaArcanaAsc = (o1, o2) -> o1.arcanaName.compareTo(o2.arcanaName);
+        sortByPersonaArcanaDesc = (o1, o2) -> o1.arcanaName.compareTo(o2.arcanaName) * -1;
 
         filteredPersonas.addSource(personaSearchName, personaName -> {
             allPersonas.observeForever(personas -> {
 
                 if(personas == null){
+
                     personas = new ArrayList<>();
                 }
 
@@ -233,9 +205,7 @@ public class PersonaMainListViewModel extends ViewModel{
 
         this.repository = repository;
 
-        repository.getAllPersonasForMainList().observeForever(personas -> {
-            updatePersonas(personas);
-        });
+        repository.getAllPersonasForMainList().observeForever(this::updatePersonas);
     }
 
     public void updatePersonas(List<MainListPersona> newPersonas){
@@ -244,7 +214,6 @@ public class PersonaMainListViewModel extends ViewModel{
     }
 
     public void filterPersonas(final String personaNameQuery){
-
         this.personaSearchName.postValue(personaNameQuery);
     }
 

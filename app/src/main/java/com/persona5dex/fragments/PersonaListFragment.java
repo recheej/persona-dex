@@ -70,16 +70,6 @@ public class PersonaListFragment extends BaseFragment {
         return baseView;
     }
 
-    public void setPersonas(List<MainListPersona> newPersonas){
-        this.personas.clear();
-
-        if(newPersonas != null){
-            this.personas.addAll(newPersonas);
-        }
-
-        personaListAdapter.notifyDataSetChanged();
-    }
-
     public void filterPersonas(String personaName){
         viewModel.filterPersonas(personaName);
     }
@@ -114,6 +104,10 @@ public class PersonaListFragment extends BaseFragment {
         viewModel.filterPersonas(filterArgs);
     }
 
+    public void setPersonas(List<MainListPersona> personas){
+        viewModel.updatePersonas(personas);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -129,6 +123,14 @@ public class PersonaListFragment extends BaseFragment {
 
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(personas);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
-        viewModel.getFilteredPersonas().observe(this, this::setPersonas);
+        viewModel.getFilteredPersonas().observe(this, newPersonas -> {
+            this.personas.clear();
+
+            if(newPersonas != null){
+                this.personas.addAll(newPersonas);
+            }
+
+            personaListAdapter.notifyDataSetChanged();
+        });
     }
 }
