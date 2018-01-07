@@ -43,7 +43,6 @@ public class PersonaMainListViewModel extends ViewModel{
         setUpViewModel(repository);
     }
 
-
     private void setUpViewModel(MainPersonaRepository repository) {
         allPersonas = new MutableLiveData<>();
         filteredPersonas = new MediatorLiveData<>();
@@ -98,14 +97,19 @@ public class PersonaMainListViewModel extends ViewModel{
         };
 
         filteredPersonas.addSource(personaSearchName, personaName -> {
-            allPersonas.observeForever(allPersonas -> {
+            allPersonas.observeForever(personas -> {
+
+                if(personas == null){
+                    personas = new ArrayList<>();
+                }
+
                 if(personaName == null || personaName.isEmpty()){
-                    filteredPersonas.setValue(allPersonas);
+                    filteredPersonas.setValue(personas);
                 }
                 else{
                     List<MainListPersona> finalList = new ArrayList<>();
 
-                    for (MainListPersona mainListPersona : allPersonas) {
+                    for (MainListPersona mainListPersona : personas) {
                         if(mainListPersona.name.toLowerCase().contains(personaName.toLowerCase())){
                             finalList.add(mainListPersona);
                         }
@@ -230,9 +234,13 @@ public class PersonaMainListViewModel extends ViewModel{
         this.repository = repository;
 
         repository.getAllPersonasForMainList().observeForever(personas -> {
-            allPersonas.setValue(personas);
-            filteredPersonas.setValue(personas);
+            updatePersonas(personas);
         });
+    }
+
+    public void updatePersonas(List<MainListPersona> newPersonas){
+        allPersonas.setValue(new ArrayList<>(newPersonas));
+        filteredPersonas.setValue(new ArrayList<>(newPersonas));
     }
 
     public void filterPersonas(final String personaNameQuery){

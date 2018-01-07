@@ -36,4 +36,9 @@ public class MainPersonaRoomRepository implements MainPersonaRepository {
     public LiveData<List<MainListPersona>> getDLCPersonas() {
         return db.personaDao().getDLCPersonas();
     }
+
+    @Override
+    public LiveData<String> getPersonaName(int personaID) {
+        return db.personaDao().getPersonaName(personaID);
+    }
 }

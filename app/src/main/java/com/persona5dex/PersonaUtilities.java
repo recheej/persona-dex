@@ -5,6 +5,8 @@ import com.persona5dex.models.Persona;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.persona5dex.models.Enumerations.*;
 
@@ -63,5 +65,9 @@ public class PersonaUtilities {
         }
 
         return filteredSuggestions.toArray(new Persona[filteredSuggestions.size()]);
+    }
+
+    public static String normalizePersonaName(String personaName){
+        return personaName.replaceAll("[^a-zA-Z0-9]+","").toLowerCase().trim();
     }
 }

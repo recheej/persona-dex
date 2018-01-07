@@ -44,4 +44,17 @@ public class CustomPersonaRepository implements MainPersonaRepository {
             return finalList;
         });
     }
+
+    @Override
+    public LiveData<String> getPersonaName(int personaID) {
+
+        MutableLiveData<String> data = new MutableLiveData<>();
+        for (MainListPersona persona : personas) {
+            if(persona.id == personaID){
+                data.setValue(persona.name);
+            }
+        }
+
+        return data;
+    }
 }

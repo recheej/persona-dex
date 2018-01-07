@@ -11,6 +11,7 @@ import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.Pair;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.models.RawPersonaEdge;
+import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
 
 import java.util.ArrayList;
@@ -27,13 +28,16 @@ import javax.inject.Inject;
 
 public class PersonaFusionViewModel extends ViewModel {
 
+    private final MainPersonaRepository mainPersonaRepository;
     private PersonaDisplayEdgesRepository repository;
 
     private LiveData<List<PersonaEdgeDisplay>> personaToEdges;
     private LiveData<List<PersonaEdgeDisplay>> personaFromEdges;
     private LiveData<String> personaName;
 
-    public PersonaFusionViewModel(PersonaDisplayEdgesRepository repository){
+    public PersonaFusionViewModel(PersonaDisplayEdgesRepository repository,
+                                  MainPersonaRepository mainPersonaRepository){
+        this.mainPersonaRepository = mainPersonaRepository;
         this.repository = repository;
     }
 
@@ -178,13 +182,13 @@ public class PersonaFusionViewModel extends ViewModel {
         });
     }
 
-    public boolean personaIsAdvanced(int personaID){
+    public LiveData<Integer> personaIsAdvanced(int personaID){
         return this.repository.personaIsAdvanced(personaID);
     }
 
     public LiveData<String> getPersonaName(int personaID){
         if(this.personaName == null){
-            this.personaName = repository.getPersonaName(personaID);
+            this.personaName = mainPersonaRepository.getPersonaName(personaID);
         }
 
         return this.personaName;

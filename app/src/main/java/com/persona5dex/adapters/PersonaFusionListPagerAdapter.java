@@ -13,22 +13,26 @@ import com.persona5dex.fragments.FusionListFragment;
  */
 
 public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
+    private static final int FRAGMENT_COUNT = 2;
     private final Context context;
-    private final int personaID;
+    private final Fragment toFragment;
+    private final Fragment fromFragment;
 
-    public PersonaFusionListPagerAdapter(FragmentManager fm, Context context, int personaID) {
+    public PersonaFusionListPagerAdapter(FragmentManager fm, Context context, Fragment toFragment,
+                                         Fragment fromFragment) {
         super(fm);
         this.context = context;
-        this.personaID = personaID;
+        this.toFragment = toFragment;
+        this.fromFragment = fromFragment;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return FusionListFragment.newInstance(true, personaID);
+                return toFragment;
             case 1:
-                return FusionListFragment.newInstance(false, personaID);
+                return fromFragment;
             default:
                 return null;
         }
@@ -36,7 +40,7 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return FRAGMENT_COUNT;
     }
 
     @Override

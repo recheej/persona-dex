@@ -1,6 +1,7 @@
 package com.persona5dex.models.room;
 
 import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
 
 import com.persona5dex.models.Enumerations;
 
@@ -37,6 +38,16 @@ public class PersonaTypeConverters {
         }
 
         return elementEffect.value();
+    }
+
+    @TypeConverter
+    public static int toInt(boolean bool){
+        return bool ? 1 : 0;
+    }
+
+    @TypeConverter
+    public static boolean toBool(int intToConvert){
+        return intToConvert == 1;
     }
 
     @TypeConverter

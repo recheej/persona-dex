@@ -1,16 +1,13 @@
 package com.persona5dex.activities;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -24,9 +21,7 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.SearchEvent;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
-import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
-import com.persona5dex.adapters.PersonaListAdapter;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
@@ -34,21 +29,16 @@ import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.fragments.FilterDialogFragment;
+import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.PersonaFilterArgs;
-import com.persona5dex.models.MainListPersona;
+import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.services.FusionCalculatorJobService;
-import com.persona5dex.viewmodels.PersonaMainListViewModel;
-import com.persona5dex.viewmodels.ViewModelFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 import io.fabric.sdk.android.Fabric;
 
 import static android.app.SearchManager.EXTRA_DATA_KEY;
@@ -58,23 +48,16 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     private static final String FILTER_DIALOG = "FILTER_DIALOG";
 
-    //https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
-    private IndexFastScrollRecyclerView recyclerView;
-    private LinearLayoutManager layoutManager;
-    private PersonaListAdapter personaListAdapter;
-
     @Inject
     Toolbar mainToolbar;
 
     @Inject
-    ViewModelFactory viewModelFactory;
-
-    private PersonaMainListViewModel viewModel;
+    MainPersonaRepository mainPersonaRepository;
 
     private PersonaFilterArgs latestFilterArgs;
 
     private int selectedSortMenuItemID;
-    private List<MainListPersona> filteredPersonas;
+    private PersonaListFragment personaListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,50 +81,24 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             Fabric.with(this, new Crashlytics());
         }
 
-        this.viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(PersonaMainListViewModel.class);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
 
-        filteredPersonas = new ArrayList<>(250);
+        mainPersonaRepository.getAllPersonasForMainList().observe(this, personas -> {
+            personaListFragment.setPersonas(personas);
 
-        recyclerView = findViewById(R.id.persona_view);
-        recyclerView.setHasFixedSize(true);
-
-        personaListAdapter = new PersonaListAdapter(filteredPersonas);
-        recyclerView.setAdapter(personaListAdapter);
-
-        viewModel.getFilteredPersonas().observe(this, new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> mainListPersonas) {
-                MainActivity.this.filteredPersonas.clear();
-
-                if(mainListPersonas != null){
-                    MainActivity.this.filteredPersonas.addAll(mainListPersonas);
-                }
-
-                personaListAdapter.notifyDataSetChanged();
-            }
+            Intent intent = getIntent();
+            handleIntent(intent);
         });
 
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
-        SharedPreferences commonSharedPreferences = getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS,
-                Context.MODE_PRIVATE);
-
-        recyclerView = findViewById(R.id.persona_view);
-        recyclerView.setHasFixedSize(true);
 
         FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
 
         setSupportActionBar(this.mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainToolbar.setLogo(R.drawable.ic_app_icon_fore);
-
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        Intent intent = getIntent();
-        handleIntent(intent);
     }
 
     @Override
@@ -156,7 +113,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
             logSearchQuery(query);
 
-            viewModel.filterPersonas(query);
+            personaListFragment.filterPersonas(query);
         }
         else if(Intent.ACTION_VIEW.equals(intent.getAction())){
             String itemID = intent.getDataString();
@@ -213,7 +170,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                viewModel.filterPersonas("");
+                personaListFragment.filterPersonas("");
 
                 menu.setGroupVisible(R.id.menu_item_group_sorting, true);
                 settingsItem.setVisible(true);
@@ -275,46 +232,22 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     private boolean handleSortClick() {
         switch (selectedSortMenuItemID){
             case R.id.menu_sort_name_asc:
-                viewModel.sortPersonasByName(true);
-                personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
-
-                personaListAdapter.notifyDataSetChanged();
-
-                recyclerView.setIndexBarVisibility(true);
+                personaListFragment.sortPersonasByName(true);
                 return true;
             case R.id.menu_sort_name_desc:
-                viewModel.sortPersonasByName(false);
-                personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
-
-                recyclerView.setIndexBarVisibility(true);
+                personaListFragment.sortPersonasByName(false);
                 return true;
             case R.id.menu_sort_level_asc:
-                viewModel.sortPersonasByLevel(true);
-
-                recyclerView.setIndexBarVisibility(false);
+                personaListFragment.sortPersonasByLevel(true);
                 return true;
             case R.id.menu_sort_level_desc:
-                viewModel.sortPersonasByLevel(false);
-
-                recyclerView.setIndexBarVisibility(false);
+                personaListFragment.sortPersonasByLevel(false);
                 return true;
             case R.id.menu_sort_arcana_asc:
-                viewModel.sortPersonasByArcana(true);
-
-                personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.ArcanaName);
-
-                personaListAdapter.notifyDataSetChanged();
-
-                recyclerView.setIndexBarVisibility(true);
+                personaListFragment.sortPersonasByArcana(true);
                 return true;
             case R.id.menu_sort_arcana_desc:
-                viewModel.sortPersonasByArcana(false);
-
-                personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.ArcanaName);
-
-                personaListAdapter.notifyDataSetChanged();
-
-                recyclerView.setIndexBarVisibility(true);
+                personaListFragment.sortPersonasByArcana(false);
                 return true;
             default:
                 return false;
@@ -324,7 +257,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     @Override
     public void onFilterSelected(PersonaFilterArgs filterArgs) {
         this.latestFilterArgs = filterArgs;
-        viewModel.filterPersonas(latestFilterArgs);
+        personaListFragment.filterPersonas(latestFilterArgs);
     }
 
     @Override
@@ -358,7 +291,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
             latestFilterArgs.minLevel = savedInstanceState.getInt("filter_minLevel");
             latestFilterArgs.maxLevel = savedInstanceState.getInt("filter_maxLevel");
-            viewModel.filterPersonas(latestFilterArgs);
+            personaListFragment.filterPersonas(latestFilterArgs);
 
             selectedSortMenuItemID = savedInstanceState.getInt("sort_id");
             handleSortClick();

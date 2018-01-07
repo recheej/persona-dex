@@ -26,6 +26,10 @@ public class PersonaFileUtilities {
         this.gson = gson;
     }
 
+    public PersonaFileUtilities() {
+        this.gson = new Gson();
+    }
+
     private String getFileContents(InputStream stream){
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         StringBuilder out = new StringBuilder();

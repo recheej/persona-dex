@@ -1,5 +1,6 @@
 package com.persona5dex.dagger.fragment;
 
+import com.persona5dex.fragments.AdvancedPersonaFragment;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.fragments.FusionListFragment;
 import com.persona5dex.fragments.PersonaDetailInfoFragment;
@@ -25,4 +26,5 @@ public interface FragmentComponent {
     void inject(PersonaSkillsFragment fragment);
     void inject(FilterDialogFragment fragment);
     void inject(PersonaListFragment fragment);
+    void inject(AdvancedPersonaFragment advancedPersonaFragment);
 }

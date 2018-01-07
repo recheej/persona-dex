@@ -13,12 +13,17 @@
         android:layout_width="match_parent"
         />
 
-    <in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView
-        android:id="@+id/persona_view"
+    <FrameLayout
+        android:id="@+id/list_container"
         android:layout_below="@id/main_toolbar"
-        android:layout_alignParentEnd="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"/>
+        android:layout_alignParentEnd="true">
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.persona5dex.fragments.PersonaListFragment"
+            android:id="@+id/fragment_persona_list"/>
+    </FrameLayout>
 </RelativeLayout>

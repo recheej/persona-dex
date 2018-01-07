@@ -65,5 +65,5 @@ public interface PersonaDao {
 
 
     @Query("select special from personas where id = :personaID")
-    boolean personaIsAdvanced(int personaID);
+    LiveData<Integer> personaIsAdvanced(int personaID);
 }

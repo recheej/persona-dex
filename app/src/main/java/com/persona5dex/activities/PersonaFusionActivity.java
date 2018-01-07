@@ -1,11 +1,11 @@
 package com.persona5dex.activities;
 
-import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
 import com.persona5dex.BuildConfig;
@@ -15,10 +15,11 @@ import com.persona5dex.adapters.PersonaFusionListPagerAdapter;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.fragments.AdvancedPersonaFragment;
+import com.persona5dex.fragments.FusionListFragment;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
@@ -54,19 +55,36 @@ public class PersonaFusionActivity extends BaseActivity {
         component.inject(this);
         this.component = component;
 
-        setUpToolbar();
-
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaFusionViewModel.class);
 
-        boolean personaIsAdvanced = viewModel.personaIsAdvanced(personaForFusionID);
+        setUpToolbar();
 
-        ViewPager viewPager = findViewById(R.id.view_pager_fusion);
-        PersonaFusionListPagerAdapter pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(),
-                this, personaForFusionID);
-        viewPager.setAdapter(pagerAdapter);
+        LiveData<Integer> personaIsAdvanced = viewModel.personaIsAdvanced(personaForFusionID);
+        personaIsAdvanced.observe(this, intValue -> {
+            if(intValue == null){
+                intValue = 0;
+            }
 
-        TabLayout tabLayout = findViewById(R.id.tab_layout_fusions);
-        tabLayout.setupWithViewPager(viewPager);
+            boolean isAdvanced = intValue == 1;
+
+            Fragment toFragment;
+            if(isAdvanced){
+                toFragment = AdvancedPersonaFragment.newInstance(personaForFusionID);
+            }
+            else{
+                toFragment = FusionListFragment.newInstance(true, personaForFusionID);
+            }
+
+            Fragment fromFragment = FusionListFragment.newInstance(false, personaForFusionID);
+
+            ViewPager viewPager = findViewById(R.id.view_pager_fusion);
+            PersonaFusionListPagerAdapter pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(),
+                    this, toFragment, fromFragment);
+            viewPager.setAdapter(pagerAdapter);
+
+            TabLayout tabLayout = findViewById(R.id.tab_layout_fusions);
+            tabLayout.setupWithViewPager(viewPager);
+        });
     }
 
     private void setUpToolbar(){

@@ -19,14 +19,23 @@ import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
+import com.persona5dex.activities.PersonaFusionActivity;
 import com.persona5dex.adapters.PersonaFusionListAdapter;
+import com.persona5dex.dagger.activity.ActivityContextModule;
+import com.persona5dex.dagger.activity.LayoutModule;
+import com.persona5dex.dagger.activity.ViewModelModule;
+import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.services.FusionCalculatorJobService;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
+import com.persona5dex.viewmodels.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class FusionListFragment extends BaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,6 +54,9 @@ public class FusionListFragment extends BaseFragment {
 
     private List<PersonaEdgeDisplay> edgeDisplays;
     private PersonaFusionListAdapter fusionListAdapter;
+
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     public FusionListFragment() {
         // Required empty public constructor
@@ -83,8 +95,15 @@ public class FusionListFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
-        viewModel = ViewModelProviders.of(this).get(PersonaFusionViewModel.class);
-        viewModel.init(component, personaID, isToList);
+        component.viewModelComponent(new AndroidViewModelRepositoryModule())
+                .activityComponent(new LayoutModule(activity),
+                        new ActivityContextModule(activity),
+                        new ViewModelModule(),
+                        new ViewModelRepositoryModule())
+                .plus()
+                .inject(this);
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaFusionViewModel.class);
 
         recyclerView = baseView.findViewById(R.id.recycler_view_persona_list);
 
@@ -142,7 +161,7 @@ public class FusionListFragment extends BaseFragment {
             personaHeaderColumnTwo.setText(R.string.result);
         }
 
-        viewModel.getEdges().observe(this, new Observer<List<PersonaEdgeDisplay>>() {
+        viewModel.getEdges(personaID, isToList).observe(this, new Observer<List<PersonaEdgeDisplay>>() {
             @Override
             public void onChanged(@Nullable List<PersonaEdgeDisplay> personaEdgeDisplays) {
                 edgeDisplays.clear();
