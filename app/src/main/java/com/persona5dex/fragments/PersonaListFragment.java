@@ -63,6 +63,7 @@ public class PersonaListFragment extends BaseFragment {
 
     public void setIndexBarVisible(boolean isVisible) {
         this.showIndexBar = isVisible;
+        this.recyclerView.setIndexBarVisibility(isVisible);
     }
 
     public interface PersonaListFragmentListener {
