@@ -1,10 +1,8 @@
 package com.persona5dex.fragments;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +35,7 @@ import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 
 public class PersonaListFragment extends BaseFragment {
 
+    public static final String INDEX_BAR_VISIBLE = "index_bar_visible";
     //https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
     private IndexFastScrollRecyclerView recyclerView;
     private List<MainListPersona> personas;
@@ -46,11 +45,37 @@ public class PersonaListFragment extends BaseFragment {
     @Inject
     ViewModelFactory viewModelFactory;
     private LinearLayoutManager layoutManager;
+    private boolean showIndexBar;
+    private PersonaListFragmentListener fragmentListener;
+
+    public static PersonaListFragment newInstance(boolean indexBarVisible){
+        PersonaListFragment listFragment = new PersonaListFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(INDEX_BAR_VISIBLE, indexBarVisible);
+        listFragment.setArguments(args);
+        return listFragment;
+    }
+
+    public PersonaListFragment() {
+        this.personas = new ArrayList<>(250);
+        this.showIndexBar = true;
+    }
+
+    public interface PersonaListFragmentListener {
+        void fragmentFinishedLoading();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         personas = new ArrayList<>(250);
+
+        this.showIndexBar = true;
+
+        Bundle args = getArguments();
+        if(args != null){
+            this.showIndexBar = args.getBoolean(INDEX_BAR_VISIBLE, true);
+        }
     }
 
     @Nullable
@@ -60,6 +85,7 @@ public class PersonaListFragment extends BaseFragment {
 
         recyclerView = baseView.findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setIndexBarVisibility(showIndexBar);
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -80,7 +106,7 @@ public class PersonaListFragment extends BaseFragment {
         personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
         personaListAdapter.notifyDataSetChanged();
 
-        recyclerView.setIndexBarVisibility(true);
+        recyclerView.setIndexBarVisibility(showIndexBar);
     }
 
     public void sortPersonasByLevel(boolean asc){
@@ -97,7 +123,7 @@ public class PersonaListFragment extends BaseFragment {
         personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.ArcanaName);
         personaListAdapter.notifyDataSetChanged();
 
-        recyclerView.setIndexBarVisibility(true);
+        recyclerView.setIndexBarVisibility(showIndexBar);
     }
 
     public void filterPersonas(PersonaFilterArgs filterArgs){
@@ -106,6 +132,10 @@ public class PersonaListFragment extends BaseFragment {
 
     public void setPersonas(List<MainListPersona> personas){
         viewModel.updatePersonas(personas);
+    }
+
+    public void setListener(PersonaListFragmentListener fragmentListener){
+        this.fragmentListener = fragmentListener;
     }
 
     @Override
@@ -132,5 +162,9 @@ public class PersonaListFragment extends BaseFragment {
 
             personaListAdapter.notifyDataSetChanged();
         });
+
+        if(this.fragmentListener != null){
+            this.fragmentListener.fragmentFinishedLoading();
+        }
     }
 }

@@ -1,29 +1,23 @@
 package com.persona5dex.fragments;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.activities.PersonaFusionActivity;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
-import com.persona5dex.models.MainListPersona;
 import com.persona5dex.viewmodels.AdvancedFusionViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -31,11 +25,13 @@ import javax.inject.Inject;
  * Created by reche on 1/6/2018.
  */
 
-public class AdvancedPersonaFragment extends BaseFragment {
+public class AdvancedPersonaFragment extends BaseFragment implements PersonaListFragment.PersonaListFragmentListener {
 
     public static final String PERSONA_ID = "persona_id";
     private int personaID;
     private TextView fusionPromptTextView;
+    private AdvancedFusionViewModel viewModel;
+    private PersonaListFragment personaListFragment;
 
     public static AdvancedPersonaFragment newInstance(int personaID){
         AdvancedPersonaFragment advancedPersonaFragment = new AdvancedPersonaFragment();
@@ -78,15 +74,24 @@ public class AdvancedPersonaFragment extends BaseFragment {
                         new ViewModelRepositoryModule())
                 .plus().inject(this);
 
-        AdvancedFusionViewModel viewModel = ViewModelProviders.of(this, viewModelFactory)
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(AdvancedFusionViewModel.class);
-
-        viewModel.getRecipesForAdvancedPersona(personaID).observe(this, personas -> {
-
-        });
 
         viewModel.getPersonaName().observe(this, personaName -> {
             fusionPromptTextView.setText(getString(R.string.advanced_fusion_prompt, personaName));
+        });
+
+        personaListFragment = PersonaListFragment.newInstance(false);
+        personaListFragment.setListener(this);
+
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, personaListFragment).commit();
+    }
+
+    @Override
+    public void fragmentFinishedLoading() {
+        viewModel.getRecipesForAdvancedPersona(personaID).observe(this, personas -> {
+            personaListFragment.setPersonas(personas);
         });
     }
 }

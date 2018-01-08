@@ -16,6 +16,7 @@ import com.persona5dex.repositories.MainPersonaRepository;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +122,7 @@ public class AdvancedFusionViewModel extends ViewModel {
                             }
                         }
 
+                        Collections.sort(finalList, (p1, p2) -> p1.name.compareTo(p2.name));
                         personas.postValue(finalList);
                     });
                     break;
