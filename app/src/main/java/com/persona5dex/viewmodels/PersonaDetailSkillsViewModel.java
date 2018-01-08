@@ -8,6 +8,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
+import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.room.Skill;
 import com.persona5dex.repositories.PersonaSkillsRepository;
@@ -58,5 +59,9 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
 
     public LiveData<Skill> getSkill(int skillID) {
         return repository.getSkill(skillID);
+    }
+
+    public LiveData<List<MainListPersona>> getPersonasWithSkill(int skillID){
+        return repository.getPersonasWithSkill(skillID);
     }
 }

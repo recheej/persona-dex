@@ -61,6 +61,10 @@ public class PersonaListFragment extends BaseFragment {
         this.showIndexBar = true;
     }
 
+    public void setIndexBarVisible(boolean isVisible) {
+        this.showIndexBar = isVisible;
+    }
+
     public interface PersonaListFragmentListener {
         void fragmentFinishedLoading();
     }

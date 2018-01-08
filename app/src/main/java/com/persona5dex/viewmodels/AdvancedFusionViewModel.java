@@ -114,7 +114,6 @@ public class AdvancedFusionViewModel extends ViewModel {
                                     mainListPersona);
                         }
 
-
                         for (String source : rawAdvancedFusion.sources) {
                             final String normalizedName = PersonaUtilities.normalizePersonaName(source);
                             if(mainListPersonaHashMap.containsKey(normalizedName)){

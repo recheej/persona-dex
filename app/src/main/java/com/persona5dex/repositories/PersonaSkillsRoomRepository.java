@@ -2,6 +2,7 @@ package com.persona5dex.repositories;
 
 import android.arch.lifecycle.LiveData;
 
+import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.room.PersonaDao;
 import com.persona5dex.models.room.Skill;
@@ -29,5 +30,10 @@ public class PersonaSkillsRoomRepository implements PersonaSkillsRepository {
     @Override
     public LiveData<Skill> getSkill(Integer skillID) {
         return skillDao.getSkill(skillID);
+    }
+
+    @Override
+    public LiveData<List<MainListPersona>> getPersonasWithSkill(int skillID) {
+        return skillDao.getPersonasWithSkill(skillID);
     }
 }

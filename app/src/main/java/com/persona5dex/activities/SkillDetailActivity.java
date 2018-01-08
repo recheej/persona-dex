@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.models.room.Skill;
 import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
@@ -32,6 +34,7 @@ public class SkillDetailActivity extends BaseActivity {
     ViewModelFactory viewModelFactory;
 
     private PersonaDetailSkillsViewModel viewModel;
+    private PersonaListFragment personaListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,5 +92,9 @@ public class SkillDetailActivity extends BaseActivity {
                 costTextView.setText(skill.costFriendly());
             }
         });
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
+        personaListFragment.setIndexBarVisible(false);
     }
 }

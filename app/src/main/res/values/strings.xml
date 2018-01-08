@@ -78,5 +78,6 @@
     <string name="persona_skill">Persona Skill</string>
     <string name="advanced_fusion">Advanced Fusion</string>
     <string name="advanced_fusion_prompt">%s can be fused by acquiring all of the following personas:</string>
+    <string name="personas_with_skill">Personas with this skill:</string>
 
 </resources>
