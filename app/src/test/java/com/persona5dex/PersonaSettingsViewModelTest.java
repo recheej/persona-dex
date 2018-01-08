@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
 import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.room.Persona;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.viewmodels.SettingsViewModel;
@@ -31,11 +32,11 @@ import static org.mockito.Mockito.when;
 public class PersonaSettingsViewModelTest {
 
     private SettingsViewModel viewModel;
-    private MutableLiveData<List<Persona>> dlcPersonas;
+    private MutableLiveData<List<MainListPersona>> dlcPersonas;
 
     @Before
     public void init() {
-        Persona testPersona = new Persona();
+        MainListPersona testPersona = new MainListPersona();
         testPersona.name = "testName";
         testPersona.id = 1;
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
@@ -43,7 +44,7 @@ public class PersonaSettingsViewModelTest {
         testPersona.dlc = true;
         testPersona.level = 1;
 
-        Persona testPersonaTwo = new Persona();
+        MainListPersona testPersonaTwo = new MainListPersona();
         testPersonaTwo.name = "testNameTwo";
         testPersonaTwo.id = 2;
         testPersonaTwo.arcana = Enumerations.Arcana.HANGED_MAN;
@@ -51,7 +52,7 @@ public class PersonaSettingsViewModelTest {
         testPersonaTwo.dlc = true;
         testPersonaTwo.level = 2;
 
-        List<Persona> personas = new ArrayList<>();
+        List<MainListPersona> personas = new ArrayList<>();
         personas.add(testPersona);
         personas.add(testPersonaTwo);
 
@@ -83,7 +84,7 @@ public class PersonaSettingsViewModelTest {
     @Test
     public void getDLCForSettings_IsSorted() throws Exception {
 
-        Persona testPersona = new Persona();
+        MainListPersona testPersona = new MainListPersona();
         testPersona.name = "b";
         testPersona.id = 1;
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
@@ -91,7 +92,7 @@ public class PersonaSettingsViewModelTest {
         testPersona.dlc = true;
         testPersona.level = 1;
 
-        Persona testPersonaTwo = new Persona();
+        MainListPersona testPersonaTwo = new MainListPersona();
         testPersonaTwo.name = "a";
         testPersonaTwo.id = 2;
         testPersonaTwo.arcana = Enumerations.Arcana.HANGED_MAN;
@@ -99,7 +100,7 @@ public class PersonaSettingsViewModelTest {
         testPersonaTwo.dlc = true;
         testPersonaTwo.level = 2;
 
-        List<Persona> personas = new ArrayList<>();
+        List<MainListPersona> personas = new ArrayList<>();
         personas.add(testPersona);
         personas.add(testPersonaTwo);
 
@@ -131,7 +132,7 @@ public class PersonaSettingsViewModelTest {
     @Test
     public void getDLCForSettings_HandlesNoDLC() throws Exception {
 
-        dlcPersonas.setValue(new ArrayList<Persona>(1));
+        dlcPersonas.setValue(new ArrayList<MainListPersona>(1));
         viewModel.getDLCPersonaForSettings().observeForever(new Observer<String[][]>() {
             @Override
             public void onChanged(@Nullable String[][] output) {

@@ -86,7 +86,9 @@ public class PersonaListViewModelTest {
             @Override
             public void onChanged(@Nullable List<MainListPersona> output) {
                 assertEquals(personasToSort.size(), output.size());
-                assertEquals(testPersonaTwo, output.get(0));
+                assertEquals(testPersonaTwo.id, output.get(0).id);
+                assertEquals(testPersonaTwo.arcana, output.get(0).arcana);
+                assertEquals(testPersonaTwo.name, output.get(0).name);
             }
         });
     }
@@ -146,7 +148,10 @@ public class PersonaListViewModelTest {
         viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
             @Override
             public void onChanged(@Nullable List<MainListPersona> personasToSort) {
-                assertEquals(testPersonaTwo, personasToSort.get(0));
+                assertNotNull(personasToSort);
+                assertEquals(testPersonaTwo.id, personasToSort.get(0).id);
+                assertEquals(testPersona.arcana, personasToSort.get(0).arcana);
+                assertEquals(testPersona.name, personasToSort.get(0).name);
             }
         });
     }

@@ -56,6 +56,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return  (T) new AdvancedFusionViewModel((Application) applicationContext,
                     mainPersonaRepositoryLazy.get());
         }
+        else if(modelClass == SettingsViewModel.class){
+            return (T) new SettingsViewModel(mainPersonaRepositoryLazy.get());
+        }
 
         throw new RuntimeException("could not get view model");
     }

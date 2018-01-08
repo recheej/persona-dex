@@ -23,8 +23,7 @@ import javax.inject.Inject;
 
 public class SettingsViewModel extends ViewModel {
 
-    @Inject
-    MainPersonaRepository repository;
+    private MainPersonaRepository repository;
 
     private LiveData<List<MainListPersona>> dlcPersonas;
 
@@ -33,15 +32,6 @@ public class SettingsViewModel extends ViewModel {
         this.dlcPersonas = repository.getDLCPersonas();
     }
 
-    public SettingsViewModel() {}
-
-    public void init(Persona5ApplicationComponent component) {
-        component
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
-                .inject(this);
-
-        this.dlcPersonas = repository.getDLCPersonas();
-    }
     /**
      * Gets dlc per the settings
      * @return 2D string array with two columns: column one is persona name, column 2 is persona id
