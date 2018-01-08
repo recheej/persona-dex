@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
@@ -32,6 +33,7 @@ public class AdvancedPersonaFragment extends BaseFragment implements PersonaList
     private TextView fusionPromptTextView;
     private AdvancedFusionViewModel viewModel;
     private PersonaListFragment personaListFragment;
+    private ProgressBar progressBar;
 
     public static AdvancedPersonaFragment newInstance(int personaID){
         AdvancedPersonaFragment advancedPersonaFragment = new AdvancedPersonaFragment();
@@ -59,6 +61,8 @@ public class AdvancedPersonaFragment extends BaseFragment implements PersonaList
         baseView = inflater.inflate(R.layout.fragment_advanced_persona, container, false);
         
         this.fusionPromptTextView = baseView.findViewById(R.id.textView_fusionPrompt);
+        progressBar = baseView.findViewById(R.id.progress_bar_fusions);
+        progressBar.setVisibility(View.VISIBLE);
         return baseView;
     }
 
@@ -92,6 +96,7 @@ public class AdvancedPersonaFragment extends BaseFragment implements PersonaList
     public void fragmentFinishedLoading() {
         viewModel.getRecipesForAdvancedPersona(personaID).observe(this, personas -> {
             personaListFragment.setPersonas(personas);
+            progressBar.setVisibility(View.GONE);
         });
     }
 }
