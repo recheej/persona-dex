@@ -13,6 +13,7 @@ public class PersonaDetailInfo {
     public String arcanaName;
     public int level;
     public String imageUrl;
+    public String note;
 
     @Embedded
     public Stats stats;

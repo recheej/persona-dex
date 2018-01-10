@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.chrisbanes.photoview.PhotoView;
@@ -18,6 +19,7 @@ import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.room.Stats;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -55,6 +57,8 @@ public class PersonaDetailInfoFragment extends BaseFragment {
         viewModel = ViewModelProviders.of(this).get(PersonaDetailInfoViewModel.class);
         viewModel.init(component, personaID);
 
+        ProgressBar progressBar = baseView.findViewById(R.id.progress_bar_fusions);
+        progressBar.setVisibility(View.VISIBLE);
         viewModel.getDetailsForPersona().observe(this, new Observer<PersonaDetailInfo>() {
             @Override
             public void onChanged(@Nullable PersonaDetailInfo personaDetailInfo) {
@@ -65,20 +69,42 @@ public class PersonaDetailInfoFragment extends BaseFragment {
                     setTextViewText(baseView, R.id.textViewEnduranceStat, Integer.toString(personaStats.endurance));
                     setTextViewText(baseView, R.id.textViewAgilityStat, Integer.toString(personaStats.agility));
                     setTextViewText(baseView, R.id.textViewLuckStat, Integer.toString(personaStats.luck));
-
                     setTextViewText(baseView, R.id.textView_arcanaName, personaDetailInfo.arcanaName);
+
+                    if(personaDetailInfo.note != null && !personaDetailInfo.note.isEmpty()){
+                        View notesContainer = baseView.findViewById(R.id.container_note);
+                        notesContainer.setVisibility(View.VISIBLE);
+                        setTextViewText(baseView, R.id.textView_note, personaDetailInfo.note);
+                    }
+
                     PhotoView personaPictureView = baseView.findViewById(R.id.imageView_persona);
                     Picasso picasso = Picasso
                             .with(PersonaDetailInfoFragment.this.getContext());
 
-                    //green = memory, blue = disk, red = network
-                    picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
-                    picasso
-                            .load(personaDetailInfo.imageUrl)
-                            .placeholder(R.drawable.placeholder)
-                            .fit()
-                            .centerInside()
-                            .into(personaPictureView);
+                    //green = memory, blue = disk, red = network)
+
+                    if(personaDetailInfo.imageUrl == null){
+                        progressBar.setVisibility(View.GONE);
+                    }
+                    else{
+                        picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
+                        picasso
+                                .load(personaDetailInfo.imageUrl)
+                                .placeholder(R.drawable.placeholder)
+                                .fit()
+                                .centerInside()
+                                .into(personaPictureView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+                    }
                 }
             }
         });
