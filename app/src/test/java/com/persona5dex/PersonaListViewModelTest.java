@@ -1,5 +1,6 @@
 package com.persona5dex;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
@@ -7,6 +8,7 @@ import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.FakeMainPersonaRepository;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
+import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import org.junit.Test;
@@ -20,6 +22,8 @@ import java.util.List;
 import edu.emory.mathcs.backport.java.util.Arrays;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Rechee on 8/13/2017.
@@ -42,22 +46,25 @@ public class PersonaListViewModelTest {
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 2;
 
-        final List<MainListPersona> personasToSort = Arrays.asList(new MainListPersona[] {
+        final List<MainListPersona> personasToSort = Arrays.asList(new MainListPersona[]{
                 testPersonaTwo, testPersona
         });
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(personasToSort);
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(personasToSort);
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+
+        Observer observer = mock(Observer.class);
+        viewModel.getFilteredPersonas().observeForever(observer);
         viewModel.sortPersonasByName(true);
 
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> output) {
-                assertEquals(personasToSort.size(), output.size());
-                assertEquals(testPersona, output.get(0));
-            }
-        });
+        final List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+        assertEquals(personasToSort.size(), output.size());
+        assertEquals(testPersona, output.get(0));
     }
 
     @Test
@@ -77,20 +84,22 @@ public class PersonaListViewModelTest {
                 testPersona, testPersonaTwo
         });
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(personasToSort);
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(personasToSort);
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
         viewModel.sortPersonasByName(false);
 
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> output) {
-                assertEquals(personasToSort.size(), output.size());
-                assertEquals(testPersonaTwo.id, output.get(0).id);
-                assertEquals(testPersonaTwo.arcana, output.get(0).arcana);
-                assertEquals(testPersonaTwo.name, output.get(0).name);
-            }
-        });
+        List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+
+        assertEquals(personasToSort.size(), output.size());
+        assertEquals(testPersonaTwo.id, output.get(0).id);
+        assertEquals(testPersonaTwo.arcana, output.get(0).arcana);
+        assertEquals(testPersonaTwo.name, output.get(0).name);
     }
 
     @Test
@@ -110,17 +119,19 @@ public class PersonaListViewModelTest {
                 testPersona, testPersonaTwo
         });
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(personasToSort);
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(personasToSort);
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
         viewModel.sortPersonasByLevel(true);
 
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> personasToSort) {
-                assertEquals(testPersonaTwo, personasToSort.get(0));
-            }
-        });
+        List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+
+        assertEquals(testPersonaTwo, output.get(0));
     }
 
     @Test
@@ -140,40 +151,44 @@ public class PersonaListViewModelTest {
                 testPersona, testPersonaTwo
         });
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(personasToSort);
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(personasToSort);
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
         viewModel.sortPersonasByLevel(false);
 
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> personasToSort) {
-                assertNotNull(personasToSort);
-                assertEquals(testPersonaTwo.id, personasToSort.get(0).id);
-                assertEquals(testPersona.arcana, personasToSort.get(0).arcana);
-                assertEquals(testPersona.name, personasToSort.get(0).name);
-            }
-        });
+
+        List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+
+        assertNotNull(output);
+        assertEquals(testPersonaTwo.id, output.get(0).id);
+        assertEquals(testPersona.arcana, output.get(0).arcana);
+        assertEquals(testPersona.name, output.get(0).name);
     }
 
     @Test
     public void filterPersonas_handlesEmptyList() throws Exception {
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(new ArrayList<MainListPersona>());
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(new ArrayList<>());
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
 
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> filteredPersonas) {
+        List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
 
-                assertNotNull(filteredPersonas);
-                assertTrue(filteredPersonas.size() == 0);
-            }
-        });
+        assertNotNull(output);
+        assertTrue(output.size() == 0);
     }
 
     @Test
@@ -193,22 +208,24 @@ public class PersonaListViewModelTest {
             testPersonaOne, testPersonaTwo
         });
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(personasToFilter);
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(personasToFilter);
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
 
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> filteredPersonas) {
-                assertNotNull(filteredPersonas);
-                assertTrue(filteredPersonas.size() == 1);
-                assertTrue(filteredPersonas.get(0).arcana == Enumerations.Arcana.CHARIOT);
-                assertTrue(filteredPersonas.get(0).name.equals(testPersonaOne.name));
-            }
-        });
+        List<MainListPersona> filteredPersonas = viewModel.getFilteredPersonas().getValue();
+
+        assertNotNull(filteredPersonas);
+        assertTrue(filteredPersonas.size() == 1);
+        assertTrue(filteredPersonas.get(0).arcana == Enumerations.Arcana.CHARIOT);
+        assertTrue(filteredPersonas.get(0).name.equals(testPersonaOne.name));
     }
 
     @Test
@@ -228,22 +245,24 @@ public class PersonaListViewModelTest {
                 testPersonaOne, testPersonaTwo
         });
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(personasToFilter);
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(personasToFilter);
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(testPersonaOne.level, testPersonaOne.level, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
 
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> filteredPersonas) {
-                assertNotNull(filteredPersonas);
-                assertTrue(filteredPersonas.size() == 1);
-                assertTrue(filteredPersonas.get(0).level == testPersonaOne.level);
-                assertTrue(filteredPersonas.get(0).name.equals(testPersonaOne.name));
-            }
-        });
+        List<MainListPersona> filteredPersonas = viewModel.getFilteredPersonas().getValue();
+
+        assertNotNull(filteredPersonas);
+        assertTrue(filteredPersonas.size() == 1);
+        assertTrue(filteredPersonas.get(0).arcana == Enumerations.Arcana.CHARIOT);
+        assertTrue(filteredPersonas.get(0).name.equals(testPersonaOne.name));
     }
 
     @Test
@@ -264,23 +283,26 @@ public class PersonaListViewModelTest {
                 testPersonaOne, testPersonaTwo
         });
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(personasToFilter);
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(personasToFilter);
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
                 99,
                 Enumerations.Arcana.CHARIOT, true, false);
 
         viewModel.filterPersonas(filterArgs);
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> filteredPersonas) {
-                assertNotNull(filteredPersonas);
-                assertTrue(filteredPersonas.size() == 1);
-                assertTrue(filteredPersonas.get(0).name.equals(testPersonaTwo.name));
-            }
-        });
+
+        List<MainListPersona> filteredPersonas = viewModel.getFilteredPersonas().getValue();
+
+        assertNotNull(filteredPersonas);
+        assertTrue(filteredPersonas.size() == 1);
+        assertTrue(filteredPersonas.get(0).name.equals(testPersonaTwo.name));
     }
 
     @Test
@@ -301,22 +323,24 @@ public class PersonaListViewModelTest {
                 testPersonaOne, testPersonaTwo
         });
 
-        FakeMainPersonaRepository fakeMainPersonaRepository = new FakeMainPersonaRepository(personasToFilter);
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(personasToFilter);
+
+        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
+        when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository);
+        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
                 99,
                 Enumerations.Arcana.CHARIOT, false, true);
         viewModel.filterPersonas(filterArgs);
 
-        viewModel.getFilteredPersonas().observeForever(new Observer<List<MainListPersona>>() {
-            @Override
-            public void onChanged(@Nullable List<MainListPersona> mainListPersonas) {
-                assertNotNull(mainListPersonas);
-                assertTrue(mainListPersonas.size() == 1);
-                assertTrue(mainListPersonas.get(0).name.equals(testPersonaTwo.name));
-            }
-        });
+        List<MainListPersona> mainListPersonas = viewModel.getFilteredPersonas().getValue();
+
+        assertNotNull(mainListPersonas);
+        assertTrue(mainListPersonas.size() == 1);
+        assertTrue(mainListPersonas.get(0).name.equals(testPersonaTwo.name));
     }
 }
