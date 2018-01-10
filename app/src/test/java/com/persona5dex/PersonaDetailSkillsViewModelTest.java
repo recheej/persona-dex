@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 
+import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.room.Skill;
 import com.persona5dex.repositories.PersonaSkillsRepository;
@@ -113,6 +114,21 @@ public class PersonaDetailSkillsViewModelTest {
                 assertEquals(testSkill.effect, skill.effect);
                 assertEquals(testSkill.element, skill.element);
             }
+        });
+    }
+
+    @Test
+    public void getPersonasWithSkill_handlesEmpty() {
+
+        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
+        data.setValue(new ArrayList<>());
+        PersonaSkillsRepository repository = mock(PersonaSkillsRepository.class);
+        when(repository.getPersonasWithSkill(anyInt())).thenReturn(data);
+
+        PersonaDetailSkillsViewModel viewModel = new PersonaDetailSkillsViewModel(repository);
+        viewModel.getPersonasWithSkill(1).observeForever(personas -> {
+            assertNotNull(personas);
+            assertEquals(0, personas.size());
         });
     }
 }
