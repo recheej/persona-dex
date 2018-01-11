@@ -9,6 +9,7 @@ import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.room.Persona;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,7 +28,13 @@ public class CustomPersonaRepository implements MainPersonaRepository {
 
     @Override
     public LiveData<List<MainListPersona>> getAllPersonasForMainList() {
-        return personasLiveData;
+        return Transformations.map(personasLiveData, new Function<List<MainListPersona>, List<MainListPersona>>() {
+            @Override
+            public List<MainListPersona> apply(List<MainListPersona> input) {
+                 Collections.sort(input, (p1, p2) -> p1.name.compareTo(p2.name));
+                 return input;
+            }
+        });
     }
 
     @Override

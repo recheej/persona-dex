@@ -55,12 +55,7 @@ public class PersonaMainListViewModel extends ViewModel{
 
         sortByPersonaNameAsc = (o1, o2) -> o1.name.compareTo(o2.name);
 
-        sortByPersonaNameDesc = new Comparator<MainListPersona>() {
-            @Override
-            public int compare(MainListPersona o1, MainListPersona o2) {
-                return o1.name.compareTo(o2.name) * -1;
-            }
-        };
+        sortByPersonaNameDesc = (o1, o2) -> o1.name.compareTo(o2.name) * -1;
 
         sortByPersonaLevelAsc = (o1, o2) -> Integer.compare(o1.level, o2.level);
         sortByPersonaLevelDesc = (o1, o2) -> Integer.compare(o1.level, o2.level) * -1;
@@ -209,6 +204,7 @@ public class PersonaMainListViewModel extends ViewModel{
     }
 
     public void updatePersonas(List<MainListPersona> newPersonas){
+        Collections.sort(newPersonas, (p1, p2) -> p1.name.compareTo(p2.name));
         allPersonas.setValue(new ArrayList<>(newPersonas));
         filteredPersonas.setValue(new ArrayList<>(newPersonas));
     }
