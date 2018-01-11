@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
     android:label="@string/app_name_short"
-    android:hint="@string/hint_persona_name"
+    android:hint="@string/hint_main_search"
     android:searchSuggestAuthority="@string/name_provider_auth"
     android:searchSuggestIntentAction="android.intent.action.VIEW"
     >

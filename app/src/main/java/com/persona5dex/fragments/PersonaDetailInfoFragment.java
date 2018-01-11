@@ -72,9 +72,10 @@ public class PersonaDetailInfoFragment extends BaseFragment {
                     setTextViewText(baseView, R.id.textView_arcanaName, personaDetailInfo.arcanaName);
 
                     if(personaDetailInfo.note != null && !personaDetailInfo.note.isEmpty()){
-                        View notesContainer = baseView.findViewById(R.id.container_note);
-                        notesContainer.setVisibility(View.VISIBLE);
-                        setTextViewText(baseView, R.id.textView_note, personaDetailInfo.note);
+                        addNote(personaDetailInfo.note);
+                    }
+                    else if(personaDetailInfo.max){
+                        PersonaDetailInfoFragment.this.addNote(getString(R.string.max_note));
                     }
 
                     PhotoView personaPictureView = baseView.findViewById(R.id.imageView_persona);
@@ -102,12 +103,19 @@ public class PersonaDetailInfoFragment extends BaseFragment {
                                     @Override
                                     public void onError() {
                                         progressBar.setVisibility(View.GONE);
+                                        personaPictureView.setVisibility(View.GONE);
                                     }
                                 });
                     }
                 }
             }
         });
+    }
+
+    private void addNote(String notToAdd) {
+        View notesContainer = baseView.findViewById(R.id.container_note);
+        notesContainer.setVisibility(View.VISIBLE);
+        setTextViewText(baseView, R.id.textView_note, notToAdd);
     }
 
     @Nullable

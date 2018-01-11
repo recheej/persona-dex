@@ -14,6 +14,7 @@ public class PersonaDetailInfo {
     public int level;
     public String imageUrl;
     public String note;
+    public boolean max;
 
     @Embedded
     public Stats stats;

@@ -4,7 +4,7 @@
     <string name="level_label">Level:</string>
     <string name="action_search">search</string>
     <string name="personas">Persona</string>
-    <string name="hint_persona_name">Search Personas</string>
+    <string name="hint_main_search">Search Personas or skills</string>
     <string name="tab_name_info">Info</string>
     <string name="tab_name_elements">Elements</string>
     <string name="tab_name_skills">Skills</string>
@@ -79,5 +79,6 @@
     <string name="advanced_fusion">Advanced Fusion</string>
     <string name="advanced_fusion_prompt">%s can be fused by acquiring all of the following personas:</string>
     <string name="personas_with_skill">Personas with this skill:</string>
+    <string name="max_note">You can only fuse this persona after you max out the confidant rank.</string>
 
 </resources>
