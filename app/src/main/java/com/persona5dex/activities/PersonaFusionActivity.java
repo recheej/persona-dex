@@ -25,7 +25,7 @@ import com.persona5dex.viewmodels.ViewModelFactory;
 
 import javax.inject.Inject;
 
-public class PersonaFusionActivity extends BaseActivity {
+public class PersonaFusionActivity extends BaseActivity implements FusionListFragment.FusionListListener {
 
     @Inject
     Toolbar mainToolbar;
@@ -36,6 +36,8 @@ public class PersonaFusionActivity extends BaseActivity {
     private PersonaFusionViewModel viewModel;
 
     private int personaForFusionID;
+    private PersonaFusionListPagerAdapter pagerAdapter;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +74,16 @@ public class PersonaFusionActivity extends BaseActivity {
                 toFragment = AdvancedPersonaFragment.newInstance(personaForFusionID);
             }
             else{
-                toFragment = FusionListFragment.newInstance(true, personaForFusionID);
+                FusionListFragment fusionListFragment = FusionListFragment.newInstance(true, personaForFusionID);
+                toFragment = fusionListFragment;
+                fusionListFragment.setListener(this);
             }
 
-            Fragment fromFragment = FusionListFragment.newInstance(false, personaForFusionID);
+            FusionListFragment fromFragment = FusionListFragment.newInstance(false, personaForFusionID);
+            fromFragment.setListener(this);
 
-            ViewPager viewPager = findViewById(R.id.view_pager_fusion);
-            PersonaFusionListPagerAdapter pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(),
+            viewPager = findViewById(R.id.view_pager_fusion);
+            pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(),
                     this, toFragment, fromFragment);
             viewPager.setAdapter(pagerAdapter);
 
@@ -103,5 +108,17 @@ public class PersonaFusionActivity extends BaseActivity {
 
         viewModel.getPersonaName(personaForFusionID).observe(this,
                 personaName -> mainToolbar.setTitle(String.format("Fusions for: %s", personaName)));
+    }
+
+    @Override
+    public void fusionListCountUpdated(int count, boolean isToList) {
+        if(isToList){
+            pagerAdapter.setToListCount(count);
+        }
+        else{
+            pagerAdapter.setFromListCount(count);
+        }
+
+        viewPager.setAdapter(pagerAdapter);
     }
 }
