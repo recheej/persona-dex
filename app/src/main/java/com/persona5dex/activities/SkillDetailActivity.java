@@ -96,5 +96,8 @@ public class SkillDetailActivity extends BaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
         personaListFragment.setIndexBarVisible(false);
+
+        viewModel.getPersonasWithSkill(skillID)
+                .observe(this, personas -> personaListFragment.setPersonas(personas));
     }
 }

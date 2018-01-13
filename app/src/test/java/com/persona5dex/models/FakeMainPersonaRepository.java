@@ -63,4 +63,9 @@ public class FakeMainPersonaRepository implements MainPersonaRepository {
     public LiveData<List<MainListPersona>> getDLCPersonas() {
         return null;
     }
+
+    @Override
+    public LiveData<String> getPersonaName(int personaID) {
+        return null;
+    }
 }

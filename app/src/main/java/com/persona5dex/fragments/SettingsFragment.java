@@ -11,8 +11,17 @@ import android.support.v14.preference.MultiSelectListPreference;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.activities.BaseActivity;
+import com.persona5dex.activities.SettingsActivity;
+import com.persona5dex.dagger.activity.ActivityContextModule;
+import com.persona5dex.dagger.activity.LayoutModule;
+import com.persona5dex.dagger.activity.ViewModelModule;
+import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
+import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.viewmodels.SettingsViewModel;
+import com.persona5dex.viewmodels.ViewModelFactory;
+
+import javax.inject.Inject;
 
 /**
  * Created by Rechee on 10/7/2017.
@@ -26,16 +35,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private String[] dlcValues;
     private BaseActivity activity;
 
+    @Inject
+    ViewModelFactory viewModelFactory;
+
     private SettingsViewModel viewModel;
     private PreferenceManager preferenceManager;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-
-
         setPreferencesFromResource(R.xml.preferences, rootKey);
-
-
     }
 
     @Override
@@ -45,11 +53,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         this.activity = (BaseActivity) getActivity();
         preferenceManager = getPreferenceManager();
 
-        Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
+        Persona5Application.get(activity)
+                .getComponent()
+                .viewModelComponent(new AndroidViewModelRepositoryModule())
+                .activityComponent(new LayoutModule(activity),
+                        new ActivityContextModule(activity),
+                        new ViewModelModule(),
+                        new ViewModelRepositoryModule())
+                .plus()
+                .inject(this);
 
-        viewModel = ViewModelProviders.of(this).get(SettingsViewModel.class);
-        viewModel.init(component);
-
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SettingsViewModel.class);
 
         final MultiSelectListPreference dlcPreference = (MultiSelectListPreference) preferenceManager
                 .findPreference(activity.getString(R.string.pref_key_dlc));

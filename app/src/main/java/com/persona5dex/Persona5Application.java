@@ -33,7 +33,6 @@ public class Persona5Application extends Application {
         this.component = DaggerPersona5ApplicationComponent.builder()
                 .applicationContextModule(new ApplicationContextModule(this))
                 .build();
-        this.database = PersonaDatabase.getPersonaDatabase(this);
     }
 
     public static PersonaDatabase getPersonaDatabase(Context context) {
@@ -42,6 +41,10 @@ public class Persona5Application extends Application {
     }
 
     public PersonaDatabase getPersonaDatabase() {
+        if(this.database == null) {
+            this.database = PersonaDatabase.getPersonaDatabase(this);
+        }
+
         return database;
     }
 
