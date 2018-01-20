@@ -1,6 +1,8 @@
 package com.persona5dex.fragments;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -57,6 +59,9 @@ public class FusionListFragment extends BaseFragment {
 
     @Inject
     ViewModelFactory viewModelFactory;
+    private LiveData<List<PersonaEdgeDisplay>> edgesLiveData;
+
+    private FusionListListener listener;
 
     public FusionListFragment() {
         // Required empty public constructor
@@ -76,6 +81,14 @@ public class FusionListFragment extends BaseFragment {
         args.putInt(PERSONA_ID, personaID);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public interface FusionListListener {
+        void fusionListCountUpdated(int count, boolean isToList);
+    }
+
+    public void setListener(FusionListListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -161,13 +174,18 @@ public class FusionListFragment extends BaseFragment {
             personaHeaderColumnTwo.setText(R.string.result);
         }
 
-        viewModel.getEdges(personaID, isToList).observe(this, new Observer<List<PersonaEdgeDisplay>>() {
+        this.edgesLiveData = viewModel.getEdges(personaID, isToList);
+        this.edgesLiveData.observe(this, new Observer<List<PersonaEdgeDisplay>>() {
             @Override
             public void onChanged(@Nullable List<PersonaEdgeDisplay> personaEdgeDisplays) {
                 edgeDisplays.clear();
 
                 if(personaEdgeDisplays != null){
                     edgeDisplays.addAll(personaEdgeDisplays);
+                }
+
+                if(listener != null){
+                    listener.fusionListCountUpdated(edgeDisplays.size(), isToList);
                 }
 
                 fusionListAdapter.notifyDataSetChanged();
