@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
 import android.support.v4.content.LocalBroadcastManager;
 
+import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.dagger.fusionService.FusionArcanaDataModule;
 import com.persona5dex.dagger.fusionService.FusionCalculatorServiceComponent;
@@ -63,6 +64,13 @@ public class FusionCalculatorJobService extends JobIntentService {
         enqueueWork(context, FusionCalculatorJobService.class, JOB_ID, work);
     }
 
+    private boolean fusionUpdateRequired() {
+        int currentAppVersionCode = BuildConfig.VERSION_CODE;
+        int currentFusionVersionCode = personaEdgeRepository.getEdgesVersionCode();
+
+        return currentAppVersionCode != currentFusionVersionCode;
+    }
+
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
         FusionCalculatorServiceComponent component = Persona5Application.get(this).getComponent()
@@ -70,7 +78,7 @@ public class FusionCalculatorJobService extends JobIntentService {
         component.inject(this);
 
         final boolean forceReset = intent.getBooleanExtra("forceReset", false);
-        if(forceReset || !personaEdgeRepository.edgesStored()){
+        if(forceReset || this.fusionUpdateRequired()){
 
             PersonaFuser.PersonaFusionArgs fuserArgs = new PersonaFuser.PersonaFusionArgs();
             fuserArgs.personasByLevel = personaByLevel;
@@ -97,6 +105,9 @@ public class FusionCalculatorJobService extends JobIntentService {
             }
 
             this.personaEdgeRepository.markFinished();
+
+            //update current edge version to app version
+            personaEdgeRepository.updateEdgesVersion(BuildConfig.VERSION_CODE);
         }
 
         Intent fusionCalculationFishedIntent = new Intent(FusionCalculatorJobService.Constants.BROADCAST_ACTION);

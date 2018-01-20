@@ -14,4 +14,6 @@ public interface PersonaEdgesRepository {
     void markInit();
     PersonaStore getEdgesForPersona(int personaID);
     boolean edgesStored();
+    int getEdgesVersionCode();
+    void updateEdgesVersion(int newVersion);
 }

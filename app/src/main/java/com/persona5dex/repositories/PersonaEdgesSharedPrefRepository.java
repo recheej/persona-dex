@@ -51,6 +51,7 @@ public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository 
     public void markInit() {
         editor.putBoolean("finished", false);
         editor.commit();
+        personaDao.removeAllFusions();
         personaDatabase.beginTransaction();
     }
 
@@ -71,5 +72,14 @@ public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository 
     @Override
     public boolean edgesStored() {
         return sharedPreferences.getBoolean("finished", false);
+    }
+
+    public int getEdgesVersionCode() {
+        return sharedPreferences.getInt(PersonaStore.FUSION_VERSION_KEY, 10);
+    }
+
+    public void updateEdgesVersion(int newVersion) {
+        editor.putInt(PersonaStore.FUSION_VERSION_KEY, newVersion);
+        editor.commit();
     }
 }

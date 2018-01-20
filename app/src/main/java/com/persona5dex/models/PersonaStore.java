@@ -5,6 +5,9 @@ package com.persona5dex.models;
  */
 
 public class PersonaStore {
+
+    public static final String FUSION_VERSION_KEY = "fusion_version";
+
     private RawPersonaEdge[] edgesFrom;
     private RawPersonaEdge[] edgesTo;
 

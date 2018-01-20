@@ -54,7 +54,7 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
         private void goToPersonaDetail(int personaID){
             Intent startDetailIntent = new Intent(itemView.getContext(), PersonaDetailActivity.class);
-            startDetailIntent.putExtra("persona_id", 0);
+            startDetailIntent.putExtra("persona_id", personaID);
             itemView.getContext().startActivity(startDetailIntent);
         }
 
@@ -80,19 +80,9 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
             this.textViewPersonaNameOne.setText(edge.leftPersonaName);
             this.textViewPersonaNameTwo.setText(edge.rightPersonaName);
 
-            this.textViewPersonaOneDetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goToPersonaDetail(edge.leftPersonaID);
-                }
-            });
+            this.textViewPersonaOneDetail.setOnClickListener(v -> goToPersonaDetail(edge.leftPersonaID));
 
-            this.textViewPersonaTwoDetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    goToPersonaDetail(edge.rightPersonaID);
-                }
-            });
+            this.textViewPersonaTwoDetail.setOnClickListener(v -> goToPersonaDetail(edge.rightPersonaID));
 
             String detailsFor = itemView.getContext().getString(R.string.details_for);
 
@@ -132,28 +122,25 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
         final int edgePosition = holder.getAdapterPosition() == RecyclerView.NO_POSITION ? 0 : holder.getAdapterPosition();
         holder.bind(edges.get(edgePosition));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //view clicked let's expand
+        holder.itemView.setOnClickListener(v -> {
+            //view clicked let's expand
 
-                ViewHolder selectedViewHolder = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(selectedPosition);
-                if(selectedViewHolder != null){
-                    selectedViewHolder.expandableLayout().collapse();
-                    selectedViewHolder.expandImage().setImageResource(R.drawable.ic_expand_more_white_24dp);
-                }
+            ViewHolder selectedViewHolder = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(selectedPosition);
+            if(selectedViewHolder != null){
+                selectedViewHolder.expandableLayout().collapse();
+                selectedViewHolder.expandImage().setImageResource(R.drawable.ic_expand_more_white_24dp);
+            }
 
-                if(holder.personaEdge() == selectedPersonaEdge){
-                    selectedPersonaEdge = null;
-                    selectedPosition = -1;
-                    holder.expandImage().setImageResource(R.drawable.ic_expand_more_white_24dp);
-                }
-                else{
-                    holder.expandableLayout().expand();
-                    selectedPersonaEdge = edges.get(edgePosition);
-                    selectedPosition = edgePosition;
-                    holder.expandImage().setImageResource(R.drawable.ic_expand_less_white_24dp);
-                }
+            if(holder.personaEdge() == selectedPersonaEdge){
+                selectedPersonaEdge = null;
+                selectedPosition = -1;
+                holder.expandImage().setImageResource(R.drawable.ic_expand_more_white_24dp);
+            }
+            else{
+                holder.expandableLayout().expand();
+                selectedPersonaEdge = edges.get(edgePosition);
+                selectedPosition = edgePosition;
+                holder.expandImage().setImageResource(R.drawable.ic_expand_less_white_24dp);
             }
         });
     }

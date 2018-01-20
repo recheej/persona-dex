@@ -213,12 +213,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         PopupMenu popupMenu = new PopupMenu(this, anchor);
         popupMenu.inflate(R.menu.sort_persona_menu);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                MainActivity.this.selectedSortMenuItemID = item.getItemId();
-                return handleSortClick();
-            }
+        popupMenu.setOnMenuItemClickListener(item -> {
+            MainActivity.this.selectedSortMenuItemID = item.getItemId();
+            return handleSortClick();
         });
 
         popupMenu.show();
