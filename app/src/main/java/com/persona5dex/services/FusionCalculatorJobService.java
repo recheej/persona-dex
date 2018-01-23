@@ -65,10 +65,15 @@ public class FusionCalculatorJobService extends JobIntentService {
     }
 
     private boolean fusionUpdateRequired() {
-        int currentAppVersionCode = BuildConfig.VERSION_CODE;
-        int currentFusionVersionCode = personaEdgeRepository.getEdgesVersionCode();
+        int fusionVersionNumber = BuildConfig.FUSION_VERSION_NUMBER;
+        int storedFusionNumber = personaEdgeRepository.getEdgesVersionCode();
 
-        return currentAppVersionCode != currentFusionVersionCode;
+        if(fusionVersionNumber != storedFusionNumber){
+            //update current edge version to app version
+            personaEdgeRepository.updateEdgesVersion(fusionVersionNumber);
+        }
+
+        return fusionVersionNumber != storedFusionNumber;
     }
 
     @Override
@@ -105,9 +110,6 @@ public class FusionCalculatorJobService extends JobIntentService {
             }
 
             this.personaEdgeRepository.markFinished();
-
-            //update current edge version to app version
-            personaEdgeRepository.updateEdgesVersion(BuildConfig.VERSION_CODE);
         }
 
         Intent fusionCalculationFishedIntent = new Intent(FusionCalculatorJobService.Constants.BROADCAST_ACTION);

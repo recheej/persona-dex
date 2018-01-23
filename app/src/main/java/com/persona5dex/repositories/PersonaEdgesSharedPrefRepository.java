@@ -2,6 +2,7 @@ package com.persona5dex.repositories;
 
 import android.content.SharedPreferences;
 
+import com.persona5dex.BuildConfig;
 import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.RawPersonaEdge;
 import com.google.gson.Gson;
@@ -75,7 +76,13 @@ public class PersonaEdgesSharedPrefRepository implements PersonaEdgesRepository 
     }
 
     public int getEdgesVersionCode() {
-        return sharedPreferences.getInt(PersonaStore.FUSION_VERSION_KEY, 10);
+        int storedVersionCode = sharedPreferences.getInt(PersonaStore.FUSION_VERSION_KEY, -1);
+        if(storedVersionCode == -1){
+            storedVersionCode = 1;
+            this.updateEdgesVersion(storedVersionCode);
+        }
+
+        return storedVersionCode;
     }
 
     public void updateEdgesVersion(int newVersion) {

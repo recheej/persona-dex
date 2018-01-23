@@ -42,6 +42,7 @@ public class PersonaFusionActivity extends BaseActivity implements FusionListFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_persona_fusion);
 
         personaForFusionID = getIntent().getIntExtra("persona_id", 1);
