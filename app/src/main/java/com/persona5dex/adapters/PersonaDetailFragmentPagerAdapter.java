@@ -9,7 +9,6 @@ import com.persona5dex.R;
 import com.persona5dex.fragments.PersonaDetailInfoFragment;
 import com.persona5dex.fragments.PersonaElementsFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
-import com.persona5dex.models.Persona;
 
 /**
  * Created by Rechee on 7/30/2017.

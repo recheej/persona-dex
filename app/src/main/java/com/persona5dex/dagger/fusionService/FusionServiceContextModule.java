@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
 import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
@@ -13,7 +14,6 @@ import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaEdgesSharedPrefRepository;
 import com.persona5dex.repositories.PersonaTransferRepository;
 import com.persona5dex.repositories.PersonaTransferRepositorySharedPref;
-import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.util.HashMap;

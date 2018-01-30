@@ -2,7 +2,6 @@ package com.persona5dex.repositories;
 
 import android.content.SharedPreferences;
 
-import com.persona5dex.models.Persona;
 import com.google.gson.Gson;
 
 import java.util.HashSet;
@@ -42,32 +41,6 @@ public class PersonaTransferRepositorySharedPref implements PersonaTransferRepos
         this.rarePersonaInFusionKey = rarePersonaInFusionKey;
 
         this.gson = gson;
-    }
-
-    @Override
-    public void storePersonaForDetail(Persona persona) {
-        SharedPreferences.Editor editor = transferSharedPreferences.edit();
-        editor.putString("detailPersona", gson.toJson(persona, Persona.class));
-        editor.commit();
-    }
-
-    @Override
-    public Persona getDetailPersona() {
-        String personaDetailJson = transferSharedPreferences.getString("detailPersona", "");
-        return gson.fromJson(personaDetailJson, Persona.class);
-    }
-
-    @Override
-    public void storePersonaForFusion(Persona personaForFusion) {
-        int personaID = transferSharedPreferences.getInt(personaForFusion.name, 0);
-        SharedPreferences.Editor editor = transferSharedPreferences.edit();
-        editor.putInt("personaForFusion", personaID);
-        editor.commit();
-    }
-
-    @Override
-    public int getPersonaForFusion() {
-        return transferSharedPreferences.getInt("personaForFusion", 0);
     }
 
     @Override

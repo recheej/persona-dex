@@ -10,7 +10,6 @@ import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.RawPersona;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.persona5dex.models.RawSkill;
 import com.persona5dex.models.room.PersonaDatabase;
 
 import java.io.InputStream;
@@ -57,15 +56,6 @@ public class ApplicationContextModule {
         PersonaFileUtilities utilities = new PersonaFileUtilities(gson);
 
         return utilities.parseJsonFile(stream, RawPersona[].class);
-    }
-
-    @Provides
-    @ApplicationScope
-    RawSkill[] rawSkills(Gson gson){
-        InputStream stream = context.getResources().openRawResource(R.raw.skill_data);
-        PersonaFileUtilities utilities = new PersonaFileUtilities(gson);
-
-        return utilities.parseJsonFile(stream, RawSkill[].class);
     }
 
     @Provides

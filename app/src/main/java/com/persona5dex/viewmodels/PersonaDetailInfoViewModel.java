@@ -26,8 +26,6 @@ public class PersonaDetailInfoViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public PersonaDetailInfoViewModel() {}
-
     public void init(Persona5ApplicationComponent component, int personaID) {
         component
                 .viewModelComponent(new AndroidViewModelRepositoryModule())

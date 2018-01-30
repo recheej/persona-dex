@@ -1,7 +1,5 @@
 package com.persona5dex.repositories;
 
-import com.persona5dex.models.Persona;
-import com.persona5dex.models.PersonaForFusionService;
 import com.persona5dex.models.PersonaStore;
 
 /**

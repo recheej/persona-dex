@@ -51,7 +51,6 @@ public class PersonaFuserTest {
         InputStream arcanaTableStream = classLoader.getResourceAsStream("arcana_combo_data.json");
         InputStream rareComboSteam = classLoader.getResourceAsStream("rare_combos.json");
 
-
         PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(new Gson());
 
         RawPersona[] rawPersonas = personaFileUtilities.getRawPersonas(personaDataStream);

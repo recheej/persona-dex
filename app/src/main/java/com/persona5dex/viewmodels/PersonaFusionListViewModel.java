@@ -26,15 +26,6 @@ public class PersonaFusionListViewModel{
         this.transferRepository = transferRepository;
     }
 
-    public PersonaStoreDisplay getEdgesForPersona(int personaID) {
-        PersonaStore personaStore = personaEdgeRepository.getEdgesForPersona(personaID);
-
-        personaStore.setEdgesFrom(filterOutDuplicateEdges(personaStore.edgesFrom(), personaID, false));
-        personaStore.setEdgesTo(filterOutDuplicateEdges(personaStore.edgesTo(), personaID, true));
-
-        return this.mapRawStoreToDisplay(personaStore, personaID);
-    }
-
     /**
      * Helper method to map raw persona edges to ones for display
      * @param store Persona store which has edges

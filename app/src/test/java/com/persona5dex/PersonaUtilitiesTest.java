@@ -1,9 +1,5 @@
 package com.persona5dex;
 
-import com.google.gson.Gson;
-import com.persona5dex.models.Persona;
-import com.persona5dex.repositories.PersonaTransferRepository;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -23,24 +19,24 @@ import static org.junit.Assert.assertNull;
 @Config(constants = BuildConfig.class)
 public class PersonaUtilitiesTest {
 
-    /**
-     * Tests that if you switch locales, arcana names come back correctly
-     */
-    @Test
-    public void arcanaNamesWithDifferentLocaleTest() {
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        InputStream personaDataStream = classLoader.getResourceAsStream("person_data.json");
-
-        Locale turkishLocale = Locale.forLanguageTag("tr-TR");
-        Locale.setDefault(turkishLocale);
-
-        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(new Gson());
-
-        Persona[] allPersonas = personaFileUtilities.allPersonas(personaDataStream);
-
-        for (Persona persona : allPersonas) {
-            assertNotNull(persona.arcana);
-        }
-    }
+//    /**
+//     * Tests that if you switch locales, arcana names come back correctly
+//     */
+//    @Test
+//    public void arcanaNamesWithDifferentLocaleTest() {
+//        ClassLoader classLoader = getClass().getClassLoader();
+//
+//        InputStream personaDataStream = classLoader.getResourceAsStream("person_data.json");
+//
+//        Locale turkishLocale = Locale.forLanguageTag("tr-TR");
+//        Locale.setDefault(turkishLocale);
+//
+//        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(new Gson());
+//
+//        Persona[] allPersonas = personaFileUtilities.allPersonas(personaDataStream);
+//
+//        for (Persona persona : allPersonas) {
+//            assertNotNull(persona.arcana);
+//        }
+//    }
 }

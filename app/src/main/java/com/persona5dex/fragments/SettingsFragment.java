@@ -29,10 +29,6 @@ import javax.inject.Inject;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    public static final String ARG_NAMES = "names";
-    public static final String ARG_VALUES = "values";
-    private String[] dlcNames;
-    private String[] dlcValues;
     private BaseActivity activity;
 
     @Inject
@@ -83,20 +79,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             }
         });
 
-//
-//        addPreferencesFromResource(R.xml.preferences);
-//        dlcNames = (String[]) getArguments().getCharSequenceArray(ARG_NAMES);
-//        dlcValues = (String[]) getArguments().getCharSequenceArray(ARG_VALUES);
-
 
     }
-//
-//    public static SettingsFragment newInstance(String[][] dlcSettings){
-//        SettingsFragment settingsFragment = new SettingsFragment();
-//        Bundle args = new Bundle();
-//        args.putCharSequenceArray(ARG_NAMES, dlcSettings[0]);
-//        args.putCharSequenceArray(ARG_VALUES, dlcSettings[1]);
-//        settingsFragment.setArguments(args);
-//        return settingsFragment;
-//    }
 }
