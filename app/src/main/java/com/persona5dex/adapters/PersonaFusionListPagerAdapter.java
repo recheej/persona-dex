@@ -6,7 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.persona5dex.R;
-import com.persona5dex.fragments.FusionListFragment;
+
+import java.util.Locale;
 
 /**
  * Created by Rechee on 7/30/2017.
@@ -17,6 +18,8 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
     private final Context context;
     private final Fragment toFragment;
     private final Fragment fromFragment;
+    private int toListCount;
+    private int fromListCount;
 
     public PersonaFusionListPagerAdapter(FragmentManager fm, Context context, Fragment toFragment,
                                          Fragment fromFragment) {
@@ -26,9 +29,17 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
         this.fromFragment = fromFragment;
     }
 
+    public void setToListCount(int toListCount) {
+        this.toListCount = toListCount;
+    }
+
+    public void setFromListCount(int fromListCount) {
+        this.fromListCount = fromListCount;
+    }
+
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return toFragment;
             case 1:
@@ -45,11 +56,22 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                return context.getString(R.string.to);
+                String to = context.getString(R.string.to);
+
+                if (toListCount == 0) {
+                    return to;
+                }
+
+                return String.format(Locale.getDefault(), "%s (%d)", to, toListCount);
             case 1:
-                return context.getString(R.string.from);
+                String from = context.getString(R.string.from);
+                if (fromListCount == 0) {
+                    return from;
+                }
+
+                return String.format(Locale.getDefault(), "%s (%d)", from, fromListCount);
             default:
                 return null;
         }

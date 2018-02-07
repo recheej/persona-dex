@@ -62,9 +62,11 @@ public interface PersonaDao {
     )
     LiveData<List<PersonaEdgeDisplay>> getEdgesFromPersona(int personaID);
 
+    @Query("delete from personaFusions")
+    void removeAllFusions();
+
     @Query("select name from personas where id = :personaID")
     LiveData<String> getPersonaName(int personaID);
-
 
     @Query("select special from personas where id = :personaID")
     LiveData<Integer> personaIsAdvanced(int personaID);
