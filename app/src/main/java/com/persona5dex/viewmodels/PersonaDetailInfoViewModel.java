@@ -22,6 +22,8 @@ public class PersonaDetailInfoViewModel extends ViewModel {
     private LiveData<PersonaDetailInfo> detailInfo;
     private int personaID;
 
+    public PersonaDetailInfoViewModel() {}
+
     public PersonaDetailInfoViewModel(PersonaDetailRepository repository){
         this.repository = repository;
     }
