@@ -29,13 +29,6 @@ public abstract class PersonaDatabase extends RoomDatabase {
 
     private static PersonaDatabase INSTANCE;
 
-//    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
-//        @Override
-//        public void migrate(@NonNull SupportSQLiteDatabase database) {
-//            database.execSQL("CREATE TABLE \"searchSuggestions\" ( `_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `suggest_text_1` TEXT, `suggest_text_2` TEXT, `suggest_intent_data` TEXT, `suggest_intent_extra_data` TEXT )");
-//        }
-//    };
-
     public static PersonaDatabase getPersonaDatabase(Context context){
         if(INSTANCE == null){
             INSTANCE = RoomAsset.databaseBuilder(context.getApplicationContext(),

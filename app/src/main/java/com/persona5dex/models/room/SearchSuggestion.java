@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 )
 public class SearchSuggestion {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     public int id;
 

@@ -10,6 +10,8 @@ import com.persona5dex.dagger.application.DaggerPersona5ApplicationComponent;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.room.PersonaDatabase;
 
+import java.io.IOException;
+
 /**
  * Created by Rechee on 7/1/2017.
  */

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Rechee on 10/22/2017.
@@ -36,6 +37,7 @@ public class PersonaSkill {
     @ColumnInfo(name = "skill_id")
     public int skillID;
 
+    @NonNull
     @ColumnInfo(name = "level_required")
     public int levelRequired;
 }
