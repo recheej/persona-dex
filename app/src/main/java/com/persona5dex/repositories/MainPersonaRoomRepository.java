@@ -23,7 +23,7 @@ public class MainPersonaRoomRepository implements MainPersonaRepository {
     private final PersonaDatabase db;
 
     @Inject
-    public MainPersonaRoomRepository(PersonaDatabase personaDatabase, Lazy<RawPersona[]> rawPersonas, Context applicationContext){
+    public MainPersonaRoomRepository(PersonaDatabase personaDatabase){
         this.db = personaDatabase;
     }
 
