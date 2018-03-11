@@ -80,5 +80,6 @@
     <string name="advanced_fusion_prompt">%s can be fused by acquiring all of the following personas:</string>
     <string name="personas_with_skill">Personas with this skill:</string>
     <string name="max_note">You can only fuse this persona after you max out the confidant rank.</string>
+    <string name="skills_more_details">Click on a skill for more details.</string>
 
 </resources>

@@ -8,6 +8,12 @@
     android:paddingStart="16dp"
     >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/skills_more_details"
+        android:textSize="12sp"/>
+
     <LinearLayout
         android:id="@+id/skill_grid"
         style="@style/PersonaStatsTheme"
