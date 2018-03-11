@@ -20,14 +20,14 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.persona5dex"
         minSdkVersion 19
-        targetSdkVersion 26
-        versionCode 10
-        versionName "1.2.5"
+        targetSdkVersion 27
+        versionCode 11
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -38,6 +38,7 @@ android {
             signingConfig signingConfigs.config
             buildConfigField("boolean", "ENABLE_CRASHLYTICS", "true")
             resValue("string", "name_provider_auth", defaultConfig.applicationId + ".personanameprovider")
+            buildConfigField("int", "FUSION_VERSION_NUMBER", "1")
         }
         debug {
             buildConfigField("boolean", "ENABLE_CRASHLYTICS", "false")
@@ -62,29 +63,29 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:design:27.1.0'
     compile 'com.google.dagger:dagger:2.11'
-    compile 'com.google.code.gson:gson:2.8.1'
-    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.android.support:support-v4:27.1.0'
     compile 'net.cachapa.expandablelayout:expandablelayout:2.9.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     compile 'com.github.myinnos:AlphabetIndex-Fast-Scroll-RecyclerView:1.0.8'
-    testCompile 'org.robolectric:robolectric:3.4.2'
+    testCompile 'org.robolectric:robolectric:3.6.1'
     compile 'com.github.medyo:android-about-page:1.2.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.7.0@aar') {
         transitive = true
     }
     compile 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-    compile 'android.arch.lifecycle:extensions:1.0.0'
+    compile 'android.arch.lifecycle:extensions:1.1.0'
     compile 'com.github.humazed:RoomAsset:v1.0'
     debugCompile 'com.facebook.stetho:stetho:1.5.0'
     testCompile 'org.mockito:mockito-core:2.13.0'
-    compile 'com.android.support:preference-v7:26.1.0'
-    compile 'com.android.support:preference-v14:26.1.0'
+    compile 'com.android.support:preference-v7:27.1.0'
+    compile 'com.android.support:preference-v14:27.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.chrisbanes:PhotoView:2.1.3'
 }
