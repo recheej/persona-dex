@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         />
 
-    <android.support.v4.view.ViewPager
+    <com.persona5dex.adapters.PersonaDetailViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,6 +37,7 @@
                 android:text="@string/tab_name_skills" />
 
         </android.support.design.widget.TabLayout>
-    </android.support.v4.view.ViewPager>
+
+    </com.persona5dex.adapters.PersonaDetailViewPager>
 
 </RelativeLayout>
