@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "07c3f2c94248abbe77379e31d0ae07da",
+    "identityHash": "218529850ce296bc104a26df52ea53cf",
     "entities": [
       {
         "tableName": "personas",
@@ -493,6 +493,14 @@
               "shadow_name"
             ],
             "createSql": "CREATE UNIQUE INDEX `unique_shadows` ON `${TABLE_NAME}` (`persona_id`, `shadow_name`)"
+          },
+          {
+            "name": "ix_personaShadows_suggestion_id",
+            "unique": false,
+            "columnNames": [
+              "suggestion_id"
+            ],
+            "createSql": "CREATE  INDEX `ix_personaShadows_suggestion_id` ON `${TABLE_NAME}` (`suggestion_id`)"
           }
         ],
         "foreignKeys": [
@@ -523,7 +531,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"07c3f2c94248abbe77379e31d0ae07da\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"218529850ce296bc104a26df52ea53cf\")"
     ]
   }
 }
