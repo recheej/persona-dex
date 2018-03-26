@@ -17,8 +17,8 @@ import com.huma.room_for_asset.RoomAsset;
  */
 
 @Database(
-        entities = {Persona.class, Skill.class, PersonaSkill.class, PersonaElement.class, SearchSuggestion.class, PersonaFusion.class},
-        version = 2
+        entities = {Persona.class, Skill.class, PersonaSkill.class, PersonaElement.class, SearchSuggestion.class, PersonaFusion.class, PersonaShadowName.class},
+        version = 3
 )
 @TypeConverters({PersonaTypeConverters.class})
 public abstract class PersonaDatabase extends RoomDatabase {
