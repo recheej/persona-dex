@@ -332,6 +332,10 @@ public abstract class PersonaDatabase extends RoomDatabase {
             //create unique shadows index
             database.execSQL("create index ix_personaShadows_suggestion_id " +
                     "on personaShadowNames (suggestion_id)");
+
+            //update incorrect spelling of kushi mitama
+            database.execSQL("update personas set name = 'Kushi Mitama'\n" +
+                    "where name = 'Kusi Mitama'");
         }
     };
 }
