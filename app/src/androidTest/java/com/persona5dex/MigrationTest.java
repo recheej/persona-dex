@@ -3,8 +3,10 @@ package com.persona5dex;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory;
 import android.arch.persistence.room.testing.MigrationTestHelper;
+import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import org.junit.Test;
 
 import com.persona5dex.models.room.PersonaDatabase;
 
@@ -13,6 +15,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class MigrationTest {
@@ -33,7 +38,10 @@ public class MigrationTest {
 
         // db has schema version 1. insert some data using SQL queries.
         // You cannot use DAO classes because they expect the latest schema.
-        //db.execSQL(...);
+
+        String molochPeronaName = "Moloch";
+        db.execSQL("insert into personas (name, level, special, max, dlc, rare)\n" +
+                "values (?, 1, 0, 0, 0, 0)", new String[] {molochPeronaName});
 
         // Prepare for the next version.
         db.close();
@@ -42,7 +50,14 @@ public class MigrationTest {
         // MIGRATION_1_2 as the migration process.
         db = helper.runMigrationsAndValidate(TEST_DB, 3, true, PersonaDatabase.MIGRATION_2_3);
 
-        // MigrationTestHelper automatically verifies the schema changes,
-        // but you need to validate that the data was migrated properly.
+        Cursor cursor = db.query("select psn.shadow_name, ss.suggest_text_2 from personas " +
+                "inner join personashadownames psn on psn.persona_id = personas.id" +
+                " inner join searchSuggestions ss on ss._id = psn.suggestion_id where personas.name = ?", new String[] { molochPeronaName });
+        cursor.moveToNext();
+        String resultShadowName = cursor.getString(0);
+
+        String expectedShadowName = "Sacrificial Pyrekeeper";
+        assertEquals(expectedShadowName, resultShadowName);
+        assertEquals(expectedShadowName, cursor.getString(1));
     }
 }
