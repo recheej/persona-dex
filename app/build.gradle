@@ -12,6 +12,9 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
     signingConfigs {
         config {
             keyAlias keystoreProperties['keyAlias']
@@ -93,4 +96,5 @@ dependencies {
     implementation 'com.android.support:preference-v14:26.1.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.github.chrisbanes:PhotoView:2.1.3'
+    androidTestImplementation 'android.arch.persistence.room:testing:1.0.0'
 }

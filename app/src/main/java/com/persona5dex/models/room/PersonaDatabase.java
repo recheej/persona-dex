@@ -45,7 +45,7 @@ public abstract class PersonaDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
 
@@ -53,7 +53,7 @@ public abstract class PersonaDatabase extends RoomDatabase {
             database.execSQL("CREATE TABLE \"personaShadowNames\" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `primary` INTEGER NOT NULL DEFAULT 0, `suggestion_id` INTEGER, FOREIGN KEY(`suggestion_id`) REFERENCES `searchSuggestions`(`_id`), FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) )");
 
             //insert persona shadows
-            database.execSQL("begin transaction;" +
+            database.execSQL("begin transaction; " +
                     "insert into personaShadowNames (persona_id, shadow_name, [primary]) select personas.id, 'Sacrificial Pyrekeeper', 1\n" +
                     " from personas where lower(personas.name) = 'moloch'\n" +
                     "insert into personaShadowNames (persona_id, shadow_name, [primary]) select personas.id, 'Beguiling Girl', 1\n" +
@@ -324,7 +324,14 @@ public abstract class PersonaDatabase extends RoomDatabase {
                     "\tinner join personaShadowNames psn on lower(psn.shadow_name) = lower(searchSuggestions.suggest_text_2)\n" +
                     "\tand psn.id = personaShadowNames.id\n" +
                     ")");
-        }
 
+            //create unique shadows index
+            database.execSQL("create unique index unique_shadows " +
+                    "on personaShadowNames (persona_id, shadow_name)");
+
+            //create unique shadows index
+            database.execSQL("create index ix_personaShadows_suggestion_id " +
+                    "on personaShadowNames (suggestion_id)");
+        }
     };
 }
