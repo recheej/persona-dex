@@ -7,6 +7,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
+import android.database.Cursor;
 import android.support.annotation.NonNull;
 
 import com.huma.room_for_asset.RoomAsset;
@@ -33,11 +34,11 @@ public abstract class PersonaDatabase extends RoomDatabase {
             INSTANCE = RoomAsset.databaseBuilder(context.getApplicationContext(),
                     PersonaDatabase.class, "persona-db.db")
                     .addMigrations(new Migration(1, 2) {
-                        @Override
-                        public void migrate(@NonNull SupportSQLiteDatabase database) {
+                                       @Override
+                                       public void migrate(@NonNull SupportSQLiteDatabase database) {
 
-                        }
-                    }, MIGRATION_2_3
+                                       }
+                                   }, MIGRATION_2_3
                     )
                     .build();
         }
@@ -49,8 +50,15 @@ public abstract class PersonaDatabase extends RoomDatabase {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
 
+            //if existing database, don't run the rest of the migration steps
+            Cursor cursor = database.query("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='version';");
+
+            if(cursor.getCount() > 0){
+                return;
+            }
+
             //create persona shadow names table
-            database.execSQL("CREATE TABLE \"personaShadowNames\" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `primary` INTEGER NOT NULL DEFAULT 0, `suggestion_id` INTEGER, FOREIGN KEY(`suggestion_id`) REFERENCES `searchSuggestions`(`_id`), FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) )");
+            database.execSQL("CREATE TABLE if not exists  \"personaShadowNames\" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `primary` INTEGER NOT NULL DEFAULT 0, `suggestion_id` INTEGER, FOREIGN KEY(`suggestion_id`) REFERENCES `searchSuggestions`(`_id`), FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) )");
 
             //insert persona shadows
             database.beginTransaction();
@@ -340,6 +348,10 @@ public abstract class PersonaDatabase extends RoomDatabase {
             //update incorrect spelling of kushi mitama
             database.execSQL("update personas set name = 'Kushi Mitama'\n" +
                     "where name = 'Kusi Mitama'");
+
+            //fix missing link for phoneix
+            database.execSQL("update personas set imageurl = 'https://vignette.wikia.nocookie.net/megamitensei/images/d/d2/HoouSMT.jpg'\n" +
+                    "where name = 'Phoenix'");
         }
     };
 }
