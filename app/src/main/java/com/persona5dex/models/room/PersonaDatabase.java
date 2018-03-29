@@ -54,6 +54,10 @@ public abstract class PersonaDatabase extends RoomDatabase {
             Cursor cursor = database.query("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='version';");
 
             if(cursor.getCount() > 0){
+                //only put in version table to tell difference between new databases and actual migrations.
+                //we don't need this check after the first time, let's delete the table
+                database.execSQL("delete from version");
+                database.execSQL("drop table version");
                 return;
             }
 
