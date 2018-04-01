@@ -10,6 +10,7 @@ import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.models.PersonaForFusionService;
+import com.persona5dex.models.PersonaShadowDetail;
 
 import java.util.List;
 
@@ -22,10 +23,13 @@ public interface PersonaDao {
     @Query("select id, name, arcanaName, arcana, level, rare, dlc from personas")
     LiveData<List<MainListPersona>> getAllPersonasForMainList();
 
-    @Query("select name, arcanaName, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
+    @Query("select id, name, arcanaName, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
             "from personas where id = :personaID " +
             "order by name")
     LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
+
+    @Query("select shadow_name as shadowName, `primary` from personaShadowNames where persona_id = :personaID")
+    LiveData<PersonaShadowDetail[]> getShadowsForPersona(int personaID);
 
     @Query("select id, arcana, arcanaName, name, level, rare, dlc, special from personas order by level")
     PersonaForFusionService[] getPersonasByLevel();

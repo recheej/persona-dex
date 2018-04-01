@@ -353,9 +353,13 @@ public abstract class PersonaDatabase extends RoomDatabase {
             database.execSQL("update personas set name = 'Kushi Mitama'\n" +
                     "where name = 'Kusi Mitama'");
 
-            //fix missing link for phoneix
+            //fix missing link for phoenix
             database.execSQL("update personas set imageurl = 'https://vignette.wikia.nocookie.net/megamitensei/images/d/d2/HoouSMT.jpg'\n" +
                     "where name = 'Phoenix'");
+
+            //fix missing link for yamata
+            database.execSQL("update personas set imageurl = 'https://s3-us-west-2.amazonaws.com/en-samurai-gamers-images/wp-content/uploads/2017/03/23064221/YamatanoOrochi_03_23_2017.jpg'\n" +
+                    "where name = 'Yamata-no-Orochi'");
         }
     };
 }
