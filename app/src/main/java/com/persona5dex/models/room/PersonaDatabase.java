@@ -12,6 +12,8 @@ import android.support.annotation.NonNull;
 
 import com.huma.room_for_asset.RoomAsset;
 
+import java.io.IOException;
+
 
 /**
  * Created by Rechee on 10/22/2017.
@@ -51,18 +53,19 @@ public abstract class PersonaDatabase extends RoomDatabase {
         public void migrate(SupportSQLiteDatabase database) {
 
             //if existing database, don't run the rest of the migration steps
-            Cursor cursor = database.query("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='version';");
-
-            if(cursor.getCount() > 0){
+            //Cursor cursor = database.query("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='version'");
+            Cursor cursor = database.query("select DISTINCT tbl_name from sqlite_master where tbl_name = 'version'", null);
+            if(cursor.moveToFirst()){
                 //only put in version table to tell difference between new databases and actual migrations.
                 //we don't need this check after the first time, let's delete the table
                 database.execSQL("delete from version");
-                database.execSQL("drop table version");
+                database.execSQL("drop table if exists version");
+                cursor.close();
                 return;
             }
 
             //create persona shadow names table
-            database.execSQL("CREATE TABLE if not exists  \"personaShadowNames\" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `primary` INTEGER NOT NULL DEFAULT 0, `suggestion_id` INTEGER, FOREIGN KEY(`suggestion_id`) REFERENCES `searchSuggestions`(`_id`), FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) )");
+            database.execSQL("CREATE TABLE if not exists \"personaShadowNames\" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `primary` INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`))");
 
             //insert persona shadows
             database.beginTransaction();
@@ -325,29 +328,30 @@ public abstract class PersonaDatabase extends RoomDatabase {
             database.setTransactionSuccessful();
             database.endTransaction();
 
-            //insert search suggestions for shadows
-            database.beginTransaction();
-            database.execSQL("insert into searchSuggestions (suggest_text_1, suggest_text_2, suggest_intent_data, suggest_intent_extra_data)\n" +
-                    "select p.name, psn.shadow_name, p.id, 1 from personaShadowNames psn\n" +
-                    "inner join personas p on p.id = psn.persona_id\n");
-            database.setTransactionSuccessful();
-            database.endTransaction();
+            //remove all search suggestions for current personas
+            database.execSQL("delete from searchSuggestions where suggest_intent_extra_data = 1");
 
-            //update suggestion_id column on persona shadows
-            database.execSQL("update personaShadowNames\n" +
-                    "set suggestion_id = (\n" +
-                    "\tselect searchSuggestions._id from searchSuggestions\n" +
-                    "\tinner join personaShadowNames psn on lower(psn.shadow_name) = lower(searchSuggestions.suggest_text_2)\n" +
-                    "\tand psn.id = personaShadowNames.id\n" +
-                    ")");
+            //insert search suggestions for personas with shadow names
+            database.execSQL("insert into searchSuggestions (suggest_text_1, suggest_text_2, suggest_intent_data, suggest_intent_extra_data)\n" +
+                    "select printf('%s (%s)', personas.name, personaShadowNames.shadow_name), personas.arcanaName, \n" +
+                    "personas.id, 1\n" +
+                    "from personas\n" +
+                    "inner join personaShadowNames on personaShadowNames.persona_id = personas.id\n" +
+                    "order by personas.name");
+
+            //insert search suggestions for the rest of the personas without any shadow names
+            database.execSQL("\n" +
+                    "insert into searchSuggestions (suggest_text_1, suggest_text_2, suggest_intent_data, suggest_intent_extra_data)\n" +
+                    "select personas.name, personas.arcanaName, personas.id, '1'\n" +
+                    "from personas\n" +
+                    "where not exists (\n" +
+                    "\tselect 1 from personaShadowNames where personaShadowNames.persona_id = personas.id\n" +
+                    ")\n" +
+                    "order by personas.name");
 
             //create unique shadows index
             database.execSQL("create unique index unique_shadows " +
                     "on personaShadowNames (persona_id, shadow_name)");
-
-            //create unique shadows index
-            database.execSQL("create index ix_personaShadows_suggestion_id " +
-                    "on personaShadowNames (suggestion_id)");
 
             //update incorrect spelling of kushi mitama
             database.execSQL("update personas set name = 'Kushi Mitama'\n" +
@@ -360,6 +364,8 @@ public abstract class PersonaDatabase extends RoomDatabase {
             //fix missing link for yamata
             database.execSQL("update personas set imageurl = 'https://s3-us-west-2.amazonaws.com/en-samurai-gamers-images/wp-content/uploads/2017/03/23064221/YamatanoOrochi_03_23_2017.jpg'\n" +
                     "where name = 'Yamata-no-Orochi'");
+
+            cursor.close();
         }
     };
 }

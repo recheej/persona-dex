@@ -50,14 +50,20 @@ public class MigrationTest {
         // MIGRATION_1_2 as the migration process.
         db = helper.runMigrationsAndValidate(TEST_DB, 3, true, PersonaDatabase.MIGRATION_2_3);
 
-        Cursor cursor = db.query("select psn.shadow_name, ss.suggest_text_2 from personas " +
-                "inner join personashadownames psn on psn.persona_id = personas.id" +
-                " inner join searchSuggestions ss on ss._id = psn.suggestion_id where personas.name = ?", new String[] { molochPeronaName });
+        Cursor cursor = db.query("select psn.shadow_name, ss.suggest_text_1 from personas " +
+                "inner join personashadownames psn on psn.persona_id = personas.id " +
+                "inner join searchSuggestions ss on ss.suggest_intent_data = personas.id " +
+                "where personas.name = ?", new String[] { molochPeronaName });
+
         cursor.moveToNext();
         String resultShadowName = cursor.getString(0);
 
         String expectedShadowName = "Sacrificial Pyrekeeper";
         assertEquals(expectedShadowName, resultShadowName);
-        assertEquals(expectedShadowName, cursor.getString(1));
+
+        String expectedLineOne = String.format("%s (%s)", molochPeronaName, expectedShadowName);
+        String suggestionLineOne = cursor.getString(1);
+
+        assertEquals(expectedLineOne, suggestionLineOne);
     }
 }

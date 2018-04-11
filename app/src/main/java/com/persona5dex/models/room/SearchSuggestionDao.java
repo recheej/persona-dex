@@ -10,10 +10,6 @@ import android.database.Cursor;
 
 @Dao
 public interface SearchSuggestionDao {
-    @Query("select * from searchSuggestions where suggest_text_1 like :query\n" +
-            "union\n" +
-            "select searchSuggestions.* from personaShadowNames\n" +
-            "inner join searchSuggestions on personaShadowNames.suggestion_id = searchSuggestions._id\n" +
-            "where personaShadowNames.shadow_name like :query")
+    @Query("select * from searchSuggestions where suggest_text_1 like :query")
     Cursor getSuggestions(String query);
 }
