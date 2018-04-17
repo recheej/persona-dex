@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "e42a25a650b787e971a243fff52f865a",
+    "identityHash": "352a698917e076f6a78b1a4865ba71fd",
     "entities": [
       {
         "tableName": "personas",
@@ -445,7 +445,7 @@
       },
       {
         "tableName": "personaShadowNames",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `primary` INTEGER NOT NULL, FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `isPrimary` INTEGER NOT NULL, FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -466,8 +466,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "primary",
-            "columnName": "primary",
+            "fieldPath": "isPrimary",
+            "columnName": "isPrimary",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -506,7 +506,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e42a25a650b787e971a243fff52f865a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"352a698917e076f6a78b1a4865ba71fd\")"
     ]
   }
 }

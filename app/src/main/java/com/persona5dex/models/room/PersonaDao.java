@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailInfo;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Dao
 public interface PersonaDao {
+    @Transaction
     @Query("select id, name, arcanaName, arcana, level, rare, dlc from personas")
     LiveData<List<MainListPersona>> getAllPersonasForMainList();
 
@@ -28,12 +30,13 @@ public interface PersonaDao {
             "order by name")
     LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
 
-    @Query("select shadow_name as shadowName, `primary` from personaShadowNames where persona_id = :personaID")
+    @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID")
     LiveData<PersonaShadowDetail[]> getShadowsForPersona(int personaID);
 
     @Query("select id, arcana, arcanaName, name, level, rare, dlc, special from personas order by level")
     PersonaForFusionService[] getPersonasByLevel();
 
+    @Transaction
     @Query("select id, name, arcanaName, arcana, level, rare, dlc from personas where dlc = 1")
     LiveData<List<MainListPersona>> getDLCPersonas();
 

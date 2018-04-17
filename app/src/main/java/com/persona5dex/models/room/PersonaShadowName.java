@@ -3,6 +3,7 @@ package com.persona5dex.models.room;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -32,5 +33,10 @@ public class PersonaShadowName {
     @ColumnInfo(name = "shadow_name")
     public String shadowName;
 
-    public int primary;
+    public int isPrimary;
+
+    @Ignore
+    public boolean isPrimaryShadow() {
+        return isPrimary == 1;
+    }
 }

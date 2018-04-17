@@ -14,9 +14,11 @@ import com.persona5dex.R;
 import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.MainListPersona;
+import com.persona5dex.models.room.PersonaShadowName;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Rechee on 7/3/2017.
@@ -37,6 +39,7 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewPersonaName;
+        private TextView textViewPrimaryShadowName;
         private TextView textViewPersonaLevel;
         private TextView textViewPersonaArcana;
 
@@ -44,13 +47,15 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
             super(itemView);
 
             this.textViewPersonaName = itemView.findViewById(R.id.textViewPersonaName);
+            this.textViewPrimaryShadowName = itemView.findViewById(R.id.textViewPrimaryShadowName);
             this.textViewPersonaLevel = itemView.findViewById(R.id.textViewPersonaLevel);
             this.textViewPersonaArcana = itemView.findViewById(R.id.textViewArcana);
         }
 
         public void bindPersona(MainListPersona personaToBind){
+
             this.textViewPersonaName.setText(personaToBind.name);
-            this.textViewPersonaLevel.setText(Integer.toString(personaToBind.level));
+            this.textViewPersonaLevel.setText(String.format(Locale.getDefault(), "%d" , personaToBind.level));
             this.textViewPersonaArcana.setText(personaToBind.arcanaName);
         }
     }
@@ -68,21 +73,18 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
 
         final ViewHolder viewHolder = new ViewHolder(view);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int personaPosition = viewHolder.getAdapterPosition();
-                if(personaPosition == RecyclerView.NO_POSITION){
-                    personaPosition = 0;
-                }
-
-                MainListPersona detailPersona = personas.get(personaPosition);
-
-                Context context = v.getContext();
-                Intent startDetailIntent = new Intent(context, PersonaDetailActivity.class);
-                startDetailIntent.putExtra("persona_id", detailPersona.id);
-                context.startActivity(startDetailIntent);
+        view.setOnClickListener(v -> {
+            int personaPosition = viewHolder.getAdapterPosition();
+            if(personaPosition == RecyclerView.NO_POSITION){
+                personaPosition = 0;
             }
+
+            MainListPersona detailPersona = personas.get(personaPosition);
+
+            Context context = v.getContext();
+            Intent startDetailIntent = new Intent(context, PersonaDetailActivity.class);
+            startDetailIntent.putExtra("persona_id", detailPersona.id);
+            context.startActivity(startDetailIntent);
         });
 
         return viewHolder;
