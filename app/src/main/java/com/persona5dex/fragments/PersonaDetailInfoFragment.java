@@ -110,6 +110,18 @@ public class PersonaDetailInfoFragment extends BaseFragment {
                 }
             }
         });
+
+        viewModel.getShadowsForPersona().observe(this, shadowsString -> {
+
+
+            if(shadowsString != null){
+                ViewGroup shadowContainer = baseView.findViewById(R.id.container_shadow_name);
+                shadowContainer.setVisibility(View.VISIBLE);
+
+                TextView shadowsTextView = shadowContainer.findViewById(R.id.textView_shadow_name);
+                shadowsTextView.setText(shadowsString);
+            }
+        });
     }
 
     private void addNote(String notToAdd) {

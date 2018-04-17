@@ -4,7 +4,7 @@
     <string name="level_label">Level:</string>
     <string name="action_search">search</string>
     <string name="personas">Persona</string>
-    <string name="hint_main_search">Search Personas or skills</string>
+    <string name="hint_main_search"><font size="14">Personas, shadow names, or skills</font></string>
     <string name="tab_name_info">Info</string>
     <string name="tab_name_elements">Elements</string>
     <string name="tab_name_skills">Skills</string>
@@ -81,5 +81,6 @@
     <string name="personas_with_skill">Personas with this skill:</string>
     <string name="max_note">You can only fuse this persona after you max out the confidant rank.</string>
     <string name="skills_more_details">Click on a skill for more details.</string>
+    <string name="also_known_as">Also known as</string>
 
 </resources>

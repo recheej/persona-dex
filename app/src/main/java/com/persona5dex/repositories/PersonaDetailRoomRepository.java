@@ -3,6 +3,7 @@ package com.persona5dex.repositories;
 import android.arch.lifecycle.LiveData;
 
 import com.persona5dex.models.PersonaDetailInfo;
+import com.persona5dex.models.PersonaShadowDetail;
 import com.persona5dex.models.room.PersonaDao;
 
 /**
@@ -20,5 +21,10 @@ public class PersonaDetailRoomRepository implements PersonaDetailRepository {
     @Override
     public LiveData<PersonaDetailInfo> getDetailsForPersona(int personaID) {
         return personaDao.getDetailInfoForPersona(personaID);
+    }
+
+    @Override
+    public LiveData<PersonaShadowDetail[]> getShadowsForPersona(int id) {
+        return personaDao.getShadowsForPersona(id);
     }
 }

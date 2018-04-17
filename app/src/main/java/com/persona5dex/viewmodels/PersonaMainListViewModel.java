@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
+import com.persona5dex.models.room.PersonaShadowName;
 import com.persona5dex.repositories.MainPersonaRepository;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class PersonaMainListViewModel extends ViewModel{
         sortByPersonaArcanaAsc = (o1, o2) -> o1.arcanaName.compareTo(o2.arcanaName);
         sortByPersonaArcanaDesc = (o1, o2) -> o1.arcanaName.compareTo(o2.arcanaName) * -1;
 
-        filteredPersonas.addSource(personaSearchName, personaName -> {
+        filteredPersonas.addSource(personaSearchName, searchValue -> {
             allPersonas.observeForever(personas -> {
 
                 if(personas == null){
@@ -70,15 +71,25 @@ public class PersonaMainListViewModel extends ViewModel{
                     personas = new ArrayList<>();
                 }
 
-                if(personaName == null || personaName.isEmpty()){
+                if(searchValue == null || searchValue.isEmpty()){
                     filteredPersonas.setValue(personas);
                 }
                 else{
                     List<MainListPersona> finalList = new ArrayList<>();
 
                     for (MainListPersona mainListPersona : personas) {
-                        if(mainListPersona.name.toLowerCase().contains(personaName.toLowerCase())){
+                        final String searchValueLower = searchValue.toLowerCase();
+
+                        if(mainListPersona.name.toLowerCase().contains(searchValueLower)){
                             finalList.add(mainListPersona);
+                        }
+                        else{
+                            for (PersonaShadowName personaShadowName : mainListPersona.personaShadowNames) {
+                                if(personaShadowName.shadowName.toLowerCase().contains(searchValueLower)){
+                                    finalList.add(mainListPersona);
+                                    break;
+                                }
+                            }
                         }
                     }
 
@@ -158,43 +169,40 @@ public class PersonaMainListViewModel extends ViewModel{
 
         filteredPersonas.addSource(personaFilterArgs, (final PersonaFilterArgs inputFilterArgs) -> {
 
-            allPersonas.observeForever(new Observer<List<MainListPersona>>() {
-                @Override
-                public void onChanged(@Nullable List<MainListPersona> personasToFilter) {
+            allPersonas.observeForever(personasToFilter -> {
 
-                    PersonaFilterArgs filterArgs = inputFilterArgs;
+                PersonaFilterArgs filterArgs = inputFilterArgs;
 
-                    if(filterArgs == null){
-                        filterArgs = new PersonaFilterArgs();
-                    }
-
-                    List<MainListPersona> finalValue = new ArrayList<>();
-
-                    if(personasToFilter != null) {
-                        for (MainListPersona persona : personasToFilter) {
-
-                            if (persona.rare && !filterArgs.rarePersona) {
-                                continue;
-                            }
-
-                            if (persona.dlc && !filterArgs.dlcPersona) {
-                                continue;
-                            }
-
-                            if (filterArgs.arcana != Enumerations.Arcana.ANY && persona.arcana != filterArgs.arcana) {
-                                continue;
-                            }
-
-                            if (persona.level < filterArgs.minLevel || persona.level > filterArgs.maxLevel) {
-                                continue;
-                            }
-
-                            finalValue.add(persona);
-                        }
-                    }
-
-                    filteredPersonas.setValue(finalValue);
+                if(filterArgs == null){
+                    filterArgs = new PersonaFilterArgs();
                 }
+
+                List<MainListPersona> finalValue = new ArrayList<>();
+
+                if(personasToFilter != null) {
+                    for (MainListPersona persona : personasToFilter) {
+
+                        if (persona.rare && !filterArgs.rarePersona) {
+                            continue;
+                        }
+
+                        if (persona.dlc && !filterArgs.dlcPersona) {
+                            continue;
+                        }
+
+                        if (filterArgs.arcana != Enumerations.Arcana.ANY && persona.arcana != filterArgs.arcana) {
+                            continue;
+                        }
+
+                        if (persona.level < filterArgs.minLevel || persona.level > filterArgs.maxLevel) {
+                            continue;
+                        }
+
+                        finalValue.add(persona);
+                    }
+                }
+
+                filteredPersonas.setValue(finalValue);
             });
         });
 
