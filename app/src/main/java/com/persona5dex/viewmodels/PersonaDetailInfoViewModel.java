@@ -25,22 +25,23 @@ public class PersonaDetailInfoViewModel extends ViewModel {
     PersonaDetailRepository repository;
 
     private LiveData<PersonaDetailInfo> detailInfo;
-    private int personaID;
     private LiveData<PersonaShadowDetail[]> personaShadows;
 
     public PersonaDetailInfoViewModel() {}
 
-    public PersonaDetailInfoViewModel(PersonaDetailRepository repository){
+    public PersonaDetailInfoViewModel(PersonaDetailRepository repository, int personaID){
         this.repository = repository;
+        initDetailInfo(personaID);
     }
 
     public void init(Persona5ApplicationComponent component, int personaID) {
         component
                 .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .inject(this);
+        initDetailInfo(personaID);
+    }
 
-        this.personaID = personaID;
-
+    private void initDetailInfo(int personaID) {
         if(detailInfo == null){
             detailInfo = repository.getDetailsForPersona(personaID);
         }
@@ -60,11 +61,11 @@ public class PersonaDetailInfoViewModel extends ViewModel {
 
             Arrays.sort(shadows, (s1, s2) -> {
                 if(s1.isPrimary() && !s2.isPrimary()){
-                    return 1;
+                    return -1;
                 }
 
                 if(s2.isPrimary() && !s1.isPrimary()){
-                    return -1;
+                    return 1;
                 }
 
                 return s1.shadowName.compareTo(s2.shadowName);
