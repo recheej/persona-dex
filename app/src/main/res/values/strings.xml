@@ -69,7 +69,7 @@
     <string name="version">Version</string>
     <string name="sort_arcana_asc">Sort by Arcana A-Z</string>
     <string name="sort_arcana_desc">Sort by Arcana Z-A</string>
-    <string name="loading_data">Loading data...</string>
+    <string name="loading_data">Loading data…</string>
     <string name="persona_picture">Persona Picture</string>
     <string name="effect">Effect</string>
     <string name="element">Element</string>
