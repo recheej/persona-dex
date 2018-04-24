@@ -53,20 +53,32 @@ public abstract class PersonaDatabase extends RoomDatabase {
         public void migrate(SupportSQLiteDatabase database) {
 
             //if existing database, don't run the rest of the migration steps
-            //Cursor cursor = database.query("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='version'");
-            Cursor cursor = database.query("select DISTINCT tbl_name from sqlite_master where tbl_name = 'version'", null);
-            if(cursor.moveToFirst()){
+            Cursor versionCursor = database.query("select DISTINCT tbl_name from sqlite_master where tbl_name = 'version'", null);
+            Cursor imageNameCursor = database.query("select imageurl from personas where name = 'Yamata-no-Orochi'", null);
+            imageNameCursor.moveToNext();
+
+            String imageUrl = imageNameCursor.getString(0);
+
+            boolean versionTableExists = versionCursor.moveToFirst();
+            if(imageUrl == null){
+                if(versionTableExists){
+                    database.execSQL("delete from version");
+                    database.execSQL("drop table if exists version");
+                }
+            }
+            else{
                 //only put in version table to tell difference between new databases and actual migrations.
-                //we don't need this check after the first time, let's delete the table
-                database.execSQL("delete from version");
-                database.execSQL("drop table if exists version");
-                cursor.close();
+                if(versionTableExists){
+                    database.execSQL("delete from version");
+                    database.execSQL("drop table if exists version");
+                }
                 return;
             }
 
             //create persona shadow names table
             database.execSQL("CREATE TABLE if not exists \"personaShadowNames\" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `isPrimary` INTEGER NOT NULL DEFAULT 0, FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`))");
 
+            database.execSQL("delete from personaShadowNames");
             //insert persona shadows
             database.beginTransaction();
             database.execSQL(" insert into  personaShadowNames (persona_id, shadow_name, isPrimary) select personas.id, 'Sacrificial Pyrekeeper', 1" +
@@ -333,7 +345,7 @@ public abstract class PersonaDatabase extends RoomDatabase {
 
             //insert search suggestions for personas with shadow names
             database.execSQL("insert into searchSuggestions (suggest_text_1, suggest_text_2, suggest_intent_data, suggest_intent_extra_data)\n" +
-                    "select printf('%s (%s)', personas.name, personaShadowNames.shadow_name), personas.arcanaName, \n" +
+                    "select personas.name || ' (' || personaShadowNames.shadow_name || ')', personas.arcanaName, \n" +
                     "personas.id, 1\n" +
                     "from personas\n" +
                     "inner join personaShadowNames on personaShadowNames.persona_id = personas.id\n" +
@@ -364,8 +376,6 @@ public abstract class PersonaDatabase extends RoomDatabase {
             //fix missing link for yamata
             database.execSQL("update personas set imageurl = 'https://s3-us-west-2.amazonaws.com/en-samurai-gamers-images/wp-content/uploads/2017/03/23064221/YamatanoOrochi_03_23_2017.jpg'\n" +
                     "where name = 'Yamata-no-Orochi'");
-
-            cursor.close();
         }
     };
 }
