@@ -39,9 +39,12 @@ public class MigrationTest {
         // db has schema version 1. insert some data using SQL queries.
         // You cannot use DAO classes because they expect the latest schema.
 
-        String molochPeronaName = "Moloch";
+        String molochPersonaName = "Moloch";
         db.execSQL("insert into personas (name, level, special, max, dlc, rare)\n" +
-                "values (?, 1, 0, 0, 0, 0)", new String[] {molochPeronaName});
+                "values (?, 1, 0, 0, 0, 0)", new String[] {molochPersonaName});
+
+        db.execSQL("insert into personas (name, level, special, max, dlc, rare)\n" +
+                "values (?, 1, 0, 0, 0, 0)", new String[] {"Yamata-no-Orochi"});
 
         // Prepare for the next version.
         db.close();
@@ -53,7 +56,7 @@ public class MigrationTest {
         Cursor cursor = db.query("select psn.shadow_name, ss.suggest_text_1 from personas " +
                 "inner join personashadownames psn on psn.persona_id = personas.id " +
                 "inner join searchSuggestions ss on ss.suggest_intent_data = personas.id " +
-                "where personas.name = ?", new String[] { molochPeronaName });
+                "where personas.name = ?", new String[] { molochPersonaName });
 
         cursor.moveToNext();
         String resultShadowName = cursor.getString(0);
@@ -61,7 +64,7 @@ public class MigrationTest {
         String expectedShadowName = "Sacrificial Pyrekeeper";
         assertEquals(expectedShadowName, resultShadowName);
 
-        String expectedLineOne = String.format("%s (%s)", molochPeronaName, expectedShadowName);
+        String expectedLineOne = String.format("%s (%s)", molochPersonaName, expectedShadowName);
         String suggestionLineOne = cursor.getString(1);
 
         assertEquals(expectedLineOne, suggestionLineOne);
