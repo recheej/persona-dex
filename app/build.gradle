@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'kotlin-android'
 
 // Create a variable called keystorePropertiesFile, and initialize it to your
 // keystore.properties file, in the rootProject folder.
@@ -15,7 +14,6 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
-        main.java.srcDirs += 'src/main/kotlin'
     }
     signingConfigs {
         config {
@@ -74,7 +72,7 @@ dependencies {
     implementation "android.arch.work:work-runtime:$work_version"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.firebase:firebase-auth:11.8.0'
+    implementation 'com.google.firebase:firebase-auth:16.0.1'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -110,3 +108,4 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'

@@ -18,7 +18,7 @@ class UploadDatabaseWorker: Worker() {
         val databaseFile: File = PersonaDatabase.getPersonaDatabase(applicationContext).databaseFile
         val databaseUri = Uri.fromFile(databaseFile)
 
-        val uploadpath = "$DATABASES_PATH/$databaseUri-${System.currentTimeMillis()}"
+        val uploadpath = "$DATABASES_PATH/persona-db-${System.currentTimeMillis()}.db"
         val storageRef: StorageReference = storageReference.child(uploadpath)
 
         val uploadTask: UploadTask = storageRef.putFile(databaseUri)
