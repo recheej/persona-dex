@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 
 import com.huma.room_for_asset.RoomAsset;
 
-import java.io.IOException;
+import java.io.File;
 
 
 /**
@@ -46,6 +46,11 @@ public abstract class PersonaDatabase extends RoomDatabase {
         }
 
         return INSTANCE;
+    }
+
+    public File getDatabaseFile() {
+        String path = this.getOpenHelper().getReadableDatabase().getPath();
+        return new File(path);
     }
 
     public static final Migration MIGRATION_2_3 = new Migration(2, 3) {

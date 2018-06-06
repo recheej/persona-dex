@@ -82,5 +82,8 @@
     <string name="max_note">You can only fuse this persona after you max out the confidant rank.</string>
     <string name="skills_more_details">Click on a skill for more details.</string>
     <string name="also_known_as">Also known as</string>
+    <string name="upload_db_prompt">This will send your database to the developer for debugging purposes. Are you sure?</string>
+    <string name="upload_db">Upload Database</string>
+    <string name="summary_upload_db">Uploads the persona database to developer for debugging.</string>
 
 </resources>
