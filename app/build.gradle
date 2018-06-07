@@ -68,9 +68,6 @@ repositories {
 }
 
 dependencies {
-    def work_version = "1.0.0-alpha02"
-    implementation "android.arch.work:work-runtime:$work_version"
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.google.firebase:firebase-auth:16.0.1'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -105,6 +102,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.0'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 }
 
 apply plugin: 'com.google.gms.google-services'
