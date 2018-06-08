@@ -87,5 +87,7 @@
     <string name="summary_upload_db">Uploads the persona database to developer for debugging.</string>
     <string name="instance_id">Instance ID</string>
     <string name="for_debugging">For Debugging</string>
+    <string name="upload_too_soon_prompt">You must wait two minutes before requesting another upload.</string>
+    <string name="upload_sent">Thanks, the upload was sent!</string>
 
 </resources>

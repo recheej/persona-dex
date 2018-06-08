@@ -1,17 +1,21 @@
 package com.persona5dex.uploaddatabase
 
+import android.content.Context
 import android.net.Uri
 import com.firebase.jobdispatcher.JobParameters
 import com.firebase.jobdispatcher.JobService
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.persona5dex.BuildConfig
 import com.persona5dex.models.room.PersonaDatabase
 import java.io.File
 
 private const val DATABASES_PATH = "databases"
 
-public const val TAG = "job-service-upload-db"
+const val TAG = "job-service-upload-db"
+
 
 class UploadDatabaseJobService: JobService() {
     override fun onStopJob(job: JobParameters?): Boolean {
@@ -19,23 +23,26 @@ class UploadDatabaseJobService: JobService() {
     }
 
     override fun onStartJob(job: JobParameters?): Boolean {
-        val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
-        val storageReference = firebaseStorage.reference
 
-        val databaseFile: File = PersonaDatabase.getPersonaDatabase(applicationContext).databaseFile
-        val databaseUri = Uri.fromFile(databaseFile)
+        Thread(Runnable {
+            val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
+            val storageReference = firebaseStorage.reference
 
-        val uploadPath = "$DATABASES_PATH/persona-db-${System.currentTimeMillis()}.db"
-        val storageRef: StorageReference = storageReference.child(uploadPath)
+            val databaseFile: File = PersonaDatabase.getPersonaDatabase(applicationContext).databaseFile
+            val databaseUri = Uri.fromFile(databaseFile)
 
-        val uploadTask: UploadTask = storageRef.putFile(databaseUri)
-        uploadTask.addOnSuccessListener {
-            jobFinished(job!!, false)
-        }
+            val uploadPath = "$DATABASES_PATH/${FirebaseInstanceId.getInstance().id}-${System.currentTimeMillis()}.db"
+            val storageRef: StorageReference = storageReference.child(uploadPath)
 
-        uploadTask.addOnFailureListener({
-            jobFinished(job!!, true)
-        })
+            val uploadTask: UploadTask = storageRef.putFile(databaseUri)
+            uploadTask.addOnSuccessListener {
+                jobFinished(job!!, false)
+            }
+
+            uploadTask.addOnFailureListener({
+                jobFinished(job!!, true)
+            })
+        }).start()
 
         return true
     }
