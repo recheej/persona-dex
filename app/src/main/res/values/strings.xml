@@ -85,5 +85,7 @@
     <string name="upload_db_prompt">This will send your database to the developer for debugging purposes. Are you sure?</string>
     <string name="upload_db">Upload Database</string>
     <string name="summary_upload_db">Uploads the persona database to developer for debugging.</string>
+    <string name="instance_id">Instance ID</string>
+    <string name="for_debugging">For Debugging</string>
 
 </resources>
