@@ -11,6 +11,7 @@ import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
 import com.persona5dex.BuildConfig
 import com.persona5dex.R
+import com.persona5dex.uploaddatabase.UploadDatabaseJobService.Companion.JOB_TAG
 import java.util.concurrent.TimeUnit
 
 const val UPLOAD_FILE_PREF_KEY = "${BuildConfig.APPLICATION_ID}.UPLOAD_PREF"
@@ -57,7 +58,7 @@ class UploadDbPreferenceDialogFragment: PreferenceDialogFragmentCompat() {
 
                 val myJob = dispatcher.newJobBuilder()
                         .setService(UploadDatabaseJobService::class.java) // the JobService that will be called
-                        .setTag(TAG)        // uniquely identifies the job
+                        .setTag(JOB_TAG)        // uniquely identifies the job
                         .build()
 
                 dispatcher.mustSchedule(myJob)

@@ -14,10 +14,13 @@ import java.io.File
 
 private const val DATABASES_PATH = "databases"
 
-const val TAG = "job-service-upload-db"
 
 
 class UploadDatabaseJobService: JobService() {
+    companion object {
+        const val JOB_TAG = "job-service-upload-db"
+    }
+
     override fun onStopJob(job: JobParameters?): Boolean {
         return false
     }

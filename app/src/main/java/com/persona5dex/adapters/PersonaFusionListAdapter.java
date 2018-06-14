@@ -9,9 +9,16 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.persona5dex.BuildConfig;
 import com.persona5dex.R;
 import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.models.PersonaEdgeDisplay;
+import com.persona5dex.uploaddatabase.UploadDatabaseJobService;
 import com.persona5dex.viewmodels.PersonaFusionListViewModel;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -79,6 +86,19 @@ public class PersonaFusionListAdapter extends RecyclerView.Adapter<PersonaFusion
 
             this.textViewPersonaNameOne.setText(edge.leftPersonaName);
             this.textViewPersonaNameTwo.setText(edge.rightPersonaName);
+
+            if(BuildConfig.ENABLE_CRASHLYTICS && edge.leftPersonaID == edge.rightPersonaID) {
+                Crashlytics.log("Personas have same ID. Instance ID: " + FirebaseInstanceId.getInstance().getId());
+
+                FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(recyclerView.getContext()));
+
+                Job job = dispatcher.newJobBuilder()
+                        .setService(UploadDatabaseJobService.class) // the JobService that will be called
+                        .setTag(UploadDatabaseJobService.JOB_TAG)        // uniquely identifies the job
+                        .build();
+
+                dispatcher.mustSchedule(job);
+            }
 
             this.textViewPersonaOneDetail.setOnClickListener(v -> goToPersonaDetail(edge.leftPersonaID));
 
