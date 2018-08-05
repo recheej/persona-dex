@@ -1,13 +1,17 @@
 package com.persona5dex.activities;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.RawRes;
+import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +25,7 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.SearchEvent;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
+import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.R;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
@@ -36,10 +41,17 @@ import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.services.FusionCalculatorJobService;
+import com.persona5dex.update.UpdateConfig;
+
+import java.io.InputStream;
 
 import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.app.SearchManager.EXTRA_DATA_KEY;
 import static android.app.SearchManager.USER_QUERY;
@@ -64,20 +76,10 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        ActivityComponent component = Persona5Application.get(this).getComponent()
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
-                .activityComponent(
-                new LayoutModule(this),
-                new ActivityContextModule(this),
-                new ViewModelModule(),
-                new ViewModelRepositoryModule()
-        );
         component.inject(this);
-        this.component = component;
 
         //init crashlytics
-        if(BuildConfig.ENABLE_CRASHLYTICS){
+        if(BuildConfig.ENABLE_CRASHLYTICS) {
             Fabric.with(this, new Crashlytics());
         }
 
@@ -107,36 +109,34 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         handleIntent(intent);
     }
 
-    private void handleIntent(Intent intent){
-        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
+    private void handleIntent(Intent intent) {
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
 
             logSearchQuery(query);
 
             personaListFragment.filterPersonas(query);
-        }
-        else if(Intent.ACTION_VIEW.equals(intent.getAction())){
+        } else if(Intent.ACTION_VIEW.equals(intent.getAction())) {
             String itemID = intent.getDataString();
 
             Bundle extras = intent.getExtras();
-            if(extras != null){
+            if(extras != null) {
                 String userQuery = extras.getString(USER_QUERY, null);
                 String searchType = extras.getString(EXTRA_DATA_KEY, null);
 
-                if(userQuery != null){
+                if(userQuery != null) {
                     logSearchQuery(userQuery);
                 }
 
-                if(searchType != null){
+                if(searchType != null) {
                     int searchTypeAsInt = Integer.parseInt(searchType);
                     SearchResultType searchResultType = SearchResultType.getSearchResultType(searchTypeAsInt);
 
-                    if(searchResultType == SearchResultType.PERSONA){
+                    if(searchResultType == SearchResultType.PERSONA) {
                         Intent startDetailIntent = new Intent(this, PersonaDetailActivity.class);
                         startDetailIntent.putExtra("persona_id", Integer.parseInt(itemID));
                         startActivity(startDetailIntent);
-                    }
-                    else{
+                    } else {
                         Intent skillDetailIntent = new Intent(this, SkillDetailActivity.class);
                         skillDetailIntent.putExtra(PersonaSkillsFragment.SKILL_ID, Integer.parseInt(itemID));
                         startActivity(skillDetailIntent);
@@ -147,7 +147,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     }
 
     private void logSearchQuery(String query) {
-        if(BuildConfig.ENABLE_CRASHLYTICS){
+        if(BuildConfig.ENABLE_CRASHLYTICS) {
             Answers.getInstance().logSearch(new SearchEvent()
                     .putQuery(query));
         }
@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch(item.getItemId()){
+        switch(item.getItemId()) {
             case R.id.action_sort:
                 this.showSortPopup();
                 return true;
@@ -208,7 +208,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         }
     }
 
-    private void showSortPopup(){
+    private void showSortPopup() {
         View anchor = findViewById(R.id.action_search);
         PopupMenu popupMenu = new PopupMenu(this, anchor);
         popupMenu.inflate(R.menu.sort_persona_menu);
@@ -224,10 +224,11 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     /**
      * Handles when the sort menu item is clicked. Will sort the current persona items and
      * set index bar visibility
+     *
      * @return True if selected sort menu item matches one of menu item ids
      */
     private boolean handleSortClick() {
-        switch (selectedSortMenuItemID){
+        switch(selectedSortMenuItemID) {
             case R.id.menu_sort_name_asc:
                 personaListFragment.sortPersonasByName(true);
                 return true;
@@ -261,7 +262,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if(latestFilterArgs == null){
+        if(latestFilterArgs == null) {
             latestFilterArgs = new PersonaFilterArgs();
         }
 
@@ -278,7 +279,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if(savedInstanceState != null){
+        if(savedInstanceState != null) {
             latestFilterArgs = new PersonaFilterArgs();
             latestFilterArgs.rarePersona = savedInstanceState.getBoolean("filter_rarePersona");
             latestFilterArgs.dlcPersona = savedInstanceState.getBoolean("filter_dlcPersona");

@@ -40,14 +40,7 @@ public class SkillDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_detail);
-
-        Persona5Application.get(this).getComponent()
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
-                .activityComponent(new LayoutModule(this),
-                        new ActivityContextModule(this),
-                        new ViewModelModule(),
-                        new ViewModelRepositoryModule())
-                .inject(this);
+        component.inject(this);
 
         mainToolbar.setTitle(R.string.persona_skill);
         setSupportActionBar(mainToolbar);
@@ -57,8 +50,6 @@ public class SkillDetailActivity extends BaseActivity {
         final TextView elementTextView = findViewById(R.id.textView_Element);
         final TextView noteTextView = findViewById(R.id.textView_Note);
         final TextView costTextView = findViewById(R.id.textView_Cost);
-
-
 
         Intent intent = getIntent();
         final int skillID = intent.getIntExtra(PersonaSkillsFragment.SKILL_ID, 1);

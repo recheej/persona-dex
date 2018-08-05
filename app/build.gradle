@@ -29,8 +29,8 @@ android {
         applicationId "com.persona5dex"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 17
-        versionName "2.2.1"
+        versionCode 20
+        versionName "2.2.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -103,6 +103,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

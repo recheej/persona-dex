@@ -44,19 +44,9 @@ public class PersonaFusionActivity extends BaseActivity implements FusionListFra
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_persona_fusion);
+        component.inject(this);
 
         personaForFusionID = getIntent().getIntExtra("persona_id", 1);
-
-        ActivityComponent component = Persona5Application.get(this).getComponent()
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
-                .activityComponent(
-                new LayoutModule(this),
-                new ActivityContextModule(this),
-                new ViewModelModule(),
-                new ViewModelRepositoryModule()
-        );
-        component.inject(this);
-        this.component = component;
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaFusionViewModel.class);
 

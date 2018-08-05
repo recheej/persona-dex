@@ -44,26 +44,7 @@ public class PersonaDetailActivity extends BaseActivity {
 
         final Persona5ApplicationComponent applicationComponent = Persona5Application.get(this)
                 .getComponent();
-
-        ActivityComponent component = applicationComponent
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
-                .activityComponent(
-                new LayoutModule(this),
-                new ActivityContextModule(this),
-                new ViewModelModule(),
-                new ViewModelRepositoryModule()
-        );
         component.inject(this);
-        this.component = component;
-
-        if(BuildConfig.ENABLE_CRASHLYTICS){
-            //see how personas are being viewed in app
-//            Answers.getInstance().logContentView(new ContentViewEvent()
-//                    .putContentName("View Persona Detail")
-//                    .putContentType("View Persona Screen")
-//                    .putContentId(this.detailPersona.name)
-//            );
-        }
 
         this.personaID = getIntent().getIntExtra("persona_id", 1);
 

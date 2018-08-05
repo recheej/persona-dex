@@ -45,18 +45,9 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
 
-        ActivityComponent component = Persona5Application.get(this).getComponent()
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
-                .activityComponent(
-                new LayoutModule(this),
-                new ActivityContextModule(this),
-                new ViewModelModule(),
-                new ViewModelRepositoryModule()
-        );
+        setContentView(R.layout.activity_settings);
         component.inject(this);
-        this.component = component;
 
         SettingsFragment settingsFragment = new SettingsFragment();
         getSupportFragmentManager().beginTransaction()

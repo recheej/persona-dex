@@ -90,4 +90,7 @@
     <string name="upload_too_soon_prompt">You must wait two minutes before requesting another upload.</string>
     <string name="upload_sent">Thanks, the upload was sent!</string>
 
+    <!--updates-->
+    <string name="update_18">DLC settings have been reset! Sorry for the inconvenience.\nClick the button below to update your settings.</string>
+
 </resources>

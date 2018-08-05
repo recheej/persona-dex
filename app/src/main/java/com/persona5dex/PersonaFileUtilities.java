@@ -80,20 +80,6 @@ public class PersonaFileUtilities {
         return gson.fromJson(personaFileContents, RawPersona[].class);
     }
 
-//    public Persona[] allPersonas(InputStream personaFile) {
-//        String personaFileContents = this.getFileContents(personaFile);
-//
-//        RawPersona[] rawPersonas = gson.fromJson(personaFileContents, RawPersona[].class);
-//        Persona[] personas = new Persona[rawPersonas.length];
-//
-//        final HashMap<String, Arcana> arcanaHashMap = PersonaUtilities.arcanaHashMap();
-//        for (int i = 0; i < rawPersonas.length ; i++) {
-//            personas[i] = Persona.mapFromRawPersona(rawPersonas[i], arcanaHashMap);
-//        }
-//
-//        return personas;
-//    }
-
     public <T> T parseJsonFile(InputStream stream, Class<T> tClass){
         String contents = this.getFileContents(stream);
         return gson.fromJson(contents, tClass);

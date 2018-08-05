@@ -1,0 +1,5 @@
+{
+  "action_type": "activity",
+  "action_value": "com.persona5dex.activities.SettingsActivity",
+  "action_button_text": "action_settings"
+}
