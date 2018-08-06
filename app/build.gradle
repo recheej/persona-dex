@@ -106,6 +106,7 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    implementation 'com.github.karczews:rx2-broadcast-receiver:1.0.5'
 }
 
 apply plugin: 'com.google.gms.google-services'

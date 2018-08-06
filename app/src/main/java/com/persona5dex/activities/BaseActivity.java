@@ -4,16 +4,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.HandlerThread;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RawRes;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.github.karczews.rxbroadcastreceiver.RxBroadcastReceivers;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaFileUtilities;
@@ -26,11 +30,16 @@ import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.update.UpdateConfig;
 
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
+import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -87,10 +96,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void showUpgradeDialog() {
-        final String updateDialogKey = String.format("update_%d", BuildConfig.VERSION_CODE);
-        final boolean shouldShowDialogMessage = defaultSharedPreferences.getBoolean(updateDialogKey, true);
 
-        if(shouldShowDialogMessage) {
+
+        Disposable disposable = this.shouldShowUpgradeDialog().subscribe(shouldShowDialogMessage -> {
+            final String updateDialogKey = String.format("update_%d", BuildConfig.VERSION_CODE);
+
             final Resources resources = getResources();
             final String packageName = this.getPackageName();
 
@@ -98,7 +108,7 @@ public class BaseActivity extends AppCompatActivity {
             @StringRes int dialogMessage = resources.getIdentifier(updateDialogKey, "string", packageName);
 
             if(jsonConfigIdentifier != 0) {
-                Disposable disposable = Single
+                Disposable configDisposable = Single
                         .fromCallable(() -> getUpdateConfig(resources, jsonConfigIdentifier))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -132,9 +142,45 @@ public class BaseActivity extends AppCompatActivity {
                             }
                         }, Crashlytics::logException);
 
-                addStoppableDisposable(disposable);
+                addStoppableDisposable(configDisposable);
             }
-        }
+        });
+
+        addStoppableDisposable(disposable);
+    }
+
+    private Single<Boolean> shouldShowUpgradeDialog() {
+        return Single.just(defaultSharedPreferences.getBoolean("showedUpgrade", false))
+                .toObservable()
+                .switchMap(showedUpgrade -> {
+                    if(showedUpgrade){
+                        return Observable.just(false);
+                    }
+
+                    boolean checkedReceiver = defaultSharedPreferences.getBoolean("checkedReceiver", false);
+
+                    if(checkedReceiver){
+                        return Observable.just(defaultSharedPreferences.edit().putBoolean("shouldShowUpgradeDialog", false));
+                    }
+
+                    HandlerThread handlerThread = new HandlerThread("broadcast_handler");
+                    handlerThread.start();
+
+                    return RxBroadcastReceivers.fromIntentFilter(this, new IntentFilter(Intent.ACTION_MY_PACKAGE_REPLACED))
+                            .subscribeOn(AndroidSchedulers.from(handlerThread.getLooper()))
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .map(intent -> {
+                                defaultSharedPreferences.edit().putBoolean("checkedReceiver", true).apply();
+                                defaultSharedPreferences.edit().putBoolean("shouldShowUpgradeDialog", true).apply();
+                                return true;
+                            })
+                            .timeout(15L, TimeUnit.SECONDS, Observable.create(s -> {
+                                defaultSharedPreferences.edit().putBoolean("checkedReceiver", true).apply();
+                                defaultSharedPreferences.edit().putBoolean("shouldShowUpgradeDialog", false).apply();
+                                s.onNext(false);
+                                s.onComplete();
+                            }));
+                }).first(false).cast(Boolean.class);
     }
 
     private UpdateConfig getUpdateConfig(Resources resources, int jsonConfigIdentifier) {
