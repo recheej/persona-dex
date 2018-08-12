@@ -1,16 +1,11 @@
 package com.persona5dex.activities;
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RawRes;
-import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
@@ -23,16 +18,9 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.SearchEvent;
+import com.michaelflisar.changelog.ChangelogBuilder;
 import com.persona5dex.BuildConfig;
-import com.persona5dex.Persona5Application;
-import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.R;
-import com.persona5dex.dagger.activity.ActivityComponent;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
@@ -41,17 +29,10 @@ import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.services.FusionCalculatorJobService;
-import com.persona5dex.update.UpdateConfig;
-
-import java.io.InputStream;
 
 import javax.inject.Inject;
 
 import io.fabric.sdk.android.Fabric;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static android.app.SearchManager.EXTRA_DATA_KEY;
 import static android.app.SearchManager.USER_QUERY;
@@ -59,6 +40,7 @@ import static android.app.SearchManager.USER_QUERY;
 public class MainActivity extends BaseActivity implements FilterDialogFragment.OnFilterListener {
 
     private static final String FILTER_DIALOG = "FILTER_DIALOG";
+    private static final int MIN_VERSION_TO_SHOW = 20;
 
     @Inject
     Toolbar mainToolbar;
@@ -101,6 +83,12 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         setSupportActionBar(this.mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainToolbar.setLogo(R.drawable.ic_app_icon_fore);
+
+        new ChangelogBuilder()
+                .withUseBulletList(true) // true if you want to show bullets before each changelog row, false otherwise
+                .withMinVersionToShow(MIN_VERSION_TO_SHOW)     // provide a number and the log will only show changelog rows for versions equal or higher than this number
+                .withManagedShowOnStart(true)  // library will take care to show activity/dialog only if the changelog has new infos and will only show this new infos
+                .buildAndShowDialog(this, false); // second parameter defines, if the dialog has a dark or light theme
     }
 
     @Override

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog>
+    <release
+        date="2018-08-12"
+        versionCode="20"
+        versionName="2.2.4">
+        <info>NOTE: DLC settings have been reset. Go to settings to set them again. Sorry for the inconvenience!</info>
+        <info>&lt;a href="persona://com.persona5dex/settings"&gt;Settings&lt;/a&gt;</info>
+    </release>
+</changelog>

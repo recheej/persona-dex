@@ -1,49 +1,23 @@
 package com.persona5dex.activities;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.HandlerThread;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RawRes;
-import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
-import com.github.karczews.rxbroadcastreceiver.RxBroadcastReceivers;
-import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
-import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
-import com.persona5dex.update.UpdateConfig;
-
-import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.Single;
-import io.reactivex.SingleSource;
-import io.reactivex.SingleTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Rechee on 7/30/2017.
@@ -51,7 +25,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BaseActivity extends AppCompatActivity {
     protected ActivityComponent component;
-    private CompositeDisposable compositeDisposable;
+    private CompositeDisposable compositeStoppableDisposable;
+    private CompositeDisposable compositeDestroyableDisposable;
 
     @Inject
     @Named("defaultSharedPreferences")
@@ -76,117 +51,27 @@ public class BaseActivity extends AppCompatActivity {
         component.inject(this);
         this.component = component;
 
-        compositeDisposable = new CompositeDisposable();
+        compositeStoppableDisposable = new CompositeDisposable();
+        compositeDestroyableDisposable = new CompositeDisposable();
     }
 
     protected void addStoppableDisposable(Disposable disposable) {
-        compositeDisposable.add(disposable);
+        compositeStoppableDisposable.add(disposable);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        compositeDisposable.dispose();
+        compositeStoppableDisposable.dispose();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        showUpgradeDialog();
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDestroyableDisposable.dispose();
     }
 
-    private void showUpgradeDialog() {
-
-
-        Disposable disposable = this.shouldShowUpgradeDialog().subscribe(shouldShowDialogMessage -> {
-            final String updateDialogKey = String.format("update_%d", BuildConfig.VERSION_CODE);
-
-            final Resources resources = getResources();
-            final String packageName = this.getPackageName();
-
-            @RawRes int jsonConfigIdentifier = resources.getIdentifier(updateDialogKey, "raw", packageName);
-            @StringRes int dialogMessage = resources.getIdentifier(updateDialogKey, "string", packageName);
-
-            if(jsonConfigIdentifier != 0) {
-                Disposable configDisposable = Single
-                        .fromCallable(() -> getUpdateConfig(resources, jsonConfigIdentifier))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(updateConfig -> {
-                            @StringRes int actionButtonTextRes = resources.getIdentifier(updateConfig.getActionButtonText(), "string", packageName);
-
-                            switch(updateConfig.getActionType()) {
-                                case "activity":
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                                            .setMessage(dialogMessage)
-                                            .setPositiveButton(actionButtonTextRes, (dialogInterface, i) -> {
-                                                try {
-                                                    Intent activityIntent = new Intent(this, Class.forName(updateConfig.getActionValue()));
-                                                    this.startActivity(activityIntent);
-                                                } catch(ClassNotFoundException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            });
-
-                                    AlertDialog dialog = builder.create();
-                                    if(actionButtonTextRes != 0) {
-                                        dialog.setOnShowListener(dialogInterface -> {
-                                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(actionButtonTextRes);
-
-                                        });
-                                    }
-                                    dialog.show();
-
-                                    defaultSharedPreferences.edit().putBoolean(updateDialogKey, false).apply();
-                                    break;
-                            }
-                        }, Crashlytics::logException);
-
-                addStoppableDisposable(configDisposable);
-            }
-        });
-
-        addStoppableDisposable(disposable);
-    }
-
-    private Single<Boolean> shouldShowUpgradeDialog() {
-        return Single.just(defaultSharedPreferences.getBoolean("showedUpgrade", false))
-                .toObservable()
-                .switchMap(showedUpgrade -> {
-                    if(showedUpgrade){
-                        return Observable.just(false);
-                    }
-
-                    boolean checkedReceiver = defaultSharedPreferences.getBoolean("checkedReceiver", false);
-
-                    if(checkedReceiver){
-                        return Observable.just(defaultSharedPreferences.edit().putBoolean("shouldShowUpgradeDialog", false));
-                    }
-
-                    HandlerThread handlerThread = new HandlerThread("broadcast_handler");
-                    handlerThread.start();
-
-                    return RxBroadcastReceivers.fromIntentFilter(this, new IntentFilter(Intent.ACTION_MY_PACKAGE_REPLACED))
-                            .subscribeOn(AndroidSchedulers.from(handlerThread.getLooper()))
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .map(intent -> {
-                                defaultSharedPreferences.edit().putBoolean("checkedReceiver", true).apply();
-                                defaultSharedPreferences.edit().putBoolean("shouldShowUpgradeDialog", true).apply();
-                                return true;
-                            })
-                            .timeout(15L, TimeUnit.SECONDS, Observable.create(s -> {
-                                defaultSharedPreferences.edit().putBoolean("checkedReceiver", true).apply();
-                                defaultSharedPreferences.edit().putBoolean("shouldShowUpgradeDialog", false).apply();
-                                s.onNext(false);
-                                s.onComplete();
-                            }));
-                }).first(false).cast(Boolean.class);
-    }
-
-    private UpdateConfig getUpdateConfig(Resources resources, int jsonConfigIdentifier) {
-        InputStream inputStream = resources.openRawResource(jsonConfigIdentifier);
-
-        PersonaFileUtilities fileUtilities = new PersonaFileUtilities();
-        return fileUtilities.parseJsonFile(inputStream, UpdateConfig.class);
+    protected void addDestroyableDisposable(Disposable disposable) {
+        compositeDestroyableDisposable.dispose();
     }
 }
