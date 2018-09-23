@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.persona5dex.R;
 
 import mehdi.sakout.aboutpage.AboutPage;
@@ -29,7 +28,6 @@ public class AboutActivity extends BaseActivity {
                 .addItem(this.getTextElement(this.getVersionNumber()))
                 .addGroup(String.format("%s (%s)", getString(R.string.instance_id),
                         getString(R.string.for_debugging)))
-                .addItem(this.getTextElement(FirebaseInstanceId.getInstance().getId()))
                 .addGroup(getString(R.string.about_contact_me))
                 .addEmail(getString(R.string.email_support))
                 .addGroup("Heavily Inspired by")

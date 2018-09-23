@@ -58,13 +58,5 @@
 
         <activity android:name=".activities.SkillDetailActivity" />
 
-        <service
-            android:exported="false"
-            android:name=".uploaddatabase.UploadDatabaseJobService">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
-
     </application>
 </manifest>
