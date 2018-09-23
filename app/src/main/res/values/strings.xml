@@ -1,9 +1,6 @@
 <resources>
-    <string name="app_name">PersonaDex: Persona 5 Compendium</string>
-    <string name="app_name_short">PDex</string>
     <string name="level_label">Level:</string>
     <string name="action_search">search</string>
-    <string name="personas">Persona</string>
     <string name="hint_main_search"><font size="14">Personas, shadow names, or skills</font></string>
     <string name="tab_name_info">Info</string>
     <string name="tab_name_elements">Elements</string>
@@ -14,7 +11,6 @@
     <string name="skill_agility">Agility</string>
     <string name="skill_luck">Luck</string>
     <string name="fusions">Fusions</string>
-    <string name="arcana">Arcana</string>
 
     <string name="to">To</string>
     <string name="from">from</string>
@@ -62,7 +58,6 @@
     <string name="reset">Reset</string>
     <string name="about">About</string>
     <string name="about_contact_me">Contact me if you have any feedback or find any bugs.</string>
-    <string name="email_support">support@persona5dex.com</string>
     <string name="developed_by">Developed by</string>
     <string name="about_special_thanks">Special Thanks</string>
     <string name="about_icon_designer">App Icon Designer</string>
@@ -92,5 +87,7 @@
 
     <!--updates-->
     <string name="update_20">DLC settings have been reset! Sorry for the inconvenience.\nClick the button below to update your settings.</string>
+    <string name="privacy_prompt">I take your privacy seriously! The app uses your Advertising ID for analytics. Basically, it\'s used to help with bug fixing.\n\nPrivacy Policy:\n</string>
+    <string name="privacy">Privacy!</string>
 
 </resources>

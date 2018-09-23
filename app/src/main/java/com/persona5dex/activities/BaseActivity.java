@@ -30,7 +30,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Inject
     @Named("defaultSharedPreferences")
-    SharedPreferences defaultSharedPreferences;
+    protected SharedPreferences defaultSharedPreferences;
 
     public ActivityComponent getComponent() {
         return this.component;

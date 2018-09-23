@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PersonaDex: Persona 5 Compendium</string>
+    <string name="app_name_short">PDex</string>
+    <string name="personas">Persona</string>
+    <string name="arcana">Arcana</string>
+    <string name="email_support">support@persona5dex.com</string>
+    <string name="privacy_policy_url">https://recheej.github.io/</string>
+</resources>

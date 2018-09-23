@@ -3,17 +3,26 @@ package com.persona5dex.activities;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
@@ -39,7 +48,7 @@ import static android.app.SearchManager.USER_QUERY;
 public class MainActivity extends BaseActivity implements FilterDialogFragment.OnFilterListener {
 
     private static final String FILTER_DIALOG = "FILTER_DIALOG";
-    private static final int MIN_VERSION_TO_SHOW = 21;
+    public static final String PRIVACY_POLICY_SHOWN = "privacy_policy_shown";
 
     @Inject
     Toolbar mainToolbar;
@@ -82,6 +91,38 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         setSupportActionBar(this.mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainToolbar.setLogo(R.drawable.ic_app_icon_fore);
+
+        showPrivacyPolicy();
+    }
+
+    private void showPrivacyPolicy() {
+        boolean showedPrivacyPolicy = defaultSharedPreferences.getBoolean(PRIVACY_POLICY_SHOWN, false);
+        if(!showedPrivacyPolicy) {
+
+            String privacyPrompt = getString(R.string.privacy_prompt);
+            privacyPrompt += getString(R.string.privacy_policy_url);
+
+            TextView message = new TextView(this);
+
+            SpannableString privacyPromptSpannable = new SpannableString(privacyPrompt);
+            Linkify.addLinks(privacyPromptSpannable, Linkify.WEB_URLS);
+
+            message.setText(privacyPromptSpannable);
+            message.setMovementMethod(LinkMovementMethod.getInstance());
+
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.privacy)
+                    .setCancelable(true)
+                    .setPositiveButton("OK", (dialogInterface, i) -> dialogInterface.dismiss())
+                    .setView(message)
+                    .create();
+
+            final SharedPreferences.Editor edit = defaultSharedPreferences.edit();
+            edit.putBoolean(PRIVACY_POLICY_SHOWN, true);
+            edit.apply();
+
+            alertDialog.show();
+        }
     }
 
     @Override

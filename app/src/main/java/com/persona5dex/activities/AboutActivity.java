@@ -24,7 +24,7 @@ public class AboutActivity extends BaseActivity {
 
         View aboutPage = new AboutPage(this)
                 .setDescription(getDescription())
-                .addItem(linkElement("Privacy Policy", "https://recheej.github.io/"))
+                .addItem(linkElement("Privacy Policy", getString(R.string.privacy_policy_url)))
                 .addGroup(getString(R.string.version))
                 .addItem(this.getTextElement(this.getVersionNumber()))
                 .addGroup(String.format("%s (%s)", getString(R.string.instance_id),
