@@ -40,7 +40,7 @@ import static android.app.SearchManager.USER_QUERY;
 public class MainActivity extends BaseActivity implements FilterDialogFragment.OnFilterListener {
 
     private static final String FILTER_DIALOG = "FILTER_DIALOG";
-    private static final int MIN_VERSION_TO_SHOW = 20;
+    private static final int MIN_VERSION_TO_SHOW = 21;
 
     @Inject
     Toolbar mainToolbar;
