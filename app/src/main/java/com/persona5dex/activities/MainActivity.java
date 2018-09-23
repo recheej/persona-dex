@@ -18,7 +18,6 @@ import android.view.View;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.SearchEvent;
-import com.michaelflisar.changelog.ChangelogBuilder;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.R;
 import com.persona5dex.fragments.FilterDialogFragment;
@@ -83,12 +82,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         setSupportActionBar(this.mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainToolbar.setLogo(R.drawable.ic_app_icon_fore);
-
-        new ChangelogBuilder()
-                .withUseBulletList(true) // true if you want to show bullets before each changelog row, false otherwise
-                .withMinVersionToShow(MIN_VERSION_TO_SHOW)     // provide a number and the log will only show changelog rows for versions equal or higher than this number
-                .withManagedShowOnStart(true)  // library will take care to show activity/dialog only if the changelog has new infos and will only show this new infos
-                .buildAndShowDialog(this, false); // second parameter defines, if the dialog has a dark or light theme
     }
 
     @Override
