@@ -131,12 +131,13 @@ public class PersonaFusionViewModel extends ViewModel {
                         if (edgeDisplay.leftPersonaID == personaID) {
                             left = edgeDisplay.rightPersonaName;
                             leftPersonaID = edgeDisplay.rightPersonaID;
+                            rightPersonaID = edgeDisplay.resultPersonaID;
                         } else {
                             left = edgeDisplay.leftPersonaName;
                             leftPersonaID = edgeDisplay.leftPersonaID;
+                            rightPersonaID = edgeDisplay.rightPersonaID;
                         }
                         right = edgeDisplay.resultPersonaName;
-                        rightPersonaID = edgeDisplay.rightPersonaID;
 
                         edgeDisplay.leftPersonaName = left;
                         edgeDisplay.rightPersonaName = right;
