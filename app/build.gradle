@@ -29,8 +29,8 @@ android {
         applicationId "com.persona5dex"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 22
-        versionName "2.2.6"
+        versionCode 23
+        versionName "2.2.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
