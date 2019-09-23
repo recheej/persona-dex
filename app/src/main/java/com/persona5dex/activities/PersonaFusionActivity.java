@@ -1,23 +1,16 @@
 package com.persona5dex.activities;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 
 import com.persona5dex.BuildConfig;
-import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListPagerAdapter;
-import com.persona5dex.dagger.activity.ActivityComponent;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.fragments.AdvancedPersonaFragment;
 import com.persona5dex.fragments.FusionListFragment;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;

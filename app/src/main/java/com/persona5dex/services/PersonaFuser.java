@@ -1,6 +1,6 @@
 package com.persona5dex.services;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.SparseArray;
 
 import com.persona5dex.models.Enumerations.Arcana;

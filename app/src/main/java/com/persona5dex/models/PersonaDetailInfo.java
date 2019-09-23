@@ -1,6 +1,6 @@
 package com.persona5dex.models;
 
-import android.arch.persistence.room.Embedded;
+import androidx.room.Embedded;
 
 import com.persona5dex.models.room.Stats;
 

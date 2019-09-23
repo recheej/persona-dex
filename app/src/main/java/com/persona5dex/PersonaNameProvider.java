@@ -4,8 +4,8 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.models.room.SearchSuggestionDao;
@@ -22,7 +22,7 @@ public class PersonaNameProvider extends ContentProvider {
     public boolean onCreate() {
         Persona5Application application = (Persona5Application) getContext().getApplicationContext();
 
-        PersonaDatabase db = PersonaDatabase.getPersonaDatabase(application);
+        PersonaDatabase db = PersonaDatabase.Companion.getPersonaDatabase(application);
         dao = db.searchSuggestionDao();
         return true;
     }

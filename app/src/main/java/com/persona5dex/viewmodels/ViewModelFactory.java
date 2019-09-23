@@ -1,15 +1,14 @@
 package com.persona5dex.viewmodels;
 
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
-import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaSkillsRepository;
 
 import javax.inject.Inject;

@@ -3,9 +3,9 @@ package com.persona5dex.services;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.JobIntentService;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
@@ -13,7 +13,6 @@ import com.persona5dex.dagger.fusionService.FusionArcanaDataModule;
 import com.persona5dex.dagger.fusionService.FusionCalculatorServiceComponent;
 import com.persona5dex.dagger.fusionService.FusionServiceContextModule;
 import com.persona5dex.models.Enumerations;
-import com.persona5dex.models.Pair;
 import com.persona5dex.models.PersonaForFusionService;
 import com.persona5dex.models.PersonaGraph;
 import com.persona5dex.models.PersonaStore;
@@ -23,7 +22,6 @@ import com.persona5dex.repositories.PersonaTransferRepository;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import javax.inject.Inject;

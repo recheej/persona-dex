@@ -1,22 +1,16 @@
 package com.persona5dex.activities;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.ViewModelModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.models.room.Skill;

@@ -13,25 +13,25 @@
         android:layout_width="match_parent"
         />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:layout_below="@id/main_toolbar"
         android:id="@+id/view_pager_fusion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout_fusions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.TabItem
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <android.support.design.widget.TabItem
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </android.support.design.widget.TabLayout>
-    </android.support.v4.view.ViewPager>
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.viewpager.widget.ViewPager>
 
 </RelativeLayout>

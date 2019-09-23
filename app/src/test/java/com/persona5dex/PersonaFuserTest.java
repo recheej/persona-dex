@@ -1,10 +1,9 @@
 package com.persona5dex;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.persona5dex.models.Enumerations;
-import com.persona5dex.models.Pair;
 import com.persona5dex.models.PersonaForFusionService;
 import com.persona5dex.models.RawPersona;
 import com.persona5dex.services.PersonaFuser;

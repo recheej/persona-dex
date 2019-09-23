@@ -1,11 +1,9 @@
 package com.persona5dex;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.persona5dex.models.Enumerations;
-import com.persona5dex.models.FakeMainPersonaRepository;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.repositories.MainPersonaRepository;

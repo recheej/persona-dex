@@ -1,7 +1,7 @@
 package com.persona5dex.adapters;
 
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,6 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.persona5dex.R;
 import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.models.PersonaEdgeDisplay;

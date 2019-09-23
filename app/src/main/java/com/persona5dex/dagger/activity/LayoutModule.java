@@ -1,7 +1,7 @@
 package com.persona5dex.dagger.activity;
 
 import android.app.Activity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.ProgressBar;
 
 import com.persona5dex.R;

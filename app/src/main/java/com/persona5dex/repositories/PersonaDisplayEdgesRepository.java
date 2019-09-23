@@ -1,6 +1,6 @@
 package com.persona5dex.repositories;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import com.persona5dex.models.PersonaEdgeDisplay;
 

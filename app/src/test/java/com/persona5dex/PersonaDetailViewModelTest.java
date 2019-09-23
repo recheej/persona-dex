@@ -1,32 +1,21 @@
 package com.persona5dex;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
+import androidx.annotation.NonNull;
 
-import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailInfo;
-import com.persona5dex.models.PersonaDetailSkill;
 import com.persona5dex.models.PersonaShadowDetail;
-import com.persona5dex.models.room.Skill;
 import com.persona5dex.repositories.PersonaDetailRepository;
-import com.persona5dex.repositories.PersonaSkillsRepository;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
-import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

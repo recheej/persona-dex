@@ -1,7 +1,7 @@
 package com.persona5dex.models.room;
 
-import android.arch.persistence.room.TypeConverter;
-import android.arch.persistence.room.TypeConverters;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import com.persona5dex.models.Enumerations;
 

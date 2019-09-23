@@ -1,9 +1,8 @@
 package com.persona5dex.repositories;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import com.persona5dex.models.PersonaEdgeDisplay;
-import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.room.PersonaDao;
 
 import java.util.List;

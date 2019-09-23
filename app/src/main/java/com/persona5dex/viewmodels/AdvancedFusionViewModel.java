@@ -1,9 +1,9 @@
 package com.persona5dex.viewmodels;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -61,6 +61,7 @@ public class AdvancedFusionViewModel extends ViewModel {
         public MutableLiveData<List<MainListPersona>> personas;
         public Context applicationContext;
         private MainPersonaRepository mainPersonaRepository;
+        private RawAdvancedFusion rawAdvancedFusion;
 
         public TaskParams(String personaName, MutableLiveData<List<MainListPersona>> personas,
                           Context applicationContext, MainPersonaRepository mainPersonaRepository) {
@@ -71,68 +72,67 @@ public class AdvancedFusionViewModel extends ViewModel {
         }
     }
 
-    private static class AdvancedRecipesTask extends AsyncTask<TaskParams, Void, Void> {
+    private static class AdvancedRecipesTask extends AsyncTask<TaskParams, Void, TaskParams> {
 
         @Override
-        protected Void doInBackground(TaskParams... taskParams) {
+        protected TaskParams doInBackground(TaskParams... taskParams) {
             TaskParams taskParam = taskParams[0];
             String personaNameNormalized = PersonaUtilities.normalizePersonaName(taskParam.personaName);
-
-            MutableLiveData<List<MainListPersona>> personas = taskParam.personas;
-
+            
             PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities();
             InputStream advancedFusionsFile = taskParam.applicationContext.getResources()
                     .openRawResource(R.raw.advanced_fusions);
             RawAdvancedFusion[] rawAdvancedFusions =  personaFileUtilities.parseJsonFile(advancedFusionsFile,
                     RawAdvancedFusion[].class);
 
-            boolean foundPersona = false;
             for (RawAdvancedFusion rawAdvancedFusion : rawAdvancedFusions) {
                 if(PersonaUtilities.normalizePersonaName(rawAdvancedFusion.result).equals(personaNameNormalized)){
-                    foundPersona = true;
-
-                    taskParam.mainPersonaRepository
-                            .getAllPersonasForMainList().observeForever(mainListPersonas -> {
-                        /**
-                         * We could go to the database and get each specific persona for the sources.
-                         * However, there's no guarentee the names in the fusion match match the db.
-                         * Let's get all personas, normalize their names, and then find a match to the sources
-                         */
-
-                        List<MainListPersona> finalList;
-                        if(mainListPersonas == null){
-                            finalList = new ArrayList<>();
-                            mainListPersonas = new ArrayList<>();
-                        }
-                        else{
-                            finalList = new ArrayList<>(mainListPersonas.size());
-                        }
-
-                        Map<String, MainListPersona> mainListPersonaHashMap = new HashMap<>(mainListPersonas.size());
-                        for (MainListPersona mainListPersona : mainListPersonas) {
-                            mainListPersonaHashMap.put(PersonaUtilities.normalizePersonaName(mainListPersona.name),
-                                    mainListPersona);
-                        }
-
-                        for (String source : rawAdvancedFusion.sources) {
-                            final String normalizedName = PersonaUtilities.normalizePersonaName(source);
-                            if(mainListPersonaHashMap.containsKey(normalizedName)){
-                                finalList.add(mainListPersonaHashMap.get(normalizedName));
-                            }
-                        }
-
-                        Collections.sort(finalList, (p1, p2) -> p1.name.compareTo(p2.name));
-                        personas.postValue(finalList);
-                    });
-                    break;
+                    taskParam.rawAdvancedFusion = rawAdvancedFusion;
+                    return taskParam;
                 }
             }
 
-            if(!foundPersona){
-                throw new RuntimeException("could not find advanced persona:" + taskParam.personaName);
-            }
+            throw new IllegalStateException("could not find advanced persona:" + taskParam.personaName);
+        }
 
-            return null;
+        @Override
+        protected void onPostExecute(TaskParams taskParam) {
+            super.onPostExecute(taskParam);
+
+            taskParam.mainPersonaRepository
+                    .getAllPersonasForMainList().observeForever(mainListPersonas -> {
+                /**
+                 * We could go to the database and get each specific persona for the sources.
+                 * However, there's no guarentee the names in the fusion match match the db.
+                 * Let's get all personas, normalize their names, and then find a match to the sources
+                 */
+
+                List<MainListPersona> finalList;
+                if(mainListPersonas == null){
+                    finalList = new ArrayList<>();
+                    mainListPersonas = new ArrayList<>();
+                }
+                else{
+                    finalList = new ArrayList<>(mainListPersonas.size());
+                }
+
+                Map<String, MainListPersona> mainListPersonaHashMap = new HashMap<>(mainListPersonas.size());
+                for (MainListPersona mainListPersona : mainListPersonas) {
+                    mainListPersonaHashMap.put(PersonaUtilities.normalizePersonaName(mainListPersona.name),
+                            mainListPersona);
+                }
+
+                for (String source : taskParam.rawAdvancedFusion.sources) {
+                    final String normalizedName = PersonaUtilities.normalizePersonaName(source);
+                    if(mainListPersonaHashMap.containsKey(normalizedName)){
+                        finalList.add(mainListPersonaHashMap.get(normalizedName));
+                    }
+                }
+
+                Collections.sort(finalList, (p1, p2) -> p1.name.compareTo(p2.name));
+                taskParam.personas.postValue(finalList);
+            });
+
         }
     }
 

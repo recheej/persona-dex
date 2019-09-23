@@ -1,21 +1,14 @@
 package com.persona5dex.viewmodels;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.annotation.NonNull;
 
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.repositories.CustomPersonaRepository;
-import com.persona5dex.repositories.MainPersonaRepository;
-import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
-import com.persona5dex.repositories.PersonaSkillsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
-
-import dagger.Lazy;
 
 /**
  * Created by reche on 1/4/2018.

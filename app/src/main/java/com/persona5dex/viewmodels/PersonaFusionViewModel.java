@@ -1,13 +1,11 @@
 package com.persona5dex.viewmodels;
 
-import android.arch.core.util.Function;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModel;
+import androidx.arch.core.util.Function;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+import androidx.lifecycle.ViewModel;
 
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
-import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.Pair;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.models.RawPersonaEdge;
@@ -19,8 +17,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Created by Rechee on 11/28/2017.

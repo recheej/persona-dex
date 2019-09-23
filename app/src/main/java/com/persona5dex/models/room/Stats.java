@@ -1,6 +1,6 @@
 package com.persona5dex.models.room;
 
-import android.arch.persistence.room.Entity;
+import androidx.room.Entity;
 
 /**
  * Created by Rechee on 11/18/2017.

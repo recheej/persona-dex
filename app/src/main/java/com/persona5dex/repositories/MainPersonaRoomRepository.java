@@ -1,18 +1,13 @@
 package com.persona5dex.repositories;
 
-import android.arch.lifecycle.LiveData;
-import android.content.Context;
+import androidx.lifecycle.LiveData;
 
 import com.persona5dex.models.MainListPersona;
-import com.persona5dex.models.RawPersona;
-import com.persona5dex.models.room.Persona;
 import com.persona5dex.models.room.PersonaDatabase;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import dagger.Lazy;
 
 /**
  * Created by Rechee on 11/18/2017.

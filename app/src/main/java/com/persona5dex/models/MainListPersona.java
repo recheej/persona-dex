@@ -1,8 +1,8 @@
 package com.persona5dex.models;
 
 
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Relation;
+import androidx.room.Ignore;
+import androidx.room.Relation;
 
 import com.persona5dex.models.room.PersonaShadowName;
 

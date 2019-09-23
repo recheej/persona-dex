@@ -1,28 +1,21 @@
 package com.persona5dex.activities;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaDetailFragmentPagerAdapter;
-import com.persona5dex.dagger.activity.ActivityComponent;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
-import com.persona5dex.dagger.activity.ViewModelModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
 
