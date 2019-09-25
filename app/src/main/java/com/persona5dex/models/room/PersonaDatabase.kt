@@ -34,19 +34,17 @@ abstract class PersonaDatabase : RoomDatabase() {
         private var INSTANCE: PersonaDatabase? = null
         private const val DB_NAME = "persona-db.db"
 
-        fun getPersonaDatabase(context: Context): PersonaDatabase? {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder<PersonaDatabase>(
-                        context,
-                        PersonaDatabase::class.java,
-                        DB_NAME
-                )
-                        .createFromAsset("databases/$DB_NAME")
-                        .fallbackToDestructiveMigration()
-                        .build()
-            }
-
-            return INSTANCE
+        fun getPersonaDatabase(context: Context): PersonaDatabase = INSTANCE ?: run {
+            Room.databaseBuilder(
+                    context,
+                    PersonaDatabase::class.java,
+                    DB_NAME
+            )
+                    .createFromAsset("databases/$DB_NAME")
+                    .fallbackToDestructiveMigration()
+                    .build().also {
+                        INSTANCE = it
+                    }
         }
     }
 }
