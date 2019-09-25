@@ -42,7 +42,7 @@ public class Persona5Application extends Application {
 
     public PersonaDatabase getPersonaDatabase() {
         if(this.database == null) {
-            this.database = PersonaDatabase.Companion.getPersonaDatabase(this);
+            this.database = PersonaDatabase.getPersonaDatabase(this);
         }
 
         return database;

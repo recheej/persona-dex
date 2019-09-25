@@ -34,7 +34,7 @@ abstract class PersonaDatabase : RoomDatabase() {
         private var INSTANCE: PersonaDatabase? = null
         private const val DB_NAME = "persona-db.db"
 
-        fun getPersonaDatabase(context: Context): PersonaDatabase = INSTANCE ?: run {
+        @JvmStatic fun getPersonaDatabase(context: Context): PersonaDatabase = INSTANCE ?: run {
             Room.databaseBuilder(
                     context,
                     PersonaDatabase::class.java,
