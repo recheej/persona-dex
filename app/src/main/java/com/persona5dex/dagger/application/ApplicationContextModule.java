@@ -61,6 +61,6 @@ public class ApplicationContextModule {
     @Provides
     @ApplicationScope
     PersonaDatabase personaDatabase() {
-        return Persona5Application.getPersonaDatabase(context);
+        return ((Persona5Application) context).getDatabase();
     }
 }

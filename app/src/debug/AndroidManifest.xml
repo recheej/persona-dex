@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".Persona5DebugApplication"
+        android:name="com.persona5dex.Persona5DebugApplication"
         android:allowBackup="false"
         tools:replace="android:allowBackup,name"
         android:icon="@mipmap/ic_launcher"
