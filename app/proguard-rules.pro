@@ -49,3 +49,10 @@
     @retrofit.http.** <methods>;
 }
 -dontwarn com.squareup.okhttp.**
+
+
+-keep class com.facebook.** {
+   *;
+}
+-dontwarn com.facebook.stetho.**
+-keep class com.facebook.stetho.** { *; }
