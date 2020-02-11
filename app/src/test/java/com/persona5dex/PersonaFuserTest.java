@@ -254,9 +254,8 @@ public class PersonaFuserTest {
             }
         }
 
-        return null;
+        throw new IllegalStateException("cannot find persona with name: " + name);
     }
-
     private PersonaForFusionService[] sortPersonasByLevel(PersonaForFusionService[] personas){
         PersonaForFusionService[] personsSortedByLevel = new PersonaForFusionService[personas.length];
 
@@ -279,5 +278,20 @@ public class PersonaFuserTest {
         return personsSortedByLevel;
     }
 
+    /**
+     * We expect rare fusions cannot result in special personas.
+     *
+     * We expect multiple special personas to be skipped
+     */
+    @Test
+    public void testRareFusionCannotResultInSpecialPersona() {
+        PersonaFuser fuser = new PersonaFuser(getDefaultPersonaFuserArgs());
 
+        PersonaForFusionService rarePersonaOne = getPersonaByName("Regent");
+        PersonaForFusionService rarePersonaTwo = getPersonaByName("Cu Chulainn");
+
+        PersonaForFusionService result = fuser.fuseNormal(rarePersonaOne, rarePersonaTwo);
+
+        assertNull(result);
+    }
 }
