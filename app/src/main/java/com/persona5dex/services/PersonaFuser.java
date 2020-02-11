@@ -112,6 +112,9 @@ public class PersonaFuser {
 
                 if (newPersonaIndex >= 0 && newPersonaIndex < personasOfSameArcana.size()) {
                     newPersona = personasOfSameArcana.get(newPersonaIndex);
+                    if(newPersona != null && !personaIsValidInFusionResult(newPersona)){
+                        newPersona = null;
+                    }
                 }
             }
         }
