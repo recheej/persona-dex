@@ -1,10 +1,12 @@
 package com.persona5dex.services;
 
 import androidx.annotation.Nullable;
+
 import android.util.SparseArray;
 
 import com.persona5dex.models.Enumerations.Arcana;
 import com.persona5dex.models.PersonaForFusionService;
+import com.persona5dex.models.room.Persona;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +22,7 @@ import java.util.Set;
 
 public class PersonaFuser {
 
-    private final PersonaForFusionService[]personasByLevel;
+    private final PersonaForFusionService[] personasByLevel;
     private final boolean rarePersonaAllowedInFusion;
     private final Set<Integer> ownedDLCPersonaIDs;
     private SparseArray<List<PersonaForFusionService>> personaByArcana;
@@ -30,7 +32,7 @@ public class PersonaFuser {
     private final String[] rarePersonas = {"Regent", "Queen's Necklace", "Stone of Scone",
             "Koh-i-Noor", "Orlov", "Emperor's Amulet", "Hope Diamond", "Crystal Skull"};
 
-    public PersonaFuser(PersonaFusionArgs args){
+    public PersonaFuser(PersonaFusionArgs args) {
         this.arcanaTable = args.arcanaTable;
         this.personasByLevel = args.personasByLevel;
         this.rareComboMap = args.rareComboMap;
@@ -39,7 +41,7 @@ public class PersonaFuser {
         this.personaByArcana = this.personaByArcana();
     }
 
-    private Set<Integer> convertIDsToIntegers(Set<String> ids){
+    private Set<Integer> convertIDsToIntegers(Set<String> ids) {
         final int setSize = ids.size();
         Set<Integer> integerSet = new HashSet<>(setSize);
         for (String s : ids.toArray(new String[setSize])) {
@@ -57,7 +59,7 @@ public class PersonaFuser {
         public Set<String> ownedDLCPersonaIDs;
     }
 
-    private int getRarePersonaIndex(String personaName){
+    private int getRarePersonaIndex(String personaName) {
         //get the index of the index of the rare persona's name within the rare persona array
 
         for (int i = 0; i < rarePersonas.length; i++) {
@@ -71,7 +73,7 @@ public class PersonaFuser {
     }
 
     @Nullable
-    private PersonaForFusionService fuseRare(PersonaForFusionService normalPersona, PersonaForFusionService rarePersona){
+    private PersonaForFusionService fuseRare(PersonaForFusionService normalPersona, PersonaForFusionService rarePersona) {
 
         int rarePersonaIndex = this.getRarePersonaIndex(rarePersona.getName());
         int modifier = this.rareComboMap.get(normalPersona.getArcanaName())[rarePersonaIndex];
@@ -84,59 +86,50 @@ public class PersonaFuser {
         for (int i = 0; i < arcanaSize; i++) {
             PersonaForFusionService otherPersona = personasOfSameArcana.get(i);
 
-            if(otherPersona.getName().equals(normalPersona.getName())){
+            if (otherPersona.getName().equals(normalPersona.getName())) {
                 personaIndex = i;
                 break;
             }
         }
 
         int newPersonaIndex = personaIndex + modifier;
-        if(newPersonaIndex >= 0 && newPersonaIndex < arcanaSize){
-            PersonaForFusionService result = personasOfSameArcana.get(newPersonaIndex);
-
-            if(this.personaIsValidInFusionResult(result)){
-                return result;
+        PersonaForFusionService newPersona = null;
+        if (newPersonaIndex >= 0 && newPersonaIndex < personasOfSameArcana.size()) {
+            newPersona = personasOfSameArcana.get(newPersonaIndex);
+            if(newPersona != null && !personaIsValidInFusionResult(newPersona)){
+                newPersona = null;
             }
 
             //if the result isn't valid, loop through until we get a valid one
-            while(!(newPersonaIndex >= 0 && newPersonaIndex < arcanaSize)){
-                if(modifier > 0){
+            while (newPersona != null && newPersona.isSpecial() && this.personaIsValidInFusionResult(newPersona)) {
+                if (modifier > 0) {
                     modifier++;
-                }
-                else if(modifier < 0){
+                } else if (modifier < 0) {
                     modifier--;
                 }
 
                 newPersonaIndex = personaIndex + modifier;
 
-                if(newPersonaIndex >= 0 && newPersonaIndex < arcanaSize){
-
-                    result = personasOfSameArcana.get(newPersonaIndex);
-
-                    if(this.personaIsValidInFusionResult(result)){
-                        return result;
-                    }
+                if (newPersonaIndex >= 0 && newPersonaIndex < personasOfSameArcana.size()) {
+                    newPersona = personasOfSameArcana.get(newPersonaIndex);
                 }
             }
-
-            return null;
         }
 
-        return null;
+        return newPersona;
     }
 
-    private SparseArray<List<PersonaForFusionService>> personaByArcana(){
+    private SparseArray<List<PersonaForFusionService>> personaByArcana() {
         SparseArray<List<PersonaForFusionService>> personaByArcana = new SparseArray<>(arcanaTable.size());
-        for(PersonaForFusionService persona: personasByLevel){
+        for (PersonaForFusionService persona : personasByLevel) {
             int arcanaIndex = persona.getArcana().value();
             List<PersonaForFusionService> personaList = personaByArcana.get(arcanaIndex);
 
-            if(personaList == null){
+            if (personaList == null) {
                 personaList = new ArrayList<>();
                 personaList.add(persona);
                 personaByArcana.put(persona.getArcana().value(), personaList);
-            }
-            else{
+            } else {
                 personaList.add(persona);
             }
         }
@@ -146,24 +139,24 @@ public class PersonaFuser {
 
     @Nullable
     public PersonaForFusionService fuseNormal(PersonaForFusionService personaOne, PersonaForFusionService personaTwo) {
-        if(personaOne == personaTwo){
+        if (personaOne == personaTwo) {
             return null;
         }
 
-        if(!personaIsValidInRecipe(personaOne) || !personaIsValidInRecipe(personaTwo)){
+        if (!personaIsValidInRecipe(personaOne) || !personaIsValidInRecipe(personaTwo)) {
             return null;
         }
 
-        if(personaOne.isRare() && personaTwo.isRare()){
+        if (personaOne.isRare() && personaTwo.isRare()) {
             return null;
         }
 
-        if(personaOne.isRare() || personaTwo.isRare()){
-            if(!rarePersonaAllowedInFusion){
+        if (personaOne.isRare() || personaTwo.isRare()) {
+            if (!rarePersonaAllowedInFusion) {
                 return null;
             }
 
-            if(personaOne.isRare()){
+            if (personaOne.isRare()) {
                 return fuseRare(personaTwo, personaOne);
             }
 
@@ -172,14 +165,13 @@ public class PersonaFuser {
         }
 
         Arcana resultArcana;
-        if(personaOne.getArcana() == personaTwo.getArcana()){
+        if (personaOne.getArcana() == personaTwo.getArcana()) {
             resultArcana = personaOne.getArcana();
-        }
-        else{
+        } else {
             resultArcana = getResultArcana(personaOne.getArcana(), personaTwo.getArcana(), arcanaTable);
         }
 
-        if(resultArcana == null){
+        if (resultArcana == null) {
             return null;
         }
 
@@ -188,21 +180,21 @@ public class PersonaFuser {
 
         List<PersonaForFusionService> personaForResultArcana = personaByArcana.get(resultArcana.value());
 
-        if(personaForResultArcana.size() == 0){
+        if (personaForResultArcana.size() == 0) {
             //this should never happen, but hey you never know
             return null;
         }
 
-        if(personaOne.getArcana() == personaTwo.getArcana()){
+        if (personaOne.getArcana() == personaTwo.getArcana()) {
             //fusion theory according to this: http://persona4.wikidot.com/fusiontutor
             //https://github.com/chinhodado/persona5_calculator/blob/master/src/FusionCalculator.js
             //https://www.gamefaqs.com/ps2/932312-shin-megami-tensei-persona-3/faqs/49926
 
-            for(int i = personaForResultArcana.size() - 1; i >= 0; i--){
+            for (int i = personaForResultArcana.size() - 1; i >= 0; i--) {
                 PersonaForFusionService persona = personaForResultArcana.get(i);
 
-                if(persona.getLevel() < calculatedLevel){
-                    if(!this.personaIsValidInFusionResult(persona)|| Objects.equals(persona.getName(), personaOne.getName()) || Objects.equals(persona.getName(), personaTwo.getName())){
+                if (persona.getLevel() < calculatedLevel) {
+                    if (!this.personaIsValidInFusionResult(persona) || Objects.equals(persona.getName(), personaOne.getName()) || Objects.equals(persona.getName(), personaTwo.getName())) {
                         continue;
                     }
 
@@ -211,11 +203,10 @@ public class PersonaFuser {
             }
 
             return null;
-        }
-        else{
+        } else {
             for (PersonaForFusionService persona : personaForResultArcana) {
                 if (persona.getLevel() >= calculatedLevel) {
-                    if(!this.personaIsValidInFusionResult(persona) || persona.getName().equals(personaOne.getName()) || persona.getName().equals(personaTwo.getName())){
+                    if (!this.personaIsValidInFusionResult(persona) || persona.getName().equals(personaOne.getName()) || persona.getName().equals(personaTwo.getName())) {
                         continue;
                     }
 
@@ -227,22 +218,22 @@ public class PersonaFuser {
         }
     }
 
-    private boolean personaIsValidInRecipe(PersonaForFusionService persona){
-        if(persona.isDlc()){
+    private boolean personaIsValidInRecipe(PersonaForFusionService persona) {
+        if (persona.isDlc()) {
             return ownedDLCPersonaIDs.contains(persona.getId());
         }
 
-        if(persona.isRare()){
+        if (persona.isRare()) {
             return rarePersonaAllowedInFusion;
         }
 
         return true;
     }
 
-    private boolean personaIsValidInFusionResult(PersonaForFusionService persona){
+    private boolean personaIsValidInFusionResult(PersonaForFusionService persona) {
         final boolean validInFusion = !persona.isRare() && !persona.isSpecial();
 
-        if(validInFusion && persona.isDlc()){
+        if (validInFusion && persona.isDlc()) {
             return ownedDLCPersonaIDs.contains(persona.getId());
         }
 
@@ -250,10 +241,10 @@ public class PersonaFuser {
     }
 
     @Nullable
-    private Arcana getResultArcana(Arcana arcanaOne, Arcana arcanaTwo, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable){
-        if(arcanaTable.containsKey(arcanaOne)){
+    private Arcana getResultArcana(Arcana arcanaOne, Arcana arcanaTwo, HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable) {
+        if (arcanaTable.containsKey(arcanaOne)) {
             HashMap<Arcana, Arcana> innerTable = arcanaTable.get(arcanaOne);
-            if(innerTable.containsKey(arcanaTwo)){
+            if (innerTable.containsKey(arcanaTwo)) {
                 return innerTable.get(arcanaTwo);
             }
         }
