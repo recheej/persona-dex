@@ -294,4 +294,15 @@ public class PersonaFuserTest {
 
         assertNull(result);
     }
+
+    @Test
+    public void testRareFusionShouldSkipRarePersona() {
+        PersonaFuser fuser = new PersonaFuser(getDefaultPersonaFuserArgs());
+
+        PersonaForFusionService rarePersonaOne = getPersonaByName("Regent");
+        PersonaForFusionService rarePersonaTwo = getPersonaByName("Zouchouten");
+
+        PersonaForFusionService result = fuser.fuseNormal(rarePersonaOne, rarePersonaTwo);
+        assertPersonaName("Rakshasa", result.getName());
+    }
 }

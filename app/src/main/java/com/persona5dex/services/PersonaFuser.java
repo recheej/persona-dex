@@ -6,7 +6,6 @@ import android.util.SparseArray;
 
 import com.persona5dex.models.Enumerations.Arcana;
 import com.persona5dex.models.PersonaForFusionService;
-import com.persona5dex.models.room.Persona;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,9 +80,9 @@ public class PersonaFuser {
         List<PersonaForFusionService> personasOfSameArcana = personaByArcana.get(normalPersona.getArcana().value());
 
         int personaIndex = 0;
-        final int arcanaSize = personasOfSameArcana.size();
+        final int personaListSize = personasOfSameArcana.size();
 
-        for (int i = 0; i < arcanaSize; i++) {
+        for (int i = 0; i < personaListSize; i++) {
             PersonaForFusionService otherPersona = personasOfSameArcana.get(i);
 
             if (otherPersona.getName().equals(normalPersona.getName())) {
@@ -92,34 +91,30 @@ public class PersonaFuser {
             }
         }
 
+        PersonaForFusionService result = null;
         int newPersonaIndex = personaIndex + modifier;
-        PersonaForFusionService newPersona = null;
-        if (newPersonaIndex >= 0 && newPersonaIndex < personasOfSameArcana.size()) {
-            newPersona = personasOfSameArcana.get(newPersonaIndex);
-            if(newPersona != null && !personaIsValidInFusionResult(newPersona)){
-                newPersona = null;
+
+        //if the result isn't valid, loop through until we get a valid one
+        while (newPersonaIndex >= 0 && newPersonaIndex < personaListSize) {
+            result = personasOfSameArcana.get(newPersonaIndex);
+
+            if (result != null && this.personaIsValidInFusionResult(result)) {
+                return result;
             }
 
-            //if the result isn't valid, loop through until we get a valid one
-            while (newPersona != null && newPersona.isSpecial() && this.personaIsValidInFusionResult(newPersona)) {
-                if (modifier > 0) {
-                    modifier++;
-                } else if (modifier < 0) {
-                    modifier--;
-                }
-
-                newPersonaIndex = personaIndex + modifier;
-
-                if (newPersonaIndex >= 0 && newPersonaIndex < personasOfSameArcana.size()) {
-                    newPersona = personasOfSameArcana.get(newPersonaIndex);
-                    if(newPersona != null && !personaIsValidInFusionResult(newPersona)){
-                        newPersona = null;
-                    }
-                }
+            if (modifier > 0) {
+                modifier++;
+            } else if (modifier < 0) {
+                modifier--;
             }
+
+            newPersonaIndex = personaIndex + modifier;
         }
 
-        return newPersona;
+        if (!(newPersonaIndex >= 0 && newPersonaIndex < personaListSize)) {
+            return null;
+        }
+        return result;
     }
 
     private SparseArray<List<PersonaForFusionService>> personaByArcana() {
