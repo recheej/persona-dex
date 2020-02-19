@@ -1,9 +1,9 @@
 package com.persona5dex.models.room;
 
 import androidx.room.TypeConverter;
-import androidx.room.TypeConverters;
 
 import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.GameType;
 
 /**
  * Created by Rechee on 11/18/2017.
@@ -11,8 +11,8 @@ import com.persona5dex.models.Enumerations;
 
 public class PersonaTypeConverters {
     @TypeConverter
-    public static int toInt(Enumerations.Arcana arcana){
-        if(arcana == null){
+    public static int toInt(Enumerations.Arcana arcana) {
+        if(arcana == null) {
             return 0;
         }
 
@@ -20,10 +20,10 @@ public class PersonaTypeConverters {
     }
 
     @TypeConverter
-    public static Enumerations.Arcana toArcana(int arcana){
+    public static Enumerations.Arcana toArcana(int arcana) {
 
-        for (Enumerations.Arcana arcana1 : Enumerations.Arcana.values()) {
-            if(arcana1.value() == arcana){
+        for(Enumerations.Arcana arcana1 : Enumerations.Arcana.values()) {
+            if(arcana1.value() == arcana) {
                 return arcana1;
             }
         }
@@ -32,8 +32,8 @@ public class PersonaTypeConverters {
     }
 
     @TypeConverter
-    public static int toInt(Enumerations.ElementEffect elementEffect){
-        if(elementEffect == null){
+    public static int toInt(Enumerations.ElementEffect elementEffect) {
+        if(elementEffect == null) {
             return 0;
         }
 
@@ -41,19 +41,19 @@ public class PersonaTypeConverters {
     }
 
     @TypeConverter
-    public static int toInt(boolean bool){
+    public static int toInt(boolean bool) {
         return bool ? 1 : 0;
     }
 
     @TypeConverter
-    public static boolean toBool(int intToConvert){
+    public static boolean toBool(int intToConvert) {
         return intToConvert == 1;
     }
 
     @TypeConverter
-    public static Enumerations.ElementEffect toElementEffect(int elementEffect){
-        for (Enumerations.ElementEffect effect : Enumerations.ElementEffect.values()) {
-            if(effect.value() == elementEffect){
+    public static Enumerations.ElementEffect toElementEffect(int elementEffect) {
+        for(Enumerations.ElementEffect effect : Enumerations.ElementEffect.values()) {
+            if(effect.value() == elementEffect) {
                 return effect;
             }
         }
@@ -62,9 +62,9 @@ public class PersonaTypeConverters {
     }
 
     @TypeConverter
-    public static Enumerations.Element toElement(int element){
-        for (Enumerations.Element element1 : Enumerations.Element.values()) {
-            if(element1.value() == element){
+    public static Enumerations.Element toElement(int element) {
+        for(Enumerations.Element element1 : Enumerations.Element.values()) {
+            if(element1.value() == element) {
                 return element1;
             }
         }
@@ -73,7 +73,17 @@ public class PersonaTypeConverters {
     }
 
     @TypeConverter
-    public static int toInt(Enumerations.Element element){
+    public static GameType toGameType(int gameType) {
+        return GameType.getGameType(gameType);
+    }
+
+    @TypeConverter
+    public static int toInt(GameType gameType) {
+        return gameType.getValue();
+    }
+
+    @TypeConverter
+    public static int toInt(Enumerations.Element element) {
         return element.value();
     }
 }

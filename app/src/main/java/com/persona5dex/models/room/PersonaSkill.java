@@ -6,6 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.annotation.NonNull;
 
+import com.persona5dex.models.GameType;
+
 /**
  * Created by Rechee on 10/22/2017.
  */
@@ -36,7 +38,10 @@ public class PersonaSkill {
     @ColumnInfo(name = "skill_id")
     public int skillID;
 
-    @NonNull
     @ColumnInfo(name = "level_required")
     public int levelRequired;
+
+    @NonNull
+    @ColumnInfo(defaultValue = "1")
+    public GameType gameId = GameType.BASE;
 }

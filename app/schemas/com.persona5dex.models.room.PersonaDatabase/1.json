@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2b2128ef5b08e4e5a1271f468937f64f",
+    "identityHash": "e07526530108b8f2629273a30833ecac",
     "entities": [
       {
         "tableName": "personas",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `arcana` INTEGER, `arcanaName` TEXT, `level` INTEGER NOT NULL, `personality` TEXT, `special` INTEGER NOT NULL, `max` INTEGER NOT NULL, `dlc` INTEGER NOT NULL, `rare` INTEGER NOT NULL, `note` TEXT, `imageUrl` TEXT, `endurance` INTEGER, `agility` INTEGER, `strength` INTEGER, `magic` INTEGER, `luck` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `arcana` INTEGER, `arcanaName` TEXT, `level` INTEGER NOT NULL, `personality` TEXT, `special` INTEGER NOT NULL, `max` INTEGER NOT NULL, `dlc` INTEGER NOT NULL, `rare` INTEGER NOT NULL, `note` TEXT, `imageUrl` TEXT, `gameId` INTEGER NOT NULL DEFAULT 1, `endurance` INTEGER, `agility` INTEGER, `strength` INTEGER, `magic` INTEGER, `luck` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -79,6 +79,13 @@
             "columnName": "imageUrl",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "gameId",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
           },
           {
             "fieldPath": "stats.endurance",
@@ -172,7 +179,7 @@
       },
       {
         "tableName": "personaSkills",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`persona_id` INTEGER NOT NULL, `skill_id` INTEGER NOT NULL, `level_required` INTEGER NOT NULL, PRIMARY KEY(`persona_id`, `skill_id`), FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`skill_id`) REFERENCES `skills`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`persona_id` INTEGER NOT NULL, `skill_id` INTEGER NOT NULL, `level_required` INTEGER NOT NULL, `gameId` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`persona_id`, `skill_id`), FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`skill_id`) REFERENCES `skills`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "personaID",
@@ -191,6 +198,13 @@
             "columnName": "level_required",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "gameId",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
           }
         ],
         "primaryKey": {
@@ -507,7 +521,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2b2128ef5b08e4e5a1271f468937f64f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e07526530108b8f2629273a30833ecac')"
     ]
   }
 }

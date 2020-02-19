@@ -1,11 +1,14 @@
 package com.persona5dex.models.room;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.annotation.NonNull;
 
 import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.GameType;
 
 /**
  * Created by Rechee on 10/22/2017.
@@ -18,17 +21,14 @@ public class Persona {
     public String name;
     public Enumerations.Arcana arcana;
     public String arcanaName;
-    @NonNull
     public int level;
+
+    @Nullable
     public String personality;
 
-    @NonNull
     public boolean special;
-    @NonNull
     public boolean max;
-    @NonNull
     public boolean dlc;
-    @NonNull
     public boolean rare;
 
     public String note;
@@ -37,4 +37,8 @@ public class Persona {
 
     @Embedded
     public Stats stats;
+
+    @NonNull
+    @ColumnInfo(defaultValue = "1")
+    public GameType gameId = GameType.BASE;
 }

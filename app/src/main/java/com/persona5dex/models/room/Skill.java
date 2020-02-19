@@ -4,10 +4,6 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.persona5dex.models.Enumerations;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 
 /**
