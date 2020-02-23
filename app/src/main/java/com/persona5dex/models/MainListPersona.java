@@ -20,6 +20,7 @@ public class MainListPersona {
     public int level;
     public boolean rare;
     public boolean dlc;
+    public GameType gameId;
 
     @Relation(parentColumn = "id", entityColumn = "persona_id")
     public List<PersonaShadowName> personaShadowNames;

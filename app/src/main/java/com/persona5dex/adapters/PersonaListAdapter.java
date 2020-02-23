@@ -3,7 +3,12 @@ package com.persona5dex.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,7 @@ import android.widget.TextView;
 import com.persona5dex.R;
 import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
 
 import java.util.ArrayList;
@@ -52,10 +58,45 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         }
 
         public void bindPersona(MainListPersona personaToBind){
-
             this.textViewPersonaName.setText(personaToBind.name);
             this.textViewPersonaLevel.setText(String.format(Locale.getDefault(), "%d" , personaToBind.level));
             this.textViewPersonaArcana.setText(personaToBind.arcanaName);
+
+
+            @ColorRes final int textColor = getTextColor(personaToBind, );
+            @ColorInt final int color = itemView.getContext().getResources().getColor(textColor);
+            this.textViewPersonaName.setTextColor(color);
+            this.textViewPersonaLevel.setTextColor(color);
+            this.textViewPersonaArcana.setTextColor(color);
+        }
+
+        @ColorRes private int getTextColor(MainListPersona personaToBind, boolean primary) {
+            @ColorRes int backgroundColor;
+            if(personaToBind.gameId == GameType.ROYAL){
+                if(primary){
+                    backgroundColor = R.color.textColorGoldenOnDark;
+                }
+                else{
+
+                }
+            }
+            else{
+                if(primary){
+                    backgroundColor = android.R.color.pri;
+                }
+                else{
+
+                }
+            }
+
+            return backgroundColor;
+        }
+
+        private void getDefaultTextColor(boolean primary, Context context){
+            TypedValue typedValue = new TypedValue();
+            Theme theme = context.theme
+            theme.resolveAttribute(R.attr.theme_color, typedValue, true);
+            @ColorInt int color = typedValue.data;
         }
     }
 
@@ -87,6 +128,12 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         });
 
         return viewHolder;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        MainListPersona detailPersona = personas.get(position);
+        return detailPersona.gameId.getValue();
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.util.List;
 @Dao
 public interface PersonaDao {
     @Transaction
-    @Query("select id, name, arcanaName, arcana, level, rare, dlc from personas")
+    @Query("select id, name, arcanaName, arcana, level, rare, dlc, gameId from personas")
     LiveData<List<MainListPersona>> getAllPersonasForMainList();
 
     @Query("select id, name, arcanaName, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
