@@ -6,7 +6,8 @@
     android:paddingBottom="10dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    tools:context="com.persona5dex.fragments.PersonaElementsFragment">
+    tools:context="com.persona5dex.fragments.PersonaElementsFragment"
+    android:background="?pageBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
