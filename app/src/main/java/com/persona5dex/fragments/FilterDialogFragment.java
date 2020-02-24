@@ -88,7 +88,7 @@ public class FilterDialogFragment extends DialogFragment {
         arcanaSpinner = view.findViewById(R.id.spinner_arcana);
 
         arcanaMapArrayAdapter = new ArrayAdapter<>(activity,
-                R.layout.support_simple_spinner_dropdown_item, viewModel.getArcanaMaps());
+                R.layout.spinner_dropdown, viewModel.getArcanaMaps());
         arcanaSpinner.setAdapter(arcanaMapArrayAdapter);
 
         InputFilter filter = new InputFilter.LengthFilter(2);

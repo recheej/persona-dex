@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.persona5dex.activities.PersonaFusionActivity">
+    tools:context="com.persona5dex.activities.PersonaFusionActivity"
+    android:background="?pageBackground">
 
     <include
         android:id="@+id/main_toolbar"

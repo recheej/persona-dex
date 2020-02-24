@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?pageBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,14 +16,15 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/arcana"
-            android:textSize="16sp" />
+            android:textAppearance="?textBodyTitle"/>
 
         <Spinner
             android:id="@+id/spinner_arcana"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            style="@style/PersonaSpinnerDropdown"/>
     </RelativeLayout>
 
     <include layout="@layout/grid_divider_horizontal" />
@@ -39,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/min_level"
-            android:textSize="16sp" />
+            android:textAppearance="?textBodyTitle"/>
 
         <EditText
             android:id="@+id/editText_minLevel"
@@ -58,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/max_level"
-            android:textSize="16sp" />
+            android:textAppearance="?textBodyTitle" />
 
         <EditText
             android:id="@+id/editText_maxLevel"

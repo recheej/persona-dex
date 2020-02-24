@@ -104,4 +104,8 @@
         <item name="android:textColor">?defaultTextColor</item>
     </style>
 
+    <style name="PersonaSpinnerDropdown" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:popupBackground">?pageBackground</item>
+    </style>
+
 </resources>

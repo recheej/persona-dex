@@ -3,4 +3,5 @@
     <dimen name="bodyTitleSize">16sp</dimen>
     <dimen name="bodySize">14sp</dimen>
     <dimen name="bodyCaptionSize">12sp</dimen>
+    <dimen name="touchTargetSize">48dp</dimen>
 </resources>
