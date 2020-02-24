@@ -7,24 +7,19 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-        <item name="android:textColorPrimary">?defaultTextColor</item>
         <item name="textBody">@style/TextBody</item>
         <item name="textBodyTitle">@style/TextBodyTitle</item>
         <item name="textCaption">@style/TextCaption</item>
+        <item name="textHeadline">@style/TextHeadline</item>
+        <item name="statsBackground">@color/colorAccentLight</item>
         <item name="defaultTextColor">@color/textColorWhite</item>
+        <item name="android:textColorPrimary">?defaultTextColor</item>
+        <item name="pageBackground">?colorAccent</item>
         <item name="toolbarBackground">?colorPrimary</item>
     </style>
 
     <style name="ToolbarSubtitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textColor">?defaultTextColor</item>
-    </style>
-
-    <style name="PageTheme">
-        <item name="pageBackground">?colorAccent</item>
-    </style>
-
-    <style name="PageTheme.DEFAULT" parent="PageTheme">
-        <item name="android:background">?pageBackground</item>
     </style>
 
     <style name="PreferenceThemeOverlay">
@@ -40,19 +35,19 @@
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
     </style>
 
-    <style name="PersonaStatsTheme">
+    <style name="PersonaStatsTheme" parent="AppTheme">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">?colorAccent</item>
+        <item name="android:background">?statsBackground</item>
         <item name="android:orientation">vertical</item>
     </style>
 
     <style name="PersonaStatsTextLabel">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textAppearance">?textBodyTitle</item>
     </style>
 
     <style name="PersonaStatsTextLabel.PersonaStatsTextValue">
-        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">?textBody</item>
         <item name="android:textAlignment">3</item>
     </style>
 
@@ -98,6 +93,11 @@
 
     <style name="TextBody" parent="TextAppearance.AppCompat.Body2">
         <item name="android:textColor">?defaultTextColor</item>
+    </style>
+
+    <style name="TextHeadline" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">?defaultTextColor</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">

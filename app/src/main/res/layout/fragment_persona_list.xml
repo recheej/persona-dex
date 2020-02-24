@@ -9,6 +9,6 @@
         android:layout_height="match_parent"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:theme="@style/PageTheme.DEFAULT"/>
+        android:background="?pageBackground"/>
 
 </FrameLayout>
