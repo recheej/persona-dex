@@ -62,42 +62,42 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
             this.textViewPersonaLevel.setText(String.format(Locale.getDefault(), "%d" , personaToBind.level));
             this.textViewPersonaArcana.setText(personaToBind.arcanaName);
 
-
-            @ColorRes final int textColor = getTextColor(personaToBind, );
-            @ColorInt final int color = itemView.getContext().getResources().getColor(textColor);
-            this.textViewPersonaName.setTextColor(color);
-            this.textViewPersonaLevel.setTextColor(color);
-            this.textViewPersonaArcana.setTextColor(color);
+//
+//            @ColorRes final int textColor = getTextColor(personaToBind, );
+//            @ColorInt final int color = itemView.getContext().getResources().getColor(textColor);
+//            this.textViewPersonaName.setTextColor(color);
+//            this.textViewPersonaLevel.setTextColor(color);
+//            this.textViewPersonaArcana.setTextColor(color);
         }
 
-        @ColorRes private int getTextColor(MainListPersona personaToBind, boolean primary) {
-            @ColorRes int backgroundColor;
-            if(personaToBind.gameId == GameType.ROYAL){
-                if(primary){
-                    backgroundColor = R.color.textColorGoldenOnDark;
-                }
-                else{
-
-                }
-            }
-            else{
-                if(primary){
-                    backgroundColor = android.R.color.pri;
-                }
-                else{
-
-                }
-            }
-
-            return backgroundColor;
-        }
-
-        private void getDefaultTextColor(boolean primary, Context context){
-            TypedValue typedValue = new TypedValue();
-            Theme theme = context.theme
-            theme.resolveAttribute(R.attr.theme_color, typedValue, true);
-            @ColorInt int color = typedValue.data;
-        }
+//        @ColorRes private int getTextColor(MainListPersona personaToBind, boolean primary) {
+//            @ColorRes int backgroundColor;
+//            if(personaToBind.gameId == GameType.ROYAL){
+//                if(primary){
+//                    backgroundColor = R.color.textColorGoldenOnDark;
+//                }
+//                else{
+//
+//                }
+//            }
+//            else{
+//                if(primary){
+//                    backgroundColor = android.R.color.pri;
+//                }
+//                else{
+//
+//                }
+//            }
+//
+//            return backgroundColor;
+//        }
+//
+//        private void getDefaultTextColor(boolean primary, Context context){
+//            TypedValue typedValue = new TypedValue();
+//            Theme theme = context.theme
+//            theme.resolveAttribute(R.attr.theme_color, typedValue, true);
+//            @ColorInt int color = typedValue.data;
+//        }
     }
 
     public PersonaListAdapter(List<MainListPersona> mainListPersonas){

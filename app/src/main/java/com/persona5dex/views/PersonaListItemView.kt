@@ -12,8 +12,8 @@ class PersonaListItemView(context: Context, attrs: AttributeSet?, defStyleAttr: 
     }
 }
 
-fun getPersonaListItemView(gameType: GameType) =
-        when(gameType){
-            GameType.BASE -> R.style.PersonaListItem
-            GameType.ROYAL -> TODO()
-        }
+//fun getPersonaListItemView(gameType: GameType) =
+//        when(gameType){
+//            GameType.BASE -> R.style.PersonaListItem
+//            GameType.ROYAL -> TODO()
+//        }

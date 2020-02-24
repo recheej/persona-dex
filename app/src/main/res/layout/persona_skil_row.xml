@@ -1,29 +1,28 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="48dp">
+    android:minHeight="48dp"
+    android:theme="@style/PageTheme.DEFAULT">
 
     <TextView
         android:id="@+id/textViewSkillName"
-        style="@style/PersonaListItemPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:text="@string/element_curse"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="?textBodyTitle"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewSkillLevel"
-        style="@style/PersonaStatsTextLabel.PersonaStatsTextValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="16"
+        android:textAppearance="?textBody"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewSkillName" />
 
@@ -34,6 +33,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="2dp"
         android:text="TextView"
+        android:textAppearance="?textCaption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewSkillName"
         app:layout_constraintTop_toBottomOf="@+id/textViewSkillName" />

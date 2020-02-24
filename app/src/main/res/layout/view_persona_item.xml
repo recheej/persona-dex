@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="76dp"
     android:orientation="vertical"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:theme="@style/PageTheme.DEFAULT">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,16 +21,15 @@
 
             <TextView
                 android:id="@+id/textViewPersonaName"
-                style="@style/DenseListTextPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Persona Name"
                 tools:ignore="HardcodedText"
+                android:textAppearance="?textBodyTitle"
                 android:layout_marginRight="5dp"/>
 
             <TextView
                 android:id="@+id/textViewPrimaryShadowName"
-                style="@style/DenseListTextSecondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -40,10 +40,10 @@
 
         <TextView
             android:id="@+id/textViewArcana"
-            style="@style/DenseListTextSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Arcana"
+            android:textAppearance="?textCaption"
             tools:ignore="HardcodedText" />
 
         <LinearLayout
@@ -54,19 +54,19 @@
 
             <TextView
                 android:id="@+id/textViewPersonaLevelLabel"
-                style="@style/DenseListTextSecondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="5dp"
                 android:text="@string/level_label"
+                android:textAppearance="?textCaption"
                 tools:ignore="RtlSymmetry" />
 
             <TextView
                 android:id="@+id/textViewPersonaLevel"
-                style="@style/DenseListTextSecondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1234"
+                android:textAppearance="?textCaption"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
     </LinearLayout>

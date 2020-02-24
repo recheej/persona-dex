@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="pageBackground" format="reference" />
+    <attr name="toolbarBackground" format="reference" />
+    <attr name="textBody" format="reference" />
+    <attr name="textBodyTitle" format="reference" />
+    <attr name="textCaption" format="reference" />
+    <attr name="defaultTextColor" format="reference" />
+</resources>
