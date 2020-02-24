@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/skills_more_details"
-        android:textSize="12sp"/>
+        android:textAppearance="?textBody"/>
 
     <LinearLayout
         android:id="@+id/skill_grid"
