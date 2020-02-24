@@ -1,8 +1,13 @@
 package com.persona5dex.fragments;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.Nullable;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
@@ -44,6 +49,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
+        //todo: use theme attribute
+        view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        return view;
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -64,7 +77,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         final MultiSelectListPreference dlcPreference = (MultiSelectListPreference) preferenceManager
                 .findPreference(activity.getString(R.string.pref_key_dlc));
 
-        viewModel.getDLCPersonaForSettings().observe(this, new Observer<String[][]>() {
+        viewModel.getDLCPersonaForSettings().observe(getViewLifecycleOwner(), new Observer<String[][]>() {
             @Override
             public void onChanged(@Nullable String[][] dlcInfo) {
                 if(dlcInfo == null){

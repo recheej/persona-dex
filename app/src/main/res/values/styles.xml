@@ -17,6 +17,8 @@
         <item name="pageBackground">?colorAccent</item>
         <item name="toolbarBackground">?colorPrimary</item>
         <item name="android:dialogTheme">@style/PersonaDialogAlert</item>
+        <item name="android:itemBackground">?pageBackground</item>
+        <item name="android:textColorSecondary">?defaultTextColor</item>
     </style>
 
     <style name="ToolbarSubtitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
