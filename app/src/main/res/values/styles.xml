@@ -16,6 +16,7 @@
         <item name="android:textColorPrimary">?defaultTextColor</item>
         <item name="pageBackground">?colorAccent</item>
         <item name="toolbarBackground">?colorPrimary</item>
+        <item name="android:dialogTheme">@style/PersonaDialogAlert</item>
     </style>
 
     <style name="ToolbarSubtitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
@@ -106,6 +107,18 @@
 
     <style name="PersonaSpinnerDropdown" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:popupBackground">?pageBackground</item>
+    </style>
+
+    <style name="PersonaCheckbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="buttonTint">?colorPrimary</item>
+        <item name="android:textColor">?defaultTextColor</item>
+    </style>
+
+    <style name="PersonaDialogAlert" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+<!--        <item name="colorPrimary">?colorPrimary</item>-->
+<!--        <item name="colorAccent">?colorAccent</item>-->
+        <item name="android:background">?pageBackground</item>
+        <item name="android:textColorPrimary">?defaultTextColor</item>
     </style>
 
 </resources>

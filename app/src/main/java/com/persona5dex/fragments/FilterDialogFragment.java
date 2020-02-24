@@ -2,7 +2,7 @@ package com.persona5dex.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -10,7 +10,10 @@ import androidx.appcompat.app.AlertDialog;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -174,9 +177,24 @@ public class FilterDialogFragment extends DialogFragment {
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE);
-                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
-                alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
+
+                //todo: use theme attributes instead
+                final Resources resources = getResources();
+                final int textColorWhite = resources.getColor(R.color.textColorWhite);
+                final int textColorRed = resources.getColor(R.color.colorPrimary);
+                final int backgroundColor = getResources().getColor(R.color.colorAccent);
+
+                final Button button = setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_POSITIVE, backgroundColor);
+
+                final ViewParent parent = button.getParent();
+                if(parent instanceof ViewGroup){
+                    // hacky, but for some reason background color isn't being applied to parent through themes
+                    View parentView = (ViewGroup) parent;
+                    parentView.setBackgroundColor(backgroundColor);
+                }
+
+                setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_NEGATIVE, backgroundColor);
+                setupButton(textColorRed, alertDialog, AlertDialog.BUTTON_NEUTRAL, backgroundColor);
             }
         });
 
@@ -193,6 +211,13 @@ public class FilterDialogFragment extends DialogFragment {
         }
 
         return alertDialog;
+    }
+
+    private Button setupButton(int textColor, AlertDialog alertDialog, int buttonType, int backgroundColor) {
+        final Button button = alertDialog.getButton(buttonType);
+        button.setTextColor(textColor);
+        button.setBackgroundColor(backgroundColor);
+        return button;
     }
 
     private int getSpinnerPosition(int arcana) {

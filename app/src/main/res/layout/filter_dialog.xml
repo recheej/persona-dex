@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?pageBackground">
+    style="@style/PersonaDialogAlert">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -83,6 +83,7 @@
         android:layout_height="wrap_content"
         android:checked="true"
         android:padding="10dp"
+        style="@style/PersonaCheckbox"
         android:text="@string/rare_persona" />
 
     <CheckBox
@@ -91,6 +92,7 @@
         android:layout_height="wrap_content"
         android:checked="true"
         android:padding="10dp"
+        style="@style/PersonaCheckbox"
         android:text="@string/dlc_persona" />
 
 
