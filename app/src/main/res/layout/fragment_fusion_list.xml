@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.persona5dex.fragments.FusionListFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?pageBackground">
 
     <include layout="@layout/progress_bar_fusions" />
 

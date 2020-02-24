@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?pageBackground">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="TextView"
-            android:textSize="13sp"
+            android:textAppearance="?textBody"
             tools:ignore="HardcodedText" />
 
         <ImageView
@@ -41,7 +42,7 @@
             android:layout_gravity="center_vertical"
             android:layout_toStartOf="@id/expand_icon"
             android:text="TextView"
-            android:textSize="13sp" />
+            android:textAppearance="?textBody" />
 
     </RelativeLayout>
 
