@@ -52,7 +52,7 @@
         android:id="@+id/expandable_fusion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/personaGrey"
         app:el_duration="300"
         app:el_expanded="false">
 

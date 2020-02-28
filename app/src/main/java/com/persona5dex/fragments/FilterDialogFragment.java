@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.persona5dex.R;
+import com.persona5dex.ThemeUtil;
 import com.persona5dex.activities.BaseActivity;
 import com.persona5dex.dagger.fragment.FragmentComponent;
 import com.persona5dex.models.ArcanaMap;
@@ -178,11 +179,8 @@ public class FilterDialogFragment extends DialogFragment {
             @Override
             public void onShow(DialogInterface dialog) {
 
-                //todo: use theme attributes instead
-                final Resources resources = getResources();
-                final int textColorWhite = resources.getColor(R.color.textColorWhite);
-                final int textColorRed = resources.getColor(R.color.colorPrimary);
-                final int backgroundColor = getResources().getColor(R.color.colorAccent);
+                final int textColorWhite = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.defaultTextColor);
+                final int backgroundColor = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.pageBackground);
 
                 final Button button = setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_POSITIVE, backgroundColor);
 
@@ -193,8 +191,9 @@ public class FilterDialogFragment extends DialogFragment {
                     parentView.setBackgroundColor(backgroundColor);
                 }
 
+                final int colorAccent = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.colorAccent);
                 setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_NEGATIVE, backgroundColor);
-                setupButton(textColorRed, alertDialog, AlertDialog.BUTTON_NEUTRAL, backgroundColor);
+                setupButton(colorAccent, alertDialog, AlertDialog.BUTTON_NEUTRAL, backgroundColor);
             }
         });
 

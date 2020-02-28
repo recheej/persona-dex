@@ -3,19 +3,19 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/personaGrey</item>
+        <item name="colorPrimaryDark">@color/personaGreyDark</item>
+        <item name="colorAccent">@color/personaRed</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="textBody">@style/TextBody</item>
         <item name="textBodyTitle">@style/TextBodyTitle</item>
         <item name="textCaption">@style/TextCaption</item>
         <item name="textHeadline">@style/TextHeadline</item>
-        <item name="statsBackground">@color/colorAccentLight</item>
+        <item name="statsBackground">@color/personaGreyLight</item>
         <item name="defaultTextColor">@color/textColorWhite</item>
         <item name="android:textColorPrimary">?defaultTextColor</item>
-        <item name="pageBackground">?colorAccent</item>
-        <item name="toolbarBackground">?colorPrimary</item>
+        <item name="pageBackground">?colorPrimary</item>
+        <item name="toolbarBackground">?colorAccent</item>
         <item name="android:dialogTheme">@style/PersonaDialogAlert</item>
         <item name="android:itemBackground">?pageBackground</item>
     </style>

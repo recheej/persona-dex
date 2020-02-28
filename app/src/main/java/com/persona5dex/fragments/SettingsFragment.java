@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.preference.MultiSelectListPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.preference.PreferenceScreen;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
+import com.persona5dex.ThemeUtil;
 import com.persona5dex.activities.BaseActivity;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
@@ -52,7 +51,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
         //todo: use theme attribute
-        view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        view.setBackgroundColor(ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.pageBackground));
         return view;
     }
 

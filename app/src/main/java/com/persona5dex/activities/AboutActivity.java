@@ -5,8 +5,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.persona5dex.R;
 
@@ -44,7 +45,7 @@ public class AboutActivity extends BaseActivity {
         Element linkElement = new Element();
         linkElement.setTitle(title);
         linkElement.setIconDrawable(R.drawable.about_icon_link);
-        linkElement.setIconTint(R.color.colorPrimary);
+        linkElement.setIconTint(R.color.personaRed);
 
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D50000</color>
-    <color name="colorPrimaryDark">#9B0000</color>
-    <color name="colorAccent">#474747</color>
-    <color name="colorAccentLight">#727272</color>
+    <color name="personaRed">#D50000</color>
+    <color name="personaRedDark">#9B0000</color>
+    <color name="personaGrey">#474747</color>
+    <color name="personaGreyDark">#202020</color>
+    <color name="personaGreyLight">#727272</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorGoldenOnDark">#FFDB57</color>
+    <color name="darkGrey">#121212</color>
+    <color name="redA200">#FF5252</color>
 </resources>
