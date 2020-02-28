@@ -37,7 +37,6 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     @Inject
     ProgressBar fusionsProgressBar;
 
-    private SharedPreferences defaultSharedPreferences;
     private View frameLayout;
     private boolean resetService;
 
@@ -57,8 +56,6 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.action_settings);
-
-        defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         frameLayout = findViewById(R.id.container);
 
@@ -111,7 +108,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.equals(getString(R.string.pref_key_theme))) {
             final String nightModeValue = sharedPreferences.getString(key, String.valueOf(MODE_NIGHT_FOLLOW_SYSTEM));
-            AppCompatDelegate.setDefaultNightMode(ThemeUtil.getNightMode(nightModeValue));
+            ThemeUtil.setNightMode(nightModeValue);
         } else {
             this.resetService = true;
 

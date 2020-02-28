@@ -2,10 +2,13 @@ package com.persona5dex.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.persona5dex.Persona5Application;
+import com.persona5dex.R;
+import com.persona5dex.ThemeUtil;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
@@ -18,6 +21,8 @@ import javax.inject.Named;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 
 /**
  * Created by Rechee on 7/30/2017.
@@ -53,6 +58,10 @@ public class BaseActivity extends AppCompatActivity {
 
         compositeStoppableDisposable = new CompositeDisposable();
         compositeDestroyableDisposable = new CompositeDisposable();
+
+        final String nightModeValue =
+                defaultSharedPreferences.getString(getString(R.string.pref_key_theme), String.valueOf(MODE_NIGHT_FOLLOW_SYSTEM));
+        ThemeUtil.setNightMode(nightModeValue);
     }
 
     protected void addStoppableDisposable(Disposable disposable) {

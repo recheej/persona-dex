@@ -18,10 +18,14 @@ fun Context.getThemeAttributeColor(@AttrRes themeColor: Int): Int {
     return typedValue.data
 }
 
-fun getNightMode(nightModeString: String): Int =
+private fun getNightMode(nightModeString: String): Int =
         when (nightModeString.toInt()) {
             0 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             1 -> AppCompatDelegate.MODE_NIGHT_NO
             2 -> AppCompatDelegate.MODE_NIGHT_YES
             else -> error("cannot get night mode for string $nightModeString")
         }
+
+fun setNightMode(nightModeString: String) {
+    AppCompatDelegate.setDefaultNightMode(getNightMode(nightModeString))
+}
