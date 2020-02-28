@@ -46,11 +46,11 @@
     <string name="dlc_persona_owned">DLC Persona Owned</string>
     <string name="dlc_persona_pref_summary">Choose the DLC persona you own and would like to include in fusions</string>
     <string name="pref_rare_persona_title">Include rare personas in fusions</string>
+    <string name="pref_theme_title">Theme</string>
     <string name="pref_rare_persona_summary">Include rare persona in fusions (Note: Base level is used for rare persona)</string>
+    <string name="pref_theme_summary">Choose theme for app, including Dark Mode</string>
     <string name="action_settings">Settings</string>
 
-    <string name="pref_key_dlc">pref_dlc_persona_owned</string>
-    <string name="pref_key_rarePersona">pref_include_rare</string>
     <string name="rare_persona">Rare Persona</string>
     <string name="dlc_persona">DLC Persona</string>
     <string name="max_level">Max Level</string>
@@ -89,5 +89,9 @@
     <string name="update_20">DLC settings have been reset! Sorry for the inconvenience.\nClick the button below to update your settings.</string>
     <string name="privacy_prompt">I take your privacy seriously! The app uses your Advertising ID for analytics. Basically, it\'s used to help with bug fixing.\n\nPrivacy Policy:\n</string>
     <string name="privacy">Privacy!</string>
+
+    <string name="theme_type_title_device_default">Device Default</string>
+    <string name="theme_type_title_device_light">Light</string>
+    <string name="theme_type_title_device_dark">Dark</string>
 
 </resources>

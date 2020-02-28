@@ -7,6 +7,7 @@ import android.content.res.Resources.Theme
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatDelegate
 
 
 @ColorInt
@@ -16,3 +17,11 @@ fun Context.getThemeAttributeColor(@AttrRes themeColor: Int): Int {
     theme.resolveAttribute(themeColor, typedValue, true)
     return typedValue.data
 }
+
+fun getNightMode(nightModeString: String): Int =
+        when (nightModeString.toInt()) {
+            0 -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            1 -> AppCompatDelegate.MODE_NIGHT_NO
+            2 -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> error("cannot get night mode for string $nightModeString")
+        }

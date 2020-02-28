@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="themeTypeTitles">
+        <item>@string/theme_type_title_device_default</item>
+        <item>@string/theme_type_title_device_light</item>
+        <item>@string/theme_type_title_device_dark</item>
+    </string-array>
+
+    <string-array name="themeType">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

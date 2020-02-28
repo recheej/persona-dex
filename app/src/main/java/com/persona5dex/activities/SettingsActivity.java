@@ -7,17 +7,23 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.persona5dex.R;
+import com.persona5dex.ThemeUtil;
 import com.persona5dex.fragments.SettingsFragment;
 import com.persona5dex.services.FusionCalculatorJobService;
 
 import javax.inject.Inject;
+
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 
 /**
  * Created by Rechee on 10/7/2017.
@@ -71,7 +77,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(SettingsActivity.this.resetService){
+            if(SettingsActivity.this.resetService) {
                 //it's possible that the user changed the dlc values while the service is running so reset again
                 SettingsActivity.this.resetService = false;
                 final Intent work = new Intent(SettingsActivity.this,
@@ -103,10 +109,15 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        this.resetService = true;
+        if(key.equals(getString(R.string.pref_key_theme))) {
+            final String nightModeValue = sharedPreferences.getString(key, String.valueOf(MODE_NIGHT_FOLLOW_SYSTEM));
+            AppCompatDelegate.setDefaultNightMode(ThemeUtil.getNightMode(nightModeValue));
+        } else {
+            this.resetService = true;
 
-        final Intent work = new Intent(this, FusionCalculatorJobService.class);
-        work.putExtra("forceReset", true);
-        FusionCalculatorJobService.enqueueWork(this, work);
+            final Intent work = new Intent(this, FusionCalculatorJobService.class);
+            work.putExtra("forceReset", true);
+            FusionCalculatorJobService.enqueueWork(this, work);
+        }
     }
 }

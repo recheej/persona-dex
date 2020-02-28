@@ -8,4 +8,10 @@
     <attr name="textBodyTitle" format="reference" />
     <attr name="textCaption" format="reference" />
     <attr name="defaultTextColor" format="reference" />
+
+    <attr name="themeType">
+        <enum name="deviceDefault" value="0" />
+        <enum name="light" value="1" />
+        <enum name="dark" value="2" />
+    </attr>
 </resources>

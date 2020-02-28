@@ -1,6 +1,7 @@
 package com.persona5dex.fragments;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
@@ -73,8 +76,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SettingsViewModel.class);
 
-        final MultiSelectListPreference dlcPreference = (MultiSelectListPreference) preferenceManager
+        final MultiSelectListPreference dlcPreference = preferenceManager
                 .findPreference(activity.getString(R.string.pref_key_dlc));
+
+        final ListPreference preference = preferenceManager.findPreference(activity.getString(R.string.pref_key_theme));
+        preference.setOnPreferenceChangeListener((preference1, newValue) -> {
+            return true;
+        });
 
         viewModel.getDLCPersonaForSettings().observe(getViewLifecycleOwner(), new Observer<String[][]>() {
             @Override
