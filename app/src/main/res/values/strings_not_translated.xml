@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">PersonaDex: Persona 5 Compendium</string>
     <string name="app_name_short" translatable="false">>PDex</string>
-    <string name="personas" translatable="false">>Persona</string>
-    <string name="arcana" translatable="false">>Arcana</string>
-    <string name="email_support" translatable="false">>support@persona5dex.com</string>
-    <string name="privacy_policy_url" translatable="false">>https://recheej.github.io/</string>
-    <string name="pref_key_dlc" translatable="false">>pref_dlc_persona_owned</string>
+    <string name="personas" translatable="false">Persona</string>
+    <string name="arcana" translatable="false">Arcana</string>
+    <string name="email_support" translatable="false">support@persona5dex.com</string>
+    <string name="privacy_policy_url" translatable="false">https://recheej.github.io/</string>
+    <string name="pref_key_dlc" translatable="false">pref_dlc_persona_owned</string>
     <string name="pref_key_rarePersona" translatable="false">>pref_include_rare</string>
     <string name="pref_key_theme" translatable="false">pref_include_rare</string>
 
