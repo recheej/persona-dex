@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Persona5Calculator.iml" filepath="$PROJECT_DIR$/Persona5Calculator.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Persona5Calculator.iml" filepath="$PROJECT_DIR$/Persona5Calculator.iml" group="Persona5Calculator" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Persona5Calculator/app" />
       <module fileurl="file://$PROJECT_DIR$/persona-dex.iml" filepath="$PROJECT_DIR$/persona-dex.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/persona-dex-app.iml" filepath="$PROJECT_DIR$/app/persona-dex-app.iml" />
     </modules>
