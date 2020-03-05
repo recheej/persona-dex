@@ -18,7 +18,9 @@
         <item name="pageBackground">@color/darkGrey</item>
         <item name="toolbarBackground">?colorAccent</item>
         <item name="android:dialogTheme">@style/PersonaDialogAlert</item>
+        <item name="android:alertDialogTheme">@style/PersonaDialogAlert</item>
         <item name="android:itemBackground">?pageBackground</item>
+        <item name="searchViewStyle">@style/DropDownItemStyle</item>
     </style>
 
     <style name="PersonaStatsTheme" parent="AppTheme">

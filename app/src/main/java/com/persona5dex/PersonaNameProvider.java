@@ -31,7 +31,8 @@ public class PersonaNameProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         String query = uri.getLastPathSegment().toLowerCase();
-        return dao.getSuggestions(String.format("%%%s%%", query));
+        final Cursor databaseCursor = dao.getSuggestions(String.format("%%%s%%", query));
+        return new SearchSuggestionCursor(databaseCursor);
     }
 
     @Nullable

@@ -53,8 +53,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
-        //todo: use theme attribute
-        view.setBackgroundColor(ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.pageBackground));
+        view.setBackgroundColor(ThemeUtil.getThemeAttributeColor(requireActivity(), R.attr.pageBackground));
         return view;
     }
 
@@ -78,11 +77,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         final MultiSelectListPreference dlcPreference = preferenceManager
                 .findPreference(activity.getString(R.string.pref_key_dlc));
-
-        final ListPreference preference = preferenceManager.findPreference(activity.getString(R.string.pref_key_theme));
-        preference.setOnPreferenceChangeListener((preference1, newValue) -> {
-            return true;
-        });
 
         viewModel.getDLCPersonaForSettings().observe(getViewLifecycleOwner(), new Observer<String[][]>() {
             @Override
