@@ -12,21 +12,25 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import static com.persona5dex.models.Enumerations.*;
 
 /**
  * Created by Rechee on 9/24/2017.
  */
 
+@Singleton
 public class PersonaFileUtilities {
 
-    private Gson gson;
-    public PersonaFileUtilities(Gson gson) {
-        this.gson = gson;
-    }
+    private final Gson gson;
+    private final ArcanaNameProvider arcanaNameProvider;
 
-    public PersonaFileUtilities() {
-        this.gson = new Gson();
+    @Inject
+    public PersonaFileUtilities(Gson gson, ArcanaNameProvider arcanaNameProvider) {
+        this.gson = gson;
+        this.arcanaNameProvider = arcanaNameProvider;
     }
 
     private String getFileContents(InputStream stream){
@@ -52,15 +56,14 @@ public class PersonaFileUtilities {
 
     public HashMap<Arcana, HashMap<Arcana, Arcana>> getArcanaTable(InputStream arcanaComboFile){
         String arcanaMapFileContents = this.getFileContents(arcanaComboFile);
-        PersonaUtilities personaUtilities = PersonaUtilities.getUtilities();
 
         RawArcanaMap[] arcanaMaps = gson.fromJson(arcanaMapFileContents, RawArcanaMap[].class);
         HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable = new HashMap<>(30);
         for (RawArcanaMap arcanaMap: arcanaMaps){
-            Arcana arcanaPersonaOne = personaUtilities.nameToArcana(arcanaMap.source[0]);
-            Arcana arcanaPersonaTwo = personaUtilities.nameToArcana(arcanaMap.source[1]);
+            Arcana arcanaPersonaOne = arcanaNameProvider.getArcanaForEnglishName(arcanaMap.source[0]);
+            Arcana arcanaPersonaTwo = arcanaNameProvider.getArcanaForEnglishName(arcanaMap.source[1]);
 
-            Arcana resultArcana = personaUtilities.nameToArcana(arcanaMap.result);
+            Arcana resultArcana = arcanaNameProvider.getArcanaForEnglishName(arcanaMap.result);
 
             if(arcanaTable.containsKey(arcanaPersonaOne)){
                 arcanaTable.get(arcanaPersonaOne).put(arcanaPersonaTwo, resultArcana);

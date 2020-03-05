@@ -1,123 +1,61 @@
 package com.persona5dex.models;
 
+import android.content.Context;
+
+import androidx.annotation.StringRes;
+
+import com.persona5dex.R;
+
 /**
  * Created by Rechee on 7/1/2017.
  */
 
 public class Enumerations {
     public enum Arcana {
-        FOOL(0),
-        MAGICIAN(1),
-        PRIESTESS(2),
-        EMPRESS(3),
-        EMPEROR(4),
-        HIEROPHANT(5),
-        LOVERS(6),
-        CHARIOT(7),
-        JUSTICE(8),
-        HERMIT(9),
-        FORTUNE(10),
-        HANGED_MAN(11),
-        DEATH(12),
-        TEMPERANCE(13),
-        DEVIL(14),
-        TOWER(15),
-        STAR(16),
-        MOON(17),
-        SUN(18),
-        JUDGEMENT(19),
-        WORLD(20),
-        STRENGTH(21),
-        ANY(-1);
+        FOOL(0, R.string.arcana_fool),
+        MAGICIAN(1, R.string.arcana_magician),
+        PRIESTESS(2, R.string.arcana_priestess),
+        EMPRESS(3, R.string.arcana_empress),
+        EMPEROR(4, R.string.arcana_emperor),
+        HIEROPHANT(5, R.string.arcana_hierophant),
+        LOVERS(6, R.string.arcana_lovers),
+        CHARIOT(7, R.string.arcana_chariot),
+        JUSTICE(8, R.string.arcana_justice),
+        HERMIT(9, R.string.arcana_hermit),
+        FORTUNE(10, R.string.arcana_fortune),
+        HANGED_MAN(11, R.string.arcana_hanged_man),
+        DEATH(12, R.string.arcana_death),
+        TEMPERANCE(13, R.string.arcana_temperance),
+        DEVIL(14, R.string.arcana_devil),
+        TOWER(15, R.string.arcana_tower),
+        STAR(16, R.string.arcana_star),
+        MOON(17, R.string.arcana_moon),
+        SUN(18, R.string.arcana_sun),
+        JUDGEMENT(19, R.string.arcana_judgement),
+        WORLD(20, R.string.arcana_world),
+        STRENGTH(21, R.string.arcana_strength),
+        FAITH(22, R.string.arcana_faith),
+        ANY(-1, R.string.arcana_any);
 
         private int i;
+        private final int textRes;
 
-        Arcana(int value) {
+        Arcana(int value, @StringRes int textRes) {
             i = value;
+            this.textRes = textRes;
+        }
+
+        @StringRes public int getTextRes() {
+            return textRes;
         }
 
         public int value() {
             return i;
         }
 
-        public String getName() {
-            switch (i){
-                case 0:
-                    return "Fool";
-                case 1:
-                    return "Magician";
-                case 2:
-                    return "Priestess";
-                case 3:
-                    return "Empress";
-                case 4:
-                    return "Emperor";
-                case 5:
-                    return "Hierophant";
-                case 6:
-                    return "Lovers";
-                case 7:
-                    return "Chariot";
-                case 8:
-                    return "Justice";
-                case 9:
-                    return "Hermit";
-                case 10:
-                    return "Fortune";
-                case 11:
-                    return "Hanged Man";
-                case 12:
-                    return "Death";
-                case 13:
-                    return "Temperance";
-                case 14:
-                    return "Devil";
-                case 15:
-                    return "Tower";
-                case 16:
-                    return "Star";
-                case 17:
-                    return "Moon";
-                case 18:
-                    return "Sun";
-                case 19:
-                    return "Judgement";
-                case 20:
-                    return "World";
-                case 21:
-                    return "Strength";
-                case -1:
-                    return "Any";
-                 default:
-                     return "Any";
-            }
-        }
-
         public static Arcana getArcana(int i) {
             for (Arcana arcana : Arcana.values()) {
                 if (arcana.value() == i) {
-                    return arcana;
-                }
-            }
-
-            return Arcana.ANY;
-        }
-
-        private static String formatArcanaName(String arcanaName) {
-            if (arcanaName == null || arcanaName.isEmpty()) {
-                return "";
-            }
-
-            return arcanaName.replaceAll("\\s+", "")
-                    .replaceAll("_", "").toLowerCase();
-        }
-
-
-        public static Arcana getArcana(String arcanaName) {
-            String arcanaStringFormatted = formatArcanaName(arcanaName);
-
-            for (Arcana arcana : Arcana.values()) {
-                if (formatArcanaName(arcana.getName()).equals(arcanaStringFormatted)) {
                     return arcana;
                 }
             }

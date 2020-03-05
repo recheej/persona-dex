@@ -2,7 +2,6 @@ package com.persona5dex.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -18,6 +17,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.persona5dex.ArcanaNameProvider;
+import com.persona5dex.ArcanaNameProvider.ArcanaName;
 import com.persona5dex.R;
 import com.persona5dex.ThemeUtil;
 import com.persona5dex.activities.BaseActivity;
@@ -40,7 +41,7 @@ public class FilterDialogFragment extends DialogFragment {
     private EditText maxLevelEditText;
     private ArcanaMap selectedArcanaMap;
     private Spinner arcanaSpinner;
-    private ArrayAdapter<ArcanaMap> arcanaMapArrayAdapter;
+    private ArrayAdapter<ArcanaName> arcanaMapArrayAdapter;
 
     public  interface OnFilterListener {
         void onFilterSelected(PersonaFilterArgs filterArgs);
@@ -92,7 +93,7 @@ public class FilterDialogFragment extends DialogFragment {
         arcanaSpinner = view.findViewById(R.id.spinner_arcana);
 
         arcanaMapArrayAdapter = new ArrayAdapter<>(activity,
-                R.layout.spinner_dropdown, viewModel.getArcanaMaps());
+                R.layout.spinner_dropdown, viewModel.getArcanaNames());
         arcanaSpinner.setAdapter(arcanaMapArrayAdapter);
 
         InputFilter filter = new InputFilter.LengthFilter(2);
@@ -136,7 +137,6 @@ public class FilterDialogFragment extends DialogFragment {
                             arcanaName = selectedArcanaMap.name.replace("_", " ");
                         }
 
-                        filterArgs.arcanaName = arcanaName;
                         filterArgs.arcana = selectedArcanaMap.arcana;
                         filterArgs.rarePersona = rarePersonaCheckBox.isChecked();
                         filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
@@ -222,9 +222,9 @@ public class FilterDialogFragment extends DialogFragment {
     private int getSpinnerPosition(int arcana) {
 
         for (int i = 0; i < arcanaMapArrayAdapter.getCount(); i++) {
-            ArcanaMap arcanaMap = arcanaMapArrayAdapter.getItem(i);
+            ArcanaName arcanaName = arcanaMapArrayAdapter.getItem(i);
 
-            if(arcanaMap.arcana.value() == arcana){
+            if(arcanaName.getArcana().value() == arcana){
                 return i;
             }
         }

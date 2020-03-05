@@ -94,4 +94,30 @@
     <string name="theme_type_title_device_light">Light</string>
     <string name="theme_type_title_device_dark">Dark</string>
 
+    <!-- Arcanas -->
+    <string name="arcana_any">Any</string>
+    <string name="arcana_fool">Fool</string>
+    <string name="arcana_magician">Magician</string>
+    <string name="arcana_priestess">Priestess</string>
+    <string name="arcana_empress">Empress</string>
+    <string name="arcana_emperor">Emperor</string>
+    <string name="arcana_hierophant">Hierophant</string>
+    <string name="arcana_lovers">Lovers</string>
+    <string name="arcana_chariot">Chariot</string>
+    <string name="arcana_justice">Justice</string>
+    <string name="arcana_hermit">Hermit</string>
+    <string name="arcana_fortune">Fortune</string>
+    <string name="arcana_hanged_man">Hanged Man</string>
+    <string name="arcana_death">Death</string>
+    <string name="arcana_temperance">Temperance</string>
+    <string name="arcana_devil">Devil</string>
+    <string name="arcana_tower">Tower</string>
+    <string name="arcana_moon">Moon</string>
+    <string name="arcana_sun">Sun</string>
+    <string name="arcana_judgement">Judgement</string>
+    <string name="arcana_world">World</string>
+    <string name="arcana_strength">Strength</string>
+    <string name="arcana_faith">Faith</string>
+    <string name="arcana_star">Star</string>
+
 </resources>

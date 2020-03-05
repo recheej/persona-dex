@@ -2,11 +2,7 @@ package com.persona5dex.dagger;
 
 import android.content.Context;
 
-import com.persona5dex.PersonaFileUtilities;
-import com.persona5dex.R;
 import com.google.gson.Gson;
-
-import java.io.InputStream;
 
 import dagger.Module;
 import dagger.Provides;
@@ -20,7 +16,7 @@ public class NameProviderRepositoryModule {
 
     private final Context context;
 
-    public NameProviderRepositoryModule(Context context){
+    public NameProviderRepositoryModule(Context context) {
         this.context = context;
     }
 

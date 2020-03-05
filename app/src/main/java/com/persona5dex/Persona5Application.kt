@@ -8,6 +8,7 @@ import com.persona5dex.dagger.application.DaggerPersona5ApplicationComponent
 import com.persona5dex.dagger.application.Persona5ApplicationComponent
 import com.persona5dex.models.room.PersonaDatabase
 
+
 /**
  * Created by Rechee on 7/1/2017.
  */
@@ -27,10 +28,12 @@ open class Persona5Application : Application() {
 
     companion object {
 
-        @JvmStatic fun get(activity: Activity): Persona5Application =
+        @JvmStatic
+        fun get(activity: Activity): Persona5Application =
                 activity.application as Persona5Application
 
-        @JvmStatic fun get(service: JobIntentService): Persona5Application =
+        @JvmStatic
+        fun get(service: JobIntentService): Persona5Application =
                 service.application as Persona5Application
     }
 }

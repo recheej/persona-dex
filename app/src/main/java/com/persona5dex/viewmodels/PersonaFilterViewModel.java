@@ -1,5 +1,7 @@
 package com.persona5dex.viewmodels;
 
+import com.persona5dex.ArcanaNameProvider;
+import com.persona5dex.ArcanaNameProvider.ArcanaName;
 import com.persona5dex.models.ArcanaMap;
 import com.persona5dex.models.Enumerations;
 
@@ -14,46 +16,35 @@ import javax.inject.Inject;
 
 public class PersonaFilterViewModel {
 
-    @Inject
-    public PersonaFilterViewModel(){
+    private final ArcanaNameProvider arcanaNameProvider;
 
+    @Inject
+    public PersonaFilterViewModel(ArcanaNameProvider arcanaNameProvider){
+        this.arcanaNameProvider = arcanaNameProvider;
     }
 
-    public ArcanaMap[] getArcanaMaps() {
-        Enumerations.Arcana[] arcanas = Enumerations.Arcana.values();
-
-        ArcanaMap[] maps = new ArcanaMap[arcanas.length];
-
-        for (int i = 0; i < arcanas.length; i++) {
-            Enumerations.Arcana arcana = arcanas[i];
-            String name = arcana.getName();
-
-            //we are iterating though all arcana enumns, but we are adding to the +1 index since we manulaly added one
-            maps[i] = new ArcanaMap();
-            maps[i].arcana = arcana;
-            maps[i].name = name;
-        }
-
-        Arrays.sort(maps, new Comparator<ArcanaMap>() {
+    public ArcanaName[] getArcanaNames() {
+        final ArcanaName[] allArcanaNames = arcanaNameProvider.getAllArcanaNames();
+        Arrays.sort(allArcanaNames, new Comparator<ArcanaName>() {
             @Override
-            public int compare(ArcanaMap o1, ArcanaMap o2) {
+            public int compare(ArcanaName o1, ArcanaName o2) {
 
-                if(o1.arcana == Enumerations.Arcana.ANY && o2.arcana == Enumerations.Arcana.ANY){
+                if(o1.getArcana() == Enumerations.Arcana.ANY && o2.getArcana() == Enumerations.Arcana.ANY){
                     return 0;
                 }
 
-                if(o1.arcana == Enumerations.Arcana.ANY){
+                if(o1.getArcana() == Enumerations.Arcana.ANY){
                     return -1;
                 }
 
-                if(o2.arcana == Enumerations.Arcana.ANY){
+                if(o2.getArcana() == Enumerations.Arcana.ANY){
                     return 1;
                 }
 
-                return o1.name.compareTo(o2.name);
+                return o1.getArcanaName().compareTo(o2.getArcanaName());
             }
         });
 
-        return maps;
+        return allArcanaNames;
     }
 }

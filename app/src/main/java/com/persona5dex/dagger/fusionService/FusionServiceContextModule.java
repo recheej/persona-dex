@@ -33,23 +33,20 @@ public class FusionServiceContextModule {
 
     private final Context context;
 
-    public FusionServiceContextModule(Context context){
+    public FusionServiceContextModule(Context context) {
         this.context = context;
     }
 
     @FusionServiceScope
     @Provides
-    HashMap<Enumerations.Arcana, HashMap<Enumerations.Arcana, Enumerations.Arcana>> arcanaTable(Gson gson) {
-        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(gson);
+    HashMap<Enumerations.Arcana, HashMap<Enumerations.Arcana, Enumerations.Arcana>> arcanaTable(PersonaFileUtilities personaFileUtilities) {
         InputStream stream = context.getResources().openRawResource(R.raw.arcana_combo_data);
-
         return personaFileUtilities.getArcanaTable(stream);
     }
 
     @FusionServiceScope
     @Provides
-    Map<String, int[]> rarePersonaCombos(Gson gson) {
-        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(gson);
+    Map<String, int[]> rarePersonaCombos(PersonaFileUtilities personaFileUtilities) {
         InputStream stream = context.getResources().openRawResource(R.raw.rare_combos);
 
         return personaFileUtilities.rareCombos(stream);
@@ -58,28 +55,28 @@ public class FusionServiceContextModule {
     @Provides
     @FusionServiceScope
     @Named("fusionSharedPreferences")
-    SharedPreferences sharedPreferences(){
+    SharedPreferences sharedPreferences() {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_FUSIONS, Context.MODE_PRIVATE);
     }
 
     @Provides
     @FusionServiceScope
     @Named("transferSharedPreferences")
-    SharedPreferences transferSharedPreferences(){
+    SharedPreferences transferSharedPreferences() {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_TRANSFER_CONTENT, Context.MODE_PRIVATE);
     }
 
     @Provides
     @FusionServiceScope
     @Named("dlcSharedPreferences")
-    SharedPreferences dlcSharedPreferences(){
+    SharedPreferences dlcSharedPreferences() {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
     }
 
     @Provides
     @FusionServiceScope
     @Named("defaultSharedPreferences")
-    SharedPreferences defaultSharedPreferences(){
+    SharedPreferences defaultSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
