@@ -4,21 +4,18 @@ package com.persona5dex.adapters;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.R;
 import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.models.Enumerations;
-import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
 
 import java.util.ArrayList;
@@ -32,6 +29,7 @@ import java.util.Locale;
 public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.ViewHolder> implements SectionIndexer {
 
     private List<MainListPersona> personas;
+    private final ArcanaNameProvider arcanaNameProvider;
     private ArrayList<Integer> mSectionPositions;
     private boolean sectionAsc;
 
@@ -47,20 +45,22 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         private TextView textViewPrimaryShadowName;
         private TextView textViewPersonaLevel;
         private TextView textViewPersonaArcana;
+        private final ArcanaNameProvider arcanaNameProvider;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, ArcanaNameProvider arcanaNameProvider) {
             super(itemView);
 
             this.textViewPersonaName = itemView.findViewById(R.id.textViewPersonaName);
             this.textViewPrimaryShadowName = itemView.findViewById(R.id.textViewPrimaryShadowName);
             this.textViewPersonaLevel = itemView.findViewById(R.id.textViewPersonaLevel);
             this.textViewPersonaArcana = itemView.findViewById(R.id.textViewArcana);
+            this.arcanaNameProvider = arcanaNameProvider;
         }
 
         public void bindPersona(MainListPersona personaToBind){
             this.textViewPersonaName.setText(personaToBind.name);
             this.textViewPersonaLevel.setText(String.format(Locale.getDefault(), "%d" , personaToBind.level));
-            this.textViewPersonaArcana.setText(personaToBind.arcanaName);
+            this.textViewPersonaArcana.setText(arcanaNameProvider.getArcanaNameForDisplay(personaToBind.arcana));
 
 //
 //            @ColorRes final int textColor = getTextColor(personaToBind, );
@@ -100,10 +100,11 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
 //        }
     }
 
-    public PersonaListAdapter(List<MainListPersona> mainListPersonas){
+    public PersonaListAdapter(List<MainListPersona> mainListPersonas, ArcanaNameProvider arcanaNameProvider){
         this.personas = mainListPersonas;
         this.sectionIndexerType = IndexerType.PersonaName;
         this.sectionAsc = true;
+        this.arcanaNameProvider = arcanaNameProvider;
     }
 
     @Override
@@ -111,7 +112,7 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_persona_item, parent, false);
 
-        final ViewHolder viewHolder = new ViewHolder(view);
+        final ViewHolder viewHolder = new ViewHolder(view, arcanaNameProvider);
 
         view.setOnClickListener(v -> {
             int personaPosition = viewHolder.getAdapterPosition();
@@ -167,7 +168,7 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
         List<String> sections = new ArrayList<>(arcanaSize);
         mSectionPositions = new ArrayList<>(arcanaSize);
         for (int i = 0; i < personas.size(); i++) {
-            String section = personas.get(i).arcanaName.toUpperCase();
+            String section = arcanaNameProvider.getArcanaNameForDisplay(personas.get(i).arcana).toUpperCase();
             if(section.length() > 5){
                 section = section.substring(0, 4);
             }

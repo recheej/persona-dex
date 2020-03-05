@@ -51,11 +51,10 @@ public class ApplicationContextModule {
 
     @Provides
     @ApplicationScope
-    RawPersona[] rawPersonas(Gson gson) {
+    RawPersona[] rawPersonas(PersonaFileUtilities personaFileUtilities) {
         InputStream stream = context.getResources().openRawResource(R.raw.person_data);
-        PersonaFileUtilities utilities = new PersonaFileUtilities(gson);
 
-        return utilities.parseJsonFile(stream, RawPersona[].class);
+        return personaFileUtilities.parseJsonFile(stream, RawPersona[].class);
     }
 
     @Provides

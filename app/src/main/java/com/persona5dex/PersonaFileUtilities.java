@@ -1,5 +1,6 @@
 package com.persona5dex;
 
+import com.persona5dex.dagger.application.ApplicationScope;
 import com.persona5dex.models.RawArcanaMap;
 import com.persona5dex.models.RawPersona;
 import com.persona5dex.models.RawRarePersonaMap;
@@ -21,7 +22,7 @@ import static com.persona5dex.models.Enumerations.*;
  * Created by Rechee on 9/24/2017.
  */
 
-@Singleton
+@ApplicationScope
 public class PersonaFileUtilities {
 
     private final Gson gson;

@@ -29,13 +29,16 @@ public class AdvancedFusionViewModel extends ViewModel {
 
     private final Application application;
     private final MainPersonaRepository mainPersonaRepository;
+    private final PersonaFileUtilities personaFileUtilities;
     private MutableLiveData<String> personaNameLiveData;
 
     public AdvancedFusionViewModel(Application application,
-                                   MainPersonaRepository mainPersonaRepository){
+                                   MainPersonaRepository mainPersonaRepository,
+                                   PersonaFileUtilities personaFileUtilities){
         this.application = application;
         this.mainPersonaRepository = mainPersonaRepository;
         personaNameLiveData = new MutableLiveData<>();
+        this.personaFileUtilities = personaFileUtilities;
     }
 
     public LiveData<List<MainListPersona>> getRecipesForAdvancedPersona(int personaID){
@@ -45,7 +48,7 @@ public class AdvancedFusionViewModel extends ViewModel {
             personaNameLiveData.setValue(personaName);
 
             new AdvancedRecipesTask().execute(new TaskParams(personaName, output, application,
-                    mainPersonaRepository));
+                    mainPersonaRepository, personaFileUtilities));
         });
 
 
@@ -61,14 +64,17 @@ public class AdvancedFusionViewModel extends ViewModel {
         public MutableLiveData<List<MainListPersona>> personas;
         public Context applicationContext;
         private MainPersonaRepository mainPersonaRepository;
+        private final PersonaFileUtilities personaFileUtilities;
         private RawAdvancedFusion rawAdvancedFusion;
 
         public TaskParams(String personaName, MutableLiveData<List<MainListPersona>> personas,
-                          Context applicationContext, MainPersonaRepository mainPersonaRepository) {
+                          Context applicationContext, MainPersonaRepository mainPersonaRepository,
+                          PersonaFileUtilities personaFileUtilities) {
             this.personaName = personaName;
             this.personas = personas;
             this.applicationContext = applicationContext;
             this.mainPersonaRepository = mainPersonaRepository;
+            this.personaFileUtilities = personaFileUtilities;
         }
     }
 
@@ -78,11 +84,10 @@ public class AdvancedFusionViewModel extends ViewModel {
         protected TaskParams doInBackground(TaskParams... taskParams) {
             TaskParams taskParam = taskParams[0];
             String personaNameNormalized = PersonaUtilities.normalizePersonaName(taskParam.personaName);
-            
-            PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities();
+
             InputStream advancedFusionsFile = taskParam.applicationContext.getResources()
                     .openRawResource(R.raw.advanced_fusions);
-            RawAdvancedFusion[] rawAdvancedFusions =  personaFileUtilities.parseJsonFile(advancedFusionsFile,
+            RawAdvancedFusion[] rawAdvancedFusions =  taskParam.personaFileUtilities.parseJsonFile(advancedFusionsFile,
                     RawAdvancedFusion[].class);
 
             for (RawAdvancedFusion rawAdvancedFusion : rawAdvancedFusions) {

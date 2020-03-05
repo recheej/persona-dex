@@ -39,7 +39,6 @@ public class PersonaSettingsViewModelTest {
         testPersona.name = "testName";
         testPersona.id = 1;
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
-        testPersona.arcanaName = "Chariot";
         testPersona.dlc = true;
         testPersona.level = 1;
 
@@ -47,7 +46,6 @@ public class PersonaSettingsViewModelTest {
         testPersonaTwo.name = "testNameTwo";
         testPersonaTwo.id = 2;
         testPersonaTwo.arcana = Enumerations.Arcana.HANGED_MAN;
-        testPersonaTwo.arcanaName = "Hanged Man";
         testPersonaTwo.dlc = true;
         testPersonaTwo.level = 2;
 
@@ -87,7 +85,6 @@ public class PersonaSettingsViewModelTest {
         testPersona.name = "b";
         testPersona.id = 1;
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
-        testPersona.arcanaName = "Chariot";
         testPersona.dlc = true;
         testPersona.level = 1;
 
@@ -95,7 +92,6 @@ public class PersonaSettingsViewModelTest {
         testPersonaTwo.name = "a";
         testPersonaTwo.id = 2;
         testPersonaTwo.arcana = Enumerations.Arcana.HANGED_MAN;
-        testPersonaTwo.arcanaName = "Hanged Man";
         testPersonaTwo.dlc = true;
         testPersonaTwo.level = 2;
 

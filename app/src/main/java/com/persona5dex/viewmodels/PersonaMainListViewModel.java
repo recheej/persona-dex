@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 
 public class PersonaMainListViewModel extends ViewModel{
+    private final ArcanaNameProvider arcanaNameProvider;
     private MediatorLiveData<List<MainListPersona>> filteredPersonas;
     private MutableLiveData<List<MainListPersona>> allPersonas;
     private MutableLiveData<String> personaSearchName;
@@ -38,7 +40,8 @@ public class PersonaMainListViewModel extends ViewModel{
     private Comparator<MainListPersona> sortByPersonaArcanaAsc;
     private Comparator<MainListPersona> sortByPersonaArcanaDesc;
 
-    public PersonaMainListViewModel(final MainPersonaRepository repository){
+    public PersonaMainListViewModel(final MainPersonaRepository repository, ArcanaNameProvider arcanaNameProvider){
+        this.arcanaNameProvider = arcanaNameProvider;
         setUpViewModel(repository);
     }
 
@@ -58,8 +61,8 @@ public class PersonaMainListViewModel extends ViewModel{
 
         sortByPersonaLevelAsc = (o1, o2) -> Integer.compare(o1.level, o2.level);
         sortByPersonaLevelDesc = (o1, o2) -> Integer.compare(o1.level, o2.level) * -1;
-        sortByPersonaArcanaAsc = (o1, o2) -> o1.arcanaName.compareTo(o2.arcanaName);
-        sortByPersonaArcanaDesc = (o1, o2) -> o1.arcanaName.compareTo(o2.arcanaName) * -1;
+        sortByPersonaArcanaAsc = (o1, o2) -> arcanaNameProvider.getArcanaNameForDisplay(o1.arcana).compareTo(arcanaNameProvider.getArcanaNameForDisplay(o2.arcana));
+        sortByPersonaArcanaDesc = (o1, o2) -> arcanaNameProvider.getArcanaNameForDisplay(o1.arcana).compareTo(arcanaNameProvider.getArcanaNameForDisplay(o2.arcana)) * -1;
 
         filteredPersonas.addSource(personaSearchName, searchValue -> {
             allPersonas.observeForever(personas -> {

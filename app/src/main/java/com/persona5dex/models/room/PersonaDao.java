@@ -22,10 +22,10 @@ import java.util.List;
 @Dao
 public interface PersonaDao {
     @Transaction
-    @Query("select id, name, arcanaName, arcana, level, rare, dlc, gameId from personas")
+    @Query("select id, name, arcana, level, rare, dlc, gameId from personas")
     LiveData<List<MainListPersona>> getAllPersonasForMainList();
 
-    @Query("select id, name, arcanaName, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
+    @Query("select id, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
             "from personas where id = :personaID " +
             "order by name")
     LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
@@ -33,11 +33,11 @@ public interface PersonaDao {
     @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID")
     LiveData<PersonaShadowDetail[]> getShadowsForPersona(int personaID);
 
-    @Query("select id, arcana, arcanaName, name, level, rare, dlc, special from personas order by level")
+    @Query("select id, arcana, name, level, rare, dlc, special from personas order by level")
     PersonaForFusionService[] getPersonasByLevel();
 
     @Transaction
-    @Query("select id, name, arcanaName, arcana, level, rare, dlc from personas where dlc = 1")
+    @Query("select id, name, arcana, level, rare, dlc from personas where dlc = 1")
     LiveData<List<MainListPersona>> getDLCPersonas();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

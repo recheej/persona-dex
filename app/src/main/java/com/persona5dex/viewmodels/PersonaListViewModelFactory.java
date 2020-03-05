@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.repositories.CustomPersonaRepository;
 
@@ -18,22 +19,19 @@ public class PersonaListViewModelFactory implements ViewModelProvider.Factory {
 
     private final List<MainListPersona> personas;
     private CustomPersonaRepository customPersonaRepository;
+    private final ArcanaNameProvider arcanaNameProvider;
 
-    public PersonaListViewModelFactory(List<MainListPersona> personas){
+    public PersonaListViewModelFactory(List<MainListPersona> personas, ArcanaNameProvider arcanaNameProvider){
         this.personas = personas;
         this.customPersonaRepository = new CustomPersonaRepository(personas);
-    }
-
-    public PersonaListViewModelFactory(){
-        this.personas = new ArrayList<>(250);
-        this.customPersonaRepository = new CustomPersonaRepository(personas);
+        this.arcanaNameProvider = arcanaNameProvider;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if(modelClass == PersonaMainListViewModel.class){
-            return (T) new PersonaMainListViewModel(customPersonaRepository);
+            return (T) new PersonaMainListViewModel(customPersonaRepository, arcanaNameProvider);
         }
 
         throw new RuntimeException("could not get view model");

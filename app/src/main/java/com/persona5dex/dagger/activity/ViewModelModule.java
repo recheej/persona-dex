@@ -1,5 +1,6 @@
 package com.persona5dex.dagger.activity;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.repositories.PersonaEdgesRepository;
 import com.persona5dex.repositories.PersonaTransferRepository;
 import com.persona5dex.viewmodels.PersonaFilterViewModel;
@@ -23,7 +24,7 @@ public class ViewModelModule {
 
     @Provides
     @ActivityScope
-    PersonaFilterViewModel personaFilterViewModel() {
-        return new PersonaFilterViewModel();
+    PersonaFilterViewModel personaFilterViewModel(ArcanaNameProvider arcanaNameProvider) {
+        return new PersonaFilterViewModel(arcanaNameProvider);
     }
 }

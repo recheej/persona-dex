@@ -15,7 +15,6 @@ import java.util.List;
 public class MainListPersona {
     public int id;
     public String name;
-    public String arcanaName;
     public Enumerations.Arcana arcana;
     public int level;
     public boolean rare;

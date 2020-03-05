@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import androidx.annotation.NonNull;
 
+import com.persona5dex.ArcanaNameProvider;
+import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
 import com.persona5dex.repositories.PersonaSkillsRepository;
@@ -26,16 +28,22 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     private final Lazy<MainPersonaRepository> mainPersonaRepositoryLazy;
     private final Lazy<PersonaDisplayEdgesRepository> edgesRepositoryLazy;
     private final Context applicationContext;
+    private final Lazy<ArcanaNameProvider> arcanaNameProviderLazy;
+    private final Lazy<PersonaFileUtilities> personaFileUtilitiesLazy;
 
     @Inject
     public ViewModelFactory(Lazy<PersonaSkillsRepository> skillsRepositoryLazy,
                             Lazy<MainPersonaRepository> mainPersonaRepositoryLazy,
                             Lazy<PersonaDisplayEdgesRepository> edgesRepositoryLazy,
-                            @Named("applicationContext") Context applicationContext){
+                            @Named("applicationContext") Context applicationContext,
+                            Lazy<ArcanaNameProvider> arcanaNameProviderLazy,
+                            Lazy<PersonaFileUtilities> personaFileUtilitiesLazy){
         this.skillsRepositoryLazy = skillsRepositoryLazy;
         this.mainPersonaRepositoryLazy = mainPersonaRepositoryLazy;
         this.edgesRepositoryLazy = edgesRepositoryLazy;
         this.applicationContext = applicationContext;
+        this.arcanaNameProviderLazy = arcanaNameProviderLazy;
+        this.personaFileUtilitiesLazy = personaFileUtilitiesLazy;
     }
 
     @NonNull
@@ -45,7 +53,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new PersonaDetailSkillsViewModel(skillsRepositoryLazy.get());
         }
         else if(modelClass == PersonaMainListViewModel.class){
-            return (T) new PersonaMainListViewModel(mainPersonaRepositoryLazy.get());
+            return (T) new PersonaMainListViewModel(mainPersonaRepositoryLazy.get(), arcanaNameProviderLazy.get());
         }
         else if(modelClass == PersonaFusionViewModel.class){
             return (T) new PersonaFusionViewModel(edgesRepositoryLazy.get(),
@@ -53,7 +61,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         else if(modelClass == AdvancedFusionViewModel.class){
             return  (T) new AdvancedFusionViewModel((Application) applicationContext,
-                    mainPersonaRepositoryLazy.get());
+                    mainPersonaRepositoryLazy.get(), personaFileUtilitiesLazy.get());
         }
         else if(modelClass == SettingsViewModel.class){
             return (T) new SettingsViewModel(mainPersonaRepositoryLazy.get());

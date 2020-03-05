@@ -20,7 +20,6 @@ public class Persona {
     public int id;
     public String name;
     public Enumerations.Arcana arcana;
-    public String arcanaName;
     public int level;
 
     @Nullable

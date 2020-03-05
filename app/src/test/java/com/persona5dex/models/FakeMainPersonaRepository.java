@@ -20,7 +20,6 @@ public class FakeMainPersonaRepository implements MainPersonaRepository {
 
         MainListPersona fakePersona = new MainListPersona();
         fakePersona.name = "one";
-        fakePersona.arcanaName = "any";
         fakePersona.arcana = Enumerations.Arcana.ANY;
         fakePersona.level = 1;
 
@@ -28,7 +27,6 @@ public class FakeMainPersonaRepository implements MainPersonaRepository {
 
         fakePersona = new MainListPersona();
         fakePersona.name = "two";
-        fakePersona.arcanaName = "Chariot";
         fakePersona.arcana = Enumerations.Arcana.CHARIOT;
         fakePersona.level = 99;
         fakePersona.rare = true;
@@ -38,7 +36,6 @@ public class FakeMainPersonaRepository implements MainPersonaRepository {
 
         fakePersona = new MainListPersona();
         fakePersona.name = "three";
-        fakePersona.arcanaName = "Hanged Man";
         fakePersona.arcana = Enumerations.Arcana.HANGED_MAN;
         fakePersona.level = 2;
         fakePersona.rare = true;

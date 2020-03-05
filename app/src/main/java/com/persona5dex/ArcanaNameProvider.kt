@@ -3,13 +3,13 @@ package com.persona5dex
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
+import com.persona5dex.dagger.application.ApplicationScope
 import com.persona5dex.models.Enumerations
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
-import javax.inject.Singleton
 
-@Singleton
+@ApplicationScope
 class ArcanaNameProvider @Inject constructor(@Named("applicationContext") private val context: Context) {
 
     private val englishArcanaMap = getUSResource().let {

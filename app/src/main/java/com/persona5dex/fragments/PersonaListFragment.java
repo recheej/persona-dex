@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaListAdapter;
@@ -43,7 +44,8 @@ public class PersonaListFragment extends BaseFragment {
     private PersonaMainListViewModel viewModel;
 
     @Inject
-    ViewModelFactory viewModelFactory;
+    ArcanaNameProvider arcanaNameProvider;
+
     private LinearLayoutManager layoutManager;
     private boolean showIndexBar;
     private PersonaListFragmentListener fragmentListener;
@@ -95,7 +97,7 @@ public class PersonaListFragment extends BaseFragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        personaListAdapter = new PersonaListAdapter(personas);
+        personaListAdapter = new PersonaListAdapter(personas, arcanaNameProvider);
         recyclerView.setAdapter(personaListAdapter);
 
         return baseView;
@@ -156,9 +158,9 @@ public class PersonaListFragment extends BaseFragment {
                 .plus()
                 .inject(this);
 
-        PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(personas);
+        PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(personas, arcanaNameProvider);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
-        viewModel.getFilteredPersonas().observe(this, newPersonas -> {
+        viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), newPersonas -> {
             this.personas.clear();
 
             if(newPersonas != null){
