@@ -23,7 +23,8 @@ public class Skill {
 
     @Ignore
     public String costFriendly() {
-        if (!Objects.equals(element.toLowerCase(), "passive")) {
+        final String elementLower = element.toLowerCase();
+        if (!Objects.equals(elementLower, "passive") && !Objects.equals(elementLower, "trait")) {
             if (cost < 100) {
                 return cost + "% HP";
             }
