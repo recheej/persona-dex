@@ -97,9 +97,6 @@ public class PersonaListFragment extends BaseFragment {
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        personaListAdapter = new PersonaListAdapter(personas, arcanaNameProvider);
-        recyclerView.setAdapter(personaListAdapter);
-
         return baseView;
     }
 
@@ -157,6 +154,9 @@ public class PersonaListFragment extends BaseFragment {
                         new ViewModelRepositoryModule())
                 .plus()
                 .inject(this);
+
+        personaListAdapter = new PersonaListAdapter(personas, arcanaNameProvider);
+        recyclerView.setAdapter(personaListAdapter);
 
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(personas, arcanaNameProvider);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
