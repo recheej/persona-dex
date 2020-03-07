@@ -2,8 +2,13 @@ package com.persona5dex.fragments;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +38,7 @@ public class PersonaDetailInfoFragment extends BaseFragment {
         super();
     }
 
-    public static PersonaDetailInfoFragment newInstance(int personaID){
+    public static PersonaDetailInfoFragment newInstance(int personaID) {
         PersonaDetailInfoFragment detailInfoFragment = new PersonaDetailInfoFragment();
         Bundle args = new Bundle();
         args.putInt("persona_id", personaID);
@@ -58,10 +63,10 @@ public class PersonaDetailInfoFragment extends BaseFragment {
 
         ProgressBar progressBar = baseView.findViewById(R.id.progress_bar_fusions);
         progressBar.setVisibility(View.VISIBLE);
-        viewModel.getDetailsForPersona().observe(this, new Observer<PersonaDetailInfo>() {
+        viewModel.getDetailsForPersona().observe(getViewLifecycleOwner(), new Observer<PersonaDetailInfo>() {
             @Override
             public void onChanged(@Nullable PersonaDetailInfo personaDetailInfo) {
-                if(personaDetailInfo != null){
+                if(personaDetailInfo != null) {
                     Stats personaStats = personaDetailInfo.stats;
                     setTextViewText(baseView, R.id.textViewStrengthStat, Integer.toString(personaStats.strength));
                     setTextViewText(baseView, R.id.textViewMagicStat, Integer.toString(personaStats.magic));
@@ -70,23 +75,23 @@ public class PersonaDetailInfoFragment extends BaseFragment {
                     setTextViewText(baseView, R.id.textViewLuckStat, Integer.toString(personaStats.luck));
                     setTextViewText(baseView, R.id.textView_arcanaName, personaDetailInfo.arcanaName);
 
-                    if(personaDetailInfo.note != null && !personaDetailInfo.note.isEmpty()){
+                    if(personaDetailInfo.note != null && !personaDetailInfo.note.isEmpty()) {
                         addNote(personaDetailInfo.note);
-                    }
-                    else if(personaDetailInfo.max){
+                    } else if(personaDetailInfo.max) {
                         PersonaDetailInfoFragment.this.addNote(getString(R.string.max_note));
                     }
 
-                    PhotoView personaPictureView = baseView.findViewById(R.id.imageView_persona);
-                    Picasso picasso = Picasso
-                            .with(PersonaDetailInfoFragment.this.getContext());
-
                     //green = memory, blue = disk, red = network)
 
-                    if(personaDetailInfo.imageUrl == null){
+                    if(personaDetailInfo.imageUrl == null) {
                         progressBar.setVisibility(View.GONE);
-                    }
-                    else{
+                    } else {
+                        PhotoView personaPictureView = baseView.findViewById(R.id.imageView_persona);
+                        final Picasso.Builder builder = new Picasso.Builder(PersonaDetailInfoFragment.this.requireContext());
+                        builder.listener((picasso, uri, exception) ->
+                                Log.e("PersonaInfoFragment", "error getting image with uri: " + uri, exception));
+
+                        Picasso picasso = builder.build();
                         picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
                         picasso
                                 .load(personaDetailInfo.imageUrl)
@@ -110,10 +115,9 @@ public class PersonaDetailInfoFragment extends BaseFragment {
             }
         });
 
-        viewModel.getShadowsForPersona().observe(this, shadowsString -> {
+        viewModel.getShadowsForPersona().observe(getViewLifecycleOwner(), shadowsString -> {
 
-
-            if(shadowsString != null){
+            if(shadowsString != null) {
                 ViewGroup shadowContainer = baseView.findViewById(R.id.container_shadow_name);
                 shadowContainer.setVisibility(View.VISIBLE);
 
@@ -136,7 +140,7 @@ public class PersonaDetailInfoFragment extends BaseFragment {
         return baseView;
     }
 
-    private void setTextViewText(View rootView, int textViewId, String text){
+    private void setTextViewText(View rootView, int textViewId, String text) {
         TextView view = rootView.findViewById(textViewId);
         view.setText(text);
     }

@@ -24,11 +24,11 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
 
     private PersonaSkillsRepository repository;
 
-    public PersonaDetailSkillsViewModel(final PersonaSkillsRepository repository){
+    public PersonaDetailSkillsViewModel(final PersonaSkillsRepository repository) {
         this.repository = repository;
     }
 
-    public LiveData<List<PersonaDetailSkill>> getSkillsForPersona(int personaID){
+    public LiveData<List<PersonaDetailSkill>> getSkillsForPersona(int personaID) {
         return Transformations.map(repository.getPersonaSkillsForDetail(personaID), new Function<List<PersonaDetailSkill>, List<PersonaDetailSkill>>() {
             @Override
             public List<PersonaDetailSkill> apply(List<PersonaDetailSkill> input) {
@@ -36,8 +36,8 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
                 Collections.sort(input, new Comparator<PersonaDetailSkill>() {
                     @Override
                     public int compare(PersonaDetailSkill o1, PersonaDetailSkill o2) {
-                        if(o1.levelRequired == MAX_CONFIDANT_SKILL_VALUE|| o2.levelRequired == MAX_CONFIDANT_SKILL_VALUE {
-                            if(o1.levelRequired == MAX_CONFIDANT_SKILL_VALUE&& o2.levelRequired == MAX_CONFIDANT_SKILL_VALUE) {
+                        if(o1.levelRequired == MAX_CONFIDANT_SKILL_VALUE || o2.levelRequired == MAX_CONFIDANT_SKILL_VALUE) {
+                            if(o1.levelRequired == MAX_CONFIDANT_SKILL_VALUE && o2.levelRequired == MAX_CONFIDANT_SKILL_VALUE) {
                                 return 0;
                             } else if(o1.levelRequired == MAX_CONFIDANT_SKILL_VALUE) {
                                 return 1;
@@ -46,11 +46,11 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
                             }
                         }
 
-                        if(o1.levelRequired < o2.levelRequired){
+                        if(o1.levelRequired < o2.levelRequired) {
                             return -1;
                         }
 
-                        if(o1.levelRequired > o2.levelRequired){
+                        if(o1.levelRequired > o2.levelRequired) {
                             return 1;
                         }
 
@@ -68,7 +68,7 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
         return repository.getSkill(skillID);
     }
 
-    public LiveData<List<MainListPersona>> getPersonasWithSkill(int skillID){
+    public LiveData<List<MainListPersona>> getPersonasWithSkill(int skillID) {
         return repository.getPersonasWithSkill(skillID);
     }
 }
