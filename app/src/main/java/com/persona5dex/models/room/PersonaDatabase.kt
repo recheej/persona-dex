@@ -17,7 +17,6 @@ import androidx.room.TypeConverters
             Skill::class,
             PersonaSkill::class,
             PersonaElement::class,
-            SearchSuggestion::class,
             PersonaFusion::class,
             PersonaShadowName::class
         ],
