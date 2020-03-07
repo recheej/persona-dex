@@ -39,7 +39,9 @@ class ArcanaNameProvider @Inject constructor(@Named("applicationContext") privat
             replace("\\s+".toRegex(), "")
                     .replace("_".toRegex(), "").toLowerCase(Locale.US)
 
-    data class ArcanaName(val arcana: Enumerations.Arcana, val arcanaName: String)
+    data class ArcanaName(val arcana: Enumerations.Arcana, val arcanaName: String) {
+        override fun toString(): String = arcanaName
+    }
 
     private fun getUSResource(): Resources {
         var conf = context.resources.configuration
