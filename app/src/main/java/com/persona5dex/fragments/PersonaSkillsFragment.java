@@ -76,10 +76,10 @@ public class PersonaSkillsFragment extends BaseFragment {
                 viewModelFactory).get(PersonaDetailSkillsViewModel.class);
 
         viewModel.getSkillsForPersona(personaID)
-                .observe(this, new Observer<List<PersonaDetailSkill>>() {
+                .observe(getViewLifecycleOwner(), new Observer<List<PersonaDetailSkill>>() {
             @Override
             public void onChanged(@Nullable List<PersonaDetailSkill> personaDetailSkills) {
-                LinearLayout skillsGrid = baseView.findViewById(R.id.skill_grid);
+                ViewGroup skillsGrid = baseView.findViewById(R.id.skill_grid);
 
                 LayoutInflater inflater = activity.getLayoutInflater();
                 ViewGroup container = activity.findViewById(R.id.view_pager);

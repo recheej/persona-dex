@@ -15,14 +15,16 @@
         android:text="@string/skills_more_details"
         android:textAppearance="?textBody"/>
 
-    <LinearLayout
-        android:id="@+id/skill_grid"
-        style="@style/PersonaStatsTheme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-    </LinearLayout>
+    <ScrollView android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:id="@+id/skill_grid"
+            style="@style/PersonaStatsTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+        </LinearLayout>
+    </ScrollView>
 
 
 </FrameLayout>
