@@ -20,6 +20,8 @@ import java.util.List;
 
 public class PersonaDetailSkillsViewModel extends ViewModel {
 
+    public static final int MAX_CONFIDANT_SKILL_VALUE = -1;
+
     private PersonaSkillsRepository repository;
 
     public PersonaDetailSkillsViewModel(final PersonaSkillsRepository repository){
@@ -34,6 +36,16 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
                 Collections.sort(input, new Comparator<PersonaDetailSkill>() {
                     @Override
                     public int compare(PersonaDetailSkill o1, PersonaDetailSkill o2) {
+                        if(o1.levelRequired == MAX_CONFIDANT_SKILL_VALUE|| o2.levelRequired == MAX_CONFIDANT_SKILL_VALUE {
+                            if(o1.levelRequired == MAX_CONFIDANT_SKILL_VALUE&& o2.levelRequired == MAX_CONFIDANT_SKILL_VALUE) {
+                                return 0;
+                            } else if(o1.levelRequired == MAX_CONFIDANT_SKILL_VALUE) {
+                                return 1;
+                            } else {
+                                return -1;
+                            }
+                        }
+
                         if(o1.levelRequired < o2.levelRequired){
                             return -1;
                         }

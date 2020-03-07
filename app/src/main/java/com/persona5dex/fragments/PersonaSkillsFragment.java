@@ -30,6 +30,8 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import static com.persona5dex.viewmodels.PersonaDetailSkillsViewModel.MAX_CONFIDANT_SKILL_VALUE;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -94,6 +96,10 @@ public class PersonaSkillsFragment extends BaseFragment {
 
                     if(personaSkill.levelRequired == 0){
                         textViewSkillLevel.setText("-");
+                    }
+                    else if(personaSkill.levelRequired == MAX_CONFIDANT_SKILL_VALUE) {
+                        // max persona
+                        textViewSkillLevel.setText(R.string.max_confidant);
                     }
                     else{
                         textViewSkillLevel.setText(String.format(Locale.getDefault(), "%d", personaSkill.levelRequired));

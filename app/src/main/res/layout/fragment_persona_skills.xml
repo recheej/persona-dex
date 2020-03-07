@@ -15,7 +15,7 @@
         android:text="@string/skills_more_details"
         android:textAppearance="?textBody"/>
 
-    <ScrollView android:layout_height="wrap_content"
+    <androidx.core.widget.NestedScrollView android:layout_height="wrap_content"
         android:layout_width="match_parent">
         <LinearLayout
             android:id="@+id/skill_grid"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </FrameLayout>
