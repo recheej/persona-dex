@@ -119,6 +119,7 @@
     <string name="arcana_strength">Strength</string>
     <string name="arcana_faith">Faith</string>
     <string name="arcana_star">Star</string>
+    <string name="arcana_consultant">Consultant</string>
 
     <string name="max_confidant">Max Confidant</string>
 

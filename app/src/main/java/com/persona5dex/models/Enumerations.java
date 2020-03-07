@@ -35,6 +35,7 @@ public class Enumerations {
         WORLD(20, R.string.arcana_world),
         STRENGTH(21, R.string.arcana_strength),
         FAITH(22, R.string.arcana_faith),
+        CONSULTANT(23, R.string.arcana_consultant),
         ANY(-1, R.string.arcana_any);
 
         private int i;
