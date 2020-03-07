@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f6bcf7a40f5c003a89495f052b29bcfb",
+    "identityHash": "059be112dd38ae0d4f89b6737348706a",
     "entities": [
       {
         "tableName": "personas",
@@ -311,50 +311,6 @@
         ]
       },
       {
-        "tableName": "searchSuggestions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `suggest_text_1` TEXT, `suggest_text_2` TEXT, `suggest_intent_data` TEXT, `suggest_intent_extra_data` TEXT)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "suggestionColumnTextOne",
-            "columnName": "suggest_text_1",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "suggestionColumnTextTwo",
-            "columnName": "suggest_text_2",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "suggestColumnIntentData",
-            "columnName": "suggest_intent_data",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "suggestColumnIntentExtraData",
-            "columnName": "suggest_intent_extra_data",
-            "affinity": "TEXT",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "_id"
-          ],
-          "autoGenerate": true
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
         "tableName": "personaFusions",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `persona_one` INTEGER NOT NULL, `persona_two` INTEGER NOT NULL, `result` INTEGER NOT NULL, FOREIGN KEY(`persona_one`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`persona_two`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`result`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
@@ -515,7 +471,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f6bcf7a40f5c003a89495f052b29bcfb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '059be112dd38ae0d4f89b6737348706a')"
     ]
   }
 }
