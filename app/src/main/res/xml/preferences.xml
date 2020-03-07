@@ -4,7 +4,7 @@
         android:key="@string/pref_key_theme"
         android:title="@string/pref_theme_title"
         android:summary="@string/pref_theme_summary"
-        android:defaultValue="0"
+        android:defaultValue="-1"
         android:entries="@array/themeTypeTitles"
         android:entryValues="@array/themeType"
         />
