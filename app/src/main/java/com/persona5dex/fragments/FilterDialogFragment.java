@@ -129,14 +129,6 @@ public class FilterDialogFragment extends DialogFragment {
 
                         selectedArcanaMap = (ArcanaMap) arcanaSpinner.getSelectedItem();
 
-                        String arcanaName;
-                        if(arcanaSpinner.getSelectedItemPosition() == 0){
-                            arcanaName = "";
-                        }
-                        else{
-                            arcanaName = selectedArcanaMap.name.replace("_", " ");
-                        }
-
                         filterArgs.arcana = selectedArcanaMap.arcana;
                         filterArgs.rarePersona = rarePersonaCheckBox.isChecked();
                         filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
