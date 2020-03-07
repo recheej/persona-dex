@@ -2,7 +2,6 @@ package com.persona5dex.viewmodels;
 
 import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.ArcanaNameProvider.ArcanaName;
-import com.persona5dex.models.ArcanaMap;
 import com.persona5dex.models.Enumerations;
 
 import java.util.Arrays;

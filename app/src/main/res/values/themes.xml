@@ -16,8 +16,6 @@
         <item name="android:textColorPrimary">?defaultTextColor</item>
         <item name="pageBackground">?colorPrimary</item>
         <item name="toolbarBackground">?colorAccent</item>
-        <item name="android:dialogTheme">@style/PersonaDialogAlert</item>
-        <item name="android:alertDialogTheme">@style/PersonaDialogAlert</item>
         <item name="android:textColorSecondary">@color/textColorWhiteDim</item>
         <item name="android:itemBackground">?pageBackground</item>
         <item name="android:colorBackground">?pageBackground</item>

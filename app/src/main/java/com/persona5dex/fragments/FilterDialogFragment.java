@@ -3,9 +3,6 @@ package com.persona5dex.fragments;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.appcompat.app.AlertDialog;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +14,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.persona5dex.ArcanaNameProvider;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+
 import com.persona5dex.ArcanaNameProvider.ArcanaName;
 import com.persona5dex.R;
 import com.persona5dex.ThemeUtil;
 import com.persona5dex.activities.BaseActivity;
 import com.persona5dex.dagger.fragment.FragmentComponent;
-import com.persona5dex.models.ArcanaMap;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.viewmodels.PersonaFilterViewModel;
 
@@ -39,7 +38,7 @@ public class FilterDialogFragment extends DialogFragment {
     private CheckBox dlcPersonaCheckBox;
     private EditText minLevelEditText;
     private EditText maxLevelEditText;
-    private ArcanaMap selectedArcanaMap;
+    private ArcanaName selectedArcanaName;
     private Spinner arcanaSpinner;
     private ArrayAdapter<ArcanaName> arcanaMapArrayAdapter;
 
@@ -127,9 +126,9 @@ public class FilterDialogFragment extends DialogFragment {
 
                         PersonaFilterArgs filterArgs = new PersonaFilterArgs();
 
-                        selectedArcanaMap = (ArcanaMap) arcanaSpinner.getSelectedItem();
+                        selectedArcanaName = (ArcanaName) arcanaSpinner.getSelectedItem();
 
-                        filterArgs.arcana = selectedArcanaMap.arcana;
+                        filterArgs.arcana = selectedArcanaName.getArcana();
                         filterArgs.rarePersona = rarePersonaCheckBox.isChecked();
                         filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
 
