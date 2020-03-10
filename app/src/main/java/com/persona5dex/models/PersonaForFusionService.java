@@ -1,33 +1,28 @@
 package com.persona5dex.models;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by reche on 12/9/2017.
  */
 
 public class PersonaForFusionService {
     private Enumerations.Arcana arcana;
-    private String arcanaName;
     private int level;
     private String name;
     private boolean rare;
     private boolean special;
     private boolean dlc;
+    private boolean isOwnedDLC;
     private int id;
+    private GameType gameType;
 
-    public Enumerations.Arcana getArcana() {
+    @NonNull public Enumerations.Arcana getArcana() {
         return arcana;
     }
 
-    public void setArcana(Enumerations.Arcana arcana) {
+    public void setArcana(@NonNull Enumerations.Arcana arcana) {
         this.arcana = arcana;
-    }
-
-    public String getArcanaName() {
-        return arcanaName;
-    }
-
-    public void setArcanaName(String arcanaName) {
-        this.arcanaName = arcanaName;
     }
 
     public int getLevel() {
@@ -38,7 +33,7 @@ public class PersonaForFusionService {
         this.level = level;
     }
 
-    public String getName() {
+    @NonNull public String getName() {
         return name;
     }
 
@@ -76,5 +71,21 @@ public class PersonaForFusionService {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @NonNull public GameType getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(@NonNull GameType gameType) {
+        this.gameType = gameType;
+    }
+
+    public boolean isOwnedDLC() {
+        return isOwnedDLC;
+    }
+
+    public void setOwnedDLC(boolean ownedDLC) {
+        isOwnedDLC = ownedDLC;
     }
 }

@@ -1,11 +1,14 @@
 package com.persona5dex.dagger.application;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaFileUtilities;
+import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaStoreGsonAdapter;
+import com.persona5dex.dagger.activity.ActivityScope;
 import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.RawPersona;
 import com.google.gson.Gson;
@@ -46,6 +49,13 @@ public class ApplicationContextModule {
         builder.registerTypeAdapter(PersonaStore.class, new PersonaStoreGsonAdapter());
 
         return builder.create();
+    }
+
+    @Provides
+    @ApplicationScope
+    @Named("dlcSharedPreferences")
+    SharedPreferences dlcSharedPreferences(){
+        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
     }
 
 
