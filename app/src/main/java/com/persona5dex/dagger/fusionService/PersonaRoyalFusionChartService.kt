@@ -46,8 +46,7 @@ class PersonaRoyalFusionChartService @Inject constructor(
                 val arcanaRow = tableArray[index]
                 for((arcanaTwo, indexTwo) in arcanaIndexMap) {
                     try {
-                        val resultArcana = arcanaRow[indexTwo] ?: arcana
-                        arcanaMap[arcanaTwo] = resultArcana
+                        arcanaMap[arcanaTwo] = arcanaRow[indexTwo] ?: arcana
                     } catch (e: IndexOutOfBoundsException) {
                     }
                 }
