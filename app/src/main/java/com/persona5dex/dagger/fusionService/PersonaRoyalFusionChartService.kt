@@ -39,12 +39,12 @@ class PersonaRoyalFusionChartService @Inject constructor(
             reader.endObject()
 
             val fusionChartMap = mutableMapOf<Enumerations.Arcana, MutableMap<Enumerations.Arcana, Enumerations.Arcana>>()
-            for((arcana, index) in arcanaIndexMap) {
+            for ((arcana, index) in arcanaIndexMap) {
                 val arcanaMap = mutableMapOf<Enumerations.Arcana, Enumerations.Arcana>()
                 fusionChartMap[arcana] = arcanaMap
 
                 val arcanaRow = tableArray[index]
-                for((arcanaTwo, indexTwo) in arcanaIndexMap) {
+                for ((arcanaTwo, indexTwo) in arcanaIndexMap) {
                     try {
                         arcanaMap[arcanaTwo] = arcanaRow[indexTwo] ?: arcana
                     } catch (e: IndexOutOfBoundsException) {
