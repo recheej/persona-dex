@@ -33,6 +33,7 @@ class ArcanaNameProvider @Inject constructor(@Named("applicationContext") privat
                 englishArcanaMap.entries.firstOrNull {
                     it.value.normalizeArcanaName() == inputNormalizedName
                 }?.key
+                        ?: Enumerations.Arcana.HANGED_MAN.takeIf { inputNormalizedName.contains("hanged") }
             }
 
     private fun String.normalizeArcanaName(): String =

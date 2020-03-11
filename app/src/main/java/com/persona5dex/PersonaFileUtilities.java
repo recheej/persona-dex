@@ -1,5 +1,7 @@
 package com.persona5dex;
 
+import androidx.annotation.NonNull;
+
 import com.persona5dex.dagger.application.ApplicationScope;
 import com.persona5dex.models.RawArcanaMap;
 import com.persona5dex.models.RawPersona;
@@ -34,7 +36,7 @@ public class PersonaFileUtilities {
         this.arcanaNameProvider = arcanaNameProvider;
     }
 
-    private String getFileContents(InputStream stream){
+    @NonNull public String getFileContents(InputStream stream){
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         StringBuilder out = new StringBuilder();
         String line;

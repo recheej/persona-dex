@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.dagger.fusionService.FusionArcanaDataModule;
@@ -50,6 +51,9 @@ public class FusionCalculatorJobService extends JobIntentService {
     @Inject
     HashMap<Enumerations.Arcana, HashMap<Enumerations.Arcana, Enumerations.Arcana>> arcanaTable;
 
+    @Inject
+    ArcanaNameProvider arcanaNameProvider;
+
     private final static String SERVICE_NAME = "FusionCalculatorJobService";
 
     public final class Constants {
@@ -90,7 +94,7 @@ public class FusionCalculatorJobService extends JobIntentService {
             fuserArgs.rarePersonaAllowedInFusion = personaTransferRepository.rarePersonaAllowedInFusions();
             fuserArgs.ownedDLCPersonaIDs = personaTransferRepository.getOwnedDlCPersonaIDs();
 
-            PersonaFuser personaFuser = new PersonaFuser(fuserArgs);
+            PersonaFuser personaFuser = new PersonaFuser(fuserArgs, arcanaNameProvider);
 
             PersonaGraph graph = this.makePersonaGraph(personaByLevel, personaFuser);
 

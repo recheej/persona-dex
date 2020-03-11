@@ -11,6 +11,7 @@ import com.persona5dex.services.PersonaFuser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.io.InputStream;
@@ -42,6 +43,7 @@ public class PersonaFuserTest {
     private final PersonaForFusionService[] personasByLevel;
     private final HashMap<Enumerations.Arcana, HashMap<Enumerations.Arcana, Enumerations.Arcana>> arcanaTable;
     private final Map<String, int[]> rareCombos;
+    private final ArcanaNameProvider arcanaNameProvider;
 
     public PersonaFuserTest() {
         ClassLoader classLoader = getClass().getClassLoader();
@@ -50,7 +52,8 @@ public class PersonaFuserTest {
         InputStream arcanaTableStream = classLoader.getResourceAsStream("arcana_combo_data.json");
         InputStream rareComboSteam = classLoader.getResourceAsStream("rare_combos.json");
 
-        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(new Gson());
+        arcanaNameProvider = new ArcanaNameProvider(RuntimeEnvironment.application);
+        PersonaFileUtilities personaFileUtilities = new PersonaFileUtilities(new Gson(), arcanaNameProvider);
 
         RawPersona[] rawPersonas = personaFileUtilities.getRawPersonas(personaDataStream);
         this.allPersonas = getAllPersonas(rawPersonas);
@@ -75,14 +78,13 @@ public class PersonaFuserTest {
     public PersonaForFusionService mockPersona(RawPersona persona){
         PersonaForFusionService personaForFusionService = mock(PersonaForFusionService.class);
 
-        Enumerations.Arcana arcana = Enumerations.Arcana.getArcana(persona.arcanaName);
+        Enumerations.Arcana arcana = arcanaNameProvider.getArcanaForEnglishName(persona.arcanaName);
         if(arcana == Enumerations.Arcana.ANY){
-            arcana = Enumerations.Arcana.getArcana(persona.arcana);
+            arcana = arcanaNameProvider.getArcanaForEnglishName(persona.arcana);
         }
 
         when(personaForFusionService.getArcana()).thenReturn(arcana);
         when(personaForFusionService.getName()).thenReturn(persona.name);
-        when(personaForFusionService.getArcanaName()).thenReturn(persona.arcana);
         when(personaForFusionService.getLevel()).thenReturn(persona.level);
         when(personaForFusionService.isRare()).thenReturn(persona.rare);
         when(personaForFusionService.isSpecial()).thenReturn(persona.special);
@@ -95,7 +97,7 @@ public class PersonaFuserTest {
     public void basicFusionTest() throws Exception {
         PersonaFuser.PersonaFusionArgs args = getDefaultPersonaFuserArgs();
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
 
         PersonaForFusionService personaOne = this.getPersonaByName("Apsaras");
         PersonaForFusionService personaTwo = this.getPersonaByName("Yaksini");
@@ -108,7 +110,7 @@ public class PersonaFuserTest {
     public void basicFusionTestTwo() throws Exception {
         PersonaFuser.PersonaFusionArgs args = getDefaultPersonaFuserArgs();
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
 
         PersonaForFusionService personaOne = this.getPersonaByName("arsene");
         PersonaForFusionService personaTwo = this.getPersonaByName("pixie");
@@ -122,7 +124,7 @@ public class PersonaFuserTest {
 
         PersonaFuser.PersonaFusionArgs args = getDefaultPersonaFuserArgs();
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
 
         PersonaForFusionService personaOne = this.getPersonaByName("orthrus");
         PersonaForFusionService personaTwo = this.getPersonaByName("matador");
@@ -135,7 +137,7 @@ public class PersonaFuserTest {
     public void sameArcanaFusionTestSuccess() throws Exception {
         PersonaFuser.PersonaFusionArgs args = getDefaultPersonaFuserArgs();
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
 
         PersonaForFusionService personaOne = this.getPersonaByName("pixie");
         PersonaForFusionService personaTwo = this.getPersonaByName("Leanan Sidhe");
@@ -164,7 +166,7 @@ public class PersonaFuserTest {
         //asserts that a rare persona cannot be fused from any fusion
         PersonaFuser.PersonaFusionArgs args = getDefaultPersonaFuserArgs();
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
 
         for (PersonaForFusionService personaOne : allPersonas) {
             for (PersonaForFusionService personaTwo : allPersonas) {
@@ -181,7 +183,7 @@ public class PersonaFuserTest {
         //asserts that a special persona cannot be fused from any fusion.
         PersonaFuser.PersonaFusionArgs args = getDefaultPersonaFuserArgs();
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
 
         for (PersonaForFusionService personaOne : allPersonas) {
             for (PersonaForFusionService personaTwo : allPersonas) {
@@ -203,7 +205,7 @@ public class PersonaFuserTest {
         PersonaFuser.PersonaFusionArgs args = getDefaultPersonaFuserArgs();
         args.ownedDLCPersonaIDs.add(Integer.toString(ariadne.getId()));
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
 
         PersonaForFusionService clotho = getPersonaByName("clotho");
         PersonaForFusionService regent = getPersonaByName("regent");
@@ -219,7 +221,7 @@ public class PersonaFuserTest {
         //asserts that no dlc persona are the result of any fusions if no dlc are selected
         PersonaFuser.PersonaFusionArgs args = getDefaultPersonaFuserArgs();
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
         for (PersonaForFusionService personaOne : allPersonas) {
             for (PersonaForFusionService personaTwo : allPersonas) {
                 PersonaForFusionService result = fuser.fuseNormal(personaOne, personaTwo);
@@ -241,7 +243,7 @@ public class PersonaFuserTest {
         PersonaForFusionService rarePersona = getPersonaByName("regent");
         PersonaForFusionService manDrake = getPersonaByName("mandrake");
 
-        PersonaFuser fuser = new PersonaFuser(args);
+        PersonaFuser fuser = new PersonaFuser(args, arcanaNameProvider);
         PersonaForFusionService result = fuser.fuseNormal(rarePersona, manDrake);
 
         assertNull(result);
@@ -285,7 +287,7 @@ public class PersonaFuserTest {
      */
     @Test
     public void testRareFusionCannotResultInSpecialPersona() {
-        PersonaFuser fuser = new PersonaFuser(getDefaultPersonaFuserArgs());
+        PersonaFuser fuser = new PersonaFuser(getDefaultPersonaFuserArgs(), arcanaNameProvider);
 
         PersonaForFusionService rarePersonaOne = getPersonaByName("Regent");
         PersonaForFusionService rarePersonaTwo = getPersonaByName("Cu Chulainn");
@@ -297,7 +299,7 @@ public class PersonaFuserTest {
 
     @Test
     public void testRareFusionShouldSkipRarePersona() {
-        PersonaFuser fuser = new PersonaFuser(getDefaultPersonaFuserArgs());
+        PersonaFuser fuser = new PersonaFuser(getDefaultPersonaFuserArgs(), arcanaNameProvider);
 
         PersonaForFusionService rarePersonaOne = getPersonaByName("Regent");
         PersonaForFusionService rarePersonaTwo = getPersonaByName("Zouchouten");

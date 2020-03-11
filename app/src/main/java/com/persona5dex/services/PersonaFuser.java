@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 import android.util.SparseArray;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.models.Enumerations.Arcana;
 import com.persona5dex.models.PersonaForFusionService;
 
@@ -24,6 +25,7 @@ public class PersonaFuser {
     private final PersonaForFusionService[] personasByLevel;
     private final boolean rarePersonaAllowedInFusion;
     private final Set<Integer> ownedDLCPersonaIDs;
+    private final ArcanaNameProvider arcanaNameProvider;
     private SparseArray<List<PersonaForFusionService>> personaByArcana;
     private HashMap<Arcana, HashMap<Arcana, Arcana>> arcanaTable;
     private Map<String, int[]> rareComboMap;
@@ -31,13 +33,14 @@ public class PersonaFuser {
     private final String[] rarePersonas = {"Regent", "Queen's Necklace", "Stone of Scone",
             "Koh-i-Noor", "Orlov", "Emperor's Amulet", "Hope Diamond", "Crystal Skull"};
 
-    public PersonaFuser(PersonaFusionArgs args) {
+    public PersonaFuser(PersonaFusionArgs args, ArcanaNameProvider arcanaNameProvider) {
         this.arcanaTable = args.arcanaTable;
         this.personasByLevel = args.personasByLevel;
         this.rareComboMap = args.rareComboMap;
         this.rarePersonaAllowedInFusion = args.rarePersonaAllowedInFusion;
         this.ownedDLCPersonaIDs = convertIDsToIntegers(args.ownedDLCPersonaIDs);
         this.personaByArcana = this.personaByArcana();
+        this.arcanaNameProvider = arcanaNameProvider;
     }
 
     private Set<Integer> convertIDsToIntegers(Set<String> ids) {
@@ -75,7 +78,9 @@ public class PersonaFuser {
     private PersonaForFusionService fuseRare(PersonaForFusionService normalPersona, PersonaForFusionService rarePersona) {
 
         int rarePersonaIndex = this.getRarePersonaIndex(rarePersona.getName());
-        int modifier = this.rareComboMap.get(normalPersona.getArcanaName())[rarePersonaIndex];
+
+        String arcanaName = arcanaNameProvider.getEnglishArcanaName(normalPersona.getArcana());
+        int modifier = this.rareComboMap.get(arcanaName)[rarePersonaIndex];
 
         List<PersonaForFusionService> personasOfSameArcana = personaByArcana.get(normalPersona.getArcana().value());
 

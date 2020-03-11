@@ -68,13 +68,6 @@ public class FusionServiceContextModule {
 
     @Provides
     @FusionServiceScope
-    @Named("dlcSharedPreferences")
-    SharedPreferences dlcSharedPreferences() {
-        return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
-    }
-
-    @Provides
-    @FusionServiceScope
     @Named("defaultSharedPreferences")
     SharedPreferences defaultSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(context);

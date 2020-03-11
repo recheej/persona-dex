@@ -13,7 +13,6 @@ public class PersonaForFusionService {
     private boolean rare;
     private boolean special;
     private boolean dlc;
-    private boolean isOwnedDLC;
     private int id;
     private GameType gameType;
 
@@ -79,13 +78,5 @@ public class PersonaForFusionService {
 
     public void setGameType(@NonNull GameType gameType) {
         this.gameType = gameType;
-    }
-
-    public boolean isOwnedDLC() {
-        return isOwnedDLC;
-    }
-
-    public void setOwnedDLC(boolean ownedDLC) {
-        isOwnedDLC = ownedDLC;
     }
 }
