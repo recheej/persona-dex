@@ -2,11 +2,9 @@ package com.persona5dex.dagger.fusionService
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import com.persona5dex.ArcanaNameProvider
-import com.persona5dex.BuildConfig
+import com.persona5dex.models.Enumerations.Arcana
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -36,7 +34,8 @@ class PersonaRoyalFusionChartServiceTest {
     fun `testGetFusionChart`() {
         runBlocking {
             val chart = chartService.getFusionChart()
-            Assert.assertNotNull(chart)
+            val resultArcana = chart.getResultArcana(Arcana.MAGICIAN, Arcana.FOOL)
+            Assert.assertEquals(Arcana.DEATH, resultArcana)
         }
     }
 }
