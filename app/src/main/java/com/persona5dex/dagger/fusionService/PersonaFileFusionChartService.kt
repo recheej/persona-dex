@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 
 abstract class PersonaFileFusionChartService(
-        private val context: Context
+        context: Context
 ) : FusionChartService, PersonaFileService<FusionChart>(context) {
 
     final override suspend fun getFusionChart(): FusionChart = parseFile()

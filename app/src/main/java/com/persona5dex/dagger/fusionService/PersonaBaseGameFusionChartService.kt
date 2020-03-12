@@ -14,7 +14,7 @@ import javax.inject.Named
 
 
 class PersonaBaseGameFusionChartService @Inject constructor(
-        @Named("applicationContext") private val context: Context,
+        @Named("applicationContext") context: Context,
         private val arcanaNameProvider: ArcanaNameProvider
 ) : PersonaFileFusionChartService(context) {
     override fun getFileRes(): Int = R.raw.arcana_combo_data
