@@ -12,8 +12,5 @@ abstract class PersonaFileFusionChartService(
         private val context: Context
 ) : FusionChartService, PersonaFileService<FusionChart>(context) {
 
-    final override suspend fun getFusionChart(): FusionChart =
-            withContext(Dispatchers.IO) {
-                parseFile()
-            }
+    final override suspend fun getFusionChart(): FusionChart = parseFile()
 }
