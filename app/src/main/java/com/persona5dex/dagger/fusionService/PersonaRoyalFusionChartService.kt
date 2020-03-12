@@ -19,7 +19,7 @@ class PersonaRoyalFusionChartService @Inject constructor(
 ) : PersonaFileFusionChartService(context) {
     override fun getFileRes(): Int = R.raw.arcana_combo_royal
 
-    override suspend fun getFusionChart(fileInputStream: InputStream): FusionChart = withContext(Dispatchers.IO) {
+    override suspend fun parseFile(fileInputStream: InputStream): FusionChart = withContext(Dispatchers.IO) {
         val reader = JsonReader(InputStreamReader(fileInputStream, "UTF-8"))
         reader.use {
             reader.beginObject()
@@ -77,7 +77,6 @@ class PersonaRoyalFusionChartService @Inject constructor(
         endArray()
         return fusionRow
     }
-
 }
 
 

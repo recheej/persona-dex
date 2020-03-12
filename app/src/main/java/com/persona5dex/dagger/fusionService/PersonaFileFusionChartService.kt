@@ -10,15 +10,10 @@ import java.io.InputStream
 
 abstract class PersonaFileFusionChartService(
         private val context: Context
-) : FusionChartService {
-    @RawRes
-    protected abstract fun getFileRes(): Int
-
-    @WorkerThread
-    protected abstract suspend fun getFusionChart(fileInputStream: InputStream): FusionChart
+) : FusionChartService, PersonaFileService<FusionChart>(context) {
 
     final override suspend fun getFusionChart(): FusionChart =
             withContext(Dispatchers.IO) {
-                getFusionChart(context.resources.openRawResource(getFileRes()))
+                parseFile()
             }
 }
