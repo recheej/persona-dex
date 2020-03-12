@@ -31,11 +31,20 @@ class PersonaRoyalFusionChartServiceTest {
     }
 
     @Test
-    fun `testGetFusionChart`() {
+    fun `getFusionChart() returns valid fusion chart`() {
         runBlocking {
             val chart = chartService.getFusionChart()
             val resultArcana = chart.getResultArcana(Arcana.MAGICIAN, Arcana.FOOL)
             Assert.assertEquals(Arcana.DEATH, resultArcana)
+        }
+    }
+
+    @Test
+    fun `getFusionChart() returns valid fusion chart for hanged man`() {
+        runBlocking {
+            val chart = chartService.getFusionChart()
+            val resultArcana = chart.getResultArcana(Arcana.HANGED_MAN, Arcana.MAGICIAN)
+            Assert.assertEquals(Arcana.EMPRESS, resultArcana)
         }
     }
 }
