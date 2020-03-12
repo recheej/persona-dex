@@ -36,6 +36,11 @@ class ArcanaNameProvider @Inject constructor(@Named("applicationContext") privat
                         ?: Enumerations.Arcana.HANGED_MAN.takeIf { inputNormalizedName.contains("hanged") }
             }
 
+    fun getArcanaForEnglishNameOrThrow(rawEnglishArcanaName: String): Enumerations.Arcana =
+        checkNotNull(getArcanaForEnglishName(rawEnglishArcanaName)) {
+            "could not find arcana for name: $rawEnglishArcanaName"
+        }
+
     private fun String.normalizeArcanaName(): String =
             replace("\\s+".toRegex(), "")
                     .replace("_".toRegex(), "").toLowerCase(Locale.US)
