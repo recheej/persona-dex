@@ -29,21 +29,17 @@ class ArcanaNameProvider @Inject constructor(@Named("applicationContext") privat
             Enumerations.Arcana.values().map { ArcanaName(it, it.getNameForDisplay()) }.toTypedArray()
 
     fun getArcanaForEnglishName(rawEnglishArcanaName: String) =
-            rawEnglishArcanaName.normalizeArcanaName().let { inputNormalizedName ->
+            rawEnglishArcanaName.normalizeName().let { inputNormalizedName ->
                 englishArcanaMap.entries.firstOrNull {
-                    it.value.normalizeArcanaName() == inputNormalizedName
+                    it.value.normalizeName() == inputNormalizedName
                 }?.key
                         ?: Enumerations.Arcana.HANGED_MAN.takeIf { inputNormalizedName.contains("hanged") }
             }
 
     fun getArcanaForEnglishNameOrThrow(rawEnglishArcanaName: String): Enumerations.Arcana =
-        checkNotNull(getArcanaForEnglishName(rawEnglishArcanaName)) {
-            "could not find arcana for name: $rawEnglishArcanaName"
-        }
-
-    private fun String.normalizeArcanaName(): String =
-            replace("\\s+".toRegex(), "")
-                    .replace("_".toRegex(), "").toLowerCase(Locale.US)
+            checkNotNull(getArcanaForEnglishName(rawEnglishArcanaName)) {
+                "could not find arcana for name: $rawEnglishArcanaName"
+            }
 
     data class ArcanaName(val arcana: Enumerations.Arcana, val arcanaName: String) {
         override fun toString(): String = arcanaName
@@ -57,3 +53,4 @@ class ArcanaNameProvider @Inject constructor(@Named("applicationContext") privat
         return localizedContext.resources
     }
 }
+
