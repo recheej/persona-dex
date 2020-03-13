@@ -33,7 +33,6 @@ class PersonaBaseGameFusionChartService @Inject constructor(
                         FusionChart(fusionMap)
                     }
                 }
-
             }
 
     private fun JsonReader.addArcanaMapEntry(fusionMap: MutableMap<Arcana, MutableMap<Arcana, Arcana>>) {
