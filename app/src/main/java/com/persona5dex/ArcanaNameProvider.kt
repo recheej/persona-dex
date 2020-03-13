@@ -29,12 +29,10 @@ class ArcanaNameProvider @Inject constructor(@Named("applicationContext") privat
             Enumerations.Arcana.values().map { ArcanaName(it, it.getNameForDisplay()) }.toTypedArray()
 
     fun getArcanaForEnglishName(rawEnglishArcanaName: String) =
-            rawEnglishArcanaName.normalizeName().let { inputNormalizedName ->
-                englishArcanaMap.entries.firstOrNull {
-                    it.value.normalizeName() == inputNormalizedName
-                }?.key
-                        ?: Enumerations.Arcana.HANGED_MAN.takeIf { inputNormalizedName.contains("hanged") }
-            }
+            englishArcanaMap.entries.firstOrNull {
+                it.value equalNormalized rawEnglishArcanaName
+            }?.key
+                    ?: Enumerations.Arcana.HANGED_MAN.takeIf { rawEnglishArcanaName.normalizeName().contains("hanged") }
 
     fun getArcanaForEnglishNameOrThrow(rawEnglishArcanaName: String): Enumerations.Arcana =
             checkNotNull(getArcanaForEnglishName(rawEnglishArcanaName)) {
