@@ -2,6 +2,8 @@ package com.persona5dex.models;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 /**
  * Created by reche on 12/9/2017.
  */
@@ -78,5 +80,25 @@ public class PersonaForFusionService {
 
     public void setGameType(@NonNull GameType gameType) {
         this.gameType = gameType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        PersonaForFusionService that = (PersonaForFusionService) o;
+        return level == that.level &&
+                rare == that.rare &&
+                special == that.special &&
+                dlc == that.dlc &&
+                id == that.id &&
+                arcana == that.arcana &&
+                name.equals(that.name) &&
+                gameType == that.gameType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(arcana, level, name, rare, special, dlc, id, gameType);
     }
 }

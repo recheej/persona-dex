@@ -1,4 +1,4 @@
-package com.persona5dex.dagger.fusionService
+package fusionService
 
 import android.content.Context
 import android.os.Build

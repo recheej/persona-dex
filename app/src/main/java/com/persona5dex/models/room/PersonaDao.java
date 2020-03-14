@@ -36,6 +36,9 @@ public interface PersonaDao {
     @Query("select id, arcana, name, level, rare, dlc, special from personas where gameId = :gameType and rare = 0 order by level")
     PersonaForFusionService[] getPersonasByLevel(int gameType);
 
+    @Query("select id, arcana, name, level, rare, dlc, special from personas order by level")
+    PersonaForFusionService[] getPersonasByLevel();
+
     @Transaction
     @Query("select id, name, arcana, level, rare, dlc from personas where dlc = 1")
     LiveData<List<MainListPersona>> getDLCPersonas();

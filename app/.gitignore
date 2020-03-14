@@ -1,2 +1,3 @@
 /build
 /schemas/com.persona5dex.models.room.PersonaDatabase/
+/src/test/resources/personas.json
