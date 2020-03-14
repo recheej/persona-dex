@@ -1,4 +1,4 @@
-package com.persona5dex.dagger.fusionService
+package com.persona5dex.fusionService
 
 import android.content.Context
 import androidx.annotation.RawRes

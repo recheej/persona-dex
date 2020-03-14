@@ -3,6 +3,7 @@ package com.persona5dex.dagger.fusionService
 import android.content.Context
 import android.os.Build
 import com.persona5dex.ArcanaNameProvider
+import com.persona5dex.fusionService.BaseGameRareModifierService
 import com.persona5dex.models.Enumerations.Arcana
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert

@@ -1,12 +1,6 @@
-package com.persona5dex.dagger.fusionService
+package com.persona5dex.fusionService
 
 import android.content.Context
-import androidx.annotation.RawRes
-import androidx.annotation.WorkerThread
-import com.persona5dex.R
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.io.InputStream
 
 abstract class PersonaFileFusionChartService(
         context: Context
