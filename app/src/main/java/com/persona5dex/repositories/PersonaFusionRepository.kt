@@ -8,6 +8,7 @@ import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.models.room.PersonaDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -28,8 +29,8 @@ class PersonaFusionRepository @Inject constructor(
             withContext(Dispatchers.IO) {
                 val allPersonas: List<PersonaForFusionService> = personaDao.getPersonasByLevel(gameType.value)
                         .toList()
-
-
+                yield()
+                
                 val ownedDLCPersonas = allPersonas
                         .filter { it.id in ownedDLCPersonaIds }.toList()
                 PersonaFusions(allPersonas, ownedDLCPersonas)
