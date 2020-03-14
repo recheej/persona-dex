@@ -24,7 +24,7 @@ class PersonaFusionRepository @Inject constructor(
                     ?.toSet()
                     .orEmpty()
 
-    suspend fun getPersonaFusions(gameType: GameType) =
+    suspend fun getFusionPersonas(gameType: GameType) =
             withContext(Dispatchers.IO) {
                 val allPersonas: List<PersonaForFusionService> = personaDao.getPersonasByLevel(gameType.value)
                         .toList()
