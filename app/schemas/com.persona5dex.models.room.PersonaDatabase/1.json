@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "059be112dd38ae0d4f89b6737348706a",
+    "identityHash": "915d5eded150c98f2e4ef286b9d1cacc",
     "entities": [
       {
         "tableName": "personas",
@@ -312,14 +312,8 @@
       },
       {
         "tableName": "personaFusions",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `persona_one` INTEGER NOT NULL, `persona_two` INTEGER NOT NULL, `result` INTEGER NOT NULL, FOREIGN KEY(`persona_one`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`persona_two`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`result`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`persona_one` INTEGER NOT NULL, `persona_two` INTEGER NOT NULL, `result` INTEGER NOT NULL, PRIMARY KEY(`persona_one`, `persona_two`), FOREIGN KEY(`persona_one`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`persona_two`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`result`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "personaOneID",
             "columnName": "persona_one",
@@ -341,9 +335,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "persona_one",
+            "persona_two"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -471,7 +466,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '059be112dd38ae0d4f89b6737348706a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '915d5eded150c98f2e4ef286b9d1cacc')"
     ]
   }
 }
