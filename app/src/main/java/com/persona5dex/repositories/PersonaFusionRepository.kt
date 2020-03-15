@@ -11,14 +11,14 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class PersonaFusionRepository @Inject constructor(
-        private val personaDao: PersonaDao,
+        personaDao: PersonaDao,
         @Named("defaultSharedPreferences") private val defaultSharedPreferences: SharedPreferences,
         private val gameType: GameType
 ) {
+    private val personasByLevel = personaDao.personasByLevel
 
     suspend fun getFusionPersonas() =
             withContext(Dispatchers.IO) {
-                val personasByLevel = personaDao.personasByLevel
                 val ownedDLCPersonas = defaultSharedPreferences.getStringSet(DLC_SHARED_PREF, emptySet<String>()).orEmpty()
                         .map { it.toInt() }
                         .mapNotNull { dlcId -> personasByLevel.firstOrNull { persona -> persona.id == dlcId } }
