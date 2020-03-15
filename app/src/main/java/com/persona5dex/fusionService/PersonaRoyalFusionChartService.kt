@@ -40,10 +40,10 @@ class PersonaRoyalFusionChartService @Inject constructor(
 
 
             val fusionChartMap = mutableMapOf<Enumerations.Arcana, MutableMap<Enumerations.Arcana, Enumerations.Arcana>>()
-            tableArray.forEachIndexed { index, arcanas ->
-                val arcanaForRow = arcanaIndexMap.getValue(index)
-                arcanas.forEachIndexed { arcanaIndex, arcana ->
-                    val arcanaForColumn = arcanaIndexMap.getValue(arcanaIndex)
+            tableArray.forEachIndexed { row, arcanas ->
+                val arcanaForRow = arcanaIndexMap.getValue(row)
+                arcanas.forEachIndexed { col, arcana ->
+                    val arcanaForColumn = arcanaIndexMap.getValue(col)
                     fusionChartMap.getOrPut(arcanaForColumn) {
                         mutableMapOf()
                     }[arcanaForRow] = arcana ?: arcanaForRow
