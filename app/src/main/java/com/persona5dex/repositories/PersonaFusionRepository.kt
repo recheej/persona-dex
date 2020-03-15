@@ -35,7 +35,7 @@ class PersonaFusionRepository @Inject constructor(
                     val personasForGameType = allPersonas.filter { it.gameType == gameType }
                     val allGameTypePersonas = basePersonas + personasForGameType
                     allGameTypePersonas
-                            .filterNot { it.gameType == GameType.BASE && personasForGameType.any { gameTypePersona -> gameTypePersona.name equalNormalized it.name } }
+                            .filterNot { it.gameType == GameType.BASE && personasForGameType.any { other -> other.gameType == gameType && other.name equalNormalized it.name } }
                 }
 
                 filteredPersonas

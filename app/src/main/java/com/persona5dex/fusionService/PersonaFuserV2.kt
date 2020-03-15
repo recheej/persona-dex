@@ -1,6 +1,5 @@
-package com.persona5dex.services
+package com.persona5dex.fusionService
 
-import com.persona5dex.fusionService.FusionChart
 import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.repositories.PersonaFusionRepository
 import javax.inject.Inject
