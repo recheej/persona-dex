@@ -17,17 +17,17 @@ class PersonaFusionRepository @Inject constructor(
 ) {
     private val personasByLevel = personaDao.personasByLevel
 
+    private val ownedDLCPersonas = defaultSharedPreferences.getStringSet(DLC_SHARED_PREF, emptySet<String>()).orEmpty()
+            .map { it.toInt() }
+            .mapNotNull { dlcId -> personasByLevel.firstOrNull { persona -> persona.id == dlcId } }
+
+    private val allPersonas: List<PersonaForFusionService> = personasByLevel
+            .filterNot { it.isRare || it.isSpecial || (it.isDlc && !ownedDLCPersonas.contains(it)) }
+            .sortedBy { it.level }
+            .toList()
+
     suspend fun getFusionPersonas() =
             withContext(Dispatchers.IO) {
-                val ownedDLCPersonas = defaultSharedPreferences.getStringSet(DLC_SHARED_PREF, emptySet<String>()).orEmpty()
-                        .map { it.toInt() }
-                        .mapNotNull { dlcId -> personasByLevel.firstOrNull { persona -> persona.id == dlcId } }
-
-                val allPersonas: List<PersonaForFusionService> = personasByLevel
-                        .filterNot { it.isRare || it.isSpecial || (it.isDlc && !ownedDLCPersonas.contains(it)) }
-                        .sortedBy { it.level }
-                        .toList()
-
                 val basePersonas = allPersonas.filter { it.gameType == GameType.BASE }
                 val filteredPersonas = if (gameType == GameType.BASE) {
                     basePersonas
