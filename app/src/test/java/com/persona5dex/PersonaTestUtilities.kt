@@ -24,6 +24,7 @@ fun Any.getFusionPersonas(arcanaNameProvider: ArcanaNameProvider): List<PersonaF
                     level = nextInt()
                     gameType = GameType.getGameType(nextInt())
                     isRare = nextInt() == 1
+                    isDlc = nextInt() == 1
                 }
                 personasForFusion.add(persona)
                 endArray()

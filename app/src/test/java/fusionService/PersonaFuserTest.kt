@@ -21,7 +21,7 @@ import org.robolectric.annotation.Config
 class PersonaFuserTest(
         private val personaOne: String,
         private val personaTwo: String,
-        private val expectedResultPersonaName: String,
+        private val expectedResultPersonaName: String?,
         private val gameType: GameType
 ) {
 
@@ -33,7 +33,6 @@ class PersonaFuserTest(
 
     @Before
     fun setup() {
-        javaClass.classLoader
         application = RuntimeEnvironment.application as Persona5Application
         arcanaNameProvider = ArcanaNameProvider(application)
 
@@ -46,12 +45,13 @@ class PersonaFuserTest(
         val fusionChart = fusionChartFactory.getFusionChartService(gameType).getFusionChart()
 
         val allPersonas = getFusionPersonas(arcanaNameProvider).filter { it.gameType == gameType }
-        personaFusions = PersonaFusions(allPersonas, emptyList())
+
+        personaFusions = PersonaFusions(allPersonas, allPersonas.filter { it.isDlc }.toSet())
         personaFuser = PersonaFuserV2(personaFusions, fusionChart)
 
         val resultPersona = personaOne fuse personaTwo
 
-        Assert.assertEquals(expectedResultPersonaName.normalizeName(), resultPersona!!.name.normalizeName())
+        Assert.assertEquals(expectedResultPersonaName?.normalizeName(), resultPersona!!.name.normalizeName())
     }
 
     private fun String.findPersona() =
@@ -70,7 +70,8 @@ class PersonaFuserTest(
         fun data() = listOf(
                 arrayOf("Jack Frost", "Hua Po", "Yaksini", GameType.BASE),
                 arrayOf("Arsene", "Jack-o'-Lantern", "Mandrake", GameType.BASE),
-                arrayOf("Hecatoncheires", "Hua Po", "Orthrus", GameType.BASE) //same arcana fusion
+                arrayOf("Hecatoncheires", "Hua Po", "Orthrus", GameType.BASE), //same arcana fusion
+                arrayOf("Ariadne Picaro", "Succubus", "Mithras", GameType.BASE)
         )
     }
 }

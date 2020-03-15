@@ -24,12 +24,12 @@ class PersonaFusionRepository @Inject constructor(
                 yield()
 
                 val ownedDLCPersonas = allPersonas
-                        .filter { it.id in ownedDLCPersonaIds }.toList()
+                        .filter { it.id in ownedDLCPersonaIds }.toSet()
                 PersonaFusions(allPersonas, ownedDLCPersonas)
             }
 }
 
 data class PersonaFusions(
         val allPersonas: List<PersonaForFusionService>,
-        val ownedDLCPersonas: List<PersonaForFusionService>
+        val ownedDLCPersonas: Set<PersonaForFusionService>
 )
