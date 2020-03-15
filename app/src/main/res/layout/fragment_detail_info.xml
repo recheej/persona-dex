@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
+            android:paddingBottom="@dimen/rowPadding"
+            android:paddingTop="@dimen/rowPadding">
 
             <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/imageView_persona"
@@ -32,8 +32,8 @@
                 android:id="@+id/container_shadow_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="@dimen/rowPadding"
+                android:layout_marginBottom="@dimen/rowPadding"
                 android:orientation="horizontal"
                 android:visibility="gone"
                 tools:visibility="visible">
@@ -58,8 +58,8 @@
                 android:id="@+id/personaDetailHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/rowPadding"
+                android:layout_marginTop="@dimen/rowPadding"
                 android:orientation="horizontal">
 
                 <TextView
@@ -213,7 +213,7 @@
             android:id="@+id/container_note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/rowPadding"
             android:orientation="vertical"
             android:visibility="gone"
             tools:visibility="visible">

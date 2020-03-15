@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
@@ -61,7 +62,7 @@ public class BaseActivity extends AppCompatActivity {
 
         final String nightModeValue =
                 defaultSharedPreferences.getString(getString(R.string.pref_key_theme), String.valueOf(MODE_NIGHT_FOLLOW_SYSTEM));
-        ThemeUtil.setNightMode(nightModeValue);
+        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(nightModeValue));
     }
 
     protected void addStoppableDisposable(Disposable disposable) {

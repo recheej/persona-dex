@@ -123,4 +123,7 @@
 
     <string name="max_confidant">Max Confidant</string>
 
+    <string name="switch_base_game">Persona 5</string>
+    <string name="switch_royal">Persona 5 Royal</string>
+
 </resources>

@@ -108,7 +108,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.equals(getString(R.string.pref_key_theme))) {
             final String nightModeValue = sharedPreferences.getString(key, String.valueOf(MODE_NIGHT_FOLLOW_SYSTEM));
-            ThemeUtil.setNightMode(nightModeValue);
+            AppCompatDelegate.setDefaultNightMode(Integer.parseInt(nightModeValue));
         } else {
             this.resetService = true;
 
