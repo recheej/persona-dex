@@ -44,14 +44,23 @@ class PersonaFuserTest(
 
         val fusionChart = fusionChartFactory.getFusionChartService(gameType).getFusionChart()
 
-        val allPersonas = getFusionPersonas(arcanaNameProvider).filter { it.gameType == gameType }
+        val allPersonas = getFusionPersonas(arcanaNameProvider)
+        val basePersonas = allPersonas.filter { it.gameType == GameType.BASE }
+        val filteredPersonas = if (gameType == GameType.BASE) {
+            basePersonas
+        } else {
+            val personasForGameType = allPersonas.filter { it.gameType == gameType }
+            val allGameTypePersonas = basePersonas + personasForGameType
+            allGameTypePersonas
+                    .filterNot { it.gameType == GameType.BASE && personasForGameType.any { gameTypePersona -> gameTypePersona.name equalNormalized it.name } }
+        }
 
-        personaFusions = PersonaFusions(allPersonas, allPersonas.filter { it.isDlc }.toSet())
+        personaFusions = PersonaFusions(filteredPersonas, filteredPersonas.filter { it.isDlc }.toSet())
         personaFuser = PersonaFuserV2(personaFusions, fusionChart)
 
         val resultPersona = personaOne fuse personaTwo
 
-        Assert.assertEquals(expectedResultPersonaName?.normalizeName(), resultPersona?.name?.normalizeName())
+        Assert.assertEquals(expectedResultPersonaName, resultPersona?.name)
     }
 
     private fun String.findPersona() =
@@ -72,7 +81,8 @@ class PersonaFuserTest(
                 arrayOf("Arsene", "Jack-o'-Lantern", "Mandrake", GameType.BASE),
                 arrayOf("Hecatoncheires", "Hua Po", "Orthrus", GameType.BASE), //same arcana fusion
                 arrayOf("Ariadne Picaro", "Succubus", "Mithras", GameType.BASE),
-                arrayOf("Anubis", "Power", null, GameType.BASE)
+                arrayOf("Anubis", "Power", null, GameType.BASE),
+                arrayOf("Cait Sith", "Naga", "Leanan Sidhe", GameType.ROYAL)
         )
     }
 }

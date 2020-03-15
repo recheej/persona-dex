@@ -27,10 +27,10 @@ class PersonaRoyalFusionChartService @Inject constructor(
             reader.beginArray()
             var arcanaIndex = 0
 
-            val arcanaIndexMap = mutableMapOf<Enumerations.Arcana, Int>()
+            val arcanaIndexMap = mutableMapOf<Int, Enumerations.Arcana>()
             while (reader.hasNext()) {
                 val arcana = checkNotNull(arcanaNameProvider.getArcanaForEnglishName(reader.nextString()))
-                arcanaIndexMap[arcana] = arcanaIndex++
+                arcanaIndexMap[arcanaIndex++] = arcana
             }
             reader.endArray()
 
@@ -38,17 +38,15 @@ class PersonaRoyalFusionChartService @Inject constructor(
             val tableArray = reader.getTableArray()
             reader.endObject()
 
-            val fusionChartMap = mutableMapOf<Enumerations.Arcana, MutableMap<Enumerations.Arcana, Enumerations.Arcana>>()
-            for ((arcana, index) in arcanaIndexMap) {
-                val arcanaMap = mutableMapOf<Enumerations.Arcana, Enumerations.Arcana>()
-                fusionChartMap[arcana] = arcanaMap
 
-                val arcanaRow = tableArray[index]
-                for ((arcanaTwo, indexTwo) in arcanaIndexMap) {
-                    try {
-                        arcanaMap[arcanaTwo] = arcanaRow[indexTwo] ?: arcana
-                    } catch (e: IndexOutOfBoundsException) {
-                    }
+            val fusionChartMap = mutableMapOf<Enumerations.Arcana, MutableMap<Enumerations.Arcana, Enumerations.Arcana>>()
+            tableArray.forEachIndexed { index, arcanas ->
+                val arcanaForRow = arcanaIndexMap.getValue(index)
+                arcanas.forEachIndexed { arcanaIndex, arcana ->
+                    val arcanaForColumn = arcanaIndexMap.getValue(arcanaIndex)
+                    fusionChartMap.getOrPut(arcanaForColumn) {
+                        mutableMapOf()
+                    }[arcanaForRow] = arcana ?: arcanaForRow
                 }
             }
 
