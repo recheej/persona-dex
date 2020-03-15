@@ -101,4 +101,19 @@
         <item name="textAppearanceSearchResultSubtitle">?textCaption</item>
     </style>
 
+    <style name="PopUpMenuStyle" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">?pageBackground</item>
+    </style>
+
+    <style name="OverFlowMenuStyle" parent="Widget.MaterialComponents.PopupMenu.Overflow">
+        <item name="android:popupBackground">?pageBackground</item>
+    </style>
+
+    <style name="AutoCompleteTextViewStyle" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:popupBackground">?pageBackground</item>
+    </style>
+    <style name="SearchResultTitle" parent="TextAppearance.AppCompat.SearchResult.Title">
+        <item name="android:textAppearance">?textBodyTitle</item>
+    </style>
+
 </resources>

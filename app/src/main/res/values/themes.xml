@@ -17,6 +17,11 @@
         <item name="pageBackground">?colorPrimary</item>
         <item name="toolbarBackground">?colorAccent</item>
         <item name="android:textColorSecondary">@color/textColorWhiteDim</item>
+        <item name="popupMenuStyle">@style/PopUpMenuStyle</item>
+        <item name="actionOverflowMenuStyle">@style/OverFlowMenuStyle</item>
+        <item name="autoCompleteTextViewStyle">@style/AutoCompleteTextViewStyle</item>
+        <item name="textAppearanceSearchResultSubtitle">?textCaption</item>
+        <item name="textAppearanceSearchResultTitle">?textBodyTitle</item>
     </style>
 
     <style name="PersonaStatsTheme" parent="AppTheme">
