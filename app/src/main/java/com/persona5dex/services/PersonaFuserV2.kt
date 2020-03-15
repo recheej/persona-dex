@@ -18,7 +18,7 @@ class PersonaFuserV2 @Inject constructor(
 ) {
     private val personasByArcana by lazy {
         personaFusions.allPersonas
-                .filterNot { it.isRare || (it.isDlc && !personaFusions.ownedDLCPersonas.contains(it)) }
+                .filterNot { it.isRare || it.isSpecial || (it.isDlc && !personaFusions.ownedDLCPersonas.contains(it)) }
                 .sortedBy { it.level }
                 .groupBy { it.arcana }
     }
