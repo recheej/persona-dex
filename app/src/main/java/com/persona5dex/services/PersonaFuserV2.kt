@@ -44,10 +44,6 @@ class PersonaFuserV2 @Inject constructor(
 
     private fun fuseSameArcanaPersonas(personaOne: PersonaForFusionService, personaTwo: PersonaForFusionService, rank: Int, personasInArcana: List<IndexedValue<PersonaForFusionService>>): PersonaForFusionService? =
             personasInArcana.lastOrNull {
-                it.value.level < rank
-            }?.let {
-                return if (it.value == personaOne || it.value == personaTwo) {
-                    personasInArcana.getOrNull(it.index - 1)?.value
-                } else it.value
-            }
+                it.value.level < rank && it.value != personaOne && it.value != personaTwo
+            }?.value
 }
