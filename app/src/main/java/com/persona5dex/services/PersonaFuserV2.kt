@@ -13,6 +13,7 @@ class PersonaFuserV2 @Inject constructor(
 ) {
     private val personasByArcana: Map<Enumerations.Arcana, List<IndexedValue<PersonaForFusionService>>> by lazy {
         personaFusions.allPersonas
+                .filterNot { it.isRare }
                 .sortedBy { it.level }
                 .withIndex().groupBy { it.value.arcana }
     }

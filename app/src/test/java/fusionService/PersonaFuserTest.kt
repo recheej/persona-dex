@@ -53,6 +53,13 @@ class PersonaFuserTest {
         Assert.assertEquals("Mandrake".normalizeName(), resultPersona!!.name.normalizeName())
     }
 
+    @Test
+    fun `testBasicFusionTwo`() {
+        val resultPersona = "Jack Frost" fuse "Hua Po"
+
+        Assert.assertEquals("Yaksini".normalizeName(), resultPersona!!.name.normalizeName())
+    }
+
     private fun String.findPersona() =
             personaFusions.allPersonas.first { it.name equalNormalized this }
 

@@ -10,21 +10,11 @@ fun Any.getFile(path: String) = File(javaClass.classLoader!!.getResource(path).f
 
 fun Any.getFusionPersonas(arcanaNameProvider: ArcanaNameProvider): List<PersonaForFusionService> {
     val file = getFile("personas.json")
-    fun JsonReader.skipValues() {
-        skipValue()
-        skipValue()
-        skipValue()
-        skipValue()
-        skipValue()
-        skipValue()
-    }
 
     return JsonReader(file.bufferedReader()).run {
         use {
-            beginObject()
             val personasForFusion = mutableListOf<PersonaForFusionService>()
-            skipValues()
-            check(nextName() == "rows")
+
             beginArray()
             while (hasNext()) {
                 beginArray()
@@ -33,13 +23,12 @@ fun Any.getFusionPersonas(arcanaNameProvider: ArcanaNameProvider): List<PersonaF
                     name = nextString()
                     level = nextInt()
                     gameType = GameType.getGameType(nextInt())
+                    isRare = nextInt() == 1
                 }
                 personasForFusion.add(persona)
                 endArray()
             }
             endArray()
-
-            endObject()
 
             personasForFusion
         }
