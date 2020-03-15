@@ -51,7 +51,7 @@ class PersonaFuserTest(
 
         val resultPersona = personaOne fuse personaTwo
 
-        Assert.assertEquals(expectedResultPersonaName?.normalizeName(), resultPersona!!.name.normalizeName())
+        Assert.assertEquals(expectedResultPersonaName?.normalizeName(), resultPersona?.name?.normalizeName())
     }
 
     private fun String.findPersona() =
@@ -71,7 +71,8 @@ class PersonaFuserTest(
                 arrayOf("Jack Frost", "Hua Po", "Yaksini", GameType.BASE),
                 arrayOf("Arsene", "Jack-o'-Lantern", "Mandrake", GameType.BASE),
                 arrayOf("Hecatoncheires", "Hua Po", "Orthrus", GameType.BASE), //same arcana fusion
-                arrayOf("Ariadne Picaro", "Succubus", "Mithras", GameType.BASE)
+                arrayOf("Ariadne Picaro", "Succubus", "Mithras", GameType.BASE),
+                arrayOf("Anubis", "Power", null, GameType.BASE)
         )
     }
 }
