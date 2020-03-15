@@ -17,7 +17,6 @@
         <item name="pageBackground">?colorPrimary</item>
         <item name="toolbarBackground">?colorAccent</item>
         <item name="android:textColorSecondary">@color/textColorWhiteDim</item>
-        <item name="searchViewStyle">@style/DropDownItemStyle</item>
     </style>
 
     <style name="PersonaStatsTheme" parent="AppTheme">
