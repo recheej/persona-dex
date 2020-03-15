@@ -33,9 +33,6 @@ public interface PersonaDao {
     @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID")
     LiveData<PersonaShadowDetail[]> getShadowsForPersona(int personaID);
 
-    @Query("select id, arcana, name, level, rare, dlc, special from personas where gameId = :gameType and rare = 0 order by level")
-    PersonaForFusionService[] getPersonasByLevel(int gameType);
-
     @Query("select id, arcana, name, level, rare, dlc, special from personas order by level")
     PersonaForFusionService[] getPersonasByLevel();
 

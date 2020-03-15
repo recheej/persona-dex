@@ -2,7 +2,7 @@ package com.persona5dex.services
 
 import com.persona5dex.fusionService.FusionChart
 import com.persona5dex.models.PersonaForFusionService
-import com.persona5dex.repositories.PersonaFusions
+import com.persona5dex.repositories.PersonaFusionRepository
 import javax.inject.Inject
 import kotlin.math.floor
 
@@ -13,34 +13,31 @@ import kotlin.math.floor
  * https://www.gamefaqs.com/ps2/932312-shin-megami-tensei-persona-3/faqs/49926
  */
 class PersonaFuserV2 @Inject constructor(
-        private val personaFusions: PersonaFusions,
+        private val fusionRepository: PersonaFusionRepository,
         private val fusionChart: FusionChart
 ) {
-    private val personasByArcana by lazy {
-        personaFusions.allPersonas
-                .filterNot { it.isRare || it.isSpecial || (it.isDlc && !personaFusions.ownedDLCPersonas.contains(it)) }
-                .sortedBy { it.level }
-                .groupBy { it.arcana }
-    }
 
-    fun fusePersona(personaOne: PersonaForFusionService, personaTwo: PersonaForFusionService): PersonaForFusionService? =
-            when {
-                personaOne == personaTwo -> null
-                else -> {
-                    val resultArcana = fusionChart.getResultArcana(personaOne.arcana, personaTwo.arcana)
-                    resultArcana?.let {
-                        val rank = floor(((personaOne.level + personaTwo.level) / 2).toDouble()).toInt() + 1
+    suspend fun fusePersona(personaOne: PersonaForFusionService, personaTwo: PersonaForFusionService): PersonaForFusionService? {
+        val personasByArcana = fusionRepository.getFusionPersonas().groupBy { it.arcana }
 
-                        val personasInArcana = checkNotNull(personasByArcana[resultArcana]).withIndex().toList()
+        return when {
+            personaOne == personaTwo -> null
+            else -> {
+                val resultArcana = fusionChart.getResultArcana(personaOne.arcana, personaTwo.arcana)
+                resultArcana?.let {
+                    val rank = floor(((personaOne.level + personaTwo.level) / 2).toDouble()).toInt() + 1
 
-                        if (personaOne.arcana == personaTwo.arcana) {
-                            return fuseSameArcanaPersonas(personaOne, personaTwo, rank, personasInArcana)
-                        }
+                    val personasInArcana = checkNotNull(personasByArcana[resultArcana]).withIndex().toList()
 
-                        personasInArcana.firstOrNull { it.value.level >= rank }?.value
+                    if (personaOne.arcana == personaTwo.arcana) {
+                        return fuseSameArcanaPersonas(personaOne, personaTwo, rank, personasInArcana)
                     }
+
+                    personasInArcana.firstOrNull { it.value.level >= rank }?.value
                 }
             }
+        }
+    }
 
     private fun fuseSameArcanaPersonas(personaOne: PersonaForFusionService, personaTwo: PersonaForFusionService, rank: Int, personasInArcana: List<IndexedValue<PersonaForFusionService>>): PersonaForFusionService? =
             personasInArcana.lastOrNull {

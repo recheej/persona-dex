@@ -1,10 +1,21 @@
 package fusionService
 
+import android.content.SharedPreferences
 import android.os.Build
-import com.persona5dex.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
+import com.persona5dex.ArcanaNameProvider
+import com.persona5dex.Persona5Application
+import com.persona5dex.equalNormalized
 import com.persona5dex.fusionService.FusionChartServiceFactory
+import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType
-import com.persona5dex.repositories.PersonaFusions
+import com.persona5dex.models.PersonaForFusionService
+import com.persona5dex.models.room.PersonaDao
+import com.persona5dex.repositories.PersonaFusionRepository
+import com.persona5dex.repositories.PersonaFusionRepository.Companion.DLC_SHARED_PREF
 import com.persona5dex.services.PersonaFuserV2
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -29,7 +40,7 @@ class PersonaFuserTest(
     private lateinit var application: Persona5Application
     private lateinit var fusionChartFactory: FusionChartServiceFactory
     private lateinit var personaFuser: PersonaFuserV2
-    private lateinit var personaFusions: PersonaFusions
+    private lateinit var allPersonas: List<PersonaForFusionService>
 
     @Before
     fun setup() {
@@ -44,19 +55,23 @@ class PersonaFuserTest(
 
         val fusionChart = fusionChartFactory.getFusionChartService(gameType).getFusionChart()
 
-        val allPersonas = getFusionPersonas(arcanaNameProvider)
-        val basePersonas = allPersonas.filter { it.gameType == GameType.BASE }
-        val filteredPersonas = if (gameType == GameType.BASE) {
-            basePersonas
-        } else {
-            val personasForGameType = allPersonas.filter { it.gameType == gameType }
-            val allGameTypePersonas = basePersonas + personasForGameType
-            allGameTypePersonas
-                    .filterNot { it.gameType == GameType.BASE && personasForGameType.any { gameTypePersona -> gameTypePersona.name equalNormalized it.name } }
-        }
+        allPersonas = getFusionPersonas(arcanaNameProvider)
 
-        personaFusions = PersonaFusions(filteredPersonas, filteredPersonas.filter { it.isDlc }.toSet())
-        personaFuser = PersonaFuserV2(personaFusions, fusionChart)
+        val personaDao: PersonaDao = mock()
+        whenever(personaDao.personasByLevel).thenReturn(allPersonas.toTypedArray())
+
+        val mockPreferences: SharedPreferences = mock()
+
+        val dlcPersonaSet = allPersonas
+                .filter { it.isDlc }
+                .map { it.id.toString() }
+                .toSet()
+
+        whenever(mockPreferences.getStringSet(eq(DLC_SHARED_PREF), any())).thenReturn(dlcPersonaSet)
+
+        val fusionRepository = PersonaFusionRepository(personaDao, mockPreferences, gameType)
+
+        personaFuser = PersonaFuserV2(fusionRepository, fusionChart)
 
         val resultPersona = personaOne fuse personaTwo
 
@@ -65,12 +80,12 @@ class PersonaFuserTest(
 
     private fun String.findPersona() =
             try {
-                personaFusions.allPersonas.first { it.name equalNormalized this }
+                allPersonas.first { it.name equalNormalized this }
             } catch (e: NoSuchElementException) {
                 throw IllegalStateException("failed to find persona: $this", e)
             }
 
-    private infix fun String.fuse(other: String) =
+    private suspend infix fun String.fuse(other: String) =
             personaFuser.fusePersona(findPersona(), other.findPersona())
 
     companion object {

@@ -1,35 +1,47 @@
 package com.persona5dex.repositories
 
 import android.content.SharedPreferences
-import com.persona5dex.R
+import com.persona5dex.equalNormalized
 import com.persona5dex.models.GameType
 import com.persona5dex.models.PersonaForFusionService
-import com.persona5dex.models.room.PersonaDatabase
+import com.persona5dex.models.room.PersonaDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.yield
 import javax.inject.Inject
 import javax.inject.Named
 
 class PersonaFusionRepository @Inject constructor(
-        database: PersonaDatabase,
-        private val ownedDLCPersonaIds: Set<Int>
+        private val personaDao: PersonaDao,
+        @Named("defaultSharedPreferences") private val defaultSharedPreferences: SharedPreferences,
+        private val gameType: GameType
 ) {
-    private val personaDao = database.personaDao()
 
-    suspend fun getFusionPersonas(gameType: GameType) =
+    suspend fun getFusionPersonas() =
             withContext(Dispatchers.IO) {
-                val allPersonas: List<PersonaForFusionService> = personaDao.getPersonasByLevel(gameType.value)
+                val personasByLevel = personaDao.personasByLevel
+                val ownedDLCPersonas = defaultSharedPreferences.getStringSet(DLC_SHARED_PREF, emptySet<String>()).orEmpty()
+                        .map { it.toInt() }
+                        .mapNotNull { dlcId -> personasByLevel.firstOrNull { persona -> persona.id == dlcId } }
+
+                val allPersonas: List<PersonaForFusionService> = personasByLevel
+                        .filterNot { it.isRare || it.isSpecial || (it.isDlc && !ownedDLCPersonas.contains(it)) }
+                        .sortedBy { it.level }
                         .toList()
-                yield()
 
-                val ownedDLCPersonas = allPersonas
-                        .filter { it.id in ownedDLCPersonaIds }.toSet()
-                PersonaFusions(allPersonas, ownedDLCPersonas)
+                val basePersonas = allPersonas.filter { it.gameType == GameType.BASE }
+                val filteredPersonas = if (gameType == GameType.BASE) {
+                    basePersonas
+                } else {
+                    val personasForGameType = allPersonas.filter { it.gameType == gameType }
+                    val allGameTypePersonas = basePersonas + personasForGameType
+                    allGameTypePersonas
+                            .filterNot { it.gameType == GameType.BASE && personasForGameType.any { gameTypePersona -> gameTypePersona.name equalNormalized it.name } }
+                }
+
+                filteredPersonas
             }
-}
 
-data class PersonaFusions(
-        val allPersonas: List<PersonaForFusionService>,
-        val ownedDLCPersonas: Set<PersonaForFusionService>
-)
+    companion object {
+        internal const val DLC_SHARED_PREF = "pref_dlc_persona_owned"
+    }
+}
