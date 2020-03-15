@@ -47,6 +47,10 @@ class PersonaRoyalFusionChartService @Inject constructor(
                     fusionChartMap.getOrPut(arcanaForColumn) {
                         mutableMapOf()
                     }[arcanaForRow] = arcana ?: arcanaForRow
+
+                    fusionChartMap.getOrPut(arcanaForRow) {
+                        mutableMapOf()
+                    }[arcanaForColumn] = arcana ?: arcanaForRow
                 }
             }
 

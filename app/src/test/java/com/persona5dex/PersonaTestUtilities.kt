@@ -8,7 +8,7 @@ import java.io.File
 
 fun Any.getFile(path: String) = File(javaClass.classLoader!!.getResource(path).file)
 
-fun Any.getFusionPersonas(arcanaNameProvider: ArcanaNameProvider): List<PersonaForFusionService> {
+fun Any.getFusionPersonas(): List<PersonaForFusionService> {
     val file = getFile("personas.json")
 
     return JsonReader(file.bufferedReader()).run {

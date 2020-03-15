@@ -55,7 +55,7 @@ class PersonaFuserTest(
 
         val fusionChart = fusionChartFactory.getFusionChartService(gameType).getFusionChart()
 
-        allPersonas = getFusionPersonas(arcanaNameProvider)
+        allPersonas = getFusionPersonas()
 
         val personaDao: PersonaDao = mock()
         whenever(personaDao.personasByLevel).thenReturn(allPersonas.toTypedArray())
@@ -97,7 +97,8 @@ class PersonaFuserTest(
                 arrayOf("Hecatoncheires", "Hua Po", "Orthrus", GameType.BASE), //same arcana fusion
                 arrayOf("Ariadne Picaro", "Succubus", "Mithras", GameType.BASE),
                 arrayOf("Anubis", "Power", null, GameType.BASE),
-                arrayOf("Cait Sith", "Naga", "Leanan Sidhe", GameType.ROYAL)
+                arrayOf("Cait Sith", "Naga", "Leanan Sidhe", GameType.ROYAL),
+                arrayOf("Biyarky", "Take-Minakata", "Yatagarasu", GameType.ROYAL)
         )
     }
 }
