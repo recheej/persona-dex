@@ -37,9 +37,6 @@ import androidx.room.PrimaryKey;
 )
 public class PersonaFusion {
 
-    @PrimaryKey(autoGenerate = true)
-    public int id;
-
     @ColumnInfo(name = "persona_one")
     public int personaOneID;
 
