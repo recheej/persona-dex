@@ -6,13 +6,15 @@ import androidx.room.Relation;
 
 import com.persona5dex.models.room.PersonaShadowName;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 /**
  * Created by Rechee on 11/18/2017.
  */
 
-public class MainListPersona {
+public class MainListPersona implements GameTypePersona {
     public int id;
     public String name;
     public Enumerations.Arcana arcana;
@@ -47,5 +49,17 @@ public class MainListPersona {
         }
 
         return String.format("%s (%s)", this.name, primaryShadow.shadowName);
+    }
+
+    @NotNull
+    @Override
+    public GameType getGameType() {
+        return gameId;
+    }
+
+    @NotNull
+    @Override
+    public String getName() {
+        return name;
     }
 }

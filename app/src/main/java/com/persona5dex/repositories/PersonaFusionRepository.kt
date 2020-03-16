@@ -2,6 +2,7 @@ package com.persona5dex.repositories
 
 import android.content.SharedPreferences
 import com.persona5dex.equalNormalized
+import com.persona5dex.filterGameType
 import com.persona5dex.models.GameType
 import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.models.room.PersonaDao
@@ -28,17 +29,7 @@ class PersonaFusionRepository @Inject constructor(
 
     suspend fun getFusionPersonas() =
             withContext(Dispatchers.IO) {
-                val basePersonas = allPersonas.filter { it.gameType == GameType.BASE }
-                val filteredPersonas = if (gameType == GameType.BASE) {
-                    basePersonas
-                } else {
-                    val personasForGameType = allPersonas.filter { it.gameType == gameType }
-                    val allGameTypePersonas = basePersonas + personasForGameType
-                    allGameTypePersonas
-                            .filterNot { it.gameType == GameType.BASE && personasForGameType.any { other -> other.gameType == gameType && other.name equalNormalized it.name } }
-                }
-
-                filteredPersonas
+                allPersonas.filterGameType(gameType)
             }
 
     companion object {

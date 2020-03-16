@@ -8,7 +8,7 @@ import java.util.Objects;
  * Created by reche on 12/9/2017.
  */
 
-public class PersonaForFusionService {
+public class PersonaForFusionService implements GameTypePersona {
     private Enumerations.Arcana arcana;
     private int level;
     private String name;
@@ -34,6 +34,7 @@ public class PersonaForFusionService {
         this.level = level;
     }
 
+    @Override
     @NonNull public String getName() {
         return name;
     }
@@ -74,6 +75,7 @@ public class PersonaForFusionService {
         this.id = id;
     }
 
+    @Override
     @NonNull public GameType getGameType() {
         return gameType;
     }

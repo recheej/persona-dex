@@ -123,7 +123,8 @@
 
     <string name="max_confidant">Max Confidant</string>
 
-    <string name="switch_base_game">Persona 5</string>
-    <string name="switch_royal">Persona 5 Royal</string>
+    <string name="currently_viewing">Viewing: %1$s</string>
+    <string name="game_persona_5">Persona 5</string>
+    <string name="game_royal">Persona 5 Royal</string>
 
 </resources>

@@ -1,18 +1,23 @@
 package com.persona5dex.viewmodels;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.persona5dex.ArcanaNameProvider;
+import com.persona5dex.PersonaFilters;
 import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.GameType;
+import com.persona5dex.models.GameTypePersona;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.models.room.PersonaShadowName;
 import com.persona5dex.repositories.MainPersonaRepository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,6 +28,7 @@ import java.util.List;
 
 public class PersonaMainListViewModel extends ViewModel{
     private final ArcanaNameProvider arcanaNameProvider;
+    private final GameType gameType;
     private MediatorLiveData<List<MainListPersona>> filteredPersonas;
     private MutableLiveData<List<MainListPersona>> allPersonas;
     private MutableLiveData<String> personaSearchName;
@@ -40,8 +46,9 @@ public class PersonaMainListViewModel extends ViewModel{
     private Comparator<MainListPersona> sortByPersonaArcanaAsc;
     private Comparator<MainListPersona> sortByPersonaArcanaDesc;
 
-    public PersonaMainListViewModel(final MainPersonaRepository repository, ArcanaNameProvider arcanaNameProvider){
+    public PersonaMainListViewModel(final MainPersonaRepository repository, ArcanaNameProvider arcanaNameProvider, GameType gameType){
         this.arcanaNameProvider = arcanaNameProvider;
+        this.gameType = gameType;
         setUpViewModel(repository);
     }
 
@@ -181,7 +188,9 @@ public class PersonaMainListViewModel extends ViewModel{
                 List<MainListPersona> finalValue = new ArrayList<>();
 
                 if(personasToFilter != null) {
-                    for (MainListPersona persona : personasToFilter) {
+                    final List<MainListPersona> newPersonas = PersonaFilters.filterGameType(personasToFilter, gameType);
+
+                    for (MainListPersona persona : newPersonas) {
 
                         if (persona.rare && !filterArgs.rarePersona) {
                             continue;
@@ -213,9 +222,10 @@ public class PersonaMainListViewModel extends ViewModel{
     }
 
     public void updatePersonas(List<MainListPersona> newPersonas){
-        Collections.sort(newPersonas, (p1, p2) -> p1.name.compareTo(p2.name));
+        final List<MainListPersona> filteredNewPersonas = PersonaFilters.filterGameType(newPersonas, gameType);
+        Collections.sort(filteredNewPersonas, (p1, p2) -> p1.name.compareTo(p2.name));
         allPersonas.setValue(new ArrayList<>(newPersonas));
-        filteredPersonas.setValue(new ArrayList<>(newPersonas));
+        this.filteredPersonas.setValue(new ArrayList<>(filteredNewPersonas));
     }
 
     public void filterPersonas(final String personaNameQuery){
@@ -240,5 +250,14 @@ public class PersonaMainListViewModel extends ViewModel{
 
     public void filterPersonas(final PersonaFilterArgs filterArgs) {
         personaFilterArgs.setValue(filterArgs);
+    }
+
+    public void filterPersonas(@NonNull GameType gameType) {
+        PersonaFilterArgs newFilterArgs  = personaFilterArgs.getValue();
+        if(newFilterArgs == null){
+            newFilterArgs = new PersonaFilterArgs();
+        }
+        newFilterArgs.gameType = gameType;
+        personaFilterArgs.setValue(newFilterArgs);
     }
 }

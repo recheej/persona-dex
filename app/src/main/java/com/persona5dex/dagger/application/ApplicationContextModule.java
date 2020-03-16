@@ -2,13 +2,16 @@ package com.persona5dex.dagger.application;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
+import com.persona5dex.Constants;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaStoreGsonAdapter;
 import com.persona5dex.dagger.activity.ActivityScope;
+import com.persona5dex.models.GameType;
 import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.RawPersona;
 import com.google.gson.Gson;
@@ -31,7 +34,7 @@ public class ApplicationContextModule {
 
     private final Context context;
 
-    public ApplicationContextModule(Context context){
+    public ApplicationContextModule(Context context) {
         this.context = context;
     }
 
@@ -54,10 +57,9 @@ public class ApplicationContextModule {
     @Provides
     @ApplicationScope
     @Named("dlcSharedPreferences")
-    SharedPreferences dlcSharedPreferences(){
+    SharedPreferences dlcSharedPreferences() {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
     }
-
 
     @Provides
     @ApplicationScope
@@ -71,5 +73,19 @@ public class ApplicationContextModule {
     @ApplicationScope
     PersonaDatabase personaDatabase() {
         return ((Persona5Application) context).getDatabase();
+    }
+
+    @Provides
+    @ApplicationScope
+    @Named("defaultSharedPreferences")
+    SharedPreferences defaultSharedPreferences(){
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    @Provides
+    @ApplicationScope
+    GameType gameType(@Named("defaultSharedPreferences") SharedPreferences sharedPreferences) {
+        final int gameTypeInt = sharedPreferences.getInt(Constants.SHARED_PREF_KEY_GAME_TYPE, GameType.BASE.getValue());
+        return GameType.getGameType(gameTypeInt);
     }
 }

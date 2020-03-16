@@ -55,13 +55,6 @@ public class ActivityContextModule {
 
     @Provides
     @ActivityScope
-    @Named("defaultSharedPreferences")
-    SharedPreferences defaultSharedPreferences(){
-        return PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    @Provides
-    @ActivityScope
     @Named("dlcPrefKey")
     String dlcprefKey(){
         return context.getString(R.string.pref_key_dlc);

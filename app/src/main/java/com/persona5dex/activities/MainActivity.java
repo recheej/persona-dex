@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     private PersonaListFragment personaListFragment;
     private GameType currentGameType;
     private Button switchGameButton;
+    private TextView currentGameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,20 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         showPrivacyPolicy();
 
+        currentGameTextView = findViewById(R.id.current_game_text_view);
+        setCurrentGameString();
         setUpSwitchGameButton();
+    }
+
+    private void setCurrentGameString() {
+        @StringRes int switchButtonTextRes;
+        if(currentGameType == GameType.BASE) {
+            switchButtonTextRes = R.string.game_persona_5;
+        } else {
+            switchButtonTextRes = R.string.game_royal;
+        }
+        @StringRes final int currentGameRes = switchButtonTextRes;
+        currentGameTextView.setText(getString(R.string.currently_viewing, getString(currentGameRes)));
     }
 
     private void setUpSwitchGameButton() {
@@ -117,21 +131,22 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     private void switchGames() {
         currentGameType = currentGameType == GameType.BASE ? GameType.ROYAL : GameType.BASE;
+        setCurrentGameString();
         setNewSwitchButtonText();
         defaultSharedPreferences.edit()
                 .putInt(Constants.SHARED_PREF_KEY_GAME_TYPE, currentGameType.getValue())
                 .apply();
+        personaListFragment.filterPersonas(currentGameType);
         //todo: kick off new job
     }
 
     private void setNewSwitchButtonText() {
         @StringRes int switchButtonTextRes;
         if(currentGameType == GameType.BASE) {
-            switchButtonTextRes = R.string.switch_base_game;
+            switchButtonTextRes = R.string.game_royal;
         } else {
-            switchButtonTextRes = R.string.switch_royal;
+            switchButtonTextRes = R.string.game_persona_5;
         }
-
         switchGameButton.setText(switchButtonTextRes);
     }
 
