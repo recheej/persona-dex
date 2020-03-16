@@ -56,7 +56,7 @@ public class FusionCalculatorJobService extends JobIntentService {
 
     private final static String SERVICE_NAME = "FusionCalculatorJobService";
 
-    public final class Constants {
+    public final class FusionConstants {
         // Defines a custom Intent action
         public static final String BROADCAST_ACTION =
                 "com.example.rechee.person5calculator.BROADCAST";
@@ -114,7 +114,7 @@ public class FusionCalculatorJobService extends JobIntentService {
             this.personaEdgeRepository.markFinished();
         }
 
-        Intent fusionCalculationFishedIntent = new Intent(FusionCalculatorJobService.Constants.BROADCAST_ACTION);
+        Intent fusionCalculationFishedIntent = new Intent(FusionConstants.BROADCAST_ACTION);
         LocalBroadcastManager.getInstance(this).sendBroadcast(fusionCalculationFishedIntent);
     }
 

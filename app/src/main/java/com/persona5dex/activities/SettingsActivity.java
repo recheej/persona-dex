@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.persona5dex.R;
-import com.persona5dex.ThemeUtil;
 import com.persona5dex.fragments.SettingsFragment;
 import com.persona5dex.services.FusionCalculatorJobService;
 
@@ -66,7 +64,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     }
 
     private void registerCalculationFinishedReceiver() {
-        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.Constants.BROADCAST_ACTION);
+        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.FusionConstants.BROADCAST_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, calculationFinishedIntentFilter);
     }
 

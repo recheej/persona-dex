@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
+import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -19,18 +22,21 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.SearchEvent;
 import com.persona5dex.BuildConfig;
+import com.persona5dex.Constants;
 import com.persona5dex.R;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.Enumerations.SearchResultType;
+import com.persona5dex.models.GameType;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.services.FusionCalculatorJobService;
@@ -57,12 +63,14 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     private int selectedSortMenuItemID;
     private PersonaListFragment personaListFragment;
+    private GameType currentGameType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
         component.inject(this);
 
         //init crashlytics
@@ -90,6 +98,30 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         mainToolbar.setLogo(R.drawable.ic_app_icon_fore);
 
         showPrivacyPolicy();
+
+        setUpSwitchGameButton();
+    }
+
+    private void setUpSwitchGameButton() {
+        final int gameTypeInt = defaultSharedPreferences.getInt(Constants.SHARED_PREF_KEY_GAME_TYPE, GameType.BASE.getValue());
+        GameType gameType = GameType.getGameType(gameTypeInt);
+
+        @StringRes int switchButtonTextRes;
+        if(gameType == GameType.BASE) {
+            switchButtonTextRes = R.string.switch_base_game;
+        } else {
+            switchButtonTextRes = R.string.switch_royal;
+        }
+
+        Button switchGameButton = findViewById(R.id.switch_game_button);
+        switchGameButton.setText(switchButtonTextRes);
+        switchGameButton.setOnClickListener(v -> {
+            //todo: kick off new job
+            currentGameType = gameType == GameType.BASE ? GameType.ROYAL : GameType.BASE;
+            defaultSharedPreferences.edit()
+                    .putInt(Constants.SHARED_PREF_KEY_GAME_TYPE, currentGameType.getValue())
+                    .apply();
+        });
     }
 
     private void showPrivacyPolicy() {

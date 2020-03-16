@@ -201,7 +201,7 @@ public class FusionListFragment extends BaseFragment {
     };
 
     private void registerCalculationFinishedReceiver() {
-        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.Constants.BROADCAST_ACTION);
+        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.FusionConstants.BROADCAST_ACTION);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, calculationFinishedIntentFilter);
     }
 
