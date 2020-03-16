@@ -115,4 +115,34 @@
         <item name="background">?dialogPageBackground</item>
     </style>
 
+    <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:colorBackground">?dialogPageBackground</item>
+        <item name="colorSurface">?dialogPageBackground</item>
+        <item name="android:buttonBarButtonStyle">@style/DialogButtonBarStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonBarStyle</item>
+    </style>
+
+    <style name="DialogButtonBarStyle" parent="Widget.AppCompat.ButtonBar.AlertDialog">
+        <item name="android:background">?dialogPageBackground</item>
+    </style>
+
+    <style name="TitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textAppearance">?textBodyTitle</item>
+    </style>
+
+    <style name="BodyTextStyle" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textAppearance">?textBody</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">?defaultTextColor</item>
+    </style>
+
+    <style name="NeutralButtonBarStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">?colorAccent</item>
+    </style>
+
+
 </resources>

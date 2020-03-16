@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.persona5dex.ArcanaNameProvider.ArcanaName;
 import com.persona5dex.R;
 import com.persona5dex.activities.BaseActivity;
@@ -77,7 +78,7 @@ public class FilterDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         this.activity = (BaseActivity) getActivity();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new MaterialAlertDialogBuilder(requireActivity());
         LayoutInflater inflater = this.activity.getLayoutInflater();
 
         View view = inflater.inflate(R.layout.filter_dialog, null);

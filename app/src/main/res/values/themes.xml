@@ -23,7 +23,7 @@
         <item name="textAppearanceSearchResultSubtitle">?textCaption</item>
         <item name="textAppearanceSearchResultTitle">?textBodyTitle</item>
         <item name="dialogPageBackground">@color/personaGreyLight</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="materialAlertDialogTheme">@style/MaterialDialogTheme</item>
     </style>
 
     <style name="PersonaStatsTheme" parent="AppTheme">
