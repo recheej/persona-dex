@@ -77,22 +77,11 @@
     </style>
 
     <style name="PersonaSpinnerDropdown" parent="Widget.AppCompat.DropDownItem.Spinner">
-        <item name="android:popupBackground">?pageBackground</item>
+        <item name="android:popupBackground">?dialogPageBackground</item>
     </style>
 
     <style name="PersonaCheckbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:textColor">?defaultTextColor</item>
-    </style>
-
-    <style name="PersonaDialogAlert" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorPrimary">?colorPrimary</item>
-        <item name="colorPrimaryDark">?colorPrimaryDark</item>
-        <item name="colorAccent">?colorAccent</item>
-        <item name="android:textColorPrimary">?defaultTextColor</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
     </style>
 
     <style name="DropDownItemStyle" parent="Widget.AppCompat.SearchView">
@@ -102,18 +91,28 @@
     </style>
 
     <style name="PopUpMenuStyle" parent="Widget.MaterialComponents.PopupMenu">
-        <item name="android:popupBackground">?pageBackground</item>
+        <item name="android:popupBackground">?dialogPageBackground</item>
     </style>
 
     <style name="OverFlowMenuStyle" parent="Widget.MaterialComponents.PopupMenu.Overflow">
-        <item name="android:popupBackground">?pageBackground</item>
+        <item name="android:popupBackground">?dialogPageBackground</item>
     </style>
 
     <style name="AutoCompleteTextViewStyle" parent="Widget.AppCompat.Light.AutoCompleteTextView">
-        <item name="android:popupBackground">?pageBackground</item>
+        <item name="android:popupBackground">?dialogPageBackground</item>
     </style>
+
     <style name="SearchResultTitle" parent="TextAppearance.AppCompat.SearchResult.Title">
         <item name="android:textAppearance">?textBodyTitle</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:colorBackground">?dialogPageBackground</item>
+        <item name="android:buttonBarStyle">@style/AlertButtonBarStyle</item>
+    </style>
+
+    <style name="AlertButtonBarStyle" parent="Widget.AppCompat.ButtonBar.AlertDialog">
+        <item name="background">?dialogPageBackground</item>
     </style>
 
 </resources>

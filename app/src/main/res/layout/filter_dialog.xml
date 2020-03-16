@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:theme="@style/AppTheme"
-    android:background="?pageBackground">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,7 +26,10 @@
             style="@style/PersonaSpinnerDropdown"/>
     </RelativeLayout>
 
-    <include layout="@layout/grid_divider_horizontal" />
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        layout="@layout/grid_divider_horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,7 +77,10 @@
 
     </LinearLayout>
 
-    <include layout="@layout/grid_divider_horizontal" />
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        layout="@layout/grid_divider_horizontal" />
 
     <CheckBox
         android:id="@+id/checkbox_rarePersona"

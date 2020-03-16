@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="pageBackground" format="reference" />
+    <attr name="dialogPageBackground" format="reference" />
     <attr name="toolbarBackground" format="reference" />
     <attr name="statsBackground" format="reference" />
     <attr name="textBody" format="reference" />

@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,7 +18,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.persona5dex.ArcanaNameProvider.ArcanaName;
 import com.persona5dex.R;
-import com.persona5dex.ThemeUtil;
 import com.persona5dex.activities.BaseActivity;
 import com.persona5dex.dagger.fragment.FragmentComponent;
 import com.persona5dex.models.PersonaFilterArgs;
@@ -42,7 +39,7 @@ public class FilterDialogFragment extends DialogFragment {
     private Spinner arcanaSpinner;
     private ArrayAdapter<ArcanaName> arcanaMapArrayAdapter;
 
-    public  interface OnFilterListener {
+    public interface OnFilterListener {
         void onFilterSelected(PersonaFilterArgs filterArgs);
     }
 
@@ -51,15 +48,14 @@ public class FilterDialogFragment extends DialogFragment {
 
     private BaseActivity activity;
 
-    public static FilterDialogFragment newInstance(PersonaFilterArgs args){
+    public static FilterDialogFragment newInstance(PersonaFilterArgs args) {
         //used to restore the fragment's state since the fragment's onRestore and onSave aren't called
         FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
 
         PersonaFilterArgs filterArgs;
-        if(args == null){
+        if(args == null) {
             filterArgs = new PersonaFilterArgs();
-        }
-        else{
+        } else {
             filterArgs = args;
         }
 
@@ -110,7 +106,7 @@ public class FilterDialogFragment extends DialogFragment {
                 .setNeutralButton(R.string.reset, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (dialog != null) {
+                        if(dialog != null) {
                             PersonaFilterArgs filterArgs = new PersonaFilterArgs();
 
                             OnFilterListener listener = (OnFilterListener) activity;
@@ -133,21 +129,19 @@ public class FilterDialogFragment extends DialogFragment {
                         filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
 
                         String minLevelText = minLevelEditText.getText().toString();
-                        if(!minLevelText.isEmpty()){
-                            try{
+                        if(!minLevelText.isEmpty()) {
+                            try {
                                 filterArgs.minLevel = Integer.parseInt(minLevelText);
-                            }
-                            catch (NumberFormatException e){
+                            } catch(NumberFormatException e) {
                                 filterArgs.minLevel = 1;
                             }
                         }
 
                         String maxLevelText = maxLevelEditText.getText().toString();
-                        if(!minLevelText.isEmpty()){
-                            try{
+                        if(!minLevelText.isEmpty()) {
+                            try {
                                 filterArgs.maxLevel = Integer.parseInt(maxLevelText);
-                            }
-                            catch (NumberFormatException e){
+                            } catch(NumberFormatException e) {
                                 filterArgs.maxLevel = 99;
                             }
                         }
@@ -159,7 +153,7 @@ public class FilterDialogFragment extends DialogFragment {
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (dialog != null) {
+                        if(dialog != null) {
                             dialog.dismiss();
                         }
                     }
@@ -169,27 +163,27 @@ public class FilterDialogFragment extends DialogFragment {
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-
-                final int textColorWhite = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.defaultTextColor);
-                final int backgroundColor = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.pageBackground);
-
-                final Button button = setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_POSITIVE, backgroundColor);
-
-                final ViewParent parent = button.getParent();
-                if(parent instanceof ViewGroup){
-                    // hacky, but for some reason background color isn't being applied to parent through themes
-                    View parentView = (ViewGroup) parent;
-                    parentView.setBackgroundColor(backgroundColor);
-                }
-
-                final int colorAccent = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.colorAccent);
-                setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_NEGATIVE, backgroundColor);
-                setupButton(colorAccent, alertDialog, AlertDialog.BUTTON_NEUTRAL, backgroundColor);
+//
+//                final int textColorWhite = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.defaultTextColor);
+//                final int backgroundColor = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.pageBackground);
+//
+//                final Button button = setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_POSITIVE, backgroundColor);
+//
+//                final ViewParent parent = button.getParent();
+//                if(parent instanceof ViewGroup){
+//                    // hacky, but for some reason background color isn't being applied to parent through themes
+//                    View parentView = (ViewGroup) parent;
+//                    parentView.setBackgroundColor(backgroundColor);
+//                }
+//
+//                final int colorAccent = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.colorAccent);
+//                setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_NEGATIVE, backgroundColor);
+//                setupButton(colorAccent, alertDialog, AlertDialog.BUTTON_NEUTRAL, backgroundColor);
             }
         });
 
         Bundle arguments = getArguments();
-        if(arguments != null){
+        if(arguments != null) {
             rarePersonaCheckBox.setChecked(arguments.getBoolean("rarePersona"));
             dlcPersonaCheckBox.setChecked(arguments.getBoolean("dlcPersona"));
 
@@ -212,10 +206,10 @@ public class FilterDialogFragment extends DialogFragment {
 
     private int getSpinnerPosition(int arcana) {
 
-        for (int i = 0; i < arcanaMapArrayAdapter.getCount(); i++) {
+        for(int i = 0; i < arcanaMapArrayAdapter.getCount(); i++) {
             ArcanaName arcanaName = arcanaMapArrayAdapter.getItem(i);
 
-            if(arcanaName.getArcana().value() == arcana){
+            if(arcanaName.getArcana().value() == arcana) {
                 return i;
             }
         }
