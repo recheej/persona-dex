@@ -64,6 +64,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     private int selectedSortMenuItemID;
     private PersonaListFragment personaListFragment;
     private GameType currentGameType;
+    private Button switchGameButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,25 +104,35 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     }
 
     private void setUpSwitchGameButton() {
-        final int gameTypeInt = defaultSharedPreferences.getInt(Constants.SHARED_PREF_KEY_GAME_TYPE, GameType.BASE.getValue());
-        GameType gameType = GameType.getGameType(gameTypeInt);
+        switchGameButton = findViewById(R.id.switch_game_button);
 
+        final int gameTypeInt = defaultSharedPreferences.getInt(Constants.SHARED_PREF_KEY_GAME_TYPE, GameType.ROYAL.getValue());
+        currentGameType = GameType.getGameType(gameTypeInt);
+
+        setNewSwitchButtonText();
+        switchGameButton.setOnClickListener(v -> {
+            switchGames();
+        });
+    }
+
+    private void switchGames() {
+        currentGameType = currentGameType == GameType.BASE ? GameType.ROYAL : GameType.BASE;
+        setNewSwitchButtonText();
+        defaultSharedPreferences.edit()
+                .putInt(Constants.SHARED_PREF_KEY_GAME_TYPE, currentGameType.getValue())
+                .apply();
+        //todo: kick off new job
+    }
+
+    private void setNewSwitchButtonText() {
         @StringRes int switchButtonTextRes;
-        if(gameType == GameType.BASE) {
+        if(currentGameType == GameType.BASE) {
             switchButtonTextRes = R.string.switch_base_game;
         } else {
             switchButtonTextRes = R.string.switch_royal;
         }
 
-        Button switchGameButton = findViewById(R.id.switch_game_button);
         switchGameButton.setText(switchButtonTextRes);
-        switchGameButton.setOnClickListener(v -> {
-            //todo: kick off new job
-            currentGameType = gameType == GameType.BASE ? GameType.ROYAL : GameType.BASE;
-            defaultSharedPreferences.edit()
-                    .putInt(Constants.SHARED_PREF_KEY_GAME_TYPE, currentGameType.getValue())
-                    .apply();
-        });
     }
 
     private void showPrivacyPolicy() {
