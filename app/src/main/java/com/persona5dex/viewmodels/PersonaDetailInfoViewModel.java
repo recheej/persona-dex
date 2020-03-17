@@ -45,7 +45,9 @@ public class PersonaDetailInfoViewModel extends ViewModel {
         if(detailInfo == null) {
             detailInfo = Transformations.map(repository.getDetailsForPersona(personaID), input -> {
                 if(input.imageUrl != null) {
-                    input.imageUrl = input.imageUrl.replace("http", "https");
+                    if(!input.imageUrl.contains("https")) {
+                        input.imageUrl = input.imageUrl.replace("http", "https");
+                    }
                 }
                 return input;
             });
