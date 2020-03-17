@@ -174,7 +174,7 @@ public class PersonaListFragment extends BaseFragment {
 
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(personas, arcanaNameProvider, gameType);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
-        viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), this::setPersonas);
+        viewModel.filteredPersonas.observe(getViewLifecycleOwner(), this::setPersonas);
 
         if(this.fragmentListener != null){
             this.fragmentListener.fragmentFinishedLoading();

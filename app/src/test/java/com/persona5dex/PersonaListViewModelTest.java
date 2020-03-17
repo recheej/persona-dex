@@ -66,10 +66,10 @@ public class PersonaListViewModelTest {
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository,arcanaNameProvider );
 
         Observer observer = mock(Observer.class);
-        viewModel.getFilteredPersonas().observeForever(observer);
+        viewModel.filteredPersonas.observeForever(observer);
         viewModel.sortPersonasByName(true);
 
-        final List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+        final List<MainListPersona> output = viewModel.filteredPersonas.getValue();
         assertEquals(personasToSort.size(), output.size());
         assertEquals(testPersona, output.get(0));
     }
@@ -98,10 +98,10 @@ public class PersonaListViewModelTest {
         when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.filteredPersonas.observeForever(mock(Observer.class));
         viewModel.sortPersonasByName(false);
 
-        List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+        List<MainListPersona> output = viewModel.filteredPersonas.getValue();
 
         assertEquals(personasToSort.size(), output.size());
         assertEquals(testPersonaTwo.id, output.get(0).id);
@@ -133,10 +133,10 @@ public class PersonaListViewModelTest {
         when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.filteredPersonas.observeForever(mock(Observer.class));
         viewModel.sortPersonasByLevel(true);
 
-        List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+        List<MainListPersona> output = viewModel.filteredPersonas.getValue();
 
         assertEquals(testPersonaTwo, output.get(0));
     }
@@ -165,11 +165,11 @@ public class PersonaListViewModelTest {
         when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.filteredPersonas.observeForever(mock(Observer.class));
         viewModel.sortPersonasByLevel(false);
 
 
-        List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+        List<MainListPersona> output = viewModel.filteredPersonas.getValue();
 
         assertNotNull(output);
         assertEquals(testPersonaTwo.id, output.get(0).id);
@@ -187,12 +187,12 @@ public class PersonaListViewModelTest {
         when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.filteredPersonas.observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
 
-        List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
+        List<MainListPersona> output = viewModel.filteredPersonas.getValue();
 
         assertNotNull(output);
         assertTrue(output.size() == 0);
@@ -222,12 +222,12 @@ public class PersonaListViewModelTest {
         when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.filteredPersonas.observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
 
-        List<MainListPersona> filteredPersonas = viewModel.getFilteredPersonas().getValue();
+        List<MainListPersona> filteredPersonas = viewModel.filteredPersonas.getValue();
 
         assertNotNull(filteredPersonas);
         assertTrue(filteredPersonas.size() == 1);
@@ -259,12 +259,12 @@ public class PersonaListViewModelTest {
         when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.filteredPersonas.observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(testPersonaOne.level, testPersonaOne.level, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
 
-        List<MainListPersona> filteredPersonas = viewModel.getFilteredPersonas().getValue();
+        List<MainListPersona> filteredPersonas = viewModel.filteredPersonas.getValue();
 
         assertNotNull(filteredPersonas);
         assertTrue(filteredPersonas.size() == 1);
@@ -297,7 +297,7 @@ public class PersonaListViewModelTest {
         when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.filteredPersonas.observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
                 99,
@@ -305,7 +305,7 @@ public class PersonaListViewModelTest {
 
         viewModel.filterPersonas(filterArgs);
 
-        List<MainListPersona> filteredPersonas = viewModel.getFilteredPersonas().getValue();
+        List<MainListPersona> filteredPersonas = viewModel.filteredPersonas.getValue();
 
         assertNotNull(filteredPersonas);
         assertTrue(filteredPersonas.size() == 1);
@@ -337,14 +337,14 @@ public class PersonaListViewModelTest {
         when(fakeMainPersonaRepository.getAllPersonasForMainList()).thenReturn(data);
 
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.filteredPersonas.observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
                 99,
                 Enumerations.Arcana.CHARIOT, false, true);
         viewModel.filterPersonas(filterArgs);
 
-        List<MainListPersona> mainListPersonas = viewModel.getFilteredPersonas().getValue();
+        List<MainListPersona> mainListPersonas = viewModel.filteredPersonas.getValue();
 
         assertNotNull(mainListPersonas);
         assertTrue(mainListPersonas.size() == 1);
