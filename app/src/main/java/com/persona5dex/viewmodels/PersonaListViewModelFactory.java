@@ -8,6 +8,7 @@ import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.repositories.CustomPersonaRepository;
+import com.persona5dex.repositories.MainPersonaRepository;
 
 import java.util.List;
 
@@ -17,14 +18,12 @@ import java.util.List;
 
 public class PersonaListViewModelFactory implements ViewModelProvider.Factory {
 
-    private final List<MainListPersona> personas;
-    private CustomPersonaRepository customPersonaRepository;
+    private final MainPersonaRepository mainPersonaRepository;
     private final ArcanaNameProvider arcanaNameProvider;
     private final GameType gameType;
 
-    public PersonaListViewModelFactory(List<MainListPersona> personas, ArcanaNameProvider arcanaNameProvider, GameType gameType){
-        this.personas = personas;
-        this.customPersonaRepository = new CustomPersonaRepository(personas);
+    public PersonaListViewModelFactory(MainPersonaRepository mainPersonaRepository, ArcanaNameProvider arcanaNameProvider, GameType gameType){
+        this.mainPersonaRepository = mainPersonaRepository;
         this.arcanaNameProvider = arcanaNameProvider;
         this.gameType = gameType;
     }
@@ -33,7 +32,7 @@ public class PersonaListViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if(modelClass == PersonaMainListViewModel.class){
-            return (T) new PersonaMainListViewModel(customPersonaRepository, arcanaNameProvider);
+            return (T) new PersonaMainListViewModel(mainPersonaRepository, arcanaNameProvider, gameType);
         }
 
         throw new RuntimeException("could not get view model");

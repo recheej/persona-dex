@@ -18,15 +18,14 @@ class ArcanaNameProvider @Inject constructor(@Named("applicationContext") privat
         }
     }
 
-    fun Enumerations.Arcana.getEnglishArcanaName() =
-            englishArcanaMap[this] ?: error("cannot find english name for arcana: $this")
+    fun getEnglishArcanaName(arcana: Enumerations.Arcana): String =
+            englishArcanaMap[arcana] ?: error("cannot find english name for arcana: $this")
 
-    @JvmName("getArcanaNameForDisplay")
-    fun Enumerations.Arcana.getNameForDisplay() =
-            context.getString(textRes)
+    fun getArcanaNameForDisplay(arcana: Enumerations.Arcana) =
+            context.getString(arcana.textRes)
 
     fun getAllArcanaNames() =
-            Enumerations.Arcana.values().map { ArcanaName(it, it.getNameForDisplay()) }.toTypedArray()
+            Enumerations.Arcana.values().map { ArcanaName(it, getArcanaNameForDisplay(it)) }.toTypedArray()
 
     fun getArcanaForEnglishName(rawEnglishArcanaName: String) =
             englishArcanaMap.entries.firstOrNull {

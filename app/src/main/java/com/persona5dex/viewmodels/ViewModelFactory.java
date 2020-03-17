@@ -56,7 +56,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         if(modelClass == PersonaDetailSkillsViewModel.class) {
             return (T) new PersonaDetailSkillsViewModel(skillsRepositoryLazy.get());
         } else if(modelClass == PersonaMainListViewModel.class) {
-            return (T) new PersonaMainListViewModel(mainPersonaRepositoryLazy.get(), arcanaNameProviderLazy.get());
+            return (T) new PersonaMainListViewModel(mainPersonaRepositoryLazy.get(), arcanaNameProviderLazy.get(), gameTypeLazy.get());
         } else if(modelClass == PersonaFusionViewModel.class) {
             return (T) new PersonaFusionViewModel(edgesRepositoryLazy.get(),
                     mainPersonaRepositoryLazy.get());

@@ -26,14 +26,16 @@ public class CustomPersonaRepository implements MainPersonaRepository {
     }
 
     @Override
-    public LiveData<List<MainListPersona>> getAllPersonasForMainList() {
-        return Transformations.map(personasLiveData, new Function<List<MainListPersona>, List<MainListPersona>>() {
-            @Override
-            public List<MainListPersona> apply(List<MainListPersona> input) {
-                 Collections.sort(input, (p1, p2) -> p1.name.compareTo(p2.name));
-                 return input;
-            }
+    public LiveData<List<MainListPersona>> getAllPersonasForMainListLiveData() {
+        return Transformations.map(personasLiveData, input -> {
+             Collections.sort(input, (p1, p2) -> p1.getName().compareTo(p2.getName()));
+             return input;
         });
+    }
+
+    @Override
+    public List<MainListPersona> getAllPersonasForMainList() {
+        return personas;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class CustomPersonaRepository implements MainPersonaRepository {
         MutableLiveData<String> data = new MutableLiveData<>();
         for (MainListPersona persona : personas) {
             if(persona.id == personaID){
-                data.setValue(persona.name);
+                data.setValue(persona.getName());
             }
         }
 

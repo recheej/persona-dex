@@ -16,7 +16,7 @@ import java.util.List;
 
 public class MainListPersona implements GameTypePersona {
     public int id;
-    public String name;
+    private String name;
     public Enumerations.Arcana arcana;
     public int level;
     public boolean rare;
@@ -61,5 +61,9 @@ public class MainListPersona implements GameTypePersona {
     @Override
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

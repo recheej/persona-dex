@@ -105,7 +105,7 @@ public class AdvancedFusionViewModel extends ViewModel {
             super.onPostExecute(taskParam);
 
             taskParam.mainPersonaRepository
-                    .getAllPersonasForMainList().observeForever(mainListPersonas -> {
+                    .getAllPersonasForMainListLiveData().observeForever(mainListPersonas -> {
                 /**
                  * We could go to the database and get each specific persona for the sources.
                  * However, there's no guarentee the names in the fusion match match the db.
@@ -123,7 +123,7 @@ public class AdvancedFusionViewModel extends ViewModel {
 
                 Map<String, MainListPersona> mainListPersonaHashMap = new HashMap<>(mainListPersonas.size());
                 for (MainListPersona mainListPersona : mainListPersonas) {
-                    mainListPersonaHashMap.put(PersonaUtilities.normalizePersonaName(mainListPersona.name),
+                    mainListPersonaHashMap.put(PersonaUtilities.normalizePersonaName(mainListPersona.getName()),
                             mainListPersona);
                 }
 
@@ -134,7 +134,7 @@ public class AdvancedFusionViewModel extends ViewModel {
                     }
                 }
 
-                Collections.sort(finalList, (p1, p2) -> p1.name.compareTo(p2.name));
+                Collections.sort(finalList, (p1, p2) -> p1.getName().compareTo(p2.getName()));
                 taskParam.personas.postValue(finalList);
             });
 

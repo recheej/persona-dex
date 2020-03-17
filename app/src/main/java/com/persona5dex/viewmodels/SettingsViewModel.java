@@ -47,7 +47,7 @@ public class SettingsViewModel extends ViewModel {
                 Collections.sort(input, new Comparator<MainListPersona>() {
                     @Override
                     public int compare(MainListPersona p1, MainListPersona p2) {
-                        return p1.name.compareTo(p2.name);
+                        return p1.getName().compareTo(p2.getName());
                     }
                 });
 
@@ -55,7 +55,7 @@ public class SettingsViewModel extends ViewModel {
 
                 for (int i = 0; i < input.size(); i++) {
                     MainListPersona persona = input.get(i);
-                    output[0][i] = persona.name;
+                    output[0][i] = persona.getName();
                     output[1][i] = String.valueOf(persona.id);
                 }
 
