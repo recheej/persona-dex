@@ -1,23 +1,25 @@
 package com.persona5dex.viewmodels;
 
 import androidx.annotation.NonNull;
+import androidx.arch.core.util.Function;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.PersonaFilters;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.GameType;
-import com.persona5dex.models.GameTypePersona;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.models.room.PersonaShadowName;
 import com.persona5dex.repositories.MainPersonaRepository;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,9 +30,7 @@ import java.util.List;
 
 public class PersonaMainListViewModel extends ViewModel{
     private final ArcanaNameProvider arcanaNameProvider;
-    private final GameType gameType;
-    private MediatorLiveData<List<MainListPersona>> filteredPersonas;
-    private MutableLiveData<List<MainListPersona>> allPersonas;
+
     private MutableLiveData<String> personaSearchName;
     private MutableLiveData<Boolean> personasByName;
     private MutableLiveData<Boolean> personasByLevel;
@@ -45,42 +45,25 @@ public class PersonaMainListViewModel extends ViewModel{
     private Comparator<MainListPersona> sortByPersonaLevelDesc;
     private Comparator<MainListPersona> sortByPersonaArcanaAsc;
     private Comparator<MainListPersona> sortByPersonaArcanaDesc;
+    private LiveData<List<MainListPersona>> allPersonas;
 
-    public PersonaMainListViewModel(final MainPersonaRepository repository, ArcanaNameProvider arcanaNameProvider, GameType gameType){
+    private LiveData<List<MainListPersona>> filteredPersonas;
+
+    public PersonaMainListViewModel(final MainPersonaRepository repository, ArcanaNameProvider arcanaNameProvider){
+        this.repository = repository;
         this.arcanaNameProvider = arcanaNameProvider;
-        this.gameType = gameType;
-        setUpViewModel(repository);
-    }
 
-    private void setUpViewModel(MainPersonaRepository repository) {
-        allPersonas = new MutableLiveData<>();
-        filteredPersonas = new MediatorLiveData<>();
+        allPersonas = repository.getAllPersonasForMainList();
+        allPersonas.observeForever(mainListPersonas -> {
 
-        personaSearchName = new MutableLiveData<>();
-        personasByName = new MutableLiveData<>();
-        personasByLevel = new MutableLiveData<>();
-        personasByArcana = new MutableLiveData<>();
-        personaFilterArgs = new MutableLiveData<>();
+        });
 
-        sortByPersonaNameAsc = (o1, o2) -> o1.name.compareTo(o2.name);
+        filteredPersonas = Transformations.switchMap(allPersonas, personas -> {
+            MediatorLiveData<List<MainListPersona>> filteredLiveData = new MediatorLiveData<>();
 
-        sortByPersonaNameDesc = (o1, o2) -> o1.name.compareTo(o2.name) * -1;
-
-        sortByPersonaLevelAsc = (o1, o2) -> Integer.compare(o1.level, o2.level);
-        sortByPersonaLevelDesc = (o1, o2) -> Integer.compare(o1.level, o2.level) * -1;
-        sortByPersonaArcanaAsc = (o1, o2) -> arcanaNameProvider.getArcanaNameForDisplay(o1.arcana).compareTo(arcanaNameProvider.getArcanaNameForDisplay(o2.arcana));
-        sortByPersonaArcanaDesc = (o1, o2) -> arcanaNameProvider.getArcanaNameForDisplay(o1.arcana).compareTo(arcanaNameProvider.getArcanaNameForDisplay(o2.arcana)) * -1;
-
-        filteredPersonas.addSource(personaSearchName, searchValue -> {
-            allPersonas.observeForever(personas -> {
-
-                if(personas == null){
-
-                    personas = new ArrayList<>();
-                }
-
+            filteredLiveData.addSource(personaSearchName, searchValue -> {
                 if(searchValue == null || searchValue.isEmpty()){
-                    filteredPersonas.setValue(personas);
+                    filteredLiveData.setValue(personas);
                 }
                 else{
                     List<MainListPersona> finalList = new ArrayList<>();
@@ -101,83 +84,79 @@ public class PersonaMainListViewModel extends ViewModel{
                         }
                     }
 
-                    filteredPersonas.setValue(finalList);
+                    filteredLiveData.setValue(finalList);
                 }
             });
-        });
 
-        filteredPersonas.addSource(personasByName, asc -> {
-            if(asc == null){
-                asc = true;
-            }
-
-            List<MainListPersona> personas = getFilteredPersonas().getValue();
-            if(personas != null){
-                if(personas.size() == 1){
-                    return;
+            filteredLiveData.addSource(personasByName, asc -> {
+                if(asc == null){
+                    asc = true;
                 }
 
-                if(asc){
+                List<MainListPersona> newPersonas = filteredPersonas.getValue();
+                if(newPersonas != null){
+                    if(newPersonas.size() == 1){
+                        return;
+                    }
 
-                    Collections.sort(personas, sortByPersonaNameAsc);
-                }
-                else{
-                    Collections.sort(personas, sortByPersonaNameDesc);
-                }
-            }
-
-            filteredPersonas.setValue(personas);
-        });
-
-        filteredPersonas.addSource(personasByLevel, asc -> {
-            if(asc == null){
-                asc = true;
-            }
-
-            final List<MainListPersona> personas = getFilteredPersonas().getValue();
-
-            if(personas != null){
-                if(personas.size() == 1){
-                    return;
+                    if(asc){
+                        Collections.sort(newPersonas, sortByPersonaNameAsc);
+                    }
+                    else{
+                        Collections.sort(newPersonas, sortByPersonaNameDesc);
+                    }
                 }
 
-                if(asc){
-                    Collections.sort(personas, sortByPersonaLevelAsc);
-                }
-                else{
-                    Collections.sort(personas, sortByPersonaLevelDesc);
-                }
-            }
+                filteredLiveData.setValue(newPersonas);
+            });
 
-            filteredPersonas.setValue(personas);
-        });
-
-        filteredPersonas.addSource(personasByArcana, asc -> {
-            if(asc == null){
-                asc = true;
-            }
-
-            List<MainListPersona> personas = getFilteredPersonas().getValue();
-
-            if(personas != null){
-                if(personas.size() == 1){
-                    return;
+            filteredLiveData.addSource(personasByLevel, asc -> {
+                if(asc == null){
+                    asc = true;
                 }
 
-                if(asc){
-                    Collections.sort(personas, sortByPersonaArcanaAsc);
+                final List<MainListPersona> newPersonas = filteredPersonas.getValue();
+
+                if(newPersonas != null){
+                    if(newPersonas.size() == 1){
+                        return;
+                    }
+
+                    if(asc){
+                        Collections.sort(newPersonas, sortByPersonaLevelAsc);
+                    }
+                    else{
+                        Collections.sort(newPersonas, sortByPersonaLevelDesc);
+                    }
                 }
-                else{
-                    Collections.sort(personas, sortByPersonaArcanaDesc);
+
+                filteredLiveData.setValue(newPersonas);
+            });
+
+            filteredLiveData.addSource(personasByArcana, asc -> {
+                if(asc == null){
+                    asc = true;
                 }
-            }
 
-            filteredPersonas.setValue(personas);
-        });
+                List<MainListPersona> newPersonas = filteredLiveData.getValue();
 
-        filteredPersonas.addSource(personaFilterArgs, (final PersonaFilterArgs inputFilterArgs) -> {
+                if(newPersonas != null){
+                    if(newPersonas.size() == 1){
+                        return;
+                    }
 
-            allPersonas.observeForever(personasToFilter -> {
+                    if(asc){
+                        Collections.sort(newPersonas, sortByPersonaArcanaAsc);
+                    }
+                    else{
+                        Collections.sort(newPersonas, sortByPersonaArcanaDesc);
+                    }
+                }
+
+                filteredLiveData.setValue(newPersonas);
+            });
+
+            filteredLiveData.addSource(personaFilterArgs, (final PersonaFilterArgs inputFilterArgs) -> {
 
                 PersonaFilterArgs filterArgs = inputFilterArgs;
 
@@ -187,8 +166,8 @@ public class PersonaMainListViewModel extends ViewModel{
 
                 List<MainListPersona> finalValue = new ArrayList<>();
 
-                if(personasToFilter != null) {
-                    final List<MainListPersona> newPersonas = PersonaFilters.filterGameType(personasToFilter, gameType);
+                if(personas != null) {
+                    final List<MainListPersona> newPersonas = PersonaFilters.filterGameType(personas, inputFilterArgs.gameType);
 
                     for (MainListPersona persona : newPersonas) {
 
@@ -212,20 +191,26 @@ public class PersonaMainListViewModel extends ViewModel{
                     }
                 }
 
-                filteredPersonas.setValue(finalValue);
+                filteredLiveData.setValue(finalValue);
             });
+
+            return filteredLiveData;
         });
 
-        this.repository = repository;
+        personaSearchName = new MutableLiveData<>();
+        personasByName = new MutableLiveData<>();
+        personasByLevel = new MutableLiveData<>();
+        personasByArcana = new MutableLiveData<>();
+        personaFilterArgs = new MutableLiveData<>();
 
-        repository.getAllPersonasForMainList().observeForever(this::updatePersonas);
-    }
+        sortByPersonaNameAsc = (o1, o2) -> o1.name.compareTo(o2.name);
 
-    public void updatePersonas(List<MainListPersona> newPersonas){
-        final List<MainListPersona> filteredNewPersonas = PersonaFilters.filterGameType(newPersonas, gameType);
-        Collections.sort(filteredNewPersonas, (p1, p2) -> p1.name.compareTo(p2.name));
-        allPersonas.setValue(new ArrayList<>(newPersonas));
-        this.filteredPersonas.setValue(new ArrayList<>(filteredNewPersonas));
+        sortByPersonaNameDesc = (o1, o2) -> o1.name.compareTo(o2.name) * -1;
+
+        sortByPersonaLevelAsc = (o1, o2) -> Integer.compare(o1.level, o2.level);
+        sortByPersonaLevelDesc = (o1, o2) -> Integer.compare(o1.level, o2.level) * -1;
+        sortByPersonaArcanaAsc = (o1, o2) -> arcanaNameProvider.getArcanaNameForDisplay(o1.arcana).compareTo(arcanaNameProvider.getArcanaNameForDisplay(o2.arcana));
+        sortByPersonaArcanaDesc = (o1, o2) -> arcanaNameProvider.getArcanaNameForDisplay(o1.arcana).compareTo(arcanaNameProvider.getArcanaNameForDisplay(o2.arcana)) * -1;
     }
 
     public void filterPersonas(final String personaNameQuery){

@@ -23,7 +23,6 @@ import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.viewmodels.PersonaListViewModelFactory;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
-import com.persona5dex.viewmodels.ViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,7 +143,13 @@ public class PersonaListFragment extends BaseFragment {
     }
 
     public void setPersonas(List<MainListPersona> personas){
-        viewModel.updatePersonas(personas);
+        this.personas.clear();
+
+        if(personas != null){
+            this.personas.addAll(personas);
+        }
+
+        personaListAdapter.notifyDataSetChanged();
     }
 
     public void setListener(PersonaListFragmentListener fragmentListener){
@@ -169,15 +174,7 @@ public class PersonaListFragment extends BaseFragment {
 
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(personas, arcanaNameProvider, gameType);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
-        viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), newPersonas -> {
-            this.personas.clear();
-
-            if(newPersonas != null){
-                this.personas.addAll(newPersonas);
-            }
-
-            personaListAdapter.notifyDataSetChanged();
-        });
+        viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), this::setPersonas);
 
         if(this.fragmentListener != null){
             this.fragmentListener.fragmentFinishedLoading();

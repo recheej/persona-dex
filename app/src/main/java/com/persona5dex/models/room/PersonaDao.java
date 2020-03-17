@@ -23,7 +23,11 @@ import java.util.List;
 public interface PersonaDao {
     @Transaction
     @Query("select id, name, arcana, level, rare, dlc, gameId from personas order by name")
-    LiveData<List<MainListPersona>> getAllPersonasForMainList();
+    LiveData<List<MainListPersona>> getAllPersonasForMainListLiveData();
+
+    @Transaction
+    @Query("select id, name, arcana, level, rare, dlc, gameId from personas order by name")
+    List<MainListPersona> getAllPersonasForMainList();
 
     @Query("select id, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
             "from personas where id = :personaID " +

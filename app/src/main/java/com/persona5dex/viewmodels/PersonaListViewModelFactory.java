@@ -9,7 +9,6 @@ import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.repositories.CustomPersonaRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public class PersonaListViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if(modelClass == PersonaMainListViewModel.class){
-            return (T) new PersonaMainListViewModel(customPersonaRepository, arcanaNameProvider, gameType);
+            return (T) new PersonaMainListViewModel(customPersonaRepository, arcanaNameProvider);
         }
 
         throw new RuntimeException("could not get view model");

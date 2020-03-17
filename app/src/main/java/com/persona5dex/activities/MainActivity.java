@@ -83,13 +83,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         FragmentManager fragmentManager = getSupportFragmentManager();
         personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
 
-        mainPersonaRepository.getAllPersonasForMainList().observe(this, personas -> {
-            personaListFragment.setPersonas(personas);
-
-            Intent intent = getIntent();
-            handleIntent(intent);
-        });
-
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
@@ -104,6 +97,9 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         currentGameTextView = findViewById(R.id.current_game_text_view);
         setCurrentGameString();
         setUpSwitchGameButton();
+
+        Intent intent = getIntent();
+        handleIntent(intent);
     }
 
     private void setCurrentGameString() {
