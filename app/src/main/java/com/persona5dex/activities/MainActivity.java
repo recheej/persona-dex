@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
@@ -349,23 +350,21 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if(savedInstanceState != null) {
-            latestFilterArgs = new PersonaFilterArgs();
-            latestFilterArgs.rarePersona = savedInstanceState.getBoolean("filter_rarePersona");
-            latestFilterArgs.dlcPersona = savedInstanceState.getBoolean("filter_dlcPersona");
+        latestFilterArgs = new PersonaFilterArgs();
+        latestFilterArgs.rarePersona = savedInstanceState.getBoolean("filter_rarePersona");
+        latestFilterArgs.dlcPersona = savedInstanceState.getBoolean("filter_dlcPersona");
 
-            int arcanaValue = savedInstanceState.getInt("filter_selectedArcana");
-            latestFilterArgs.arcana = Enumerations.Arcana.getArcana(arcanaValue);
+        int arcanaValue = savedInstanceState.getInt("filter_selectedArcana");
+        latestFilterArgs.arcana = Enumerations.Arcana.getArcana(arcanaValue);
 
-            latestFilterArgs.minLevel = savedInstanceState.getInt("filter_minLevel");
-            latestFilterArgs.maxLevel = savedInstanceState.getInt("filter_maxLevel");
-            personaListFragment.filterPersonas(latestFilterArgs);
+        latestFilterArgs.minLevel = savedInstanceState.getInt("filter_minLevel");
+        latestFilterArgs.maxLevel = savedInstanceState.getInt("filter_maxLevel");
+        personaListFragment.filterPersonas(latestFilterArgs);
 
-            selectedSortMenuItemID = savedInstanceState.getInt("sort_id");
-            handleSortClick();
-        }
+        selectedSortMenuItemID = savedInstanceState.getInt("sort_id");
+        handleSortClick();
     }
 }
