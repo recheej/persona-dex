@@ -112,12 +112,12 @@ class PersonaMainListViewModel(private val repository: MainPersonaRepository, pr
                             if (newPersonas.size == 1) {
                                 return@addSource
                             }
-                            if (asc != false) {
+                            lastPersonaComparator = if (asc != false) {
                                 Collections.sort(newPersonas, sortByPersonaNameAsc)
-                                lastPersonaComparator = sortByPersonaNameAsc
+                                sortByPersonaNameAsc
                             } else {
                                 Collections.sort(newPersonas, sortByPersonaNameDesc)
-                                lastPersonaComparator = sortByPersonaNameDesc
+                                sortByPersonaNameDesc
                             }
                         }
                         filteredLiveData.setValue(newPersonas)
@@ -128,12 +128,12 @@ class PersonaMainListViewModel(private val repository: MainPersonaRepository, pr
                             if (newPersonas.size == 1) {
                                 return@addSource
                             }
-                            if (asc != false) {
+                            lastPersonaComparator = if (asc != false) {
                                 Collections.sort(newPersonas, sortByPersonaLevelAsc)
-                                lastPersonaComparator = sortByPersonaLevelAsc
+                                sortByPersonaLevelAsc
                             } else {
                                 Collections.sort(newPersonas, sortByPersonaLevelDesc)
-                                lastPersonaComparator = sortByPersonaLevelDesc
+                                sortByPersonaLevelDesc
                             }
                         }
                         filteredLiveData.setValue(newPersonas)
@@ -144,12 +144,12 @@ class PersonaMainListViewModel(private val repository: MainPersonaRepository, pr
                             if (newPersonas.size == 1) {
                                 return@addSource
                             }
-                            if (asc != false) {
+                            lastPersonaComparator = if (asc != false) {
                                 Collections.sort(newPersonas, sortByPersonaArcanaAsc)
-                                lastPersonaComparator = sortByPersonaArcanaAsc
+                                sortByPersonaArcanaAsc
                             } else {
                                 Collections.sort(newPersonas, sortByPersonaArcanaDesc)
-                                lastPersonaComparator = sortByPersonaArcanaDesc
+                                sortByPersonaArcanaDesc
                             }
                         }
                         filteredLiveData.setValue(newPersonas)
