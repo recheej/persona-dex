@@ -57,9 +57,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     @Inject
     Toolbar mainToolbar;
 
-    @Inject
-    MainPersonaRepository mainPersonaRepository;
-
     private PersonaFilterArgs latestFilterArgs;
 
     private int selectedSortMenuItemID;
