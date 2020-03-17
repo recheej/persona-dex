@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.Persona5Application;
@@ -41,6 +42,8 @@ public class PersonaListFragment extends BaseFragment {
     public static final String INDEX_BAR_VISIBLE = "index_bar_visible";
     //https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
     private IndexFastScrollRecyclerView recyclerView;
+    private ProgressBar progressBar;
+
     private List<MainListPersona> personas;
     private PersonaListAdapter personaListAdapter;
     private PersonaMainListViewModel viewModel;
@@ -98,6 +101,8 @@ public class PersonaListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         baseView = inflater.inflate(R.layout.fragment_persona_list, container, false);
 
+        progressBar = baseView.findViewById(R.id.progress_bar);
+
         recyclerView = baseView.findViewById(R.id.persona_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setIndexBarVisibility(showIndexBar);
@@ -108,11 +113,20 @@ public class PersonaListFragment extends BaseFragment {
         return baseView;
     }
 
+    private void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
     public void filterPersonas(String personaName){
         viewModel.filterPersonas(personaName);
     }
 
     public void filterPersonas(@NonNull GameType gameType){
+        showProgressBar();
         viewModel.filterPersonas(gameType);
     }
 
@@ -176,9 +190,13 @@ public class PersonaListFragment extends BaseFragment {
         personaListAdapter = new PersonaListAdapter(personas, arcanaNameProvider);
         recyclerView.setAdapter(personaListAdapter);
 
+        showProgressBar();
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(mainPersonaRepository, arcanaNameProvider, gameType);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
-        viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), this::setPersonas);
+        viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), personas -> {
+            setPersonas(personas);
+            hideProgressBar();
+        });
         viewModel.initialize();
 
         if(this.fragmentListener != null){
