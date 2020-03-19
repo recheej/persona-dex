@@ -7,7 +7,6 @@ import com.persona5dex.models.Enumerations
 import com.persona5dex.models.GameType
 import com.persona5dex.models.MainListPersona
 import com.persona5dex.models.PersonaFilterArgs
-import com.persona5dex.repositories.MainPersonaRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,7 +15,7 @@ import java.util.*
 /**
  * Created by Rechee on 11/18/2017.
  */
-class PersonaMainListViewModel(private val repository: MainPersonaRepository, private val arcanaNameProvider: ArcanaNameProvider, private val gameType: GameType) : ViewModel() {
+class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvider, private val gameType: GameType) : ViewModel() {
     private val personaSearchName: MutableLiveData<String> = MutableLiveData()
     private val personasByName: MutableLiveData<Boolean> = MutableLiveData()
     private val personasByLevel: MutableLiveData<Boolean> = MutableLiveData()
@@ -75,22 +74,21 @@ class PersonaMainListViewModel(private val repository: MainPersonaRepository, pr
         sortByPersonaNameDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.name.compareTo(o2.name) * -1 }
         sortByPersonaLevelAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.level.compareTo(o2.level) }
         sortByPersonaLevelDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.level.compareTo(o2.level) * -1 }
-        sortByPersonaArcanaAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> getPersonaComparison(o1, o2) }
-        sortByPersonaArcanaDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> getPersonaComparison(o1, o2) * -1 }
+        sortByPersonaArcanaAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> getPersonaNameComparison(o1, o2) }
+        sortByPersonaArcanaDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> getPersonaNameComparison(o1, o2) * -1 }
     }
 
-    fun initialize() {
+    fun initialize(allPersonas: List<MainListPersona>) {
         if (!initialized) {
             viewModelScope.launch(Dispatchers.IO) {
-                val personas = repository.allPersonasForMainList
 
                 withContext(Dispatchers.Main) {
                     filteredLiveData.addSource(personaSearchName) { searchValue: String? ->
                         if (searchValue == null || searchValue.isEmpty()) {
-                            filteredLiveData.setValue(personas)
+                            filteredLiveData.setValue(allPersonas)
                         } else {
                             val finalList: MutableList<MainListPersona> = ArrayList()
-                            for (mainListPersona in personas!!) {
+                            for (mainListPersona in allPersonas!!) {
                                 val searchValueLower = searchValue.toLowerCase()
                                 if (mainListPersona.name.toLowerCase().contains(searchValueLower)) {
                                     finalList.add(mainListPersona)
@@ -156,27 +154,25 @@ class PersonaMainListViewModel(private val repository: MainPersonaRepository, pr
                     }
                     filteredLiveData.addSource(personaFilterArgs) { inputFilterArgs: PersonaFilterArgs ->
                         val finalValue: MutableList<MainListPersona> = ArrayList()
-                        if (personas != null) {
-                            val comparator = lastPersonaComparator ?: sortByPersonaNameAsc
-                            val newPersonas = personas
-                                    .filterGameType(inputFilterArgs.gameType)
-                                    .sortedWith(comparator)
+                        val comparator = lastPersonaComparator ?: sortByPersonaNameAsc
+                        val newPersonas = allPersonas
+                                .filterGameType(inputFilterArgs.gameType)
+                                .sortedWith(comparator)
 
-                            for (persona in newPersonas) {
-                                if (persona.rare && !inputFilterArgs.rarePersona) {
-                                    continue
-                                }
-                                if (persona.dlc && !inputFilterArgs.dlcPersona) {
-                                    continue
-                                }
-                                if (inputFilterArgs.arcana != Enumerations.Arcana.ANY && persona.arcana != inputFilterArgs.arcana) {
-                                    continue
-                                }
-                                if (persona.level < inputFilterArgs.minLevel || persona.level > inputFilterArgs.maxLevel) {
-                                    continue
-                                }
-                                finalValue.add(persona)
+                        for (persona in newPersonas) {
+                            if (persona.rare && !inputFilterArgs.rarePersona) {
+                                continue
                             }
+                            if (persona.dlc && !inputFilterArgs.dlcPersona) {
+                                continue
+                            }
+                            if (inputFilterArgs.arcana != Enumerations.Arcana.ANY && persona.arcana != inputFilterArgs.arcana) {
+                                continue
+                            }
+                            if (persona.level < inputFilterArgs.minLevel || persona.level > inputFilterArgs.maxLevel) {
+                                continue
+                            }
+                            finalValue.add(persona)
                         }
                         filteredLiveData.setValue(finalValue)
                     }
@@ -189,6 +185,6 @@ class PersonaMainListViewModel(private val repository: MainPersonaRepository, pr
         }
     }
 
-    private fun getPersonaComparison(personaOne: MainListPersona, personaTwo: MainListPersona) =
+    private fun getPersonaNameComparison(personaOne: MainListPersona, personaTwo: MainListPersona) =
             arcanaNameProvider.getArcanaNameForDisplay(personaOne.arcana).compareTo(arcanaNameProvider.getArcanaNameForDisplay(personaTwo.arcana))
 }

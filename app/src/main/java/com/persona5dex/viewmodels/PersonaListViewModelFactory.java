@@ -32,7 +32,7 @@ public class PersonaListViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if(modelClass == PersonaMainListViewModel.class){
-            return (T) new PersonaMainListViewModel(mainPersonaRepository, arcanaNameProvider, gameType);
+            return (T) new PersonaMainListViewModel(arcanaNameProvider, gameType);
         }
 
         throw new RuntimeException("could not get view model");

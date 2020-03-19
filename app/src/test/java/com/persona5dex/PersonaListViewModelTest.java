@@ -64,7 +64,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository,arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
 
         Observer observer = mock(Observer.class);
         viewModel.getFilteredPersonas().observeForever(observer);
@@ -98,7 +98,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
         viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
         viewModel.sortPersonasByName(false);
 
@@ -133,7 +133,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
         viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
         viewModel.sortPersonasByLevel(true);
 
@@ -165,7 +165,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
         viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
         viewModel.sortPersonasByLevel(false);
 
@@ -187,7 +187,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
         viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
@@ -222,7 +222,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
         viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
@@ -259,7 +259,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
         viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(testPersonaOne.level, testPersonaOne.level, Enumerations.Arcana.CHARIOT);
@@ -297,7 +297,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
         viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
@@ -337,7 +337,7 @@ public class PersonaListViewModelTest {
         MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
         when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
 
-        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(fakeMainPersonaRepository, arcanaNameProvider, GameType.BASE);
+        PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
         viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,

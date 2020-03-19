@@ -57,6 +57,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     @Inject
     Toolbar mainToolbar;
 
+    @Inject MainPersonaRepository repository;
+
     private PersonaFilterArgs latestFilterArgs;
 
     private int selectedSortMenuItemID;
@@ -64,6 +66,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     private GameType currentGameType;
     private Button switchGameButton;
     private TextView currentGameTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,10 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
+
+        repository.getAllPersonasForMainListLiveData().observe(this, personas -> {
+            personaListFragment.setPersonas(personas);
+        });
 
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);

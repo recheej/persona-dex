@@ -161,13 +161,7 @@ public class PersonaListFragment extends BaseFragment {
     }
 
     public void setPersonas(List<MainListPersona> personas){
-        this.personas.clear();
-
-        if(personas != null){
-            this.personas.addAll(personas);
-        }
-
-        personaListAdapter.notifyDataSetChanged();
+        viewModel.initialize(personas);
     }
 
     public void setListener(PersonaListFragmentListener fragmentListener){
@@ -194,10 +188,16 @@ public class PersonaListFragment extends BaseFragment {
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(mainPersonaRepository, arcanaNameProvider, gameType);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
         viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), personas -> {
-            setPersonas(personas);
+            this.personas.clear();
+
+            if(personas != null){
+                this.personas.addAll(personas);
+            }
+
+            personaListAdapter.notifyDataSetChanged();
+
             hideProgressBar();
         });
-        viewModel.initialize();
 
         if(this.fragmentListener != null){
             this.fragmentListener.fragmentFinishedLoading();
