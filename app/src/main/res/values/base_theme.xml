@@ -13,6 +13,7 @@
         <item name="textHeadline">@style/TextHeadline</item>
         <item name="defaultTextColor">@color/textColorWhite</item>
         <item name="android:textColorPrimary">?defaultTextColor</item>
+        <item name="android:textColorSecondary">?defaultTextColor</item>
         <item name="toolbarBackground">?colorAccent</item>
         <item name="popupMenuStyle">@style/PopUpMenuStyle</item>
         <item name="actionOverflowMenuStyle">@style/OverFlowMenuStyle</item>

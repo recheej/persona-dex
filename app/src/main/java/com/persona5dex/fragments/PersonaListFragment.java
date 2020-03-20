@@ -25,6 +25,7 @@ import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.viewmodels.PersonaListViewModelFactory;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
+import com.persona5dex.viewmodels.PersonaMainListViewModel.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,6 +188,7 @@ public class PersonaListFragment extends BaseFragment {
         showProgressBar();
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(mainPersonaRepository, arcanaNameProvider, gameType);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
+
         viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), personas -> {
             this.personas.clear();
 
@@ -199,8 +201,12 @@ public class PersonaListFragment extends BaseFragment {
             hideProgressBar();
         });
 
-        if(this.fragmentListener != null){
-            this.fragmentListener.fragmentFinishedLoading();
-        }
+        viewModel.getState().observe(getViewLifecycleOwner(), state -> {
+            if(fragmentListener != null){
+                if(state == State.InitializeLoading.INSTANCE) {
+                    fragmentListener.fragmentFinishedLoading();
+                }
+            }
+        });
     }
 }

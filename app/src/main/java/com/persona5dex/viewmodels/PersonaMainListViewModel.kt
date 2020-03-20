@@ -31,7 +31,11 @@ class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvide
     private var lastPersonaComparator: Comparator<MainListPersona>? = null
     private var initialized: Boolean = false
 
+    private val stateLiveData = MutableLiveData<State>()
+
     private val filteredLiveData = MediatorLiveData<List<MainListPersona>>()
+
+    fun getState(): LiveData<State> = stateLiveData
 
     fun filterPersonas(personaNameQuery: String) {
         check(initialized)
@@ -183,7 +187,12 @@ class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvide
             }
 
             initialized = true
+            stateLiveData.postValue(State.InitializeLoading)
         }
+    }
+
+    sealed class State {
+        object InitializeLoading: State()
     }
 
     private fun getPersonaNameComparison(personaOne: MainListPersona, personaTwo: MainListPersona) =

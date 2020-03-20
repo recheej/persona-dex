@@ -57,7 +57,8 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     @Inject
     Toolbar mainToolbar;
 
-    @Inject MainPersonaRepository repository;
+    @Inject
+    MainPersonaRepository repository;
 
     private PersonaFilterArgs latestFilterArgs;
 
@@ -66,7 +67,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
     private GameType currentGameType;
     private Button switchGameButton;
     private TextView currentGameTextView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +83,12 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
+        assert personaListFragment != null;
+        personaListFragment.setListener(() -> {
+            if(savedInstanceState != null) {
+                restoreFromBundle(savedInstanceState);
+            }
+        });
 
         repository.getAllPersonasForMainListLiveData().observe(this, personas -> {
             personaListFragment.setPersonas(personas);
@@ -353,10 +359,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
         outState.putInt("sort_id", selectedSortMenuItemID);
     }
 
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
+    private void restoreFromBundle(@NonNull Bundle savedInstanceState) {
         latestFilterArgs = new PersonaFilterArgs();
         latestFilterArgs.rarePersona = savedInstanceState.getBoolean("filter_rarePersona");
         latestFilterArgs.dlcPersona = savedInstanceState.getBoolean("filter_dlcPersona");
