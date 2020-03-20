@@ -2,7 +2,6 @@
 <resources>
     <attr name="pageBackground" format="reference" />
     <attr name="dialogPageBackground" format="reference" />
-    <attr name="toolbarBackground" format="reference" />
     <attr name="statsBackground" format="reference" />
     <attr name="textBody" format="reference" />
     <attr name="textHeadline" format="reference" />
