@@ -5,7 +5,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import com.persona5dex.dagger.application.ApplicationScope
 import com.persona5dex.extensions.equalNormalized
-import com.persona5dex.extensions.normalizeName
+import com.persona5dex.extensions.normalize
 import com.persona5dex.models.Enumerations
 import java.util.*
 import javax.inject.Inject
@@ -33,7 +33,7 @@ class ArcanaNameProvider @Inject constructor(@Named("applicationContext") privat
             englishArcanaMap.entries.firstOrNull {
                 it.value equalNormalized rawEnglishArcanaName
             }?.key
-                    ?: Enumerations.Arcana.HANGED_MAN.takeIf { rawEnglishArcanaName.normalizeName().contains("hanged") }
+                    ?: Enumerations.Arcana.HANGED_MAN.takeIf { rawEnglishArcanaName.normalize().contains("hanged") }
 
     fun getArcanaForEnglishNameOrThrow(rawEnglishArcanaName: String): Enumerations.Arcana =
             checkNotNull(getArcanaForEnglishName(rawEnglishArcanaName)) {

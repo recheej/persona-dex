@@ -8,8 +8,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.persona5dex.PersonaFileUtilities;
-import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
+import com.persona5dex.extensions.StringUtils;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.RawAdvancedFusion;
 import com.persona5dex.repositories.MainPersonaRepository;
@@ -83,7 +83,7 @@ public class AdvancedFusionViewModel extends ViewModel {
         @Override
         protected TaskParams doInBackground(TaskParams... taskParams) {
             TaskParams taskParam = taskParams[0];
-            String personaNameNormalized = PersonaUtilities.normalizePersonaName(taskParam.personaName);
+            String personaNameNormalized = StringUtils.normalize(taskParam.personaName);
 
             InputStream advancedFusionsFile = taskParam.applicationContext.getResources()
                     .openRawResource(R.raw.advanced_fusions);
@@ -91,7 +91,7 @@ public class AdvancedFusionViewModel extends ViewModel {
                     RawAdvancedFusion[].class);
 
             for (RawAdvancedFusion rawAdvancedFusion : rawAdvancedFusions) {
-                if(PersonaUtilities.normalizePersonaName(rawAdvancedFusion.result).equals(personaNameNormalized)){
+                if(StringUtils.normalize(rawAdvancedFusion.result).equals(personaNameNormalized)){
                     taskParam.rawAdvancedFusion = rawAdvancedFusion;
                     return taskParam;
                 }
@@ -123,12 +123,12 @@ public class AdvancedFusionViewModel extends ViewModel {
 
                 Map<String, MainListPersona> mainListPersonaHashMap = new HashMap<>(mainListPersonas.size());
                 for (MainListPersona mainListPersona : mainListPersonas) {
-                    mainListPersonaHashMap.put(PersonaUtilities.normalizePersonaName(mainListPersona.getName()),
+                    mainListPersonaHashMap.put(StringUtils.normalize(mainListPersona.getName()),
                             mainListPersona);
                 }
 
                 for (String source : taskParam.rawAdvancedFusion.sources) {
-                    final String normalizedName = PersonaUtilities.normalizePersonaName(source);
+                    final String normalizedName = StringUtils.normalize(source);
                     if(mainListPersonaHashMap.containsKey(normalizedName)){
                         finalList.add(mainListPersonaHashMap.get(normalizedName));
                     }
