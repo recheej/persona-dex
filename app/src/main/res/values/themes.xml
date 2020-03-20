@@ -1,35 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/personaGrey</item>
-        <item name="colorPrimaryDark">@color/personaGreyDark</item>
-        <item name="colorAccent">@color/personaRed</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
-        <item name="textBody">@style/TextBody</item>
-        <item name="textBodyTitle">@style/TextBodyTitle</item>
-        <item name="textCaption">@style/TextCaption</item>
-        <item name="textHeadline">@style/TextHeadline</item>
-        <item name="statsBackground">@color/personaGreyLight</item>
-        <item name="defaultTextColor">@color/textColorWhite</item>
-        <item name="android:textColorPrimary">?defaultTextColor</item>
-        <item name="pageBackground">?colorPrimary</item>
-        <item name="toolbarBackground">?colorAccent</item>
-        <item name="android:textColorSecondary">@color/textColorWhiteDim</item>
-        <item name="popupMenuStyle">@style/PopUpMenuStyle</item>
-        <item name="actionOverflowMenuStyle">@style/OverFlowMenuStyle</item>
-        <item name="autoCompleteTextViewStyle">@style/AutoCompleteTextViewStyle</item>
-        <item name="textAppearanceSearchResultSubtitle">?textCaption</item>
-        <item name="textAppearanceSearchResultTitle">?textBodyTitle</item>
-        <item name="dialogPageBackground">@color/personaGreyLight</item>
-        <item name="materialAlertDialogTheme">@style/MaterialDialogTheme</item>
-    </style>
 
-    <style name="PersonaStatsTheme" parent="AppTheme">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">?statsBackground</item>
-        <item name="android:orientation">vertical</item>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseAppTheme">
+        <!-- Customize your theme here. -->
+        <item name="statsBackground">@color/personaGreyLight</item>
+        <item name="pageBackground">?colorPrimary</item>
+        <item name="dialogPageBackground">@color/personaGreyLight</item>
     </style>
 </resources>

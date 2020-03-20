@@ -8,6 +8,6 @@
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorWhiteDim">#a5a5a5</color>
     <color name="textColorGoldenOnDark">#FFDB57</color>
-    <color name="darkGrey">#121212</color>
+    <color name="darkThemeSurface">#121212</color>
     <color name="redA200">#FF5252</color>
 </resources>
