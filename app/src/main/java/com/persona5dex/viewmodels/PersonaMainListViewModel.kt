@@ -2,6 +2,7 @@ package com.persona5dex.viewmodels
 
 import androidx.lifecycle.*
 import com.persona5dex.ArcanaNameProvider
+import com.persona5dex.extensions.toLowerCaseInsensitive
 import com.persona5dex.filterGameType
 import com.persona5dex.models.Enumerations
 import com.persona5dex.models.GameType
@@ -88,13 +89,13 @@ class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvide
                             filteredLiveData.setValue(allPersonas)
                         } else {
                             val finalList: MutableList<MainListPersona> = ArrayList()
-                            for (mainListPersona in allPersonas!!) {
-                                val searchValueLower = searchValue.toLowerCase()
-                                if (mainListPersona.name.toLowerCase().contains(searchValueLower)) {
+                            for (mainListPersona in allPersonas) {
+                                val searchValueLower = searchValue.toLowerCaseInsensitive()
+                                if (mainListPersona.name.toLowerCaseInsensitive().contains(searchValueLower)) {
                                     finalList.add(mainListPersona)
                                 } else {
                                     for (personaShadowName in mainListPersona.personaShadowNames) {
-                                        if (personaShadowName.shadowName.toLowerCase().contains(searchValueLower)) {
+                                        if (personaShadowName.shadowName.toLowerCaseInsensitive().contains(searchValueLower)) {
                                             finalList.add(mainListPersona)
                                             break
                                         }
