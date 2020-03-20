@@ -107,17 +107,27 @@
     </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/personaRed</item>
         <item name="android:colorBackground">?dialogPageBackground</item>
+        <item name="android:background">?dialogPageBackground</item>
+        <item name="android:textColor">?defaultTextColor</item>
+        <item name="textColorAlertDialogListItem">?defaultTextColor</item>
+        <item name="colorControlNormal">?colorAccent</item>
         <item name="android:buttonBarStyle">@style/AlertButtonBarStyle</item>
+        <item name="android:buttonBarButtonStyle">@style/DialogButtonBarStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonBarStyle</item>
     </style>
 
     <style name="AlertButtonBarStyle" parent="Widget.AppCompat.ButtonBar.AlertDialog">
         <item name="background">?dialogPageBackground</item>
     </style>
 
-    <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+    <style name="MaterialDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
         <item name="android:colorBackground">?dialogPageBackground</item>
         <item name="colorSurface">?dialogPageBackground</item>
+        <item name="android:textColor">?defaultTextColor</item>
         <item name="android:buttonBarButtonStyle">@style/DialogButtonBarStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
@@ -144,5 +154,7 @@
         <item name="android:textColor">?colorAccent</item>
     </style>
 
+
+    <style name="PreferenceDialogStyle" parent="Preference.DialogPreference.Material"></style>
 
 </resources>
