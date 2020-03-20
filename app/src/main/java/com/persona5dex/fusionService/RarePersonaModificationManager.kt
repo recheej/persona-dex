@@ -1,6 +1,6 @@
 package com.persona5dex.fusionService
 
-import com.persona5dex.equalNormalized
+import com.persona5dex.extensions.equalNormalized
 import com.persona5dex.models.Enumerations.Arcana
 
 class RarePersonaModificationManager(private val rarePersonaMap: Map<Arcana, Array<Int>>, private val rarePersonaList: Array<String>) {

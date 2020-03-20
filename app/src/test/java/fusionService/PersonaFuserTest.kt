@@ -8,7 +8,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.Persona5Application
-import com.persona5dex.equalNormalized
+import com.persona5dex.extensions.equalNormalized
 import com.persona5dex.fusionService.FusionChartServiceFactory
 import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType

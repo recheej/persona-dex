@@ -20,9 +20,9 @@ fun Any.getFusionPersonas(): List<PersonaForFusionService> {
                 beginArray()
                 val persona = PersonaForFusionService().apply {
                     arcana = Enumerations.Arcana.getArcana(nextInt())
-                    name = nextString()
+                    setName(nextString())
                     level = nextInt()
-                    gameType = GameType.getGameType(nextInt())
+                    setGameType(GameType.getGameType(nextInt()))
                     isRare = nextInt() == 1
                     isDlc = nextInt() == 1
                 }

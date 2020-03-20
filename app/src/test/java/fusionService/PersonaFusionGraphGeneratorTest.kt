@@ -4,12 +4,9 @@ import android.content.SharedPreferences
 import android.os.Build
 import com.nhaarman.mockitokotlin2.*
 import com.persona5dex.ArcanaNameProvider
-import com.persona5dex.Persona5Application
-import com.persona5dex.equalNormalized
 import com.persona5dex.fusionService.FusionChartServiceFactory
 import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType
-import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.models.room.PersonaDao
 import com.persona5dex.repositories.PersonaFusionRepository
 import com.persona5dex.repositories.PersonaFusionRepository.Companion.DLC_SHARED_PREF
@@ -20,7 +17,6 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import com.persona5dex.dagger.application.ApplicationScope
+import com.persona5dex.extensions.equalNormalized
+import com.persona5dex.extensions.normalizeName
 import com.persona5dex.models.Enumerations
 import java.util.*
 import javax.inject.Inject

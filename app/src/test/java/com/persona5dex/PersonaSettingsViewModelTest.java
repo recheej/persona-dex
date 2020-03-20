@@ -36,14 +36,14 @@ public class PersonaSettingsViewModelTest {
     @Before
     public void init() {
         MainListPersona testPersona = new MainListPersona();
-        testPersona.name = "testName";
+        testPersona.setName("testName");
         testPersona.id = 1;
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
         testPersona.dlc = true;
         testPersona.level = 1;
 
         MainListPersona testPersonaTwo = new MainListPersona();
-        testPersonaTwo.name = "testNameTwo";
+        testPersonaTwo.setName("testNameTwo");
         testPersonaTwo.id = 2;
         testPersonaTwo.arcana = Enumerations.Arcana.HANGED_MAN;
         testPersonaTwo.dlc = true;
@@ -82,14 +82,14 @@ public class PersonaSettingsViewModelTest {
     public void getDLCForSettings_IsSorted() throws Exception {
 
         MainListPersona testPersona = new MainListPersona();
-        testPersona.name = "b";
+        testPersona.setName("b");
         testPersona.id = 1;
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
         testPersona.dlc = true;
         testPersona.level = 1;
 
         MainListPersona testPersonaTwo = new MainListPersona();
-        testPersonaTwo.name = "a";
+        testPersonaTwo.setName("a");
         testPersonaTwo.id = 2;
         testPersonaTwo.arcana = Enumerations.Arcana.HANGED_MAN;
         testPersonaTwo.dlc = true;
@@ -108,7 +108,8 @@ public class PersonaSettingsViewModelTest {
             }
         });
     }
-//
+
+    //
     @Test
     public void getDLCForSettings_LengthsEqual() throws Exception {
 
@@ -121,9 +122,9 @@ public class PersonaSettingsViewModelTest {
                 assertEquals(output[0].length, output[1].length);
             }
         });
-
     }
-//
+
+    //
     @Test
     public void getDLCForSettings_HandlesNoDLC() throws Exception {
 

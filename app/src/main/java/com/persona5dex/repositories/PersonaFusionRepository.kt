@@ -1,7 +1,6 @@
 package com.persona5dex.repositories
 
 import android.content.SharedPreferences
-import com.persona5dex.equalNormalized
 import com.persona5dex.filterGameType
 import com.persona5dex.models.GameType
 import com.persona5dex.models.PersonaForFusionService
