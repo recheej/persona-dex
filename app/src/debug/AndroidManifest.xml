@@ -16,11 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service
-            android:name=".services.FusionCalculatorJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            />
-
         <activity
             android:name=".activities.MainActivity"
             android:launchMode="singleTop">

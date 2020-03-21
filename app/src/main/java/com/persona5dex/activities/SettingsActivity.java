@@ -1,28 +1,18 @@
 package com.persona5dex.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.Observer;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.widget.Toolbar;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
-
-import android.view.View;
-import android.widget.ProgressBar;
 
 import com.persona5dex.R;
 import com.persona5dex.extensions.WorkInfoStateUtils;
 import com.persona5dex.fragments.SettingsFragment;
 import com.persona5dex.jobs.PersonaJobCreator;
-import com.persona5dex.services.FusionCalculatorJobService;
 
 import javax.inject.Inject;
 
