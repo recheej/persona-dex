@@ -10,7 +10,7 @@ public class PersonaFilterArgs {
     public boolean rarePersona;
     public int minLevel;
     public int maxLevel;
-    public GameType gameType = GameType.BASE;
+    public GameType gameType = null;
 
     public PersonaFilterArgs() {
         minLevel = 1;

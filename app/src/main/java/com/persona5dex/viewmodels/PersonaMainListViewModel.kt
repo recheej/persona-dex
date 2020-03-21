@@ -8,32 +8,30 @@ import com.persona5dex.models.Enumerations
 import com.persona5dex.models.GameType
 import com.persona5dex.models.MainListPersona
 import com.persona5dex.models.PersonaFilterArgs
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
 
 /**
  * Created by Rechee on 11/18/2017.
  */
-class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvider, private val gameType: GameType) : ViewModel() {
+class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvider, private val initialGameType: GameType) : ViewModel() {
     private val personaSearchName: MutableLiveData<String> = MutableLiveData()
     private val personasByName: MutableLiveData<Boolean> = MutableLiveData()
     private val personasByLevel: MutableLiveData<Boolean> = MutableLiveData()
     private val personasByArcana: MutableLiveData<Boolean> = MutableLiveData()
     private val personaFilterArgs: MutableLiveData<PersonaFilterArgs> = MutableLiveData()
+    private val stateLiveData = MutableLiveData<State>()
+    private val filteredLiveData = MediatorLiveData<List<MainListPersona>>()
+
     private val sortByPersonaNameDesc: Comparator<MainListPersona>
     private val sortByPersonaNameAsc: Comparator<MainListPersona>
     private val sortByPersonaLevelAsc: Comparator<MainListPersona>
     private val sortByPersonaLevelDesc: Comparator<MainListPersona>
     private val sortByPersonaArcanaAsc: Comparator<MainListPersona>
     private val sortByPersonaArcanaDesc: Comparator<MainListPersona>
+
     private var lastPersonaComparator: Comparator<MainListPersona>? = null
     private var initialized: Boolean = false
-
-    private val stateLiveData = MutableLiveData<State>()
-
-    private val filteredLiveData = MediatorLiveData<List<MainListPersona>>()
+    private var lastGameType = initialGameType
 
     init {
         sortByPersonaNameAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.name.compareTo(o2.name) }
@@ -68,16 +66,17 @@ class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvide
 
     fun filterPersonas(filterArgs: PersonaFilterArgs) {
         check(initialized)
+        val gameType = filterArgs.gameType ?: lastGameType
+        filterArgs.gameType = gameType
+        lastGameType = gameType
         personaFilterArgs.value = filterArgs
     }
 
     fun filterPersonas(gameType: GameType) {
         check(initialized)
-        var newFilterArgs = personaFilterArgs.value
-        if (newFilterArgs == null) {
-            newFilterArgs = PersonaFilterArgs()
-        }
+        val newFilterArgs = personaFilterArgs.value ?: PersonaFilterArgs()
         newFilterArgs.gameType = gameType
+        lastGameType = gameType
         filterPersonas(newFilterArgs)
     }
 
@@ -187,7 +186,7 @@ class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvide
             }
             initialized = true
 
-            filterPersonas(gameType)
+            filterPersonas(initialGameType)
 
             stateLiveData.postValue(State.InitializeLoading)
         }
