@@ -1,22 +1,17 @@
 package com.persona5dex.fragments;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
@@ -27,8 +22,9 @@ import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.extensions.WorkInfoStateUtils;
+import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.PersonaEdgeDisplay;
-import com.persona5dex.services.FusionCalculatorJobService;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
@@ -57,6 +53,9 @@ public class FusionListFragment extends BaseFragment {
 
     @Inject
     ViewModelFactory viewModelFactory;
+
+    @Inject
+    PersonaJobCreator personaJobCreator;
     private LiveData<List<PersonaEdgeDisplay>> edgesLiveData;
 
     private FusionListListener listener;
@@ -114,6 +113,13 @@ public class FusionListFragment extends BaseFragment {
                 .plus()
                 .inject(this);
 
+        personaJobCreator.getStateForGenerateFusionJob().observe(getViewLifecycleOwner(), state -> {
+            if(WorkInfoStateUtils.isFinished(state)){
+                setUpRecyclerView();
+                setProgressBarVisible(false);
+            }
+        });
+
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaFusionViewModel.class);
 
         recyclerView = baseView.findViewById(R.id.recycler_view_persona_list);
@@ -125,7 +131,6 @@ public class FusionListFragment extends BaseFragment {
         progressBar = baseView.findViewById(R.id.progress_bar_fusions);
 
         setProgressBarVisible(true);
-        FusionCalculatorJobService.enqueueWork(getContext(), new Intent(getContext(), FusionCalculatorJobService.class));
     }
 
     private void setProgressBarVisible(boolean visible) {
@@ -139,18 +144,6 @@ public class FusionListFragment extends BaseFragment {
             listHeader.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        registerCalculationFinishedReceiver();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
 
     private void setUpRecyclerView() {
@@ -173,36 +166,19 @@ public class FusionListFragment extends BaseFragment {
         }
 
         this.edgesLiveData = viewModel.getEdges(personaID, isToList);
-        this.edgesLiveData.observe(this, new Observer<List<PersonaEdgeDisplay>>() {
-            @Override
-            public void onChanged(@Nullable List<PersonaEdgeDisplay> personaEdgeDisplays) {
-                edgeDisplays.clear();
+        this.edgesLiveData.observe(getViewLifecycleOwner(), personaEdgeDisplays -> {
+            edgeDisplays.clear();
 
-                if(personaEdgeDisplays != null){
-                    edgeDisplays.addAll(personaEdgeDisplays);
-                }
-
-                if(listener != null){
-                    listener.fusionListCountUpdated(edgeDisplays.size(), isToList);
-                }
-
-                fusionListAdapter.notifyDataSetChanged();
+            if(personaEdgeDisplays != null){
+                edgeDisplays.addAll(personaEdgeDisplays);
             }
+
+            if(listener != null){
+                listener.fusionListCountUpdated(edgeDisplays.size(), isToList);
+            }
+
+            fusionListAdapter.notifyDataSetChanged();
         });
-    }
-
-    // Define the callback for what to do when fusion calculation service is finished
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            setUpRecyclerView();
-            setProgressBarVisible(false);
-        }
-    };
-
-    private void registerCalculationFinishedReceiver() {
-        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.FusionConstants.BROADCAST_ACTION);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, calculationFinishedIntentFilter);
     }
 
     @Override

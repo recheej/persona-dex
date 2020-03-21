@@ -7,14 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-
-import androidx.annotation.StringRes;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -25,20 +17,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.SearchEvent;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Constants;
-import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.R;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
+import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.GameType;
 import com.persona5dex.repositories.MainPersonaRepository;
-import com.persona5dex.services.FusionCalculatorJobService;
 
 import javax.inject.Inject;
 
@@ -89,8 +87,6 @@ public class MainActivity extends BaseActivity {
 
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
-        FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
 
         setSupportActionBar(this.mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
