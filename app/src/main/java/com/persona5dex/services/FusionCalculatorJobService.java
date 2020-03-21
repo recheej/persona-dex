@@ -31,7 +31,7 @@ import javax.inject.Named;
 /**
  * Created by Rechee on 10/8/2017.
  */
-
+@Deprecated
 public class FusionCalculatorJobService extends JobIntentService {
     private static final int JOB_ID = 1000;
 

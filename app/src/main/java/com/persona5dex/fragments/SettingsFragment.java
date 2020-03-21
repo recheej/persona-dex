@@ -25,6 +25,7 @@ import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.viewmodels.SettingsViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
@@ -40,6 +41,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Inject
     ViewModelFactory viewModelFactory;
+
+    @Inject
+    PersonaJobCreator personaJobCreator;
 
     private SettingsViewModel viewModel;
     private PreferenceManager preferenceManager;

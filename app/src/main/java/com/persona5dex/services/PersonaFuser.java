@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * Created by Rechee on 9/24/2017.
  */
-
+@Deprecated
 public class PersonaFuser {
 
     private final PersonaForFusionService[] personasByLevel;

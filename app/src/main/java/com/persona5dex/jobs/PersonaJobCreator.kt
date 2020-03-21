@@ -1,24 +1,33 @@
 package com.persona5dex.jobs
 
+import androidx.lifecycle.Transformations
 import androidx.work.*
 import com.persona5dex.dagger.application.ApplicationScope
 import com.persona5dex.fusionService.GenerateFusionWorker
-import com.persona5dex.models.GameType
 import javax.inject.Inject
 
 @ApplicationScope
 class PersonaJobCreator @Inject constructor(
         private val workManager: WorkManager
 ) {
-    fun scheduleUniqueSingleJob(jobName: String, data: Data) {
+    fun scheduleUniqueSingleJob(jobName: String) {
         workManager.enqueueUniqueWork(jobName, ExistingWorkPolicy.REPLACE, getRequest(jobName))
     }
 
-    fun scheduleGenerateFusionJob(gameType: GameType) =
+    fun scheduleGenerateFusionJob() =
             scheduleUniqueSingleJob(
-                    JOB_NAME_GENERATE_FUSION,
-                    Data.Builder().putInt(JOB_PARAM_GAME_TYPE, gameType.value).build()
+                    JOB_NAME_GENERATE_FUSION
             )
+
+    fun getStateForGenerateFusionJob() =
+            getStateForUniqueJob(JOB_NAME_GENERATE_FUSION)
+
+    fun getStateForUniqueJob(jobName: String) =
+            Transformations.map(workManager.getWorkInfosForUniqueWorkLiveData(jobName)) { workInfos ->
+                workInfos.maxBy { it.id }?.let {
+                    it.state
+                } ?: WorkInfo.State.SUCCEEDED
+            }
 
     private fun getRequest(jobName: String): OneTimeWorkRequest {
         return when (jobName) {

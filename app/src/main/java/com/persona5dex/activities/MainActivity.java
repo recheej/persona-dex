@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity {
                 .apply();
         personaListFragment.filterPersonas(currentGameType);
 
-        personaJobCreator.scheduleGenerateFusionJob(currentGameType);
+        personaJobCreator.scheduleGenerateFusionJob();
     }
 
     private void setNewSwitchButtonText() {

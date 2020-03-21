@@ -9,14 +9,19 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.widget.Toolbar;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.persona5dex.R;
+import com.persona5dex.extensions.WorkInfoStateUtils;
 import com.persona5dex.fragments.SettingsFragment;
+import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.services.FusionCalculatorJobService;
 
 import javax.inject.Inject;
@@ -35,6 +40,9 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     @Inject
     ProgressBar fusionsProgressBar;
 
+    @Inject
+    PersonaJobCreator personaJobCreator;
+
     private View frameLayout;
     private boolean resetService;
 
@@ -44,6 +52,12 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
         setContentView(R.layout.activity_settings);
         component.inject(this);
+
+        personaJobCreator.getStateForGenerateFusionJob().observe(this, state -> {
+            if(WorkInfoStateUtils.isFinished(state)){
+                showSettings();
+            }
+        });
 
         SettingsFragment settingsFragment = new SettingsFragment();
         getSupportFragmentManager().beginTransaction()
@@ -57,41 +71,22 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
         frameLayout = findViewById(R.id.container);
 
-        FusionCalculatorJobService.enqueueWork(this, new Intent(this, FusionCalculatorJobService.class));
+        hideSettings();
+    }
 
+    private void hideSettings() {
         fusionsProgressBar.setVisibility(ProgressBar.VISIBLE);
         frameLayout.setVisibility(View.INVISIBLE);
     }
 
-    private void registerCalculationFinishedReceiver() {
-        IntentFilter calculationFinishedIntentFilter = new IntentFilter(FusionCalculatorJobService.FusionConstants.BROADCAST_ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, calculationFinishedIntentFilter);
+    private void showSettings() {
+        fusionsProgressBar.setVisibility(ProgressBar.INVISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
     }
-
-    // Define the callback for what to do when fusion calculation service is finished
-    private BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(SettingsActivity.this.resetService) {
-                //it's possible that the user changed the dlc values while the service is running so reset again
-                SettingsActivity.this.resetService = false;
-                final Intent work = new Intent(SettingsActivity.this,
-                        FusionCalculatorJobService.class);
-                work.putExtra("forceReset", true);
-
-                FusionCalculatorJobService.enqueueWork(SettingsActivity.this,
-                        work);
-            }
-
-            fusionsProgressBar.setVisibility(ProgressBar.INVISIBLE);
-            frameLayout.setVisibility(View.VISIBLE);
-        }
-    };
 
     @Override
     protected void onResume() {
         super.onResume();
-        registerCalculationFinishedReceiver();
         defaultSharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
@@ -99,7 +94,6 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     protected void onPause() {
         super.onPause();
         defaultSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
     @Override
@@ -108,11 +102,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
             final String nightModeValue = sharedPreferences.getString(key, String.valueOf(MODE_NIGHT_FOLLOW_SYSTEM));
             AppCompatDelegate.setDefaultNightMode(Integer.parseInt(nightModeValue));
         } else {
-            this.resetService = true;
-
-            final Intent work = new Intent(this, FusionCalculatorJobService.class);
-            work.putExtra("forceReset", true);
-            FusionCalculatorJobService.enqueueWork(this, work);
+            personaJobCreator.scheduleGenerateFusionJob();
         }
     }
 }
