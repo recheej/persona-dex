@@ -18,7 +18,6 @@ import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListAdapter;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
@@ -108,7 +107,6 @@ public class FusionListFragment extends BaseFragment {
         component.viewModelComponent(new AndroidViewModelRepositoryModule())
                 .activityComponent(new LayoutModule(activity),
                         new ActivityContextModule(activity),
-                        new ViewModelModule(),
                         new ViewModelRepositoryModule())
                 .plus()
                 .inject(this);

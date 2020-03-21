@@ -20,7 +20,6 @@ import dagger.Subcomponent;
         modules = {
                 LayoutModule.class,
                 ActivityContextModule.class,
-                ViewModelModule.class,
                 ViewModelRepositoryModule.class
         }
 )

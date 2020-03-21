@@ -12,7 +12,6 @@ import com.persona5dex.R;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 
@@ -45,7 +44,6 @@ public class BaseActivity extends AppCompatActivity {
                 .activityComponent(
                         new LayoutModule(this),
                         new ActivityContextModule(this),
-                        new ViewModelModule(),
                         new ViewModelRepositoryModule()
                 );
         component.inject(this);

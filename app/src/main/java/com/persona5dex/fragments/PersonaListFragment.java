@@ -1,15 +1,15 @@
 package com.persona5dex.fragments;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.Persona5Application;
@@ -17,12 +17,10 @@ import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaListAdapter;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
-import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.viewmodels.PersonaListViewModelFactory;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
@@ -174,7 +172,6 @@ public class PersonaListFragment extends BaseFragment {
                 .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .activityComponent(new LayoutModule(activity),
                         new ActivityContextModule(activity),
-                        new ViewModelModule(),
                         new ViewModelRepositoryModule())
                 .plus()
                 .inject(this);

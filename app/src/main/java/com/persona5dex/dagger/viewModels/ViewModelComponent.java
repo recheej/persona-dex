@@ -1,12 +1,9 @@
 package com.persona5dex.dagger.viewModels;
 
-import com.persona5dex.activities.SkillDetailActivity;
-import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.ViewModelModule;
+import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
 import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;
@@ -35,7 +32,6 @@ public interface ViewModelComponent {
 
     ActivityComponent activityComponent(LayoutModule layoutModule,
                                         ActivityContextModule activityContextModule,
-                                        ViewModelModule viewModelModule,
                                         ViewModelRepositoryModule viewModelRepositoryModule
                            );
 }

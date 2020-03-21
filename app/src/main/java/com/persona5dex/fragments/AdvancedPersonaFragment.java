@@ -1,20 +1,20 @@
 package com.persona5dex.fragments;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelModule;
 import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.viewmodels.AdvancedFusionViewModel;
@@ -74,14 +74,13 @@ public class AdvancedPersonaFragment extends BaseFragment implements PersonaList
                 .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .activityComponent(new LayoutModule(activity),
                         new ActivityContextModule(activity),
-                        new ViewModelModule(),
                         new ViewModelRepositoryModule())
                 .plus().inject(this);
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(AdvancedFusionViewModel.class);
 
-        viewModel.getPersonaName().observe(this, personaName -> {
+        viewModel.getPersonaName().observe(getViewLifecycleOwner(), personaName -> {
             fusionPromptTextView.setText(getString(R.string.advanced_fusion_prompt, personaName));
         });
 
