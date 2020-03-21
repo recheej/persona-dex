@@ -20,41 +20,41 @@ import java.util.List;
  */
 
 @Dao
-public interface PersonaDao {
+public abstract class PersonaDao {
     @Transaction
     @Query("select id, name, arcana, level, rare, dlc, gameId from personas order by name")
-    LiveData<List<MainListPersona>> getAllPersonasForMainListLiveData();
+    public abstract LiveData<List<MainListPersona>> getAllPersonasForMainListLiveData();
 
     @Query("select id, name, arcana, level, rare, dlc, gameId from personas order by name")
     @Transaction
-    List<MainListPersona> getAllPersonasForMainList();
+    public abstract List<MainListPersona> getAllPersonasForMainList();
 
     @Query("select id, arcana, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
             "from personas where id = :personaID " +
             "order by name")
-    LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
+    public abstract LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
 
     @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID")
-    LiveData<PersonaShadowDetail[]> getShadowsForPersona(int personaID);
+    public abstract LiveData<PersonaShadowDetail[]> getShadowsForPersona(int personaID);
 
     @Query("select id, arcana, name, level, rare, dlc, special, gameId from personas order by level")
-    PersonaForFusionService[] getPersonasByLevel();
+    public abstract PersonaForFusionService[] getPersonasByLevel();
 
     @Transaction
     @Query("select id, name, arcana, level, rare, dlc, gameId from personas where dlc = 1")
-    LiveData<List<MainListPersona>> getDLCPersonas();
+    public abstract LiveData<List<MainListPersona>> getDLCPersonas();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertPersonaFusion(PersonaFusion personaFusion);
+    public abstract void insertPersonaFusion(PersonaFusion personaFusion);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertPersonaFusions(List<PersonaFusion> personaFusion);
+    public abstract void insertPersonaFusions(List<PersonaFusion> personaFusion);
 
     @Query("delete from personaFusions")
-    void deleteAllFromPersonaFusions();
+    public abstract void deleteAllFromPersonaFusions();
 
     @Query("select * from personaElements where persona_id = :personaID")
-    LiveData<List<PersonaElement>> getElementsForPersona(int personaID);
+    public abstract LiveData<List<PersonaElement>> getElementsForPersona(int personaID);
 
     @Query(
             "select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
@@ -65,7 +65,7 @@ public interface PersonaDao {
                     "inner join personas as p2 on p2.id = personaFusions.persona_two " +
                     "where personaFusions.result = :personaID"
     )
-    LiveData<List<PersonaEdgeDisplay>> getEdgesToPersona(int personaID);
+    public abstract LiveData<List<PersonaEdgeDisplay>> getEdgesToPersona(int personaID);
 
     @Query(
             "select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
@@ -77,14 +77,20 @@ public interface PersonaDao {
                     "inner join personas as p3 on p3.id = personaFusions.result " +
                     "where personaFusions.persona_one = :personaID or personaFusions.persona_two == :personaID"
     )
-    LiveData<List<PersonaEdgeDisplay>> getEdgesFromPersona(int personaID);
+    public abstract LiveData<List<PersonaEdgeDisplay>> getEdgesFromPersona(int personaID);
 
     @Query("delete from personaFusions")
-    void removeAllFusions();
+    public abstract void removeAllFusions();
 
     @Query("select name from personas where id = :personaID")
-    LiveData<String> getPersonaName(int personaID);
+    public abstract LiveData<String> getPersonaName(int personaID);
 
     @Query("select special from personas where id = :personaID")
-    LiveData<Integer> personaIsAdvanced(int personaID);
+    public abstract LiveData<Integer> personaIsAdvanced(int personaID);
+
+    @Transaction
+    public void deleteAndInsertNewFusions(List<PersonaFusion> personaFusions) {
+        deleteAllFromPersonaFusions();
+        insertPersonaFusions(personaFusions);
+    }
 }

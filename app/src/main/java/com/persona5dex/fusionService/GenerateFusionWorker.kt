@@ -5,6 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.models.room.PersonaFusion
+import kotlinx.coroutines.yield
 import javax.inject.Inject
 
 class GenerateFusionWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
@@ -18,8 +19,6 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
     override suspend fun doWork(): Result {
         application.component.inject(this)
 
-        personaDao.deleteAllFromPersonaFusions()
-
         val personaFusions = graphGenerator.getAllFusions().map {
             PersonaFusion().apply {
                 personaOneID = it.personaOne.id
@@ -28,7 +27,7 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
             }
         }
 
-        personaDao.insertPersonaFusions(personaFusions)
+        personaDao.deleteAndInsertNewFusions(personaFusions)
 
         return Result.success()
     }
