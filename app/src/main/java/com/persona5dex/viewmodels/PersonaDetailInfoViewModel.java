@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.PersonaDetailInfo;
@@ -18,10 +19,13 @@ import javax.inject.Inject;
  * Created by Rechee on 11/28/2017.
  */
 
-public class PersonaDetailInfoViewModel extends ViewModel {
+public class  PersonaDetailInfoViewModel extends ViewModel {
 
     @Inject
     PersonaDetailRepository repository;
+
+    @Inject
+    ArcanaNameProvider arcanaNameProvider;
 
     private LiveData<PersonaDetailInfo> detailInfo;
     private LiveData<PersonaShadowDetail[]> personaShadows;
@@ -44,6 +48,7 @@ public class PersonaDetailInfoViewModel extends ViewModel {
     private void initDetailInfo(int personaID) {
         if(detailInfo == null) {
             detailInfo = Transformations.map(repository.getDetailsForPersona(personaID), input -> {
+                input.arcanaName = arcanaNameProvider.getArcanaNameForDisplay(input.arcana);
                 if(input.imageUrl != null) {
                     if(!input.imageUrl.contains("https")) {
                         input.imageUrl = input.imageUrl.replace("http", "https");

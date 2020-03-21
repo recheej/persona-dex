@@ -1,17 +1,14 @@
-package fusionService
+package com.persona5dex.fusionService
 
 import android.content.SharedPreferences
 import android.os.Build
 import com.nhaarman.mockitokotlin2.*
 import com.persona5dex.ArcanaNameProvider
-import com.persona5dex.fusionService.FusionChartServiceFactory
 import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType
 import com.persona5dex.models.room.PersonaDao
 import com.persona5dex.repositories.PersonaFusionRepository
 import com.persona5dex.repositories.PersonaFusionRepository.Companion.DLC_SHARED_PREF
-import com.persona5dex.fusionService.PersonaFuserV2
-import com.persona5dex.fusionService.PersonaFusionGraphGenerator
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
@@ -46,9 +43,10 @@ class PersonaFusionGraphGeneratorTest {
 
         val fusionChartFactory = FusionChartServiceFactory(context, arcanaNameProvider)
 
-        personaFuser = PersonaFuserV2(fusionRepository, fusionChartFactory.getFusionChartService(GameType.BASE).getFusionChart())
+        val fusionChartService = fusionChartFactory.getFusionChartService(GameType.BASE)
+        personaFuser = PersonaFuserV2(fusionRepository, fusionChartService.getFusionChart())
 
-        graphGenerator = PersonaFusionGraphGenerator(fusionRepository, personaFuser)
+        graphGenerator = PersonaFusionGraphGenerator(fusionRepository, fusionChartService)
     }
 
     @Test

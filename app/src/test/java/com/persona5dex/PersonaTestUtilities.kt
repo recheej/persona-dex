@@ -22,7 +22,7 @@ fun Any.getFusionPersonas(): List<PersonaForFusionService> {
                     arcana = Enumerations.Arcana.getArcana(nextInt())
                     setName(nextString())
                     level = nextInt()
-                    setGameType(GameType.getGameType(nextInt()))
+                    setGameId(GameType.getGameType(nextInt()))
                     isRare = nextInt() == 1
                     isDlc = nextInt() == 1
                 }

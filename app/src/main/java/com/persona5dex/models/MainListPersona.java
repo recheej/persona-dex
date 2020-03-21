@@ -53,7 +53,7 @@ public class MainListPersona implements GameTypePersona {
 
     @NotNull
     @Override
-    public GameType getGameType() {
+    public GameType getGameId() {
         return gameId;
     }
 

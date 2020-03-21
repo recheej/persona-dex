@@ -30,13 +30,13 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.SearchEvent;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Constants;
+import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.R;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.GameType;
-import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.services.FusionCalculatorJobService;
 
@@ -57,6 +57,9 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     MainPersonaRepository repository;
+
+    @Inject
+    PersonaJobCreator personaJobCreator;
 
     private int selectedSortMenuItemID;
     private PersonaListFragment personaListFragment;
@@ -134,7 +137,8 @@ public class MainActivity extends BaseActivity {
                 .putInt(Constants.SHARED_PREF_KEY_GAME_TYPE, currentGameType.getValue())
                 .apply();
         personaListFragment.filterPersonas(currentGameType);
-        //todo: kick off new job
+
+        personaJobCreator.scheduleGenerateFusionJob(currentGameType);
     }
 
     private void setNewSwitchButtonText() {

@@ -6,9 +6,10 @@ import javax.inject.Inject
 
 class PersonaFusionGraphGenerator @Inject constructor(
         private val fusionRepository: PersonaFusionRepository,
-        private val personaFuser: PersonaFuserV2
+        private val fusionChartService: FusionChartService
 ) {
     suspend fun getAllFusions(): List<PersonaGraphEntry> {
+        val personaFuser = PersonaFuserV2(fusionRepository, fusionChartService.getFusionChart())
         val personas = fusionRepository.getFusionPersonas()
 
         val personaFusions = mutableListOf<PersonaGraphEntry>()

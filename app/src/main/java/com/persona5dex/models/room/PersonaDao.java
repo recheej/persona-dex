@@ -26,9 +26,10 @@ public interface PersonaDao {
     LiveData<List<MainListPersona>> getAllPersonasForMainListLiveData();
 
     @Query("select id, name, arcana, level, rare, dlc, gameId from personas order by name")
+    @Transaction
     List<MainListPersona> getAllPersonasForMainList();
 
-    @Query("select id, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
+    @Query("select id, arcana, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
             "from personas where id = :personaID " +
             "order by name")
     LiveData<PersonaDetailInfo> getDetailInfoForPersona(int personaID);
@@ -36,15 +37,21 @@ public interface PersonaDao {
     @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID")
     LiveData<PersonaShadowDetail[]> getShadowsForPersona(int personaID);
 
-    @Query("select id, arcana, name, level, rare, dlc, special from personas order by level")
+    @Query("select id, arcana, name, level, rare, dlc, special, gameId from personas order by level")
     PersonaForFusionService[] getPersonasByLevel();
 
     @Transaction
-    @Query("select id, name, arcana, level, rare, dlc from personas where dlc = 1")
+    @Query("select id, name, arcana, level, rare, dlc, gameId from personas where dlc = 1")
     LiveData<List<MainListPersona>> getDLCPersonas();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPersonaFusion(PersonaFusion personaFusion);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertPersonaFusions(List<PersonaFusion> personaFusion);
+
+    @Query("delete from personaFusions")
+    void deleteAllFromPersonaFusions();
 
     @Query("select * from personaElements where persona_id = :personaID")
     LiveData<List<PersonaElement>> getElementsForPersona(int personaID);

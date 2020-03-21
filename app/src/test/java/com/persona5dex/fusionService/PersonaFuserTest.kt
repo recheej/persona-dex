@@ -1,4 +1,4 @@
-package fusionService
+package com.persona5dex.fusionService
 
 import android.content.SharedPreferences
 import android.os.Build
@@ -9,14 +9,12 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.Persona5Application
 import com.persona5dex.extensions.equalNormalized
-import com.persona5dex.fusionService.FusionChartServiceFactory
 import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType
 import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.models.room.PersonaDao
 import com.persona5dex.repositories.PersonaFusionRepository
 import com.persona5dex.repositories.PersonaFusionRepository.Companion.DLC_SHARED_PREF
-import com.persona5dex.fusionService.PersonaFuserV2
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
@@ -80,8 +78,8 @@ class PersonaFuserTest(
 
     private fun String.findPersona(gameType: GameType) =
             try {
-                allPersonas.firstOrNull { it.gameType == gameType && it.name equalNormalized this }
-                        ?: allPersonas.first { it.gameType == GameType.BASE && it.name equalNormalized this }
+                allPersonas.firstOrNull { it.getGameId == gameType && it.name equalNormalized this }
+                        ?: allPersonas.first { it.getGameId == GameType.BASE && it.name equalNormalized this }
             } catch (e: NoSuchElementException) {
                 throw IllegalStateException("failed to find persona: $this", e)
             }

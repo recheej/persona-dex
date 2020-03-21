@@ -1,5 +1,6 @@
 package com.persona5dex.fusionService
 
+import com.persona5dex.models.GameType
 import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.repositories.PersonaFusionRepository
 import javax.inject.Inject
@@ -11,7 +12,7 @@ import kotlin.math.floor
  * https://github.com/chinhodado/persona5_calculator/blob/master/src/FusionCalculator.js
  * https://www.gamefaqs.com/ps2/932312-shin-megami-tensei-persona-3/faqs/49926
  */
-class PersonaFuserV2 @Inject constructor(
+class PersonaFuserV2(
         private val fusionRepository: PersonaFusionRepository,
         private val fusionChart: FusionChart
 ) {

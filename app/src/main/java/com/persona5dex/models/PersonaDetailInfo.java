@@ -1,6 +1,7 @@
 package com.persona5dex.models;
 
 import androidx.room.Embedded;
+import androidx.room.Ignore;
 
 import com.persona5dex.models.room.Stats;
 
@@ -10,7 +11,9 @@ import com.persona5dex.models.room.Stats;
 
 public class PersonaDetailInfo {
     public String name;
+    @Ignore
     public String arcanaName;
+    public Enumerations.Arcana arcana;
     public int level;
     public String imageUrl;
     public String note;

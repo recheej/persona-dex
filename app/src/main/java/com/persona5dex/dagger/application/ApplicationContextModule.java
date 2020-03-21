@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import androidx.work.WorkManager;
+
 import com.persona5dex.Constants;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaFileUtilities;
@@ -11,11 +13,14 @@ import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaStoreGsonAdapter;
 import com.persona5dex.dagger.activity.ActivityScope;
+import com.persona5dex.fusionService.FusionChartService;
+import com.persona5dex.fusionService.FusionChartServiceFactory;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.PersonaStore;
 import com.persona5dex.models.RawPersona;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.persona5dex.models.room.PersonaDao;
 import com.persona5dex.models.room.PersonaDatabase;
 
 import java.io.InputStream;
@@ -87,5 +92,23 @@ public class ApplicationContextModule {
     GameType gameType(@Named("defaultSharedPreferences") SharedPreferences sharedPreferences) {
         final int gameTypeInt = sharedPreferences.getInt(Constants.SHARED_PREF_KEY_GAME_TYPE, GameType.BASE.getValue());
         return GameType.getGameType(gameTypeInt);
+    }
+
+    @Provides
+    @ApplicationScope
+    WorkManager providesWorkManager() {
+        return WorkManager.getInstance(context);
+    }
+
+    @Provides
+    @ApplicationScope
+    FusionChartService providesFusionChartService(FusionChartServiceFactory fusionChartServiceFactory, GameType gameType) {
+        return fusionChartServiceFactory.getFusionChartService(gameType);
+    }
+
+    @Provides
+    @ApplicationScope
+    PersonaDao providesPersonaDao(PersonaDatabase personaDatabase) {
+        return personaDatabase.personaDao();
     }
 }

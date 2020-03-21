@@ -16,7 +16,7 @@ public class PersonaForFusionService implements GameTypePersona {
     private boolean special;
     private boolean dlc;
     private int id;
-    private GameType gameType;
+    private GameType gameId;
 
     @NonNull public Enumerations.Arcana getArcana() {
         return arcana;
@@ -76,12 +76,12 @@ public class PersonaForFusionService implements GameTypePersona {
     }
 
     @Override
-    @NonNull public GameType getGameType() {
-        return gameType;
+    @NonNull public GameType getGameId() {
+        return gameId;
     }
 
-    public void setGameType(@NonNull GameType gameType) {
-        this.gameType = gameType;
+    public void setGameId(@NonNull GameType gameType) {
+        this.gameId = gameType;
     }
 
     @Override
@@ -96,11 +96,11 @@ public class PersonaForFusionService implements GameTypePersona {
                 id == that.id &&
                 arcana == that.arcana &&
                 name.equals(that.name) &&
-                gameType == that.gameType;
+                gameId == that.gameId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(arcana, level, name, rare, special, dlc, id, gameType);
+        return Objects.hash(arcana, level, name, rare, special, dlc, id, gameId);
     }
 }
