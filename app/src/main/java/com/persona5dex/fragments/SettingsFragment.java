@@ -42,9 +42,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Inject
     ViewModelFactory viewModelFactory;
 
-    @Inject
-    PersonaJobCreator personaJobCreator;
-
     private SettingsViewModel viewModel;
     private PreferenceManager preferenceManager;
 
