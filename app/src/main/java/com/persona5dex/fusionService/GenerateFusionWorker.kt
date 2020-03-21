@@ -1,10 +1,12 @@
 package com.persona5dex.fusionService
 
 import android.content.Context
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.models.room.PersonaFusion
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.yield
 import javax.inject.Inject
 
@@ -19,16 +21,24 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
     override suspend fun doWork(): Result {
         application.component.inject(this)
 
-        val personaFusions = graphGenerator.getAllFusions().map {
-            PersonaFusion().apply {
-                personaOneID = it.personaOne.id
-                personaTwoID = it.personaTwo.id
-                personaResultID = it.resultPersona.id
+        try {
+            val personaFusions = graphGenerator.getAllFusions().map {
+                PersonaFusion().apply {
+                    personaOneID = it.personaOne.id
+                    personaTwoID = it.personaTwo.id
+                    personaResultID = it.resultPersona.id
+                }
             }
+            yield()
+            personaDao.deleteAndInsertNewFusions(personaFusions)
+        } catch (e: CancellationException) {
+            Log.e(TAG, "GenerateFusionWorker job cancelled", e)
         }
 
-        personaDao.deleteAndInsertNewFusions(personaFusions)
-
         return Result.success()
+    }
+
+    companion object {
+        private const val TAG = "GenerateFusionWorker"
     }
 }
