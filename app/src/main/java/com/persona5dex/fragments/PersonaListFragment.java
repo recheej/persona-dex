@@ -1,6 +1,7 @@
 package com.persona5dex.fragments;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -157,15 +158,11 @@ public class PersonaListFragment extends BaseFragment {
         recyclerView.setIndexBarVisibility(showIndexBar);
     }
 
-    public void filterPersonas(PersonaFilterArgs filterArgs){
-        viewModel.filterPersonas(filterArgs);
-    }
-
     public void setPersonas(List<MainListPersona> personas){
         viewModel.initialize(personas);
     }
 
-    public void setListener(PersonaListFragmentListener fragmentListener){
+    void setListener(PersonaListFragmentListener fragmentListener){
         this.fragmentListener = fragmentListener;
     }
 
@@ -187,7 +184,7 @@ public class PersonaListFragment extends BaseFragment {
 
         showProgressBar();
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(mainPersonaRepository, arcanaNameProvider, gameType);
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaMainListViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(PersonaMainListViewModel.class);
 
         viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), personas -> {
             this.personas.clear();

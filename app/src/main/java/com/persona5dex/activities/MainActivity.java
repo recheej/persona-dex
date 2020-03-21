@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AlertDialog;
@@ -35,7 +34,6 @@ import com.persona5dex.R;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
-import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.PersonaFilterArgs;
@@ -49,7 +47,7 @@ import io.fabric.sdk.android.Fabric;
 import static android.app.SearchManager.EXTRA_DATA_KEY;
 import static android.app.SearchManager.USER_QUERY;
 
-public class MainActivity extends BaseActivity implements FilterDialogFragment.OnFilterListener {
+public class MainActivity extends BaseActivity {
 
     private static final String FILTER_DIALOG = "FILTER_DIALOG";
     public static final String PRIVACY_POLICY_SHOWN = "privacy_policy_shown";
@@ -59,8 +57,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
     @Inject
     MainPersonaRepository repository;
-
-    private PersonaFilterArgs latestFilterArgs;
 
     private int selectedSortMenuItemID;
     private PersonaListFragment personaListFragment;
@@ -83,12 +79,6 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
-        assert personaListFragment != null;
-        personaListFragment.setListener(() -> {
-            if(savedInstanceState != null) {
-                restoreFromBundle(savedInstanceState);
-            }
-        });
 
         repository.getAllPersonasForMainListLiveData().observe(this, personas -> {
             personaListFragment.setPersonas(personas);
@@ -280,7 +270,7 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
                 this.showSortPopup();
                 return true;
             case R.id.action_filter:
-                FilterDialogFragment dialogFragment = FilterDialogFragment.newInstance(latestFilterArgs);
+                FilterDialogFragment dialogFragment = FilterDialogFragment.newInstance();
                 dialogFragment.show(getSupportFragmentManager(), FILTER_DIALOG);
                 return true;
             case R.id.action_settings:
@@ -334,44 +324,5 @@ public class MainActivity extends BaseActivity implements FilterDialogFragment.O
             default:
                 return false;
         }
-    }
-
-    @Override
-    public void onFilterSelected(PersonaFilterArgs filterArgs) {
-        this.latestFilterArgs = filterArgs;
-        personaListFragment.filterPersonas(latestFilterArgs);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if(latestFilterArgs == null) {
-            latestFilterArgs = new PersonaFilterArgs();
-        }
-
-        outState.putBoolean("filter_rarePersona", latestFilterArgs.rarePersona);
-        outState.putBoolean("filter_dlcPersona", latestFilterArgs.dlcPersona);
-        outState.putInt("filter_selectedArcana", latestFilterArgs.arcana.value());
-        outState.putInt("filter_minLevel", latestFilterArgs.minLevel);
-        outState.putInt("filter_maxLevel", latestFilterArgs.maxLevel);
-
-        outState.putInt("sort_id", selectedSortMenuItemID);
-    }
-
-    private void restoreFromBundle(@NonNull Bundle savedInstanceState) {
-        latestFilterArgs = new PersonaFilterArgs();
-        latestFilterArgs.rarePersona = savedInstanceState.getBoolean("filter_rarePersona");
-        latestFilterArgs.dlcPersona = savedInstanceState.getBoolean("filter_dlcPersona");
-
-        int arcanaValue = savedInstanceState.getInt("filter_selectedArcana");
-        latestFilterArgs.arcana = Enumerations.Arcana.getArcana(arcanaValue);
-
-        latestFilterArgs.minLevel = savedInstanceState.getInt("filter_minLevel");
-        latestFilterArgs.maxLevel = savedInstanceState.getInt("filter_maxLevel");
-        personaListFragment.filterPersonas(latestFilterArgs);
-
-        selectedSortMenuItemID = savedInstanceState.getInt("sort_id");
-        handleSortClick();
     }
 }

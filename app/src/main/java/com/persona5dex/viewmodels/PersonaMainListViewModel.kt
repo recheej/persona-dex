@@ -35,6 +35,15 @@ class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvide
 
     private val filteredLiveData = MediatorLiveData<List<MainListPersona>>()
 
+    init {
+        sortByPersonaNameAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.name.compareTo(o2.name) }
+        sortByPersonaNameDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.name.compareTo(o2.name) * -1 }
+        sortByPersonaLevelAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.level.compareTo(o2.level) }
+        sortByPersonaLevelDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.level.compareTo(o2.level) * -1 }
+        sortByPersonaArcanaAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> getPersonaNameComparison(o1, o2) }
+        sortByPersonaArcanaDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> getPersonaNameComparison(o1, o2) * -1 }
+    }
+
     fun getState(): LiveData<State> = stateLiveData
 
     fun filterPersonas(personaNameQuery: String) {
@@ -69,124 +78,117 @@ class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvide
             newFilterArgs = PersonaFilterArgs()
         }
         newFilterArgs.gameType = gameType
-        personaFilterArgs.value = newFilterArgs
+        filterPersonas(newFilterArgs)
     }
 
     fun getFilteredPersonas() = filteredLiveData
 
-    init {
-        sortByPersonaNameAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.name.compareTo(o2.name) }
-        sortByPersonaNameDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.name.compareTo(o2.name) * -1 }
-        sortByPersonaLevelAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.level.compareTo(o2.level) }
-        sortByPersonaLevelDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> o1.level.compareTo(o2.level) * -1 }
-        sortByPersonaArcanaAsc = Comparator { o1: MainListPersona, o2: MainListPersona -> getPersonaNameComparison(o1, o2) }
-        sortByPersonaArcanaDesc = Comparator { o1: MainListPersona, o2: MainListPersona -> getPersonaNameComparison(o1, o2) * -1 }
+    fun getFilterArgs() = Transformations.map(personaFilterArgs) {
+        it ?: PersonaFilterArgs()
     }
+
+    fun getArcanaNamesForSpinner() = arcanaNameProvider.getAllArcanaNamesForDisplay()
 
     fun initialize(allPersonas: List<MainListPersona>) {
         if (!initialized) {
-            viewModelScope.launch(Dispatchers.IO) {
 
-                withContext(Dispatchers.Main) {
-                    filteredLiveData.addSource(personaSearchName) { searchValue: String? ->
-                        if (searchValue == null || searchValue.isEmpty()) {
-                            filteredLiveData.setValue(allPersonas)
+            filteredLiveData.addSource(personaSearchName) { searchValue: String? ->
+                if (searchValue == null || searchValue.isEmpty()) {
+                    filteredLiveData.setValue(allPersonas)
+                } else {
+                    val finalList: MutableList<MainListPersona> = ArrayList()
+                    for (mainListPersona in allPersonas) {
+                        val searchValueLower = searchValue.toLowerCaseInsensitive()
+                        if (mainListPersona.name.toLowerCaseInsensitive().contains(searchValueLower)) {
+                            finalList.add(mainListPersona)
                         } else {
-                            val finalList: MutableList<MainListPersona> = ArrayList()
-                            for (mainListPersona in allPersonas) {
-                                val searchValueLower = searchValue.toLowerCaseInsensitive()
-                                if (mainListPersona.name.toLowerCaseInsensitive().contains(searchValueLower)) {
+                            for (personaShadowName in mainListPersona.personaShadowNames) {
+                                if (personaShadowName.shadowName.toLowerCaseInsensitive().contains(searchValueLower)) {
                                     finalList.add(mainListPersona)
-                                } else {
-                                    for (personaShadowName in mainListPersona.personaShadowNames) {
-                                        if (personaShadowName.shadowName.toLowerCaseInsensitive().contains(searchValueLower)) {
-                                            finalList.add(mainListPersona)
-                                            break
-                                        }
-                                    }
+                                    break
                                 }
                             }
-                            filteredLiveData.setValue(finalList)
                         }
                     }
-                    filteredLiveData.addSource(personasByName) { asc: Boolean? ->
-                        val newPersonas = filteredLiveData.value
-                        if (newPersonas != null) {
-                            if (newPersonas.size == 1) {
-                                return@addSource
-                            }
-                            lastPersonaComparator = if (asc != false) {
-                                Collections.sort(newPersonas, sortByPersonaNameAsc)
-                                sortByPersonaNameAsc
-                            } else {
-                                Collections.sort(newPersonas, sortByPersonaNameDesc)
-                                sortByPersonaNameDesc
-                            }
-                        }
-                        filteredLiveData.setValue(newPersonas)
-                    }
-                    filteredLiveData.addSource(personasByLevel) { asc: Boolean? ->
-                        val newPersonas = filteredLiveData.value
-                        if (newPersonas != null) {
-                            if (newPersonas.size == 1) {
-                                return@addSource
-                            }
-                            lastPersonaComparator = if (asc != false) {
-                                Collections.sort(newPersonas, sortByPersonaLevelAsc)
-                                sortByPersonaLevelAsc
-                            } else {
-                                Collections.sort(newPersonas, sortByPersonaLevelDesc)
-                                sortByPersonaLevelDesc
-                            }
-                        }
-                        filteredLiveData.setValue(newPersonas)
-                    }
-                    filteredLiveData.addSource(personasByArcana) { asc: Boolean? ->
-                        val newPersonas = filteredLiveData.value
-                        if (newPersonas != null) {
-                            if (newPersonas.size == 1) {
-                                return@addSource
-                            }
-                            lastPersonaComparator = if (asc != false) {
-                                Collections.sort(newPersonas, sortByPersonaArcanaAsc)
-                                sortByPersonaArcanaAsc
-                            } else {
-                                Collections.sort(newPersonas, sortByPersonaArcanaDesc)
-                                sortByPersonaArcanaDesc
-                            }
-                        }
-                        filteredLiveData.setValue(newPersonas)
-                    }
-                    filteredLiveData.addSource(personaFilterArgs) { inputFilterArgs: PersonaFilterArgs ->
-                        val finalValue: MutableList<MainListPersona> = ArrayList()
-                        val comparator = lastPersonaComparator ?: sortByPersonaNameAsc
-                        val newPersonas = allPersonas
-                                .filterGameType(inputFilterArgs.gameType)
-                                .sortedWith(comparator)
-
-                        for (persona in newPersonas) {
-                            if (persona.rare && !inputFilterArgs.rarePersona) {
-                                continue
-                            }
-                            if (persona.dlc && !inputFilterArgs.dlcPersona) {
-                                continue
-                            }
-                            if (inputFilterArgs.arcana != Enumerations.Arcana.ANY && persona.arcana != inputFilterArgs.arcana) {
-                                continue
-                            }
-                            if (persona.level < inputFilterArgs.minLevel || persona.level > inputFilterArgs.maxLevel) {
-                                continue
-                            }
-                            finalValue.add(persona)
-                        }
-                        filteredLiveData.setValue(finalValue)
-                    }
-
-                    filterPersonas(gameType)
+                    filteredLiveData.setValue(finalList)
                 }
             }
+            filteredLiveData.addSource(personasByName) { asc: Boolean? ->
+                val newPersonas = filteredLiveData.value
+                if (newPersonas != null) {
+                    if (newPersonas.size == 1) {
+                        return@addSource
+                    }
+                    lastPersonaComparator = if (asc != false) {
+                        Collections.sort(newPersonas, sortByPersonaNameAsc)
+                        sortByPersonaNameAsc
+                    } else {
+                        Collections.sort(newPersonas, sortByPersonaNameDesc)
+                        sortByPersonaNameDesc
+                    }
+                }
+                filteredLiveData.setValue(newPersonas)
+            }
+            filteredLiveData.addSource(personasByLevel) { asc: Boolean? ->
+                val newPersonas = filteredLiveData.value
+                if (newPersonas != null) {
+                    if (newPersonas.size == 1) {
+                        return@addSource
+                    }
+                    lastPersonaComparator = if (asc != false) {
+                        Collections.sort(newPersonas, sortByPersonaLevelAsc)
+                        sortByPersonaLevelAsc
+                    } else {
+                        Collections.sort(newPersonas, sortByPersonaLevelDesc)
+                        sortByPersonaLevelDesc
+                    }
+                }
+                filteredLiveData.setValue(newPersonas)
+            }
+            filteredLiveData.addSource(personasByArcana) { asc: Boolean? ->
+                val newPersonas = filteredLiveData.value
+                if (newPersonas != null) {
+                    if (newPersonas.size == 1) {
+                        return@addSource
+                    }
+                    lastPersonaComparator = if (asc != false) {
+                        Collections.sort(newPersonas, sortByPersonaArcanaAsc)
+                        sortByPersonaArcanaAsc
+                    } else {
+                        Collections.sort(newPersonas, sortByPersonaArcanaDesc)
+                        sortByPersonaArcanaDesc
+                    }
+                }
+                filteredLiveData.setValue(newPersonas)
+            }
+            filteredLiveData.addSource(personaFilterArgs) { inputFilterArgs: PersonaFilterArgs ->
+                val finalValue: MutableList<MainListPersona> = ArrayList()
+                val comparator = lastPersonaComparator ?: sortByPersonaNameAsc
+                val newPersonas = allPersonas
+                        .filterGameType(inputFilterArgs.gameType)
+                        .sortedWith(comparator)
 
+                for (persona in newPersonas) {
+                    if (persona.rare && !inputFilterArgs.rarePersona) {
+                        continue
+                    }
+                    if (persona.dlc && !inputFilterArgs.dlcPersona) {
+                        continue
+                    }
+                    if (inputFilterArgs.arcana != Enumerations.Arcana.ANY && persona.arcana != inputFilterArgs.arcana) {
+                        continue
+                    }
+                    if (persona.level < inputFilterArgs.minLevel || persona.level > inputFilterArgs.maxLevel) {
+                        continue
+                    }
+                    finalValue.add(persona)
+                }
+                filteredLiveData.setValue(finalValue)
+            }
             initialized = true
+
+            filterPersonas(gameType)
+
             stateLiveData.postValue(State.InitializeLoading)
         }
     }

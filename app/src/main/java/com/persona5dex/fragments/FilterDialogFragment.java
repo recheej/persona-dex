@@ -1,28 +1,33 @@
 package com.persona5dex.fragments;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.persona5dex.ArcanaNameProvider.ArcanaName;
 import com.persona5dex.R;
 import com.persona5dex.activities.BaseActivity;
 import com.persona5dex.dagger.fragment.FragmentComponent;
+import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.PersonaFilterArgs;
-import com.persona5dex.viewmodels.PersonaFilterViewModel;
+import com.persona5dex.viewmodels.PersonaMainListViewModel;
+import com.persona5dex.viewmodels.ViewModelFactory;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -39,47 +44,22 @@ public class FilterDialogFragment extends DialogFragment {
     private ArcanaName selectedArcanaName;
     private Spinner arcanaSpinner;
     private ArrayAdapter<ArcanaName> arcanaMapArrayAdapter;
-
-    public interface OnFilterListener {
-        void onFilterSelected(PersonaFilterArgs filterArgs);
-    }
+    private PersonaMainListViewModel personaMainListViewModel;
 
     @Inject
-    PersonaFilterViewModel viewModel;
+    ViewModelFactory viewModelFactory;
 
-    private BaseActivity activity;
-
-    public static FilterDialogFragment newInstance(PersonaFilterArgs args) {
-        //used to restore the fragment's state since the fragment's onRestore and onSave aren't called
-        FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
-
-        PersonaFilterArgs filterArgs;
-        if(args == null) {
-            filterArgs = new PersonaFilterArgs();
-        } else {
-            filterArgs = args;
-        }
-
-        Bundle bundleArguments = new Bundle();
-
-        bundleArguments.putBoolean("rarePersona", filterArgs.rarePersona);
-        bundleArguments.putBoolean("dlcPersona", filterArgs.dlcPersona);
-        bundleArguments.putInt("selectedArcana", filterArgs.arcana.value());
-        bundleArguments.putInt("minLevel", filterArgs.minLevel);
-        bundleArguments.putInt("maxLevel", filterArgs.maxLevel);
-
-        filterDialogFragment.setArguments(bundleArguments);
-
-        return filterDialogFragment;
+    public static FilterDialogFragment newInstance() {
+        return new FilterDialogFragment();
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        this.activity = (BaseActivity) getActivity();
+        BaseActivity activity = (BaseActivity) getActivity();
 
         AlertDialog.Builder builder = new MaterialAlertDialogBuilder(requireActivity());
-        LayoutInflater inflater = this.activity.getLayoutInflater();
+        LayoutInflater inflater = activity.getLayoutInflater();
 
         View view = inflater.inflate(R.layout.filter_dialog, null);
 
@@ -87,10 +67,6 @@ public class FilterDialogFragment extends DialogFragment {
         component.inject(this);
 
         arcanaSpinner = view.findViewById(R.id.spinner_arcana);
-
-        arcanaMapArrayAdapter = new ArrayAdapter<>(activity,
-                R.layout.spinner_dropdown, viewModel.getArcanaNames());
-        arcanaSpinner.setAdapter(arcanaMapArrayAdapter);
 
         InputFilter filter = new InputFilter.LengthFilter(2);
 
@@ -104,113 +80,82 @@ public class FilterDialogFragment extends DialogFragment {
         dlcPersonaCheckBox = view.findViewById(R.id.checkbox_dlcPersona);
 
         builder.setView(view)
-                .setNeutralButton(R.string.reset, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(dialog != null) {
-                            PersonaFilterArgs filterArgs = new PersonaFilterArgs();
-
-                            OnFilterListener listener = (OnFilterListener) activity;
-                            listener.onFilterSelected(filterArgs);
-
-                            dialog.dismiss();
-                        }
+                .setNeutralButton(R.string.reset, (dialog, which) -> {
+                    if(dialog != null) {
+                        personaMainListViewModel.filterPersonas(new PersonaFilterArgs());
+                        dialog.dismiss();
                     }
                 })
-                .setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        PersonaFilterArgs filterArgs = new PersonaFilterArgs();
-
-                        selectedArcanaName = (ArcanaName) arcanaSpinner.getSelectedItem();
-
-                        filterArgs.arcana = selectedArcanaName.getArcana();
-                        filterArgs.rarePersona = rarePersonaCheckBox.isChecked();
-                        filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
-
-                        String minLevelText = minLevelEditText.getText().toString();
-                        if(!minLevelText.isEmpty()) {
-                            try {
-                                filterArgs.minLevel = Integer.parseInt(minLevelText);
-                            } catch(NumberFormatException e) {
-                                filterArgs.minLevel = 1;
-                            }
-                        }
-
-                        String maxLevelText = maxLevelEditText.getText().toString();
-                        if(!minLevelText.isEmpty()) {
-                            try {
-                                filterArgs.maxLevel = Integer.parseInt(maxLevelText);
-                            } catch(NumberFormatException e) {
-                                filterArgs.maxLevel = 99;
-                            }
-                        }
-
-                        OnFilterListener listener = (OnFilterListener) activity;
-                        listener.onFilterSelected(filterArgs);
-                    }
+                .setPositiveButton(R.string.filter, (dialog, which) -> {
+                    filter();
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(dialog != null) {
-                            dialog.dismiss();
-                        }
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                    if(dialog != null) {
+                        dialog.dismiss();
                     }
                 });
 
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-//
-//                final int textColorWhite = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.defaultTextColor);
-//                final int backgroundColor = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.pageBackground);
-//
-//                final Button button = setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_POSITIVE, backgroundColor);
-//
-//                final ViewParent parent = button.getParent();
-//                if(parent instanceof ViewGroup){
-//                    // hacky, but for some reason background color isn't being applied to parent through themes
-//                    View parentView = (ViewGroup) parent;
-//                    parentView.setBackgroundColor(backgroundColor);
-//                }
-//
-//                final int colorAccent = ThemeUtil.getThemeAttributeColor(requireContext(), R.attr.colorAccent);
-//                setupButton(textColorWhite, alertDialog, AlertDialog.BUTTON_NEGATIVE, backgroundColor);
-//                setupButton(colorAccent, alertDialog, AlertDialog.BUTTON_NEUTRAL, backgroundColor);
-            }
+        return builder.create();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        personaMainListViewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(PersonaMainListViewModel.class);
+
+        arcanaMapArrayAdapter = new ArrayAdapter<>(requireActivity(),
+                R.layout.spinner_dropdown, personaMainListViewModel.getArcanaNamesForSpinner());
+        arcanaSpinner.setAdapter(arcanaMapArrayAdapter);
+
+        personaMainListViewModel.getFilterArgs().observe(requireActivity(), personaFilterArgs -> {
+            rarePersonaCheckBox.setChecked(personaFilterArgs.rarePersona);
+            dlcPersonaCheckBox.setChecked(personaFilterArgs.dlcPersona);
+
+            arcanaSpinner.setSelection(this.getSpinnerPosition(personaFilterArgs.arcana));
+
+            minLevelEditText.setText(String.format(Locale.ROOT, "%d", personaFilterArgs.minLevel));
+            maxLevelEditText.setText(String.format(Locale.ROOT, "%d", personaFilterArgs.maxLevel));
         });
+    }
 
-        Bundle arguments = getArguments();
-        if(arguments != null) {
-            rarePersonaCheckBox.setChecked(arguments.getBoolean("rarePersona"));
-            dlcPersonaCheckBox.setChecked(arguments.getBoolean("dlcPersona"));
+    private void filter() {
+        PersonaFilterArgs filterArgs = new PersonaFilterArgs();
 
-            int arcana = arguments.getInt("selectedArcana");
-            arcanaSpinner.setSelection(this.getSpinnerPosition(arcana));
+        selectedArcanaName = (ArcanaName) arcanaSpinner.getSelectedItem();
 
-            minLevelEditText.setText(Integer.toString(arguments.getInt("minLevel")));
-            maxLevelEditText.setText(Integer.toString(arguments.getInt("maxLevel")));
+        filterArgs.arcana = selectedArcanaName.getArcana();
+        filterArgs.rarePersona = rarePersonaCheckBox.isChecked();
+        filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
+
+        String minLevelText = minLevelEditText.getText().toString();
+        if(!minLevelText.isEmpty()) {
+            try {
+                filterArgs.minLevel = Integer.parseInt(minLevelText);
+            } catch(NumberFormatException e) {
+                filterArgs.minLevel = 1;
+            }
         }
 
-        return alertDialog;
+        String maxLevelText = maxLevelEditText.getText().toString();
+        if(!minLevelText.isEmpty()) {
+            try {
+                filterArgs.maxLevel = Integer.parseInt(maxLevelText);
+            } catch(NumberFormatException e) {
+                filterArgs.maxLevel = 99;
+            }
+        }
+
+        personaMainListViewModel.filterPersonas(filterArgs);
     }
 
-    private Button setupButton(int textColor, AlertDialog alertDialog, int buttonType, int backgroundColor) {
-        final Button button = alertDialog.getButton(buttonType);
-        button.setTextColor(textColor);
-        button.setBackgroundColor(backgroundColor);
-        return button;
-    }
-
-    private int getSpinnerPosition(int arcana) {
+    private int getSpinnerPosition(Enumerations.Arcana arcana) {
 
         for(int i = 0; i < arcanaMapArrayAdapter.getCount(); i++) {
             ArcanaName arcanaName = arcanaMapArrayAdapter.getItem(i);
 
-            if(arcanaName.getArcana().value() == arcana) {
+            assert arcanaName != null;
+            if(arcanaName.getArcana() == arcana) {
                 return i;
             }
         }
