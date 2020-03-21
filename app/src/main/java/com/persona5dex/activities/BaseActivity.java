@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.ThemeUtil;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
@@ -20,9 +19,6 @@ import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 
 /**
@@ -31,8 +27,6 @@ import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 
 public class BaseActivity extends AppCompatActivity {
     protected ActivityComponent component;
-    private CompositeDisposable compositeStoppableDisposable;
-    private CompositeDisposable compositeDestroyableDisposable;
 
     @Inject
     @Named("defaultSharedPreferences")
@@ -57,31 +51,8 @@ public class BaseActivity extends AppCompatActivity {
         component.inject(this);
         this.component = component;
 
-        compositeStoppableDisposable = new CompositeDisposable();
-        compositeDestroyableDisposable = new CompositeDisposable();
-
         final String nightModeValue =
                 defaultSharedPreferences.getString(getString(R.string.pref_key_theme), String.valueOf(MODE_NIGHT_FOLLOW_SYSTEM));
         AppCompatDelegate.setDefaultNightMode(Integer.parseInt(nightModeValue));
-    }
-
-    protected void addStoppableDisposable(Disposable disposable) {
-        compositeStoppableDisposable.add(disposable);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        compositeStoppableDisposable.dispose();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        compositeDestroyableDisposable.dispose();
-    }
-
-    protected void addDestroyableDisposable(Disposable disposable) {
-        compositeDestroyableDisposable.dispose();
     }
 }
