@@ -24,9 +24,7 @@ class PersonaJobCreator @Inject constructor(
 
     fun getStateForUniqueJob(jobName: String) =
             Transformations.map(workManager.getWorkInfosForUniqueWorkLiveData(jobName)) { workInfos ->
-                workInfos.maxBy { it.id }?.let {
-                    it.state
-                } ?: WorkInfo.State.SUCCEEDED
+                workInfos.maxBy { it.id }?.state ?: WorkInfo.State.SUCCEEDED
             }
 
     private fun getRequest(jobName: String): OneTimeWorkRequest {
