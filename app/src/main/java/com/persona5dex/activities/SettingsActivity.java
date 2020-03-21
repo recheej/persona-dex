@@ -44,7 +44,6 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     PersonaJobCreator personaJobCreator;
 
     private View frameLayout;
-    private boolean resetService;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
