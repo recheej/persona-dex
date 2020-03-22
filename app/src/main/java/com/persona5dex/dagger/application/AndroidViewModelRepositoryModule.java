@@ -19,31 +19,26 @@ import dagger.Provides;
 public class AndroidViewModelRepositoryModule {
 
     @Provides
-    @ApplicationScope
     MainPersonaRepository mainPersonaRepository(PersonaDatabase database){
         return new MainPersonaRoomRepository(database);
     }
 
     @Provides
-    @ApplicationScope
     PersonaDetailRepository personaDetailRepository(PersonaDatabase database){
         return new PersonaDetailRoomRepository(database.personaDao());
     }
 
     @Provides
-    @ApplicationScope
     PersonaElementsRepository elementsRepository(PersonaDatabase database){
         return new PersonaElementsRoomRepository(database.personaDao());
     }
 
     @Provides
-    @ApplicationScope
     PersonaSkillsRepository skillsRepository(PersonaDatabase database){
         return new PersonaSkillsRoomRepository(database.skillDao());
     }
 
     @Provides
-    @ApplicationScope
     PersonaDisplayEdgesRepository edgesRepository(PersonaDatabase database){
         return new PersonaDisplayEdgesRoomRepository(database.personaDao());
     }

@@ -21,7 +21,10 @@ import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.extensions.WorkInfoStateUtils;
 import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.PersonaEdgeDisplay;
-import com.persona5dex.viewmodels.PersonaFusionViewModel;
+import com.persona5dex.repositories.MainPersonaRepository;
+import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
+import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
+import com.persona5dex.viewmodels.PersonaFusionViewModelV2;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
 import java.util.ArrayList;
@@ -36,25 +39,26 @@ public class FusionListFragment extends BaseFragment {
 
     private boolean isToList;
     private int personaID;
-    private RecyclerView recyclerView;
-
-    PersonaFusionViewModel viewModel;
-
-    private ProgressBar progressBar;
-
-    private ViewGroup listHeader;
-
     private List<PersonaEdgeDisplay> edgeDisplays;
     private PersonaFusionListAdapter fusionListAdapter;
+
+    private PersonaFusionViewModelV2 viewModel;
+
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private ViewGroup listHeader;
 
     @Inject
     ViewModelFactory viewModelFactory;
 
     @Inject
     PersonaJobCreator personaJobCreator;
-    private LiveData<List<PersonaEdgeDisplay>> edgesLiveData;
 
-    private FusionListListener listener;
+    @Inject
+    PersonaDisplayEdgesRepository personaDisplayEdgesRepository;
+
+    @Inject
+    MainPersonaRepository mainPersonaRepository;
 
     public FusionListFragment() {
         // Required empty public constructor
@@ -76,19 +80,11 @@ public class FusionListFragment extends BaseFragment {
         return fragment;
     }
 
-    public interface FusionListListener {
-        void fusionListCountUpdated(int count, boolean isToList);
-    }
-
-    public void setListener(FusionListListener listener) {
-        this.listener = listener;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
+        if(getArguments() != null) {
             isToList = getArguments().getBoolean(IS_TO_LIST);
             personaID = getArguments().getInt(PERSONA_ID);
         }
@@ -108,13 +104,14 @@ public class FusionListFragment extends BaseFragment {
                 .inject(this);
 
         personaJobCreator.getStateForGenerateFusionJob().observe(getViewLifecycleOwner(), state -> {
-            if(WorkInfoStateUtils.isDone(state)){
+            if(WorkInfoStateUtils.isDone(state)) {
                 setUpRecyclerView();
                 setProgressBarVisible(false);
             }
         });
 
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaFusionViewModel.class);
+        final PersonaFusionViewModelFactory factory = new PersonaFusionViewModelFactory(personaDisplayEdgesRepository, mainPersonaRepository, personaID);
+        viewModel = new ViewModelProvider(requireActivity(), factory).get(PersonaFusionViewModelV2.class);
 
         recyclerView = baseView.findViewById(R.id.recycler_view_persona_list);
 
@@ -128,12 +125,11 @@ public class FusionListFragment extends BaseFragment {
     }
 
     private void setProgressBarVisible(boolean visible) {
-        if(visible){
+        if(visible) {
             recyclerView.setVisibility(View.GONE);
             listHeader.setVisibility(View.GONE);
             progressBar.setVisibility(ProgressBar.VISIBLE);
-        }
-        else{
+        } else {
             progressBar.setVisibility(ProgressBar.GONE);
             listHeader.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
@@ -150,25 +146,20 @@ public class FusionListFragment extends BaseFragment {
         TextView personaHeaderColumnOne = baseView.findViewById(R.id.textView_fusion_column_one_label);
         TextView personaHeaderColumnTwo = baseView.findViewById(R.id.textView_fusion_column_two_label);
 
-        if(isToList){
+        if(isToList) {
             personaHeaderColumnOne.setText(R.string.persona_one);
             personaHeaderColumnTwo.setText(R.string.persona_two);
-        }
-        else{
+        } else {
             personaHeaderColumnOne.setText(R.string.persona_two);
             personaHeaderColumnTwo.setText(R.string.result);
         }
 
-        this.edgesLiveData = viewModel.getEdges(personaID, isToList);
-        this.edgesLiveData.observe(getViewLifecycleOwner(), personaEdgeDisplays -> {
+        LiveData<List<PersonaEdgeDisplay>> edgesLiveData = isToList ? viewModel.getToEdges() : viewModel.getFromEdges();
+        edgesLiveData.observe(getViewLifecycleOwner(), personaEdgeDisplays -> {
             edgeDisplays.clear();
 
-            if(personaEdgeDisplays != null){
+            if(personaEdgeDisplays != null) {
                 edgeDisplays.addAll(personaEdgeDisplays);
-            }
-
-            if(listener != null){
-                listener.fusionListCountUpdated(edgeDisplays.size(), isToList);
             }
 
             fusionListAdapter.notifyDataSetChanged();

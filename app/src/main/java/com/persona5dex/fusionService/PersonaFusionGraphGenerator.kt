@@ -12,16 +12,19 @@ class PersonaFusionGraphGenerator @Inject constructor(
         val personaFuser = PersonaFuserV2(fusionRepository, fusionChartService.getFusionChart())
         val personas = fusionRepository.getFusionPersonas()
 
-        val personaFusions = mutableListOf<PersonaGraphEntry>()
+        val personaFusions = mutableSetOf<PersonaGraphEntry>()
         personas.forEach { personaOne ->
             personas.forEach { personaTwo ->
                 personaFuser.fusePersona(personaOne, personaTwo)?.let {
-                    personaFusions.add(PersonaGraphEntry(personaOne, personaTwo, it))
+                    val graphEntry = PersonaGraphEntry(personaOne, personaTwo, it)
+                    if(graphEntry !in personaFusions) {
+                        personaFusions.add(graphEntry)
+                    }
                 }
             }
         }
 
-        return personaFusions
+        return personaFusions.toList()
     }
 }
 

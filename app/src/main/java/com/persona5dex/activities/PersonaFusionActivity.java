@@ -1,37 +1,45 @@
 package com.persona5dex.activities;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.Toolbar;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListPagerAdapter;
 import com.persona5dex.fragments.AdvancedPersonaFragment;
 import com.persona5dex.fragments.FusionListFragment;
-import com.persona5dex.viewmodels.PersonaFusionViewModel;
-import com.persona5dex.viewmodels.ViewModelFactory;
+import com.persona5dex.repositories.MainPersonaRepository;
+import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
+import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
+import com.persona5dex.viewmodels.PersonaFusionViewModelV2;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
-public class PersonaFusionActivity extends BaseActivity implements FusionListFragment.FusionListListener {
+public class PersonaFusionActivity extends BaseActivity {
 
     @Inject
     Toolbar mainToolbar;
 
     @Inject
-    ViewModelFactory viewModelFactory;
+    PersonaDisplayEdgesRepository personaDisplayEdgesRepository;
 
-    private PersonaFusionViewModel viewModel;
+    @Inject
+    MainPersonaRepository mainPersonaRepository;
+
+    private PersonaFusionViewModelV2 viewModel;
 
     private int personaForFusionID;
     private PersonaFusionListPagerAdapter pagerAdapter;
     private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,32 +50,30 @@ public class PersonaFusionActivity extends BaseActivity implements FusionListFra
 
         personaForFusionID = getIntent().getIntExtra("persona_id", 1);
 
-        viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaFusionViewModel.class);
+        final PersonaFusionViewModelFactory factory = new PersonaFusionViewModelFactory(personaDisplayEdgesRepository, mainPersonaRepository, personaForFusionID);
+        viewModel = new ViewModelProvider(this, factory).get(PersonaFusionViewModelV2.class);
 
         setUpToolbar();
 
-        LiveData<Integer> personaIsAdvanced = viewModel.personaIsAdvanced(personaForFusionID);
-        personaIsAdvanced.observe(this, intValue -> {
-            if(intValue == null){
+        viewPager = findViewById(R.id.view_pager_fusion);
+        tabLayout = findViewById(R.id.tab_layout_fusions);
+
+        viewModel.getPersonaIsAdvanced().observe(this, intValue -> {
+            if(intValue == null) {
                 intValue = 0;
             }
 
             boolean isAdvanced = intValue == 1;
 
             Fragment toFragment;
-            if(isAdvanced){
+            if(isAdvanced) {
                 toFragment = AdvancedPersonaFragment.newInstance(personaForFusionID);
-            }
-            else{
-                FusionListFragment fusionListFragment = FusionListFragment.newInstance(true, personaForFusionID);
-                toFragment = fusionListFragment;
-                fusionListFragment.setListener(this);
+            } else {
+                toFragment = FusionListFragment.newInstance(true, personaForFusionID);
             }
 
             FusionListFragment fromFragment = FusionListFragment.newInstance(false, personaForFusionID);
-            fromFragment.setListener(this);
 
-            viewPager = findViewById(R.id.view_pager_fusion);
             pagerAdapter = new PersonaFusionListPagerAdapter(getSupportFragmentManager(),
                     this, toFragment, fromFragment);
             viewPager.setAdapter(pagerAdapter);
@@ -75,11 +81,19 @@ public class PersonaFusionActivity extends BaseActivity implements FusionListFra
             TabLayout tabLayout = findViewById(R.id.tab_layout_fusions);
             tabLayout.setupWithViewPager(viewPager);
         });
+
+        viewModel.getToEdges().observe(this, toEdges -> {
+            setTabTextCount(true, toEdges.size());
+        });
+
+        viewModel.getFromEdges().observe(this, fromEdges -> {
+            setTabTextCount(false, fromEdges.size());
+        });
     }
 
-    private void setUpToolbar(){
+    private void setUpToolbar() {
 
-        if(BuildConfig.ENABLE_CRASHLYTICS){
+        if(BuildConfig.ENABLE_CRASHLYTICS) {
             //see how personas are being viewed in app
 //            Answers.getInstance().logContentView(new ContentViewEvent()
 //                    .putContentName("View Persona Fusion")
@@ -91,19 +105,26 @@ public class PersonaFusionActivity extends BaseActivity implements FusionListFra
         setSupportActionBar(this.mainToolbar);
         mainToolbar.setTitle(R.string.loading_data);
 
-        viewModel.getPersonaName(personaForFusionID).observe(this,
+        viewModel.getPersonaName().observe(this,
                 personaName -> mainToolbar.setTitle(String.format("Fusions for: %s", personaName)));
     }
 
-    @Override
-    public void fusionListCountUpdated(int count, boolean isToList) {
-        if(isToList){
-            pagerAdapter.setToListCount(count);
+    private void setTabTextCount(boolean toList, int count) {
+        int position = toList ? 0 : 1;
+        final String tabText = getTabText(toList, count);
+        final TabLayout.Tab tab = tabLayout.getTabAt(position);
+        if(tab != null) {
+            tab.setText(tabText);
         }
-        else{
-            pagerAdapter.setFromListCount(count);
+    }
+
+    private String getTabText(boolean toList, int count) {
+        @StringRes int headerTextRes = toList ? R.string.to : R.string.from;
+        String headerText = getString(headerTextRes);
+        if(count == 0) {
+            return headerText;
         }
 
-        viewPager.setAdapter(pagerAdapter);
+        return String.format(Locale.getDefault(), "%s (%d)", headerText, count);
     }
 }
