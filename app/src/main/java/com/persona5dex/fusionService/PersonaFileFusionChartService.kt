@@ -4,7 +4,7 @@ import android.content.Context
 
 abstract class PersonaFileFusionChartService(
         context: Context
-) : FusionChartService, PersonaFileService<FusionChart>(context) {
+) : FusionChartService, PersonaJsonFileService<FusionChart>(context) {
 
     final override suspend fun getFusionChart(): FusionChart = parseFile()
 }

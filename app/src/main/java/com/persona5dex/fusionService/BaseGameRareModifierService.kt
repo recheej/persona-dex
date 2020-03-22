@@ -18,21 +18,17 @@ class BaseGameRareModifierService constructor(
 
     override fun getFileRes(): Int = R.raw.rare_combos
 
-    override suspend fun parseFile(fileInputStream: InputStream): RarePersonaModificationManager =
-            withContext(Dispatchers.IO) {
-                JsonReader(InputStreamReader(fileInputStream, "UTF-8")).run {
-                    use {
+    override suspend fun parseJson(jsonReader: JsonReader): RarePersonaModificationManager =
+            jsonReader.run {
 
-                        val rarePersonaMap = mutableMapOf<Arcana, Array<Int>>()
-                        beginArray()
-                        while (hasNext()) {
-                            addToRarePersonaMap(rarePersonaMap)
-                        }
-                        endArray()
-
-                        RarePersonaModificationManager(rarePersonaMap, RARE_PERSONAS)
-                    }
+                val rarePersonaMap = mutableMapOf<Arcana, Array<Int>>()
+                beginArray()
+                while (hasNext()) {
+                    addToRarePersonaMap(rarePersonaMap)
                 }
+                endArray()
+
+                RarePersonaModificationManager(rarePersonaMap, RARE_PERSONAS)
             }
 
     private fun JsonReader.addToRarePersonaMap(rarePersonaMap: MutableMap<Arcana, Array<Int>>) {

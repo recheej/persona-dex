@@ -19,20 +19,16 @@ class PersonaBaseGameFusionChartService @Inject constructor(
 ) : PersonaFileFusionChartService(context) {
     override fun getFileRes(): Int = R.raw.arcana_combo_data
 
-    override suspend fun parseFile(fileInputStream: InputStream): FusionChart =
-            withContext(Dispatchers.IO) {
-                JsonReader(InputStreamReader(fileInputStream, "UTF-8")).run {
-                    use {
-                        beginArray()
-                        val fusionMap = mutableMapOf<Arcana, MutableMap<Arcana, Arcana>>()
-                        while (hasNext()) {
-                            addArcanaMapEntry(fusionMap)
-                        }
-                        endArray()
-
-                        FusionChart(fusionMap)
-                    }
+    override suspend fun parseJson(jsonReader: JsonReader): FusionChart =
+            jsonReader.run {
+                beginArray()
+                val fusionMap = mutableMapOf<Arcana, MutableMap<Arcana, Arcana>>()
+                while (hasNext()) {
+                    addArcanaMapEntry(fusionMap)
                 }
+                endArray()
+
+                FusionChart(fusionMap)
             }
 
     private fun JsonReader.addArcanaMapEntry(fusionMap: MutableMap<Arcana, MutableMap<Arcana, Arcana>>) {
