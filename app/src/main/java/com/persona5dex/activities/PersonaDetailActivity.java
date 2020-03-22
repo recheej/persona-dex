@@ -1,6 +1,7 @@
 package com.persona5dex.activities;
 
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +13,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaDetailFragmentPagerAdapter;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.PersonaDetailInfo;
+import com.persona5dex.repositories.PersonaDetailRepository;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
+import com.persona5dex.viewmodels.PersonaDetailInfoViewModelFactory;
 
 import javax.inject.Inject;
 
@@ -26,7 +30,12 @@ public class PersonaDetailActivity extends BaseActivity {
     @Inject
     Toolbar mainToolbar;
 
-    private PersonaDetailInfoViewModel viewModel;
+    @Inject
+    PersonaDetailRepository repository;
+
+    @Inject
+    ArcanaNameProvider arcanaNameProvider;
+
     private PersonaDetailInfo detailPersona;
     private int personaID;
 
@@ -41,9 +50,9 @@ public class PersonaDetailActivity extends BaseActivity {
 
         this.personaID = getIntent().getIntExtra("persona_id", 1);
 
-        viewModel = ViewModelProviders.of(this).get(PersonaDetailInfoViewModel.class);
-        viewModel.init(applicationComponent, personaID);
+        final PersonaDetailInfoViewModelFactory factory = new PersonaDetailInfoViewModelFactory(repository, arcanaNameProvider, personaID);
 
+        PersonaDetailInfoViewModel viewModel = new ViewModelProvider(this, factory).get(PersonaDetailInfoViewModel.class);
         viewModel.getDetailsForPersona().observe(this, new Observer<PersonaDetailInfo>() {
             @Override
             public void onChanged(@Nullable PersonaDetailInfo personaDetailInfo) {

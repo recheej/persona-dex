@@ -5,60 +5,39 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.persona5dex.ArcanaNameProvider;
-import com.persona5dex.dagger.application.Persona5ApplicationComponent;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.PersonaShadowDetail;
 import com.persona5dex.repositories.PersonaDetailRepository;
 
 import java.util.Arrays;
 
-import javax.inject.Inject;
-
 /**
  * Created by Rechee on 11/28/2017.
  */
 
-public class  PersonaDetailInfoViewModel extends ViewModel {
+public class PersonaDetailInfoViewModel extends ViewModel {
 
-    @Inject
-    PersonaDetailRepository repository;
-
-    @Inject
-    ArcanaNameProvider arcanaNameProvider;
+    private final PersonaDetailRepository repository;
+    private final ArcanaNameProvider arcanaNameProvider;
 
     private LiveData<PersonaDetailInfo> detailInfo;
     private LiveData<PersonaShadowDetail[]> personaShadows;
 
-    public PersonaDetailInfoViewModel() {
-    }
-
-    public PersonaDetailInfoViewModel(PersonaDetailRepository repository, int personaID) {
+    public PersonaDetailInfoViewModel(PersonaDetailRepository repository, ArcanaNameProvider arcanaNameProvider, int personaID) {
         this.repository = repository;
-        initDetailInfo(personaID);
-    }
+        this.arcanaNameProvider = arcanaNameProvider;
 
-    public void init(Persona5ApplicationComponent component, int personaID) {
-        component
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
-                .inject(this);
-        initDetailInfo(personaID);
-    }
-
-    private void initDetailInfo(int personaID) {
-        if(detailInfo == null) {
-            detailInfo = Transformations.map(repository.getDetailsForPersona(personaID), input -> {
-                input.arcanaName = arcanaNameProvider.getArcanaNameForDisplay(input.arcana);
-                if(input.imageUrl != null) {
-                    if(!input.imageUrl.contains("https")) {
-                        input.imageUrl = input.imageUrl.replace("http", "https");
-                    }
+        detailInfo = Transformations.map(this.repository.getDetailsForPersona(personaID), input -> {
+            input.arcanaName = this.arcanaNameProvider.getArcanaNameForDisplay(input.arcana);
+            if(input.imageUrl != null) {
+                if(!input.imageUrl.contains("https")) {
+                    input.imageUrl = input.imageUrl.replace("http", "https");
                 }
-                return input;
-            });
-        }
+            }
+            return input;
+        });
 
-        personaShadows = Transformations.switchMap(detailInfo, input -> repository.getShadowsForPersona(input.id));
+        personaShadows = Transformations.switchMap(detailInfo, input -> this.repository.getShadowsForPersona(input.id));
     }
 
     public LiveData<PersonaDetailInfo> getDetailsForPersona() {

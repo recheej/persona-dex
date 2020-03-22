@@ -1,6 +1,7 @@
 package com.persona5dex.fragments;
 
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.net.Uri;
@@ -16,23 +17,34 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.chrisbanes.photoview.PhotoView;
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.room.Stats;
+import com.persona5dex.repositories.PersonaDetailRepository;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
+import com.persona5dex.viewmodels.PersonaDetailInfoViewModelFactory;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 /**
  * Created by Rechee on 7/24/2017.
  */
 
 public class PersonaDetailInfoFragment extends BaseFragment {
-    PersonaDetailInfoViewModel viewModel;
+    private PersonaDetailInfoViewModel viewModel;
     private int personaID;
+
+    @Inject
+    PersonaDetailRepository repository;
+
+    @Inject
+    ArcanaNameProvider arcanaNameProvider;
 
     public PersonaDetailInfoFragment() {
         super();
@@ -58,8 +70,9 @@ public class PersonaDetailInfoFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
-        viewModel = ViewModelProviders.of(this).get(PersonaDetailInfoViewModel.class);
-        viewModel.init(component, personaID);
+
+        final PersonaDetailInfoViewModelFactory factory = new PersonaDetailInfoViewModelFactory(repository, arcanaNameProvider, personaID);
+        viewModel = new ViewModelProvider(this, factory).get(PersonaDetailInfoViewModel.class);
 
         ProgressBar progressBar = baseView.findViewById(R.id.progress_bar_fusions);
         progressBar.setVisibility(View.VISIBLE);

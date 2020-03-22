@@ -10,7 +10,7 @@ fun WorkInfo.State.isInProgress() =
             else -> false
         }
 
-fun WorkInfo.State.isFinished() =
+fun WorkInfo.State.isDone() =
         when (this) {
             WorkInfo.State.SUCCEEDED, WorkInfo.State.FAILED, WorkInfo.State.CANCELLED -> true
             else -> false

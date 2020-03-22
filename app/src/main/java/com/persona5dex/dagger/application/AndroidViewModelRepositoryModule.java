@@ -1,8 +1,5 @@
-package com.persona5dex.dagger.viewModels;
+package com.persona5dex.dagger.application;
 
-import android.content.Context;
-
-import com.persona5dex.models.RawPersona;
 import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.MainPersonaRoomRepository;
@@ -15,9 +12,6 @@ import com.persona5dex.repositories.PersonaElementsRoomRepository;
 import com.persona5dex.repositories.PersonaSkillsRepository;
 import com.persona5dex.repositories.PersonaSkillsRoomRepository;
 
-import javax.inject.Named;
-
-import dagger.Lazy;
 import dagger.Module;
 import dagger.Provides;
 
@@ -25,31 +19,31 @@ import dagger.Provides;
 public class AndroidViewModelRepositoryModule {
 
     @Provides
-    @ViewModelScope
+    @ApplicationScope
     MainPersonaRepository mainPersonaRepository(PersonaDatabase database){
         return new MainPersonaRoomRepository(database);
     }
 
     @Provides
-    @ViewModelScope
+    @ApplicationScope
     PersonaDetailRepository personaDetailRepository(PersonaDatabase database){
         return new PersonaDetailRoomRepository(database.personaDao());
     }
 
     @Provides
-    @ViewModelScope
+    @ApplicationScope
     PersonaElementsRepository elementsRepository(PersonaDatabase database){
         return new PersonaElementsRoomRepository(database.personaDao());
     }
 
     @Provides
-    @ViewModelScope
+    @ApplicationScope
     PersonaSkillsRepository skillsRepository(PersonaDatabase database){
         return new PersonaSkillsRoomRepository(database.skillDao());
     }
 
     @Provides
-    @ViewModelScope
+    @ApplicationScope
     PersonaDisplayEdgesRepository edgesRepository(PersonaDatabase database){
         return new PersonaDisplayEdgesRoomRepository(database.personaDao());
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.PersonaFileUtilities;
+import com.persona5dex.dagger.application.ApplicationScope;
 import com.persona5dex.models.GameType;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
@@ -23,6 +24,7 @@ import dagger.Lazy;
  * Created by reche on 1/4/2018.
  */
 
+@ApplicationScope
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private final Lazy<PersonaSkillsRepository> skillsRepositoryLazy;

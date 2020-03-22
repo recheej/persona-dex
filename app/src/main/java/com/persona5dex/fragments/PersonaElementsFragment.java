@@ -1,6 +1,7 @@
 package com.persona5dex.fragments;
 
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -11,10 +12,16 @@ import android.widget.TextView;
 
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
+import com.persona5dex.dagger.activity.ActivityContextModule;
+import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.dagger.application.Persona5ApplicationComponent;
+import com.persona5dex.repositories.PersonaElementsRepository;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;
+import com.persona5dex.viewmodels.PersonaElementsViewModelFactory;
 
 import java.util.HashMap;
+
+import javax.inject.Inject;
 
 import static com.persona5dex.models.Enumerations.Element;
 import static com.persona5dex.models.Enumerations.ElementEffect;
@@ -23,6 +30,9 @@ public class PersonaElementsFragment extends BaseFragment {
     PersonaElementsViewModel viewModel;
 
     private int personaID;
+
+    @Inject
+    PersonaElementsRepository repository;
 
     public PersonaElementsFragment() {
         super();
@@ -46,25 +56,24 @@ public class PersonaElementsFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
+        Persona5Application.get(activity).getComponent().activityComponent(
+                new LayoutModule(requireActivity()),
+                new ActivityContextModule(requireActivity())
+        ).plus().inject(this);
 
-        viewModel = ViewModelProviders.of(this).get(PersonaElementsViewModel.class);
-        viewModel.init(component, personaID);
-
-        viewModel.getElementsForPersona(personaID).observe(this, new Observer<HashMap<Element, ElementEffect>>() {
-            @Override
-            public void onChanged(@Nullable HashMap<Element, ElementEffect> elements) {
-                setElementView(baseView, R.id.textViewPhysicalStat, elements.get(Element.PHYSICAL));
-                setElementView(baseView, R.id.textViewGunStat, elements.get(Element.GUN));
-                setElementView(baseView, R.id.textViewFireStat, elements.get(Element.FIRE));
-                setElementView(baseView, R.id.textViewIceStat, elements.get(Element.ICE));
-                setElementView(baseView, R.id.textViewElectricStat, elements.get(Element.ELECTRIC));
-                setElementView(baseView, R.id.textViewWindStat, elements.get(Element.WIND));
-                setElementView(baseView, R.id.textViewPsyStat, elements.get(Element.PSYCHIC));
-                setElementView(baseView, R.id.textViewNuclearStat, elements.get(Element.NUCLEAR));
-                setElementView(baseView, R.id.textViewBlessStat, elements.get(Element.BLESS));
-                setElementView(baseView, R.id.textViewCurseStat, elements.get(Element.CURSE));
-            }
+        final PersonaElementsViewModelFactory factory = new PersonaElementsViewModelFactory(repository, personaID);
+        viewModel = new ViewModelProvider(this, factory).get(PersonaElementsViewModel.class);
+        viewModel.getElementsForPersona().observe(getViewLifecycleOwner(), elements -> {
+            setElementView(baseView, R.id.textViewPhysicalStat, elements.get(Element.PHYSICAL));
+            setElementView(baseView, R.id.textViewGunStat, elements.get(Element.GUN));
+            setElementView(baseView, R.id.textViewFireStat, elements.get(Element.FIRE));
+            setElementView(baseView, R.id.textViewIceStat, elements.get(Element.ICE));
+            setElementView(baseView, R.id.textViewElectricStat, elements.get(Element.ELECTRIC));
+            setElementView(baseView, R.id.textViewWindStat, elements.get(Element.WIND));
+            setElementView(baseView, R.id.textViewPsyStat, elements.get(Element.PSYCHIC));
+            setElementView(baseView, R.id.textViewNuclearStat, elements.get(Element.NUCLEAR));
+            setElementView(baseView, R.id.textViewBlessStat, elements.get(Element.BLESS));
+            setElementView(baseView, R.id.textViewCurseStat, elements.get(Element.CURSE));
         });
     }
 

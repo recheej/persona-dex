@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -19,8 +20,8 @@ import com.persona5dex.ThemeUtil;
 import com.persona5dex.activities.BaseActivity;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.dagger.application.AndroidViewModelRepositoryModule;
+import com.persona5dex.viewmodels.PersonaFusionViewModel;
 import com.persona5dex.viewmodels.SettingsViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
@@ -61,14 +62,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         Persona5Application.get(activity)
                 .getComponent()
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .activityComponent(new LayoutModule(activity),
-                        new ActivityContextModule(activity),
-                        new ViewModelRepositoryModule())
+                        new ActivityContextModule(activity)
+                )
                 .plus()
                 .inject(this);
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SettingsViewModel.class);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(SettingsViewModel.class);
 
         final MultiSelectListPreference dlcPreference = preferenceManager
                 .findPreference(activity.getString(R.string.pref_key_dlc));
@@ -76,7 +76,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         viewModel.getDLCPersonaForSettings().observe(getViewLifecycleOwner(), new Observer<String[][]>() {
             @Override
             public void onChanged(@Nullable String[][] dlcInfo) {
-                if(dlcInfo == null){
+                if(dlcInfo == null) {
                     dlcInfo = new String[0][0];
                 }
 

@@ -1,6 +1,7 @@
 package com.persona5dex.activities;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
@@ -41,7 +42,7 @@ public class PersonaFusionActivity extends BaseActivity implements FusionListFra
 
         personaForFusionID = getIntent().getIntExtra("persona_id", 1);
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaFusionViewModel.class);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaFusionViewModel.class);
 
         setUpToolbar();
 

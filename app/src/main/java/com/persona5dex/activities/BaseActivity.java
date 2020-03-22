@@ -12,8 +12,6 @@ import com.persona5dex.R;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,11 +38,9 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ActivityComponent component = Persona5Application.get(this).getComponent()
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .activityComponent(
                         new LayoutModule(this),
-                        new ActivityContextModule(this),
-                        new ViewModelRepositoryModule()
+                        new ActivityContextModule(this)
                 );
         component.inject(this);
         this.component = component;

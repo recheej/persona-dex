@@ -6,7 +6,9 @@ import com.persona5dex.activities.PersonaDetailActivity;
 import com.persona5dex.activities.PersonaFusionActivity;
 import com.persona5dex.activities.SettingsActivity;
 import com.persona5dex.activities.SkillDetailActivity;
+import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.dagger.fragment.FragmentComponent;
+import com.persona5dex.fragments.PersonaElementsFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 
 import dagger.Subcomponent;
@@ -19,8 +21,7 @@ import dagger.Subcomponent;
 @Subcomponent(
         modules = {
                 LayoutModule.class,
-                ActivityContextModule.class,
-                ViewModelRepositoryModule.class
+                ActivityContextModule.class
         }
 )
 public interface ActivityComponent {

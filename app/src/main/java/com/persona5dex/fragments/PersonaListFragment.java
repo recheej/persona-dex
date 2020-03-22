@@ -17,8 +17,7 @@ import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaListAdapter;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.dagger.application.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.repositories.MainPersonaRepository;
@@ -169,10 +168,9 @@ public class PersonaListFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         Persona5Application.get(activity).getComponent()
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .activityComponent(new LayoutModule(activity),
-                        new ActivityContextModule(activity),
-                        new ViewModelRepositoryModule())
+                        new ActivityContextModule(activity)
+                )
                 .plus()
                 .inject(this);
 

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +18,6 @@ import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListAdapter;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.application.Persona5ApplicationComponent;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
 import com.persona5dex.extensions.WorkInfoStateUtils;
 import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.PersonaEdgeDisplay;
@@ -103,22 +100,21 @@ public class FusionListFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
-        component.viewModelComponent(new AndroidViewModelRepositoryModule())
+        Persona5Application.get(activity).getComponent()
                 .activityComponent(new LayoutModule(activity),
-                        new ActivityContextModule(activity),
-                        new ViewModelRepositoryModule())
+                        new ActivityContextModule(activity)
+                )
                 .plus()
                 .inject(this);
 
         personaJobCreator.getStateForGenerateFusionJob().observe(getViewLifecycleOwner(), state -> {
-            if(WorkInfoStateUtils.isFinished(state)){
+            if(WorkInfoStateUtils.isDone(state)){
                 setUpRecyclerView();
                 setProgressBarVisible(false);
             }
         });
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonaFusionViewModel.class);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaFusionViewModel.class);
 
         recyclerView = baseView.findViewById(R.id.recycler_view_persona_list);
 

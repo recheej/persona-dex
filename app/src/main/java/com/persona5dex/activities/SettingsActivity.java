@@ -43,7 +43,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         component.inject(this);
 
         personaJobCreator.getStateForGenerateFusionJob().observe(this, state -> {
-            if(WorkInfoStateUtils.isFinished(state)){
+            if(WorkInfoStateUtils.isDone(state)){
                 showSettings();
             }
         });

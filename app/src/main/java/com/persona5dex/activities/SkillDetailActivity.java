@@ -1,6 +1,7 @@
 package com.persona5dex.activities;
 
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import androidx.annotation.Nullable;
@@ -48,9 +49,7 @@ public class SkillDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         final int skillID = intent.getIntExtra(PersonaSkillsFragment.SKILL_ID, 1);
 
-        this.viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(PersonaDetailSkillsViewModel.class);
-
+        this.viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaDetailSkillsViewModel.class);
         this.viewModel.getSkill(skillID).observe(this, new Observer<Skill>() {
             @Override
             public void onChanged(@Nullable Skill skill) {

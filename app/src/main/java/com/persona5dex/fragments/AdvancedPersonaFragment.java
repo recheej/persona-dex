@@ -15,8 +15,7 @@ import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.activity.ViewModelRepositoryModule;
-import com.persona5dex.dagger.viewModels.AndroidViewModelRepositoryModule;
+import com.persona5dex.dagger.application.AndroidViewModelRepositoryModule;
 import com.persona5dex.viewmodels.AdvancedFusionViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
@@ -71,10 +70,9 @@ public class AdvancedPersonaFragment extends BaseFragment implements PersonaList
         super.onActivityCreated(savedInstanceState);
 
         Persona5Application.get(activity).getComponent()
-                .viewModelComponent(new AndroidViewModelRepositoryModule())
                 .activityComponent(new LayoutModule(activity),
-                        new ActivityContextModule(activity),
-                        new ViewModelRepositoryModule())
+                        new ActivityContextModule(activity)
+                )
                 .plus().inject(this);
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)
