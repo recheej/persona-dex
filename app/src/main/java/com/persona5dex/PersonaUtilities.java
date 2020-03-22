@@ -15,7 +15,6 @@ import static com.persona5dex.models.Enumerations.*;
 
 public class PersonaUtilities {
 
-    public static final String SHARED_PREF_FUSIONS = "personaFusions";
     public static final String SHARED_PREF_TRANSFER_CONTENT = "personaTransferContent";
     public static final String SHARED_PREF_DLC = "personaDLCContent";
 
