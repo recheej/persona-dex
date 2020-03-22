@@ -8,9 +8,11 @@ import androidx.work.WorkManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.Constants;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaUtilities;
+import com.persona5dex.dagger.activity.ActivityScope;
 import com.persona5dex.fusionService.FusionChartService;
 import com.persona5dex.fusionService.FusionChartServiceFactory;
 import com.persona5dex.models.GameType;
@@ -89,5 +91,10 @@ public class ApplicationContextModule {
     @Provides
     FusionChartService providesFusionChartService(FusionChartServiceFactory fusionChartServiceFactory, GameType gameType) {
         return fusionChartServiceFactory.getFusionChartService(gameType);
+    }
+
+    @Provides
+    ArcanaNameProvider arcanaNameProvider(@Named("applicationContext") Context context) {
+        return new ArcanaNameProvider(context);
     }
 }

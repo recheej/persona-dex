@@ -1,14 +1,18 @@
-package com.persona5dex;
+package com.persona5dex.searchSuggestions;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.persona5dex.models.room.PersonaDatabase;
+import com.persona5dex.dagger.contentProvider.ContentProviderContextModule;
+import com.persona5dex.dagger.contentProvider.DaggerContentProviderComponent;
 import com.persona5dex.models.room.SearchSuggestionDao;
+
+import javax.inject.Inject;
 
 /**
  * Created by Rechee on 7/3/2017.
@@ -18,12 +22,16 @@ public class PersonaNameProvider extends ContentProvider {
 
     private SearchSuggestionDao dao;
 
+    @Inject
+    SearchSuggestionCursorProvider searchSuggestionCursorProvider;
+
     @Override
     public boolean onCreate() {
-        Persona5Application application = (Persona5Application) getContext().getApplicationContext();
-
-        PersonaDatabase db = PersonaDatabase.Companion.getPersonaDatabase(application);
-        dao = db.searchSuggestionDao();
+        DaggerContentProviderComponent
+                .builder()
+                .contentProviderContextModule(new ContentProviderContextModule(getContext()))
+                .build()
+                .inject(this);
         return true;
     }
 
@@ -31,8 +39,7 @@ public class PersonaNameProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         String query = uri.getLastPathSegment().toLowerCase();
-        final Cursor databaseCursor = dao.getSuggestions(String.format("%%%s%%", query));
-        return new SearchSuggestionCursor(databaseCursor);
+        return searchSuggestionCursorProvider.getSearchSuggestionCursor(String.format("%%%s%%", query));
     }
 
     @Nullable

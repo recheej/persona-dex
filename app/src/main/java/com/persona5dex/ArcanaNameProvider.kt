@@ -13,8 +13,7 @@ import javax.inject.Inject
 import javax.inject.Named
 import kotlin.Comparator
 
-@ApplicationScope
-class ArcanaNameProvider @Inject constructor(@Named("applicationContext") private val context: Context) {
+class ArcanaNameProvider(private val context: Context) {
 
     private val englishArcanaMap = getUSResource().let {
         Arcana.values().associate { arcana ->

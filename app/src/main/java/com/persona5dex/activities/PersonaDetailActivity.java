@@ -43,6 +43,7 @@ public class PersonaDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persona_detail);
+        component.inject(this);
 
         this.personaID = getIntent().getIntExtra("persona_id", 1);
 
