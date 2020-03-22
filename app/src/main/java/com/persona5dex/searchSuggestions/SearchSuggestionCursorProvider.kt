@@ -44,12 +44,11 @@ class SearchSuggestionCursorProvider @Inject constructor(
                 }
 
 
-        val cursor = MatrixCursor(columnNames, finalList.size)
-        finalList.forEach {
-            cursor.addRow(it)
+        return MatrixCursor(columnNames, finalList.size).apply {
+            finalList.forEach {
+                addRow(it)
+            }
         }
-
-        return cursor
     }
 
     companion object {
