@@ -14,6 +14,7 @@ import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListPagerAdapter;
 import com.persona5dex.fragments.AdvancedPersonaFragment;
 import com.persona5dex.fragments.FusionListFragment;
+import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
 import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
@@ -34,6 +35,9 @@ public class PersonaFusionActivity extends BaseActivity {
     @Inject
     MainPersonaRepository mainPersonaRepository;
 
+    @Inject
+    PersonaJobCreator personaJobCreator;
+
     private PersonaFusionViewModelV2 viewModel;
 
     private int personaForFusionID;
@@ -50,7 +54,12 @@ public class PersonaFusionActivity extends BaseActivity {
 
         personaForFusionID = getIntent().getIntExtra("persona_id", 1);
 
-        final PersonaFusionViewModelFactory factory = new PersonaFusionViewModelFactory(personaDisplayEdgesRepository, mainPersonaRepository, personaForFusionID);
+        final PersonaFusionViewModelFactory factory = new PersonaFusionViewModelFactory(
+                personaDisplayEdgesRepository,
+                mainPersonaRepository,
+                personaForFusionID,
+                personaJobCreator
+        );
         viewModel = new ViewModelProvider(this, factory).get(PersonaFusionViewModelV2.class);
 
         setUpToolbar();
