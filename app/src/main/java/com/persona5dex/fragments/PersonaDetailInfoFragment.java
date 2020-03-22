@@ -1,14 +1,6 @@
 package com.persona5dex.fragments;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.github.chrisbanes.photoview.PhotoView;
 import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.dagger.application.Persona5ApplicationComponent;
+import com.persona5dex.dagger.activity.ActivityContextModule;
+import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.room.Stats;
 import com.persona5dex.repositories.PersonaDetailRepository;
@@ -69,7 +66,10 @@ public class PersonaDetailInfoFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5ApplicationComponent component = Persona5Application.get(activity).getComponent();
+        Persona5Application.get(activity).getComponent().activityComponent(
+                new LayoutModule(requireActivity()),
+                new ActivityContextModule(requireActivity())
+        ).plus().inject(this);
 
         final PersonaDetailInfoViewModelFactory factory = new PersonaDetailInfoViewModelFactory(repository, arcanaNameProvider, personaID);
         viewModel = new ViewModelProvider(this, factory).get(PersonaDetailInfoViewModel.class);
