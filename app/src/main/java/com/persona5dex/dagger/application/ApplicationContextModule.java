@@ -6,24 +6,16 @@ import android.preference.PreferenceManager;
 
 import androidx.work.WorkManager;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.persona5dex.Constants;
 import com.persona5dex.Persona5Application;
-import com.persona5dex.PersonaFileUtilities;
 import com.persona5dex.PersonaUtilities;
-import com.persona5dex.R;
-import com.persona5dex.adapters.PersonaStoreGsonAdapter;
-import com.persona5dex.dagger.activity.ActivityScope;
 import com.persona5dex.fusionService.FusionChartService;
 import com.persona5dex.fusionService.FusionChartServiceFactory;
 import com.persona5dex.models.GameType;
-import com.persona5dex.models.PersonaStore;
-import com.persona5dex.models.RawPersona;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.persona5dex.models.room.PersonaDao;
 import com.persona5dex.models.room.PersonaDatabase;
-
-import java.io.InputStream;
 
 import javax.inject.Named;
 
@@ -53,10 +45,7 @@ public class ApplicationContextModule {
     @Provides
     @ApplicationScope
     Gson gson() {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(PersonaStore.class, new PersonaStoreGsonAdapter());
-
-        return builder.create();
+        return new GsonBuilder().create();
     }
 
     @Provides
@@ -64,14 +53,6 @@ public class ApplicationContextModule {
     @Named("dlcSharedPreferences")
     SharedPreferences dlcSharedPreferences() {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
-    }
-
-    @Provides
-    @ApplicationScope
-    RawPersona[] rawPersonas(PersonaFileUtilities personaFileUtilities) {
-        InputStream stream = context.getResources().openRawResource(R.raw.person_data);
-
-        return personaFileUtilities.parseJsonFile(stream, RawPersona[].class);
     }
 
     @Provides
