@@ -7,7 +7,7 @@ import com.persona5dex.models.PersonaEdgeDisplay
 import com.persona5dex.repositories.MainPersonaRepository
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository
 
-class PersonaFusionViewModelV2(
+class PersonaFusionViewModel(
         personaDisplayEdgesRepository: PersonaDisplayEdgesRepository,
         mainPersonaRepository: MainPersonaRepository,
         personaId: Int,
@@ -81,6 +81,6 @@ class PersonaFusionViewModelFactory(
         private val personaJobCreator: PersonaJobCreator
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            PersonaFusionViewModelV2(personaDisplayEdgesRepository, mainPersonaRepository, personaId, personaJobCreator) as T
+            PersonaFusionViewModel(personaDisplayEdgesRepository, mainPersonaRepository, personaId, personaJobCreator) as T
 
 }

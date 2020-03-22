@@ -18,7 +18,7 @@ import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
 import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
-import com.persona5dex.viewmodels.PersonaFusionViewModelV2;
+import com.persona5dex.viewmodels.PersonaFusionViewModel;
 
 import java.util.Locale;
 
@@ -38,7 +38,7 @@ public class PersonaFusionActivity extends BaseActivity {
     @Inject
     PersonaJobCreator personaJobCreator;
 
-    private PersonaFusionViewModelV2 viewModel;
+    private PersonaFusionViewModel viewModel;
 
     private int personaForFusionID;
     private PersonaFusionListPagerAdapter pagerAdapter;
@@ -60,7 +60,7 @@ public class PersonaFusionActivity extends BaseActivity {
                 personaForFusionID,
                 personaJobCreator
         );
-        viewModel = new ViewModelProvider(this, factory).get(PersonaFusionViewModelV2.class);
+        viewModel = new ViewModelProvider(this, factory).get(PersonaFusionViewModel.class);
 
         setUpToolbar();
 

@@ -18,13 +18,12 @@ import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListAdapter;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.extensions.WorkInfoStateUtils;
 import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
 import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
-import com.persona5dex.viewmodels.PersonaFusionViewModelV2;
+import com.persona5dex.viewmodels.PersonaFusionViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class FusionListFragment extends BaseFragment {
     private List<PersonaEdgeDisplay> edgeDisplays;
     private PersonaFusionListAdapter fusionListAdapter;
 
-    private PersonaFusionViewModelV2 viewModel;
+    private PersonaFusionViewModel viewModel;
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -131,7 +130,7 @@ public class FusionListFragment extends BaseFragment {
 
         setProgressBarVisible(true);
 
-        viewModel = new ViewModelProvider(requireActivity(), factory).get(PersonaFusionViewModelV2.class);
+        viewModel = new ViewModelProvider(requireActivity(), factory).get(PersonaFusionViewModel.class);
 
         LiveData<List<PersonaEdgeDisplay>> edgesLiveData = isToList ? viewModel.getToEdges() : viewModel.getFromEdges();
         edgesLiveData.observe(getViewLifecycleOwner(), personaEdgeDisplays -> {
