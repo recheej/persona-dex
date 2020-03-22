@@ -11,7 +11,7 @@ import kotlinx.coroutines.yield
 class AdvancedFusionViewModelV2(personaId: Int,
                                 private val mainPersonaRepository: MainPersonaRepository,
                                 private val advancedPersonaFusionsFileService: AdvancedPersonaFusionsFileService
-): ViewModel() {
+) : ViewModel() {
     val personaName = Transformations.map(mainPersonaRepository.getPersonaName(personaId)) {
         it.orEmpty()
     }
@@ -20,13 +20,15 @@ class AdvancedFusionViewModelV2(personaId: Int,
         liveData(Dispatchers.IO) {
             val nameNormalized = personaName.normalize()
 
-            val advancedFusions = advancedPersonaFusionsFileService.parseFile().first { it.resultPersonaName.normalize() == nameNormalized }
-            yield()
-            val nameMap = mainPersonaRepository.allPersonasForMainList.associateBy { it.name.normalize() }
-            yield()
-            val personas = advancedFusions.sourcePersonaNames
-                    .map { nameMap.getValue(it.normalize()) }
-                    .sortedBy { it.name }
+            val personas = advancedPersonaFusionsFileService.parseFile().firstOrNull { it.resultPersonaName.normalize() == nameNormalized }?.let { advancedFusions ->
+                yield()
+                val nameMap = mainPersonaRepository.allPersonasForMainList.associateBy { it.name.normalize() }
+                yield()
+                advancedFusions.sourcePersonaNames
+                        .map { nameMap.getValue(it.normalize()) }
+                        .sortedBy { it.name }
+            }.orEmpty()
+
 
             emit(personas)
         }
@@ -36,7 +38,7 @@ class AdvancedFusionViewModelV2(personaId: Int,
 class AdvancedFusionViewModelFactory(private val personaId: Int,
                                      private val mainPersonaRepository: MainPersonaRepository,
                                      private val advancedPersonaFusionsFileService: AdvancedPersonaFusionsFileService
-): ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
             AdvancedFusionViewModelV2(personaId, mainPersonaRepository, advancedPersonaFusionsFileService) as T
 }
