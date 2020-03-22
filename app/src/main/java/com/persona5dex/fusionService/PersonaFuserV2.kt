@@ -27,7 +27,10 @@ class PersonaFuserV2(
                 resultArcana?.let {
                     val rank = floor(((personaOne.level + personaTwo.level) / 2).toDouble()).toInt() + 1
 
-                    val personasInArcana = checkNotNull(personasByArcana[resultArcana]).withIndex().toList()
+                    val personasInArcana = checkNotNull(personasByArcana[resultArcana])
+                            .withIndex()
+                            .toList()
+                            .sortedBy { it.value.level }
 
                     if (personaOne.arcana == personaTwo.arcana) {
                         return fuseSameArcanaPersonas(personaOne, personaTwo, rank, personasInArcana)
@@ -41,6 +44,6 @@ class PersonaFuserV2(
 
     private fun fuseSameArcanaPersonas(personaOne: PersonaForFusionService, personaTwo: PersonaForFusionService, rank: Int, personasInArcana: List<IndexedValue<PersonaForFusionService>>): PersonaForFusionService? =
             personasInArcana.lastOrNull {
-                it.value.level < rank && it.value != personaOne && it.value != personaTwo
+                it.value.level < rank && !(it.value == personaOne || it.value == personaTwo)
             }?.value
 }

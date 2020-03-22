@@ -17,13 +17,11 @@ import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaListAdapter;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.application.AndroidViewModelRepositoryModule;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.viewmodels.PersonaListViewModelFactory;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
-import com.persona5dex.viewmodels.PersonaMainListViewModel.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +49,10 @@ public class PersonaListFragment extends BaseFragment {
     ArcanaNameProvider arcanaNameProvider;
 
     @Inject
-    MainPersonaRepository mainPersonaRepository;
-
-    @Inject
     GameType gameType;
 
     private LinearLayoutManager layoutManager;
     private boolean showIndexBar;
-    private PersonaListFragmentListener fragmentListener;
 
     public static PersonaListFragment newInstance(boolean indexBarVisible){
         PersonaListFragment listFragment = new PersonaListFragment();
@@ -174,7 +168,7 @@ public class PersonaListFragment extends BaseFragment {
         recyclerView.setAdapter(personaListAdapter);
 
         showProgressBar();
-        PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(mainPersonaRepository, arcanaNameProvider, gameType);
+        PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, gameType);
         viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(PersonaMainListViewModel.class);
 
         viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), personas -> {

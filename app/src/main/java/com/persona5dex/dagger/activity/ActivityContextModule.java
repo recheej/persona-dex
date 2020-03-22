@@ -2,7 +2,6 @@ package com.persona5dex.dagger.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.R;

@@ -83,15 +83,8 @@ public class ApplicationContextModule {
     @Provides
     @ApplicationScope
     @Named("defaultSharedPreferences")
-    SharedPreferences defaultSharedPreferences(){
+    SharedPreferences defaultSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    @Provides
-    @ApplicationScope
-    GameType gameType(@Named("defaultSharedPreferences") SharedPreferences sharedPreferences) {
-        final int gameTypeInt = sharedPreferences.getInt(Constants.SHARED_PREF_KEY_GAME_TYPE, GameType.BASE.getValue());
-        return GameType.getGameType(gameTypeInt);
     }
 
     @Provides
@@ -102,13 +95,18 @@ public class ApplicationContextModule {
 
     @Provides
     @ApplicationScope
-    FusionChartService providesFusionChartService(FusionChartServiceFactory fusionChartServiceFactory, GameType gameType) {
-        return fusionChartServiceFactory.getFusionChartService(gameType);
+    PersonaDao providesPersonaDao(PersonaDatabase personaDatabase) {
+        return personaDatabase.personaDao();
     }
 
     @Provides
-    @ApplicationScope
-    PersonaDao providesPersonaDao(PersonaDatabase personaDatabase) {
-        return personaDatabase.personaDao();
+    GameType gameType(@Named("defaultSharedPreferences") SharedPreferences sharedPreferences) {
+        final int gameTypeInt = sharedPreferences.getInt(Constants.SHARED_PREF_KEY_GAME_TYPE, GameType.BASE.getValue());
+        return GameType.getGameType(gameTypeInt);
+    }
+
+    @Provides
+    FusionChartService providesFusionChartService(FusionChartServiceFactory fusionChartServiceFactory, GameType gameType) {
+        return fusionChartServiceFactory.getFusionChartService(gameType);
     }
 }

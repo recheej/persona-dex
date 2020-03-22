@@ -19,88 +19,135 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 
+@RunWith(Enclosed::class)
+class PersonaFuserTestSuiteTest {
 
-@RunWith(ParameterizedRobolectricTestRunner::class)
-@Config(manifest = "src/main/AndroidManifest.xml", sdk = [Build.VERSION_CODES.O])
-class PersonaFuserTest(
-        private val personaOne: String,
-        private val personaTwo: String,
-        private val expectedResultPersonaName: String?,
-        private val gameType: GameType
-) {
+    @RunWith(RobolectricTestRunner::class)
+    @Config(manifest = "src/main/AndroidManifest.xml", sdk = [Build.VERSION_CODES.O])
+    abstract class Shared {
+        private lateinit var arcanaNameProvider: ArcanaNameProvider
+        private lateinit var application: Persona5Application
+        private lateinit var fusionChartFactory: FusionChartServiceFactory
+        protected lateinit var allPersonas: List<PersonaForFusionService>
+        private val personaDao: PersonaDao = mock()
+        private val mockPreferences: SharedPreferences = mock()
 
-    private lateinit var arcanaNameProvider: ArcanaNameProvider
-    private lateinit var application: Persona5Application
-    private lateinit var fusionChartFactory: FusionChartServiceFactory
-    private lateinit var personaFuser: PersonaFuserV2
-    private lateinit var allPersonas: List<PersonaForFusionService>
+        @Before
+        open fun setup() {
+            application = RuntimeEnvironment.application as Persona5Application
+            arcanaNameProvider = ArcanaNameProvider(application)
 
-    @Before
-    fun setup() {
-        application = RuntimeEnvironment.application as Persona5Application
-        arcanaNameProvider = ArcanaNameProvider(application)
+            fusionChartFactory = FusionChartServiceFactory(application, arcanaNameProvider)
 
-        fusionChartFactory = FusionChartServiceFactory(application, arcanaNameProvider)
-    }
+            allPersonas = getFusionPersonas()
 
-    @Test
-    fun testBasicFusion() = runBlocking {
+            whenever(personaDao.personasByLevel).thenReturn(allPersonas.toTypedArray())
 
-        val fusionChart = fusionChartFactory.getFusionChartService(gameType).getFusionChart()
+            val dlcPersonaSet = allPersonas
+                    .filter { it.isDlc }
+                    .map { it.id.toString() }
+                    .toSet()
 
-        allPersonas = getFusionPersonas()
+            whenever(mockPreferences.getStringSet(eq(DLC_SHARED_PREF), any())).thenReturn(dlcPersonaSet)
+        }
 
-        val personaDao: PersonaDao = mock()
-        whenever(personaDao.personasByLevel).thenReturn(allPersonas.toTypedArray())
-
-        val mockPreferences: SharedPreferences = mock()
-
-        val dlcPersonaSet = allPersonas
-                .filter { it.isDlc }
-                .map { it.id.toString() }
-                .toSet()
-
-        whenever(mockPreferences.getStringSet(eq(DLC_SHARED_PREF), any())).thenReturn(dlcPersonaSet)
-
-        val fusionRepository = PersonaFusionRepository(personaDao, mockPreferences, gameType)
-
-        personaFuser = PersonaFuserV2(fusionRepository, fusionChart)
-
-        val resultPersona = personaOne fuse personaTwo
-
-        Assert.assertEquals(expectedResultPersonaName, resultPersona?.name)
-    }
-
-    private fun String.findPersona(gameType: GameType) =
-            try {
-                allPersonas.firstOrNull { it.getGameId == gameType && it.name equalNormalized this }
-                        ?: allPersonas.first { it.getGameId == GameType.BASE && it.name equalNormalized this }
-            } catch (e: NoSuchElementException) {
-                throw IllegalStateException("failed to find persona: $this", e)
+        protected suspend fun GameType.getFuser() = runBlocking {
+            fusionChartFactory.getFusionChartService(this@getFuser).getFusionChart().let {
+                val fusionRepository = PersonaFusionRepository(personaDao, mockPreferences, this@getFuser)
+                PersonaFuserV2(fusionRepository, it)
             }
+        }
 
-    private suspend infix fun String.fuse(other: String) =
-            personaFuser.fusePersona(findPersona(gameType), other.findPersona(gameType))
+        protected fun String.findPersona(gameType: GameType) =
+                try {
+                    allPersonas.firstOrNull { it.gameId == gameType && it.name equalNormalized this }
+                            ?: allPersonas.first { it.gameId == GameType.BASE && it.name equalNormalized this }
+                } catch (e: NoSuchElementException) {
+                    throw IllegalStateException("failed to find persona: $this", e)
+                }
 
-    companion object {
-        @JvmStatic
-        @ParameterizedRobolectricTestRunner.Parameters(name = "{index}: testFusion({0} + {1} = {2}. GameType={3}")
-        fun data() = listOf(
-                arrayOf("Jack Frost", "Hua Po", "Yaksini", GameType.BASE),
-                arrayOf("Jack Frost", "Jack Frost", null, GameType.BASE),
-                arrayOf("Arsene", "Jack-o'-Lantern", "Mandrake", GameType.BASE),
-                arrayOf("Hecatoncheires", "Hua Po", "Orthrus", GameType.BASE), //same arcana fusion
-                arrayOf("Ariadne Picaro", "Succubus", "Mithras", GameType.BASE),
-                arrayOf("Anubis", "Power", null, GameType.BASE),
-                arrayOf("Cait Sith", "Naga", "Leanan Sidhe", GameType.ROYAL),
-                arrayOf("Biyarky", "Take-Minakata", "Yatagarasu", GameType.ROYAL),
-                arrayOf("Biyarky", "Phoenix", "Horus", GameType.ROYAL),
-                arrayOf("Biyarky", "Biyarky", null, GameType.ROYAL)
-        )
+        protected suspend fun PersonaFuserV2.fusePersona(one: String, two: String, gameType: GameType): PersonaForFusionService? {
+            return fusePersona(one.findPersona(gameType), two.findPersona(gameType))
+        }
+
+        protected infix fun PersonaForFusionService?.isEqual(other: String?) =
+                Assert.assertTrue(namesEqual(other))
+
+        protected infix fun PersonaForFusionService?.notEqual(other: String?) =
+                Assert.assertFalse(namesEqual(other))
+
+        private fun PersonaForFusionService?.namesEqual(other: String?) =
+                this?.name equalNormalized other
     }
+
+    @RunWith(ParameterizedRobolectricTestRunner::class)
+    @Config(manifest = "src/main/AndroidManifest.xml", sdk = [Build.VERSION_CODES.O])
+    class PersonaFuserTest(
+            private val personaOne: String,
+            private val personaTwo: String,
+            private val expectedResultPersonaName: String?,
+            private val gameType: GameType
+    ) : Shared() {
+
+        private lateinit var personaFuser: PersonaFuserV2
+
+        @Before
+        override fun setup() = runBlocking {
+            super.setup()
+            personaFuser = gameType.getFuser()
+        }
+
+        @Test
+        fun testBasicFusion() = runBlocking {
+            val resultPersona = personaOne fuse personaTwo
+            resultPersona isEqual expectedResultPersonaName
+        }
+
+        private suspend infix fun String.fuse(other: String) =
+                personaFuser.fusePersona(this, other, gameType)
+
+        companion object {
+            @JvmStatic
+            @ParameterizedRobolectricTestRunner.Parameters(name = "{index}: testFusion({0} + {1} = {2}. GameType={3}")
+            fun data() = listOf(
+                    arrayOf("Jack Frost", "Hua Po", "Yaksini", GameType.BASE),
+                    arrayOf("Jack Frost", "Jack Frost", null, GameType.BASE),
+                    arrayOf("Arsene", "Jack-o'-Lantern", "Mandrake", GameType.BASE),
+                    arrayOf("Hecatoncheires", "Hua Po", "Orthrus", GameType.BASE), //same arcana fusion
+                    arrayOf("Ariadne Picaro", "Succubus", "Mithras", GameType.BASE),
+                    arrayOf("Anubis", "Power", null, GameType.BASE),
+                    arrayOf("Cait Sith", "Naga", "Leanan Sidhe", GameType.ROYAL),
+                    arrayOf("Biyarky", "Take-Minakata", "Yatagarasu", GameType.ROYAL),
+                    arrayOf("Biyarky", "Phoenix", "Horus", GameType.ROYAL),
+                    arrayOf("Biyarky", "Biyarky", null, GameType.ROYAL)
+            )
+        }
+    }
+
+    class SingleTests : Shared() {
+        @Test
+        fun `cannot fuse same arcana and get ingredient`() = runBlocking {
+            val gameType = GameType.ROYAL
+            val fuser = gameType.getFuser()
+            val personaTwo = "cait sith"
+            val result = fuser.fusePersona("jack frost", personaTwo, gameType)
+            result notEqual personaTwo
+        }
+
+        @Test
+        fun `fusion respects arcana ordering`() = runBlocking {
+            val gameType = GameType.ROYAL
+            val fuser = gameType.getFuser()
+            val result = fuser.fusePersona("jack frost", "surt", gameType)
+            result notEqual "cait sith"
+        }
+    }
+
 }

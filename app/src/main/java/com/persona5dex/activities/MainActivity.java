@@ -59,9 +59,11 @@ public class MainActivity extends BaseActivity {
     @Inject
     PersonaJobCreator personaJobCreator;
 
+    @Inject
+    GameType currentGameType;
+
     private int selectedSortMenuItemID;
     private PersonaListFragment personaListFragment;
-    private GameType currentGameType;
     private Button switchGameButton;
     private TextView currentGameTextView;
 
@@ -115,9 +117,6 @@ public class MainActivity extends BaseActivity {
 
     private void setUpSwitchGameButton() {
         switchGameButton = findViewById(R.id.switch_game_button);
-
-        final int gameTypeInt = defaultSharedPreferences.getInt(Constants.SHARED_PREF_KEY_GAME_TYPE, GameType.ROYAL.getValue());
-        currentGameType = GameType.getGameType(gameTypeInt);
 
         setNewSwitchButtonText();
         switchGameButton.setOnClickListener(v -> {

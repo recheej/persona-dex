@@ -17,9 +17,7 @@ class PersonaFusionGraphGenerator @Inject constructor(
             personas.forEach { personaTwo ->
                 personaFuser.fusePersona(personaOne, personaTwo)?.let {
                     val graphEntry = PersonaGraphEntry(personaOne, personaTwo, it)
-                    if(graphEntry !in personaFusions) {
-                        personaFusions.add(graphEntry)
-                    }
+                    personaFusions.add(graphEntry)
                 }
             }
         }
@@ -32,4 +30,31 @@ data class PersonaGraphEntry(
         val personaOne: PersonaForFusionService,
         val personaTwo: PersonaForFusionService,
         val resultPersona: PersonaForFusionService
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PersonaGraphEntry
+
+        if(personaOne == other.personaTwo && other.personaOne == personaTwo) {
+            return resultPersona == other.resultPersona
+        }
+
+        if (personaOne != other.personaOne) return false
+        if (personaTwo != other.personaTwo) return false
+        if (resultPersona != other.resultPersona) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        val firstPersona = if(personaOne.id < personaTwo.id) personaOne else personaTwo
+        val secondPersona = if(firstPersona.id == personaTwo.id) personaOne else personaTwo
+
+        var result = firstPersona.hashCode()
+        result = 31 * result + secondPersona.hashCode()
+        result = 31 * result + resultPersona.hashCode()
+        return result
+    }
+}

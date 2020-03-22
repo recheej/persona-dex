@@ -63,6 +63,8 @@ public class Enumerations {
 
             return Arcana.ANY;
         }
+
+
     }
 
     public enum Personality {

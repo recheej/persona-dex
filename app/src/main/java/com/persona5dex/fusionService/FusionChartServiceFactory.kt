@@ -2,10 +2,12 @@ package com.persona5dex.fusionService
 
 import android.content.Context
 import com.persona5dex.ArcanaNameProvider
+import com.persona5dex.dagger.application.ApplicationScope
 import com.persona5dex.models.GameType
 import javax.inject.Inject
 import javax.inject.Named
 
+@ApplicationScope
 class FusionChartServiceFactory @Inject constructor(
         @Named("applicationContext") private val context: Context,
         private val arcanaNameProvider: ArcanaNameProvider

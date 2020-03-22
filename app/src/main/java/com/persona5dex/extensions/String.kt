@@ -9,5 +9,5 @@ fun String.toLowerCaseInsensitive() = toLowerCase(Locale.ROOT)
 fun String.normalize(): String =
         "[^a-zA-Z]".toRegex().replace(this, "").toLowerCaseInsensitive()
 
-infix fun String.equalNormalized(other: String) =
-        this.normalize() == other.normalize()
+infix fun String?.equalNormalized(other: String?) =
+        this?.normalize() == other?.normalize()

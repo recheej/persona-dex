@@ -54,4 +54,12 @@ class PersonaFusionGraphGeneratorTest {
         val allFusions = graphGenerator.getAllFusions()
         Assert.assertTrue(allFusions.isNotEmpty())
     }
+
+    @Test
+    fun `testGetAllFusions doesn't have dups`() = runBlocking {
+        val allFusions = graphGenerator.getAllFusions()
+        val groups = allFusions.groupBy { it.hashCode() }
+        val hasDuplicates = groups.any { it.value.count() > 1 }
+        Assert.assertFalse(hasDuplicates)
+    }
 }

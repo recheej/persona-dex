@@ -95,7 +95,7 @@ public class PersonaForFusionService implements GameTypePersona {
                 dlc == that.dlc &&
                 id == that.id &&
                 arcana == that.arcana &&
-                name.equals(that.name) &&
+                Objects.equals(name, that.name) &&
                 gameId == that.gameId;
     }
 

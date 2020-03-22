@@ -6,11 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.models.GameType;
-import com.persona5dex.models.MainListPersona;
-import com.persona5dex.repositories.CustomPersonaRepository;
-import com.persona5dex.repositories.MainPersonaRepository;
-
-import java.util.List;
 
 /**
  * Created by reche on 1/4/2018.
@@ -18,12 +13,10 @@ import java.util.List;
 
 public class PersonaListViewModelFactory implements ViewModelProvider.Factory {
 
-    private final MainPersonaRepository mainPersonaRepository;
     private final ArcanaNameProvider arcanaNameProvider;
     private final GameType gameType;
 
-    public PersonaListViewModelFactory(MainPersonaRepository mainPersonaRepository, ArcanaNameProvider arcanaNameProvider, GameType gameType){
-        this.mainPersonaRepository = mainPersonaRepository;
+    public PersonaListViewModelFactory(ArcanaNameProvider arcanaNameProvider, GameType gameType){
         this.arcanaNameProvider = arcanaNameProvider;
         this.gameType = gameType;
     }

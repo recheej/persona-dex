@@ -1,5 +1,7 @@
 package com.persona5dex;
 
+import android.app.Application;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.annotation.NonNull;
 
@@ -8,9 +10,11 @@ import com.persona5dex.models.PersonaShadowDetail;
 import com.persona5dex.repositories.PersonaDetailRepository;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +29,15 @@ import static org.mockito.Mockito.when;
 @RunWith(RobolectricTestRunner.class)
 public class PersonaDetailViewModelTest {
 
+    private Application application;
+    private ArcanaNameProvider arcananameProvider;
+
+    @Before
+    public void setup() {
+        application = RuntimeEnvironment.application;
+        arcananameProvider = new ArcanaNameProvider(application);
+    }
+
     @Test
     public void getShadowNames_sortedInCorrectOrder() {
 
@@ -36,7 +49,7 @@ public class PersonaDetailViewModelTest {
         PersonaShadowDetail shadowDetailOne = new PersonaShadowDetail("test shadow name", 1);
         PersonaShadowDetail shadowDetailTwo = new PersonaShadowDetail("test shadow name two", 0);
 
-        PersonaShadowDetail[] details = new PersonaShadowDetail[] {shadowDetailOne, shadowDetailTwo };
+        PersonaShadowDetail[] details = new PersonaShadowDetail[]{shadowDetailOne, shadowDetailTwo};
         MutableLiveData<PersonaShadowDetail[]> shadowData = new MutableLiveData<>();
         shadowData.setValue(details);
 
@@ -44,7 +57,7 @@ public class PersonaDetailViewModelTest {
         when(repository.getShadowsForPersona(testDetailInfo.id)).thenReturn(shadowData);
         when(repository.getDetailsForPersona(testDetailInfo.id)).thenReturn(detailInfoData);
 
-        PersonaDetailInfoViewModel viewModel = new PersonaDetailInfoViewModel(repository, testDetailInfo.id);
+        PersonaDetailInfoViewModel viewModel = new PersonaDetailInfoViewModel(repository, arcananameProvider, testDetailInfo.id);
 
         viewModel.getShadowsForPersona().observeForever(shadowDisplayName -> {
             assertNotNull(shadowDisplayName);
@@ -69,7 +82,7 @@ public class PersonaDetailViewModelTest {
         when(repository.getShadowsForPersona(testDetailInfo.id)).thenReturn(shadowData);
         when(repository.getDetailsForPersona(testDetailInfo.id)).thenReturn(detailInfoData);
 
-        PersonaDetailInfoViewModel viewModel = new PersonaDetailInfoViewModel(repository, testDetailInfo.id);
+        PersonaDetailInfoViewModel viewModel = new PersonaDetailInfoViewModel(repository, arcananameProvider, testDetailInfo.id);
 
         viewModel.getShadowsForPersona().observeForever(shadowDisplayName -> {
             assertNull(shadowDisplayName);
@@ -91,7 +104,7 @@ public class PersonaDetailViewModelTest {
         when(repository.getShadowsForPersona(testDetailInfo.id)).thenReturn(shadowData);
         when(repository.getDetailsForPersona(testDetailInfo.id)).thenReturn(detailInfoData);
 
-        PersonaDetailInfoViewModel viewModel = new PersonaDetailInfoViewModel(repository, testDetailInfo.id);
+        PersonaDetailInfoViewModel viewModel = new PersonaDetailInfoViewModel(repository, arcananameProvider, testDetailInfo.id);
 
         viewModel.getShadowsForPersona().observeForever(shadowDisplayName -> {
             assertNull(shadowDisplayName);
@@ -109,7 +122,7 @@ public class PersonaDetailViewModelTest {
         PersonaDetailRepository repository = mock(PersonaDetailRepository.class);
         when(repository.getDetailsForPersona(testDetailInfo.id)).thenReturn(detailInfoData);
 
-        PersonaDetailInfoViewModel viewModel = new PersonaDetailInfoViewModel(repository, testDetailInfo.id);
+        PersonaDetailInfoViewModel viewModel = new PersonaDetailInfoViewModel(repository, arcananameProvider, testDetailInfo.id);
 
         viewModel.getDetailsForPersona().observeForever(personaDetailInfo -> {
             assertNotNull(personaDetailInfo);
