@@ -159,10 +159,6 @@ public class PersonaListFragment extends BaseFragment {
         viewModel.initialize(personas);
     }
 
-    void setListener(PersonaListFragmentListener fragmentListener){
-        this.fragmentListener = fragmentListener;
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -191,14 +187,6 @@ public class PersonaListFragment extends BaseFragment {
             personaListAdapter.notifyDataSetChanged();
 
             hideProgressBar();
-        });
-
-        viewModel.getState().observe(getViewLifecycleOwner(), state -> {
-            if(fragmentListener != null){
-                if(state == State.InitializeLoading.INSTANCE) {
-                    fragmentListener.fragmentFinishedLoading();
-                }
-            }
         });
     }
 }

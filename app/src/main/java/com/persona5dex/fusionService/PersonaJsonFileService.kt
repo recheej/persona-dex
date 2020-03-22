@@ -8,7 +8,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 abstract class PersonaJsonFileService<T>(private val context: Context) : PersonaFileService<T>(context) {
-    abstract suspend fun parseJson(jsonReader: JsonReader): T
+    protected abstract suspend fun parseJson(jsonReader: JsonReader): T
 
     final override suspend fun parseFile(fileInputStream: InputStream): T =
             withContext(Dispatchers.IO) {

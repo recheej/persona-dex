@@ -7,7 +7,7 @@ import java.util.*
 fun String.toLowerCaseInsensitive() = toLowerCase(Locale.ROOT)
 
 fun String.normalize(): String =
-        "[\\s_\']".toRegex().replace(this, "").toLowerCaseInsensitive()
+        "[^a-zA-Z]".toRegex().replace(this, "").toLowerCaseInsensitive()
 
 infix fun String.equalNormalized(other: String) =
         this.normalize() == other.normalize()

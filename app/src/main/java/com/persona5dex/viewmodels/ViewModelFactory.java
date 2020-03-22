@@ -62,10 +62,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         } else if(modelClass == PersonaFusionViewModel.class) {
             return (T) new PersonaFusionViewModel(edgesRepositoryLazy.get(),
                     mainPersonaRepositoryLazy.get());
-        } else if(modelClass == AdvancedFusionViewModel.class) {
-            return (T) new AdvancedFusionViewModel((Application) applicationContext,
-                    mainPersonaRepositoryLazy.get(), personaFileUtilitiesLazy.get());
-        } else if(modelClass == SettingsViewModel.class) {
+        }  else if(modelClass == SettingsViewModel.class) {
             return (T) new SettingsViewModel(mainPersonaRepositoryLazy.get());
         }
 
