@@ -72,11 +72,7 @@ public class PersonaListFragment extends BaseFragment {
         this.recyclerView.setIndexBarVisibility(isVisible);
     }
 
-    public interface PersonaListFragmentListener {
-        void fragmentFinishedLoading();
-    }
-
-    @Override
+     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         personas = new ArrayList<>(250);

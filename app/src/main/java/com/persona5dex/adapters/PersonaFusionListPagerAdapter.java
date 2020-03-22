@@ -29,14 +29,6 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
         this.fromFragment = fromFragment;
     }
 
-    public void setToListCount(int toListCount) {
-        this.toListCount = toListCount;
-    }
-
-    public void setFromListCount(int fromListCount) {
-        this.fromListCount = fromListCount;
-    }
-
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -52,28 +44,5 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return FRAGMENT_COUNT;
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                String to = context.getString(R.string.to);
-
-                if (toListCount == 0) {
-                    return to;
-                }
-
-                return String.format(Locale.getDefault(), "%s (%d)", to, toListCount);
-            case 1:
-                String from = context.getString(R.string.from);
-                if (fromListCount == 0) {
-                    return from;
-                }
-
-                return String.format(Locale.getDefault(), "%s (%d)", from, fromListCount);
-            default:
-                return null;
-        }
     }
 }

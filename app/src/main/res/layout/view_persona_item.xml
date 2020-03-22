@@ -28,14 +28,6 @@
                 android:textAppearance="?textBodyTitle"
                 android:layout_marginRight="5dp"/>
 
-            <TextView
-                android:id="@+id/textViewPrimaryShadowName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                tools:ignore="HardcodedText"
-                android:visibility="gone"/>
-
         </LinearLayout>
 
         <TextView

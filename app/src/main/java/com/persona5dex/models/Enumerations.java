@@ -67,24 +67,6 @@ public class Enumerations {
 
     }
 
-    public enum Personality {
-        UPBEAT(0),
-        TIMID(1),
-        IRRITABLE(2),
-        GLOOMY(3),
-        UNKNOWN(4);
-
-        private int i;
-
-        Personality(int value) {
-            i = value;
-        }
-
-        public int value() {
-            return i;
-        }
-    }
-
     public enum Element {
         PHYSICAL(0),
         GUN(1),

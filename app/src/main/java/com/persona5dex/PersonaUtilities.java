@@ -17,8 +17,4 @@ public class PersonaUtilities {
 
     public static final String SHARED_PREF_TRANSFER_CONTENT = "personaTransferContent";
     public static final String SHARED_PREF_DLC = "personaDLCContent";
-
-    public static String normalizePersonaName(String personaName) {
-        return personaName.replaceAll("[^a-zA-Z0-9]+", "").toLowerCase().trim();
-    }
 }

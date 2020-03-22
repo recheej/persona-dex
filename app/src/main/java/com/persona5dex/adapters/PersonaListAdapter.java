@@ -42,7 +42,6 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         private TextView textViewPersonaName;
-        private TextView textViewPrimaryShadowName;
         private TextView textViewPersonaLevel;
         private TextView textViewPersonaArcana;
         private final ArcanaNameProvider arcanaNameProvider;
@@ -51,7 +50,6 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
             super(itemView);
 
             this.textViewPersonaName = itemView.findViewById(R.id.textViewPersonaName);
-            this.textViewPrimaryShadowName = itemView.findViewById(R.id.textViewPrimaryShadowName);
             this.textViewPersonaLevel = itemView.findViewById(R.id.textViewPersonaLevel);
             this.textViewPersonaArcana = itemView.findViewById(R.id.textViewArcana);
             this.arcanaNameProvider = arcanaNameProvider;
@@ -61,43 +59,7 @@ public class PersonaListAdapter extends RecyclerView.Adapter<PersonaListAdapter.
             this.textViewPersonaName.setText(personaToBind.getName());
             this.textViewPersonaLevel.setText(String.format(Locale.getDefault(), "%d" , personaToBind.level));
             this.textViewPersonaArcana.setText(arcanaNameProvider.getArcanaNameForDisplay(personaToBind.arcana));
-
-//
-//            @ColorRes final int textColor = getTextColor(personaToBind, );
-//            @ColorInt final int color = itemView.getContext().getResources().getColor(textColor);
-//            this.textViewPersonaName.setTextColor(color);
-//            this.textViewPersonaLevel.setTextColor(color);
-//            this.textViewPersonaArcana.setTextColor(color);
         }
-
-//        @ColorRes private int getTextColor(MainListPersona personaToBind, boolean primary) {
-//            @ColorRes int backgroundColor;
-//            if(personaToBind.gameId == GameType.ROYAL){
-//                if(primary){
-//                    backgroundColor = R.color.textColorGoldenOnDark;
-//                }
-//                else{
-//
-//                }
-//            }
-//            else{
-//                if(primary){
-//                    backgroundColor = android.R.color.pri;
-//                }
-//                else{
-//
-//                }
-//            }
-//
-//            return backgroundColor;
-//        }
-//
-//        private void getDefaultTextColor(boolean primary, Context context){
-//            TypedValue typedValue = new TypedValue();
-//            Theme theme = context.theme
-//            theme.resolveAttribute(R.attr.theme_color, typedValue, true);
-//            @ColorInt int color = typedValue.data;
-//        }
     }
 
     public PersonaListAdapter(List<MainListPersona> mainListPersonas, ArcanaNameProvider arcanaNameProvider){

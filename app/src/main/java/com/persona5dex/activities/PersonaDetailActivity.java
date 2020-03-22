@@ -44,10 +44,6 @@ public class PersonaDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persona_detail);
 
-        final Persona5ApplicationComponent applicationComponent = Persona5Application.get(this)
-                .getComponent();
-        component.inject(this);
-
         this.personaID = getIntent().getIntExtra("persona_id", 1);
 
         final PersonaDetailInfoViewModelFactory factory = new PersonaDetailInfoViewModelFactory(repository, arcanaNameProvider, personaID);

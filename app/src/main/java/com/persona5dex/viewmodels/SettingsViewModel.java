@@ -18,12 +18,9 @@ import java.util.List;
 
 public class SettingsViewModel extends ViewModel {
 
-    private MainPersonaRepository repository;
-
     private LiveData<List<MainListPersona>> dlcPersonas;
 
     public SettingsViewModel(MainPersonaRepository repository){
-        this.repository = repository;
         this.dlcPersonas = repository.getDLCPersonas();
     }
 
