@@ -6,6 +6,7 @@ import com.persona5dex.fusionService.AdvancedPersonaFusionsFileService
 import com.persona5dex.models.MainListPersona
 import com.persona5dex.repositories.MainPersonaRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.yield
 
 class AdvancedFusionViewModelV2(personaId: Int,
                                 private val mainPersonaRepository: MainPersonaRepository,
@@ -20,9 +21,9 @@ class AdvancedFusionViewModelV2(personaId: Int,
             val nameNormalized = personaName.normalize()
 
             val advancedFusions = advancedPersonaFusionsFileService.parseFile().first { it.resultPersonaName.normalize() == nameNormalized }
-
+            yield()
             val nameMap = mainPersonaRepository.allPersonasForMainList.associateBy { it.name.normalize() }
-
+            yield()
             val personas = advancedFusions.sourcePersonaNames
                     .map { nameMap.getValue(it.normalize()) }
                     .sortedBy { it.name }
