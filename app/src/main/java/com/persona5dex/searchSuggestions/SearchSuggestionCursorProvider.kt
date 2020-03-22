@@ -31,15 +31,17 @@ class SearchSuggestionCursorProvider @Inject constructor(
 
         val skillSearchSuggestions = searchSuggestionDao.getSkillSearchSuggestions(query)
 
-        val finalList = (personaSearchSuggestions + skillSearchSuggestions).sortedBy { it.lineOne }.mapIndexed { index, searchSuggestion ->
-            arrayOf(
-                    index.toLong(),
-                    searchSuggestion.lineOne,
-                    searchSuggestion.lineTwo,
-                    searchSuggestion.id.toString(),
-                    searchSuggestion.type.toString()
-            )
-        }
+        val finalList = (personaSearchSuggestions + skillSearchSuggestions)
+                .sortedBy { it.lineOne }
+                .mapIndexed { index, searchSuggestion ->
+                    arrayOf(
+                            index.toLong(),
+                            searchSuggestion.lineOne,
+                            searchSuggestion.lineTwo,
+                            searchSuggestion.id.toString(),
+                            searchSuggestion.type.toString()
+                    )
+                }
 
 
         val cursor = MatrixCursor(columnNames, finalList.size)
