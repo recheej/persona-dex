@@ -45,14 +45,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/onboarding_copy_bottom_margin"
         android:layout_marginBottom="@dimen/rowPadding"
-        android:text="@string/game_persona_5"
         android:background="@drawable/btn_rounded_background"
+        android:paddingLeft="@dimen/onboarding_btn_horizontal_padding"
+        android:paddingRight="@dimen/onboarding_btn_horizontal_padding"
+        android:text="@string/game_persona_5"
         app:backgroundTint="?colorAccent"
         app:layout_constraintBottom_toTopOf="@id/royal_game_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/royal_game_button"
@@ -60,11 +60,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/onboarding_copy_bottom_margin"
         android:background="@drawable/royal_golden_btn_background"
+        android:paddingLeft="@dimen/onboarding_btn_horizontal_padding"
+        android:paddingRight="@dimen/onboarding_btn_horizontal_padding"
         android:text="@string/game_royal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Skip"
+        android:textAppearance="?textBodyTitle"
+        android:textColor="?defaultTextColor"
+
+        app:layout_constraintBottom_toBottomOf="@id/royal_game_button"
         app:layout_constraintStart_toStartOf="parent"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"/>
+        app:layout_constraintTop_toTopOf="@id/royal_game_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

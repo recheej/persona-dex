@@ -128,5 +128,6 @@
     <string name="game_royal">Persona 5 Royal</string>
     <string name="onboarding_get_started">Get Started</string>
     <string name="onboarding_one_sub_header">Choose your game (can be changed any time).</string>
+    <string name="Skip">SKIP</string>
 
 </resources>

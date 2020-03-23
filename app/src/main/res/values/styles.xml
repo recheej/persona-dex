@@ -57,22 +57,22 @@
         <item name="android:height">48dp</item>
     </style>
 
-    <style name="TextBodyTitle" parent="TextAppearance.AppCompat.Body1">
+    <style name="TextBodyTitle" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/bodyTitleSize</item>
         <item name="android:textColor">?defaultTextColor</item>
     </style>
 
-    <style name="TextBody" parent="TextAppearance.AppCompat.Body2">
+    <style name="TextBody" parent="TextAppearance.MaterialComponents.Body2">
         <item name="android:textColor">?defaultTextColor</item>
     </style>
 
-    <style name="TextHeadline" parent="TextAppearance.AppCompat.Headline">
+    <style name="TextHeadline" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="android:textColor">?defaultTextColor</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextCaption" parent="TextAppearance.AppCompat.Caption">
+    <style name="TextCaption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">?defaultTextColor</item>
     </style>
 

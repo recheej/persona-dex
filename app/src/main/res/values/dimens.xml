@@ -7,4 +7,5 @@
     <dimen name="rowPadding">8dp</dimen>
     <dimen name="onboarding_padding_bottom">24dp</dimen>
     <dimen name="onboarding_copy_bottom_margin">56dp</dimen>
+    <dimen name="onboarding_btn_horizontal_padding">8dp</dimen>
 </resources>
