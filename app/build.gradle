@@ -111,6 +111,7 @@ dependencies {
     androidTestImplementation "androidx.work:work-testing:$work_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha01"
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 }
 
 apply plugin: 'kotlin-android'

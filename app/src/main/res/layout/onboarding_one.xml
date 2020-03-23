@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="?pageBackground"
     android:paddingBottom="@dimen/onboarding_padding_bottom">
 
@@ -64,17 +64,17 @@
         android:paddingRight="@dimen/onboarding_btn_horizontal_padding"
         android:text="@string/game_royal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/base_game_button"
+        app:layout_constraintEnd_toEndOf="@id/base_game_button"/>
 
     <Button
+        android:id="@+id/skip_onboarding_button"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Skip"
         android:textAppearance="?textBodyTitle"
         android:textColor="?defaultTextColor"
-
         app:layout_constraintBottom_toBottomOf="@id/royal_game_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/royal_game_button" />

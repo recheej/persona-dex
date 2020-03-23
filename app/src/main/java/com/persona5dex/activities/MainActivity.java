@@ -36,6 +36,7 @@ import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.GameType;
+import com.persona5dex.onboarding.OnboardingActivity;
 import com.persona5dex.repositories.MainPersonaRepository;
 
 import javax.inject.Inject;
@@ -70,6 +71,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final boolean onboardingComplete = defaultSharedPreferences.getBoolean(Constants.SHARED_PREF_ONBOARDING_COMPLETE, false);
+        if(!onboardingComplete) {
+            final Intent intent = new Intent(this, OnboardingActivity.class);
+            startActivity(intent);
+        }
 
         setContentView(R.layout.activity_main);
 
