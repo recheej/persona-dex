@@ -5,4 +5,6 @@
     <dimen name="bodyCaptionSize">12sp</dimen>
     <dimen name="touchTargetSize">48dp</dimen>
     <dimen name="rowPadding">8dp</dimen>
+    <dimen name="onboarding_padding_bottom">24dp</dimen>
+    <dimen name="onboarding_copy_bottom_margin">56dp</dimen>
 </resources>

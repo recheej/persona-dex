@@ -21,6 +21,7 @@
         <item name="textAppearanceSearchResultTitle">?textBodyTitle</item>
         <item name="materialAlertDialogTheme">@style/MaterialDialogTheme</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="colorRoyal">@color/personaGolden</item>
     </style>
 
     <style name="PersonaStatsTheme" parent="AppTheme">

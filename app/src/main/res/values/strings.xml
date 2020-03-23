@@ -126,5 +126,7 @@
     <string name="currently_viewing">Viewing: %1$s</string>
     <string name="game_persona_5">Persona 5</string>
     <string name="game_royal">Persona 5 Royal</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_one_sub_header">Choose your game (can be changed any time).</string>
 
 </resources>

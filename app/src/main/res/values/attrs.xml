@@ -8,4 +8,5 @@
     <attr name="textBodyTitle" format="reference" />
     <attr name="textCaption" format="reference" />
     <attr name="defaultTextColor" format="reference" />
+    <attr name="colorRoyal" format="reference" />
 </resources>

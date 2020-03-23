@@ -7,7 +7,9 @@
     <color name="personaGreyLight">#727272</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorWhiteDim">#a5a5a5</color>
-    <color name="textColorGoldenOnDark">#FFDB57</color>
+    <color name="personaGolden">#ffbd1b </color>
     <color name="darkThemeSurface">#121212</color>
     <color name="redA200">#FF5252</color>
+    <color name="royal_gradient_start">#dfbd69</color>
+    <color name="royal_gradient_end">#926f34</color>
 </resources>
