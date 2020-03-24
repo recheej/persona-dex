@@ -24,6 +24,8 @@ open class Persona5Application : Application() {
         component = DaggerPersona5ApplicationComponent.builder()
                 .applicationContextModule(ApplicationContextModule(this))
                 .build()
+
+        component.personaJobCreator().scheduleGenerateFusionJob()
     }
 
     companion object {

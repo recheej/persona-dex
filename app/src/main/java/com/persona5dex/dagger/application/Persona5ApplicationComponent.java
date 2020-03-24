@@ -4,6 +4,7 @@ import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.fusionService.GenerateFusionWorker;
+import com.persona5dex.jobs.PersonaJobCreator;
 
 import dagger.Component;
 
@@ -20,6 +21,7 @@ import dagger.Component;
 )
 public interface Persona5ApplicationComponent {
     void inject(GenerateFusionWorker generateFusionWorker);
+    PersonaJobCreator personaJobCreator();
     ActivityComponent activityComponent(LayoutModule layoutModule,
                                         ActivityContextModule activityContextModule
     );

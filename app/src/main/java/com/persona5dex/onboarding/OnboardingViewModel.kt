@@ -7,13 +7,15 @@ import androidx.lifecycle.*
 import com.persona5dex.R
 import com.persona5dex.SHARED_PREF_KEY_GAME_TYPE
 import com.persona5dex.SHARED_PREF_ONBOARDING_COMPLETE
+import com.persona5dex.jobs.PersonaJobCreator
 import com.persona5dex.models.GameType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
         private val defaultSharedPreferences: SharedPreferences,
-        private val application: Application
+        private val application: Application,
+        private val personaJobCreator: PersonaJobCreator
 ) : ViewModel() {
 
     private val nextStepState = MutableLiveData<OnboardingPagerState>()
@@ -24,11 +26,15 @@ class OnboardingViewModel(
         nextStepState.value = OnboardingPagerState.NextStepPagerState
     }
 
+    @SuppressLint("ApplySharedPref")
     fun setGameType(gameType: GameType) {
-        defaultSharedPreferences.edit()
-                .putInt(SHARED_PREF_KEY_GAME_TYPE, gameType.value)
-                .apply()
-        incrementNextStep()
+        viewModelScope.launch(Dispatchers.IO) {
+            defaultSharedPreferences.edit()
+                    .putInt(SHARED_PREF_KEY_GAME_TYPE, gameType.value)
+                    .commit()
+            incrementNextStep()
+            personaJobCreator.scheduleGenerateFusionJob()
+        }
     }
 
     @SuppressLint("ApplySharedPref")
@@ -53,8 +59,8 @@ class OnboardingViewModel(
     }
 }
 
-class OnboardingViewModelFactory(private val defaultSharedPreferences: SharedPreferences, private val application: Application) : ViewModelProvider.Factory {
+class OnboardingViewModelFactory(private val defaultSharedPreferences: SharedPreferences, private val application: Application, val personaJobCreator: PersonaJobCreator) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            OnboardingViewModel(defaultSharedPreferences, application) as T
+            OnboardingViewModel(defaultSharedPreferences, application, personaJobCreator) as T
 
 }

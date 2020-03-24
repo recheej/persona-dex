@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.persona5dex.R
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.fragments.BaseFragment
+import com.persona5dex.jobs.PersonaJobCreator
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -23,13 +24,16 @@ class OnboardingPrivacyFragment : BaseFragment() {
     @field:Named("defaultSharedPreferences")
     lateinit var defaultSharedPreferences: SharedPreferences
 
+    @Inject
+    internal lateinit var personaJobCreator: PersonaJobCreator
+
     private lateinit var viewModel: OnboardingViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activityComponent.plus().inject(this)
 
-        viewModel = OnboardingViewModelFactory(defaultSharedPreferences, activity.toPersonaApplication()).let {
+        viewModel = OnboardingViewModelFactory(defaultSharedPreferences, activity.toPersonaApplication(), personaJobCreator).let {
             ViewModelProvider(requireActivity(), it).get(OnboardingViewModel::class.java)
         }
     }

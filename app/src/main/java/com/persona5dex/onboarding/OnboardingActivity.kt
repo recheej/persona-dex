@@ -11,11 +11,16 @@ import androidx.viewpager.widget.ViewPager
 import com.persona5dex.R
 import com.persona5dex.activities.BaseActivity
 import com.persona5dex.extensions.toPersonaApplication
+import com.persona5dex.jobs.PersonaJobCreator
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+import javax.inject.Inject
 
 class OnboardingActivity : BaseActivity() {
 
     private lateinit var viewModel: OnboardingViewModel
+
+    @Inject
+    internal lateinit var personaJobCreator: PersonaJobCreator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +28,7 @@ class OnboardingActivity : BaseActivity() {
 
         val viewPager = findViewById<ViewPager>(R.id.onboarding_view_pager)
 
-        viewModel = OnboardingViewModelFactory(defaultSharedPreferences, toPersonaApplication()).let {
+        viewModel = OnboardingViewModelFactory(defaultSharedPreferences, toPersonaApplication(), personaJobCreator).let {
             ViewModelProvider(this, it).get(OnboardingViewModel::class.java)
         }
 
