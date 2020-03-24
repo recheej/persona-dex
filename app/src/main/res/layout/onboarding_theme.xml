@@ -42,12 +42,12 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/btn_onboarding_done"
+        android:id="@+id/btn_onboarding_next"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/onboarding_padding_bottom"
-        android:text="@string/done"
+        android:text="@string/next"
         android:textColor="?defaultTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

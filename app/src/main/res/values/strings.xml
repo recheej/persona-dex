@@ -131,5 +131,6 @@
     <string name="Skip">SKIP</string>
     <string name="choose_your_theme">Choose your theme</string>
     <string name="done">done</string>
+    <string name="next">next</string>
 
 </resources>

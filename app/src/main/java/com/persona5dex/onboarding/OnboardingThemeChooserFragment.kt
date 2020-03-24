@@ -44,9 +44,9 @@ class OnboardingThemeChooserFragment : BaseFragment() {
         radioGroup = view.findViewById<RadioGroup>(R.id.theme_radio_group)
         radioGroup.check(R.id.radio_system_default)
 
-        view.findViewById<Button>(R.id.btn_onboarding_done).let {
+        view.findViewById<Button>(R.id.btn_onboarding_next).let {
             it.setOnClickListener {
-                viewModel.setOnboardingComplete()
+                viewModel.incrementNextStep()
             }
         }
 

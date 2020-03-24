@@ -9,7 +9,10 @@ import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.fragments.SettingsFragment;
 import com.persona5dex.onboarding.OnboardingChooseGameFragment;
+import com.persona5dex.onboarding.OnboardingPrivacyFragment;
 import com.persona5dex.onboarding.OnboardingThemeChooserFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 import dagger.Subcomponent;
 
@@ -33,4 +36,5 @@ public interface FragmentComponent {
     void inject(SettingsFragment fragment);
     void inject(OnboardingChooseGameFragment onboardingChooseGameFragment);
     void inject(OnboardingThemeChooserFragment onboardingThemeChooserFragment);
+    void inject(OnboardingPrivacyFragment onboardingPrivacyFragment);
 }

@@ -27,7 +27,7 @@ class OnboardingActivity : BaseActivity() {
             ViewModelProvider(this, it).get(OnboardingViewModel::class.java)
         }
 
-        viewModel.nextStepState.observe(this, Observer {
+        viewModel.getNextStepState().observe(this, Observer {
             when (it) {
                 is OnboardingViewModel.OnboardingPagerState.NextStepPagerState -> {
                     viewPager.currentItem++
@@ -60,9 +60,10 @@ class OnboardingActivity : BaseActivity() {
                 when (position) {
                     0 -> OnboardingChooseGameFragment.newInstance()
                     1 -> OnboardingThemeChooserFragment.newInstance()
+                    2 -> OnboardingPrivacyFragment.newInstance()
                     else -> error("cannot get fragment for position $position")
                 }
 
-        override fun getCount(): Int = 2
+        override fun getCount(): Int = 3
     }
 }

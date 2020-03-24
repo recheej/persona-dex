@@ -2,7 +2,6 @@ package com.persona5dex.onboarding
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.persona5dex.R
@@ -17,19 +16,19 @@ class OnboardingViewModel(
         private val application: Application
 ) : ViewModel() {
 
-    private val gameTypeLiveData = MutableLiveData<GameType>()
+    private val nextStepState = MutableLiveData<OnboardingPagerState>()
 
-    val nextStepState = MediatorLiveData<OnboardingPagerState>().apply {
-        addSource(gameTypeLiveData) {
-            defaultSharedPreferences.edit()
-                    .putInt(SHARED_PREF_KEY_GAME_TYPE, it.value)
-                    .apply()
-            value = OnboardingPagerState.NextStepPagerState(it)
-        }
+    fun getNextStepState(): LiveData<OnboardingPagerState> = nextStepState
+
+    fun incrementNextStep() {
+        nextStepState.value = OnboardingPagerState.NextStepPagerState
     }
 
     fun setGameType(gameType: GameType) {
-        gameTypeLiveData.value = gameType
+        defaultSharedPreferences.edit()
+                .putInt(SHARED_PREF_KEY_GAME_TYPE, gameType.value)
+                .apply()
+        incrementNextStep()
     }
 
     @SuppressLint("ApplySharedPref")
@@ -49,7 +48,7 @@ class OnboardingViewModel(
     }
 
     sealed class OnboardingPagerState {
-        data class NextStepPagerState(val gameType: GameType) : OnboardingPagerState()
+        object NextStepPagerState : OnboardingPagerState()
         object OnboardingComplete : OnboardingPagerState()
     }
 }

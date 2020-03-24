@@ -50,7 +50,6 @@ import static android.app.SearchManager.USER_QUERY;
 public class MainActivity extends BaseActivity {
 
     private static final String FILTER_DIALOG = "FILTER_DIALOG";
-    public static final String PRIVACY_POLICY_SHOWN = "privacy_policy_shown";
 
     @Inject
     Toolbar mainToolbar;
@@ -102,8 +101,6 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mainToolbar.setLogo(R.drawable.ic_app_icon_fore);
 
-        showPrivacyPolicy();
-
         currentGameTextView = findViewById(R.id.current_game_text_view);
         setCurrentGameString();
         setUpSwitchGameButton();
@@ -152,38 +149,6 @@ public class MainActivity extends BaseActivity {
             switchButtonTextRes = R.string.game_persona_5;
         }
         switchGameButton.setText(switchButtonTextRes);
-    }
-
-    private void showPrivacyPolicy() {
-        boolean showedPrivacyPolicy = defaultSharedPreferences.getBoolean(PRIVACY_POLICY_SHOWN, false);
-        if(!showedPrivacyPolicy) {
-
-            String privacyPrompt = getString(R.string.privacy_prompt);
-            privacyPrompt += getString(R.string.privacy_policy_url);
-
-            final ContextThemeWrapper contextThemeWrapper = new ContextThemeWrapper(MainActivity.this, R.style.AppTheme);
-
-            TextView message = new TextView(contextThemeWrapper);
-
-            SpannableString privacyPromptSpannable = new SpannableString(privacyPrompt);
-            Linkify.addLinks(privacyPromptSpannable, Linkify.WEB_URLS);
-
-            message.setText(privacyPromptSpannable);
-            message.setMovementMethod(LinkMovementMethod.getInstance());
-
-            AlertDialog alertDialog = new AlertDialog.Builder(contextThemeWrapper)
-                    .setTitle(R.string.privacy)
-                    .setCancelable(true)
-                    .setPositiveButton("OK", (dialogInterface, i) -> dialogInterface.dismiss())
-                    .setView(message)
-                    .create();
-
-            final SharedPreferences.Editor edit = defaultSharedPreferences.edit();
-            edit.putBoolean(PRIVACY_POLICY_SHOWN, true);
-            edit.apply();
-
-            alertDialog.show();
-        }
     }
 
     @Override
