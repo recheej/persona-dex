@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.persona5dex.Persona5Application
 import com.persona5dex.R
 import com.persona5dex.activities.BaseActivity
 import com.persona5dex.extensions.toPersonaApplication
@@ -59,7 +58,7 @@ class OnboardingActivity : BaseActivity() {
     class OnboardingViewPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
         override fun getItem(position: Int): Fragment =
                 when (position) {
-                    0 -> OnboardingFragmentChooseGame.newInstance()
+                    0 -> OnboardingChooseGameFragment.newInstance()
                     1 -> OnboardingThemeChooserFragment.newInstance()
                     else -> error("cannot get fragment for position $position")
                 }

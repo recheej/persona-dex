@@ -14,7 +14,7 @@ import com.persona5dex.models.GameType
 import javax.inject.Inject
 import javax.inject.Named
 
-class OnboardingFragmentChooseGame : BaseFragment() {
+class OnboardingChooseGameFragment : BaseFragment() {
 
     @Inject
     @field:Named("defaultSharedPreferences")
@@ -55,6 +55,6 @@ class OnboardingFragmentChooseGame : BaseFragment() {
     }
 
     companion object {
-        fun newInstance() = OnboardingFragmentChooseGame()
+        fun newInstance() = OnboardingChooseGameFragment()
     }
 }
