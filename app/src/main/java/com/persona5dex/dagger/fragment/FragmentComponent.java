@@ -9,6 +9,7 @@ import com.persona5dex.fragments.PersonaListFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.fragments.SettingsFragment;
 import com.persona5dex.onboarding.OnboardingFragmentChooseGame;
+import com.persona5dex.onboarding.OnboardingThemeChooserFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,4 +34,5 @@ public interface FragmentComponent {
     void inject(AdvancedPersonaFragment advancedPersonaFragment);
     void inject(SettingsFragment fragment);
     void inject(OnboardingFragmentChooseGame onboardingFragmentChooseGame);
+    void inject(OnboardingThemeChooserFragment onboardingThemeChooserFragment);
 }

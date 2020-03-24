@@ -6,21 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RadioGroup
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.lifecycle.ViewModelProvider
 import com.persona5dex.R
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.fragments.BaseFragment
-import com.persona5dex.models.GameType
 import javax.inject.Inject
 import javax.inject.Named
 
-class OnboardingFragmentChooseGame : BaseFragment() {
+class OnboardingThemeChooserFragment : BaseFragment() {
 
     @Inject
     @field:Named("defaultSharedPreferences")
     lateinit var defaultSharedPreferences: SharedPreferences
 
     private lateinit var viewModel: OnboardingViewModel
+    private lateinit var radioGroup: RadioGroup
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -29,32 +31,37 @@ class OnboardingFragmentChooseGame : BaseFragment() {
         viewModel = OnboardingViewModelFactory(defaultSharedPreferences, activity.toPersonaApplication()).let {
             ViewModelProvider(requireActivity(), it).get(OnboardingViewModel::class.java)
         }
+
+        radioGroup.setOnCheckedChangeListener { _: RadioGroup, idRes: Int ->
+            val nightModeForRadioSelection = getNightModeForRadioSelection(idRes)
+            setDefaultNightMode(nightModeForRadioSelection)
+            viewModel.setNightMode(nightModeForRadioSelection)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.onboarding_one, container, false)
-        view.findViewById<Button>(R.id.skip_onboarding_button).apply {
-            setOnClickListener {
+        val view = inflater.inflate(R.layout.onboarding_theme, container, false)
+        radioGroup = view.findViewById<RadioGroup>(R.id.theme_radio_group)
+        radioGroup.check(R.id.radio_system_default)
+
+        view.findViewById<Button>(R.id.btn_onboarding_done).let {
+            it.setOnClickListener {
                 viewModel.setOnboardingComplete()
-            }
-        }
-
-        view.findViewById<Button>(R.id.base_game_button).apply {
-            setOnClickListener {
-                viewModel.setGameType(GameType.BASE)
-            }
-        }
-
-        view.findViewById<Button>(R.id.royal_game_button).apply {
-            setOnClickListener {
-                viewModel.setGameType(GameType.ROYAL)
             }
         }
 
         return view
     }
 
+    private fun getNightModeForRadioSelection(idRes: Int) =
+            when (idRes) {
+                R.id.radio_system_default -> MODE_NIGHT_FOLLOW_SYSTEM
+                R.id.radio_light -> MODE_NIGHT_NO
+                R.id.radio_dark -> MODE_NIGHT_YES
+                else -> error("cannot find mode night for idRes: $idRes")
+            }
+
     companion object {
-        fun newInstance() = OnboardingFragmentChooseGame()
+        fun newInstance() = OnboardingThemeChooserFragment()
     }
 }

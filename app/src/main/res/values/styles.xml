@@ -72,6 +72,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextHeadlineSmall" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">?defaultTextColor</item>
+    </style>
+
+
     <style name="TextCaption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">?defaultTextColor</item>
     </style>
@@ -118,6 +123,7 @@
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonBarStyle</item>
+        <item name="android:windowTitleStyle">@style/P5Dex.WindowTitleStyle</item>
     </style>
 
     <style name="AlertButtonBarStyle" parent="Widget.AppCompat.ButtonBar.AlertDialog">
@@ -154,7 +160,13 @@
         <item name="android:textColor">?colorAccent</item>
     </style>
 
+    <style name="P5Dex.RadioButtonStyle" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="android:textAppearance">?textBodyTitle</item>
+        <item name="android:textColor">?defaultTextColor</item>
+    </style>
 
-    <style name="PreferenceDialogStyle" parent="Preference.DialogPreference.Material"></style>
+    <style name="P5Dex.WindowTitleStyle" parent="@style/RtlOverlay.DialogWindowTitle.AppCompat">
+        <item name="android:textAppearance">@style/TextHeadlineSmall</item>
+    </style>
 
 </resources>

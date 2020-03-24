@@ -22,6 +22,7 @@
         <item name="materialAlertDialogTheme">@style/MaterialDialogTheme</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="colorRoyal">@color/personaGolden</item>
+        <item name="radioButtonStyle">@style/P5Dex.RadioButtonStyle</item>
     </style>
 
     <style name="PersonaStatsTheme" parent="AppTheme">

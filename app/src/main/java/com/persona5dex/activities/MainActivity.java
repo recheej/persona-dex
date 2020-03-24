@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -160,7 +161,9 @@ public class MainActivity extends BaseActivity {
             String privacyPrompt = getString(R.string.privacy_prompt);
             privacyPrompt += getString(R.string.privacy_policy_url);
 
-            TextView message = new TextView(this);
+            final ContextThemeWrapper contextThemeWrapper = new ContextThemeWrapper(MainActivity.this, R.style.AppTheme);
+
+            TextView message = new TextView(contextThemeWrapper);
 
             SpannableString privacyPromptSpannable = new SpannableString(privacyPrompt);
             Linkify.addLinks(privacyPromptSpannable, Linkify.WEB_URLS);
@@ -168,7 +171,7 @@ public class MainActivity extends BaseActivity {
             message.setText(privacyPromptSpannable);
             message.setMovementMethod(LinkMovementMethod.getInstance());
 
-            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+            AlertDialog alertDialog = new AlertDialog.Builder(contextThemeWrapper)
                     .setTitle(R.string.privacy)
                     .setCancelable(true)
                     .setPositiveButton("OK", (dialogInterface, i) -> dialogInterface.dismiss())

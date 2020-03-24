@@ -8,8 +8,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
+import com.persona5dex.Persona5Application
 import com.persona5dex.R
 import com.persona5dex.activities.BaseActivity
+import com.persona5dex.extensions.toPersonaApplication
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
 
 class OnboardingActivity : BaseActivity() {
@@ -22,7 +24,7 @@ class OnboardingActivity : BaseActivity() {
 
         val viewPager = findViewById<ViewPager>(R.id.onboarding_view_pager)
 
-        viewModel = OnboardingViewModelFactory(defaultSharedPreferences).let {
+        viewModel = OnboardingViewModelFactory(defaultSharedPreferences, toPersonaApplication()).let {
             ViewModelProvider(this, it).get(OnboardingViewModel::class.java)
         }
 
@@ -58,9 +60,10 @@ class OnboardingActivity : BaseActivity() {
         override fun getItem(position: Int): Fragment =
                 when (position) {
                     0 -> OnboardingFragmentChooseGame.newInstance()
+                    1 -> OnboardingThemeChooserFragment.newInstance()
                     else -> error("cannot get fragment for position $position")
                 }
 
-        override fun getCount(): Int = 1
+        override fun getCount(): Int = 2
     }
 }

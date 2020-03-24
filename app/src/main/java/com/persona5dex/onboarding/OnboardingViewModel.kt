@@ -1,13 +1,20 @@
 package com.persona5dex.onboarding
 
+import android.annotation.SuppressLint
+import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.*
+import com.persona5dex.R
 import com.persona5dex.SHARED_PREF_KEY_GAME_TYPE
 import com.persona5dex.SHARED_PREF_ONBOARDING_COMPLETE
 import com.persona5dex.models.GameType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
-        private val defaultSharedPreferences: SharedPreferences
+        private val defaultSharedPreferences: SharedPreferences,
+        private val application: Application
 ) : ViewModel() {
 
     private val gameTypeLiveData = MutableLiveData<GameType>()
@@ -25,11 +32,20 @@ class OnboardingViewModel(
         gameTypeLiveData.value = gameType
     }
 
+    @SuppressLint("ApplySharedPref")
     fun setOnboardingComplete() {
+        viewModelScope.launch(Dispatchers.IO) {
+            defaultSharedPreferences.edit()
+                    .putBoolean(SHARED_PREF_ONBOARDING_COMPLETE, true)
+                    .commit()
+            nextStepState.postValue(OnboardingPagerState.OnboardingComplete)
+        }
+    }
+
+    fun setNightMode(nightMode: Int) {
         defaultSharedPreferences.edit()
-                .putBoolean(SHARED_PREF_ONBOARDING_COMPLETE, true)
+                .putString(application.getString(R.string.pref_key_theme), nightMode.toString())
                 .apply()
-        nextStepState.value = OnboardingPagerState.OnboardingComplete
     }
 
     sealed class OnboardingPagerState {
@@ -38,8 +54,8 @@ class OnboardingViewModel(
     }
 }
 
-class OnboardingViewModelFactory(private val defaultSharedPreferences: SharedPreferences) : ViewModelProvider.Factory {
+class OnboardingViewModelFactory(private val defaultSharedPreferences: SharedPreferences, private val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            OnboardingViewModel(defaultSharedPreferences) as T
+            OnboardingViewModel(defaultSharedPreferences, application) as T
 
 }
