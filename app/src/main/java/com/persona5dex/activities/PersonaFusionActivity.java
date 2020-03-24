@@ -91,6 +91,9 @@ public class PersonaFusionActivity extends BaseActivity {
             tabLayout.setupWithViewPager(viewPager);
         });
 
+        setTabBarText(0, R.string.to);
+        setTabBarText(1, R.string.from);
+
         viewModel.getToEdges().observe(this, toEdges -> {
             setTabTextCount(true, toEdges.size());
         });
@@ -121,10 +124,19 @@ public class PersonaFusionActivity extends BaseActivity {
     private void setTabTextCount(boolean toList, int count) {
         int position = toList ? 0 : 1;
         final String tabText = getTabText(toList, count);
+        setTabBarText(position, tabText);
+    }
+
+    private void setTabBarText(int position, String tabText) {
         final TabLayout.Tab tab = tabLayout.getTabAt(position);
         if(tab != null) {
             tab.setText(tabText);
         }
+    }
+
+    private void setTabBarText(int position, @StringRes int textRes) {
+        final String tabText = getString(textRes);
+        setTabBarText(position, tabText);
     }
 
     private String getTabText(boolean toList, int count) {

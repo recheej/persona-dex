@@ -1,6 +1,7 @@
 package com.persona5dex.adapters;
 
 import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -31,7 +32,7 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
+        switch(position) {
             case 0:
                 return toFragment;
             case 1:
@@ -44,5 +45,17 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return FRAGMENT_COUNT;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch(position) {
+            case 0:
+                return context.getString(R.string.to);
+            case 1:
+                return context.getString(R.string.from);
+        }
+
+        throw new IllegalStateException("cannot get page title for position: " + position);
     }
 }
