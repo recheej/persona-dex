@@ -1,7 +1,9 @@
 package com.persona5dex.fusionService
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
+import androidx.test.core.app.ApplicationProvider
 import com.nhaarman.mockitokotlin2.*
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.getFusionPersonas
@@ -20,7 +22,6 @@ import org.robolectric.annotation.Config
 
 
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = "src/main/AndroidManifest.xml", sdk = [Build.VERSION_CODES.O])
 class PersonaFusionGraphGeneratorTest {
 
     private lateinit var personaFuser: PersonaFuserV2
@@ -38,7 +39,7 @@ class PersonaFusionGraphGeneratorTest {
 
         val fusionRepository = PersonaFusionRepository(personaDao, mockPreferences, GameType.BASE)
 
-        val context = RuntimeEnvironment.application
+        val context: Context = ApplicationProvider.getApplicationContext()
         val arcanaNameProvider = ArcanaNameProvider(context)
 
         val fusionChartFactory = FusionChartServiceFactory(context, arcanaNameProvider)

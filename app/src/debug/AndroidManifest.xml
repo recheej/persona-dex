@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <uses-library android:name="android.test.base"
+            android:required="false" />
+
         <activity
             android:name=".activities.MainActivity"
             android:launchMode="singleTop">

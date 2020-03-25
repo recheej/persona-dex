@@ -2,6 +2,7 @@ package com.persona5dex.fusionService
 
 import android.content.Context
 import android.os.Build
+import androidx.test.core.app.ApplicationProvider
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.models.Enumerations.Arcana
 import kotlinx.coroutines.runBlocking
@@ -14,7 +15,6 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = "src/main/AndroidManifest.xml", sdk = [Build.VERSION_CODES.O])
 class PersonaBaseGameRareModifierServiceTest {
 
     private lateinit var arcanaNameProvider: ArcanaNameProvider
@@ -24,7 +24,7 @@ class PersonaBaseGameRareModifierServiceTest {
 
     @Before
     fun setup() {
-        context = RuntimeEnvironment.application
+        context = ApplicationProvider.getApplicationContext()
         arcanaNameProvider = ArcanaNameProvider(context)
 
         modifierService = BaseGameRareModifierService(context, arcanaNameProvider)

@@ -2,6 +2,7 @@ package com.persona5dex.fusionService
 
 import android.content.SharedPreferences
 import android.os.Build
+import androidx.test.core.app.ApplicationProvider
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
@@ -30,7 +31,6 @@ import org.robolectric.annotation.Config
 class PersonaFuserTestSuiteTest {
 
     @RunWith(RobolectricTestRunner::class)
-    @Config(manifest = "src/main/AndroidManifest.xml", sdk = [Build.VERSION_CODES.O])
     abstract class Shared {
         private lateinit var arcanaNameProvider: ArcanaNameProvider
         private lateinit var application: Persona5Application
@@ -41,7 +41,7 @@ class PersonaFuserTestSuiteTest {
 
         @Before
         open fun setup() {
-            application = RuntimeEnvironment.application as Persona5Application
+            application = ApplicationProvider.getApplicationContext() as Persona5Application
             arcanaNameProvider = ArcanaNameProvider(application)
 
             fusionChartFactory = FusionChartServiceFactory(application, arcanaNameProvider)
@@ -88,7 +88,6 @@ class PersonaFuserTestSuiteTest {
     }
 
     @RunWith(ParameterizedRobolectricTestRunner::class)
-    @Config(manifest = "src/main/AndroidManifest.xml", sdk = [Build.VERSION_CODES.O])
     class PersonaFuserTest(
             private val personaOne: String,
             private val personaTwo: String,

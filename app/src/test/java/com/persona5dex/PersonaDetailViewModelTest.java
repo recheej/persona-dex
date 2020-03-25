@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.annotation.NonNull;
+import androidx.test.core.app.ApplicationProvider;
 
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.PersonaShadowDetail;
@@ -34,7 +35,7 @@ public class PersonaDetailViewModelTest {
 
     @Before
     public void setup() {
-        application = RuntimeEnvironment.application;
+        application = ApplicationProvider.getApplicationContext();
         arcananameProvider = new ArcanaNameProvider(application);
     }
 

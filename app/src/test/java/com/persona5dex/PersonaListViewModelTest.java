@@ -2,6 +2,7 @@ package com.persona5dex;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.test.core.app.ApplicationProvider;
 
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.GameType;
@@ -31,14 +32,13 @@ import static org.mockito.Mockito.when;
  */
 
 @RunWith(RobolectricTestRunner.class)
-@Config(application = Persona5Application.class)
 public class PersonaListViewModelTest {
 
     private ArcanaNameProvider arcanaNameProvider;
 
     @Before
     public void setup() {
-        arcanaNameProvider = new ArcanaNameProvider(RuntimeEnvironment.application);
+        arcanaNameProvider = new ArcanaNameProvider(ApplicationProvider.getApplicationContext());
     }
 
     @Test
