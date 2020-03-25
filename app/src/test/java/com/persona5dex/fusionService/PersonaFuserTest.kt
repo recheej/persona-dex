@@ -19,6 +19,7 @@ import com.persona5dex.repositories.PersonaFusionRepository.Companion.DLC_SHARED
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
@@ -148,6 +149,7 @@ class PersonaFuserTestSuiteTest {
             result notEqual "cait sith"
         }
 
+        @Ignore("data is for base game")
         @Test
         fun `fusion for royal ame-no-uzume`() = runBlocking {
             val gameType = GameType.ROYAL
