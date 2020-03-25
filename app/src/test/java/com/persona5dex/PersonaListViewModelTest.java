@@ -1,6 +1,6 @@
 package com.persona5dex;
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 
@@ -8,24 +8,22 @@ import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaFilterArgs;
-import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Rechee on 8/13/2017.
@@ -36,6 +34,9 @@ public class PersonaListViewModelTest {
 
     private ArcanaNameProvider arcanaNameProvider;
 
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     @Before
     public void setup() {
         arcanaNameProvider = new ArcanaNameProvider(ApplicationProvider.getApplicationContext());
@@ -44,12 +45,12 @@ public class PersonaListViewModelTest {
     @Test
     public void testSortByNameAsc() throws Exception {
 
-        final MainListPersona testPersona = new MainListPersona();
+        final MainListPersona testPersona = getTestMainListPersona();
         testPersona.setName("A");
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
         testPersona.level = 2;
 
-        MainListPersona testPersonaTwo = new MainListPersona();
+        MainListPersona testPersonaTwo = getTestMainListPersona();
         testPersonaTwo.setName("B");
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 2;
@@ -58,15 +59,10 @@ public class PersonaListViewModelTest {
                 testPersonaTwo, testPersona
         });
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(personasToSort);
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
+        viewModel.initialize(personasToSort);
 
-        Observer observer = mock(Observer.class);
+        Observer observer = Mockito.mock(Observer.class);
         viewModel.getFilteredPersonas().observeForever(observer);
         viewModel.sortPersonasByName(true);
 
@@ -75,31 +71,32 @@ public class PersonaListViewModelTest {
         assertEquals(testPersona, output.get(0));
     }
 
+    private MainListPersona getTestMainListPersona() {
+        MainListPersona mainListPersona = new MainListPersona();
+        mainListPersona.gameId = GameType.BASE;
+        return mainListPersona;
+    }
+
     @Test
     public void testSortByNameDesc() throws Exception {
 
-        MainListPersona testPersona = new MainListPersona();
+        MainListPersona testPersona = getTestMainListPersona();
         testPersona.setName("A");
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
         testPersona.level = 2;
 
-        final MainListPersona testPersonaTwo = new MainListPersona();
+        final MainListPersona testPersonaTwo = getTestMainListPersona();
         testPersonaTwo.setName("B");
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 2;
 
-        final List<MainListPersona> personasToSort = Arrays.asList(new MainListPersona[] {
+        final List<MainListPersona> personasToSort = Arrays.asList(new MainListPersona[]{
                 testPersona, testPersonaTwo
         });
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(personasToSort);
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.initialize(personasToSort);
+        viewModel.getFilteredPersonas().observeForever(Mockito.mock(Observer.class));
         viewModel.sortPersonasByName(false);
 
         List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
@@ -113,28 +110,23 @@ public class PersonaListViewModelTest {
     @Test
     public void testSortByLevelAsc() throws Exception {
 
-        MainListPersona testPersona = new MainListPersona();
+        MainListPersona testPersona = getTestMainListPersona();
         testPersona.setName("A");
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
         testPersona.level = 2;
 
-        final MainListPersona testPersonaTwo = new MainListPersona();
+        final MainListPersona testPersonaTwo = getTestMainListPersona();
         testPersonaTwo.setName("A");
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 1;
 
-        final List<MainListPersona> personasToSort = Arrays.asList(new MainListPersona[] {
+        final List<MainListPersona> personasToSort = Arrays.asList(new MainListPersona[]{
                 testPersona, testPersonaTwo
         });
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(personasToSort);
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.initialize(personasToSort);
+        viewModel.getFilteredPersonas().observeForever(Mockito.mock(Observer.class));
         viewModel.sortPersonasByLevel(true);
 
         List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
@@ -145,30 +137,24 @@ public class PersonaListViewModelTest {
     @Test
     public void testSortByLevelDesc() throws Exception {
 
-        MainListPersona testPersona = new MainListPersona();
+        MainListPersona testPersona = getTestMainListPersona();
         testPersona.setName("A");
         testPersona.arcana = Enumerations.Arcana.CHARIOT;
         testPersona.level = 1;
 
-        final MainListPersona testPersonaTwo = new MainListPersona();
+        final MainListPersona testPersonaTwo = getTestMainListPersona();
         testPersonaTwo.setName("A");
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 2;
 
-        final List<MainListPersona> personasToSort = Arrays.asList(new MainListPersona[] {
+        final List<MainListPersona> personasToSort = Arrays.asList(new MainListPersona[]{
                 testPersona, testPersonaTwo
         });
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(personasToSort);
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.initialize(personasToSort);
+        viewModel.getFilteredPersonas().observeForever(Mockito.mock(Observer.class));
         viewModel.sortPersonasByLevel(false);
-
 
         List<MainListPersona> output = viewModel.getFilteredPersonas().getValue();
 
@@ -181,14 +167,9 @@ public class PersonaListViewModelTest {
     @Test
     public void filterPersonas_handlesEmptyList() throws Exception {
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(new ArrayList<>());
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.initialize(new ArrayList<>());
+        viewModel.getFilteredPersonas().observeForever(Mockito.mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
@@ -202,28 +183,23 @@ public class PersonaListViewModelTest {
     @Test
     public void filterPersonas_filtersByArcana() throws Exception {
 
-        final MainListPersona testPersonaOne = new MainListPersona();
+        final MainListPersona testPersonaOne = getTestMainListPersona();
         testPersonaOne.setName("testPersonaOne");
         testPersonaOne.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaOne.level = 1;
 
-        MainListPersona testPersonaTwo = new MainListPersona();
+        MainListPersona testPersonaTwo = getTestMainListPersona();
         testPersonaTwo.setName("testPersonaTwo");
         testPersonaTwo.arcana = Enumerations.Arcana.DEATH;
         testPersonaTwo.level = 2;
 
-        List<MainListPersona> personasToFilter = Arrays.asList(new MainListPersona[] {
-            testPersonaOne, testPersonaTwo
+        List<MainListPersona> personasToFilter = Arrays.asList(new MainListPersona[]{
+                testPersonaOne, testPersonaTwo
         });
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(personasToFilter);
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.initialize(personasToFilter);
+        viewModel.getFilteredPersonas().observeForever(Mockito.mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1, 2, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
@@ -239,28 +215,23 @@ public class PersonaListViewModelTest {
     @Test
     public void filterPersonas_filtersByLevel() throws Exception {
 
-        final MainListPersona testPersonaOne = new MainListPersona();
+        final MainListPersona testPersonaOne = getTestMainListPersona();
         testPersonaOne.setName("testPersonaOne");
         testPersonaOne.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaOne.level = 1;
 
-        MainListPersona testPersonaTwo = new MainListPersona();
+        MainListPersona testPersonaTwo = getTestMainListPersona();
         testPersonaTwo.setName("testPersonaTwo");
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 2;
 
-        List<MainListPersona> personasToFilter = Arrays.asList(new MainListPersona[] {
+        List<MainListPersona> personasToFilter = Arrays.asList(new MainListPersona[]{
                 testPersonaOne, testPersonaTwo
         });
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(personasToFilter);
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.initialize(personasToFilter);
+        viewModel.getFilteredPersonas().observeForever(Mockito.mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(testPersonaOne.level, testPersonaOne.level, Enumerations.Arcana.CHARIOT);
         viewModel.filterPersonas(filterArgs);
@@ -276,29 +247,24 @@ public class PersonaListViewModelTest {
     @Test
     public void filterPersonas_filtersOutDLC() throws Exception {
 
-        MainListPersona testPersonaOne = new MainListPersona();
+        MainListPersona testPersonaOne = getTestMainListPersona();
         testPersonaOne.setName("testPersonaOne");
         testPersonaOne.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaOne.level = 1;
         testPersonaOne.dlc = true;
 
-        final MainListPersona testPersonaTwo = new MainListPersona();
+        final MainListPersona testPersonaTwo = getTestMainListPersona();
         testPersonaTwo.setName("testPersonaTwo");
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 2;
 
-        List<MainListPersona> personasToFilter = Arrays.asList(new MainListPersona[] {
+        List<MainListPersona> personasToFilter = Arrays.asList(new MainListPersona[]{
                 testPersonaOne, testPersonaTwo
         });
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(personasToFilter);
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.initialize(personasToFilter);
+        viewModel.getFilteredPersonas().observeForever(Mockito.mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
                 99,
@@ -316,29 +282,24 @@ public class PersonaListViewModelTest {
     @Test
     public void filterPersonas_filtersOutRare() throws Exception {
 
-        final MainListPersona testPersonaOne = new MainListPersona();
+        final MainListPersona testPersonaOne = getTestMainListPersona();
         testPersonaOne.setName("testPersonaOne");
         testPersonaOne.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaOne.level = 1;
         testPersonaOne.rare = true;
 
-        final MainListPersona testPersonaTwo = new MainListPersona();
+        final MainListPersona testPersonaTwo = getTestMainListPersona();
         testPersonaTwo.setName("testPersonaTwo");
         testPersonaTwo.arcana = Enumerations.Arcana.CHARIOT;
         testPersonaTwo.level = 2;
 
-        List<MainListPersona> personasToFilter = Arrays.asList(new MainListPersona[] {
+        List<MainListPersona> personasToFilter = Arrays.asList(new MainListPersona[]{
                 testPersonaOne, testPersonaTwo
         });
 
-        MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
-        data.setValue(personasToFilter);
-
-        MainPersonaRepository fakeMainPersonaRepository = mock(MainPersonaRepository.class);
-        when(fakeMainPersonaRepository.getAllPersonasForMainListLiveData()).thenReturn(data);
-
         PersonaMainListViewModel viewModel = new PersonaMainListViewModel(arcanaNameProvider, GameType.BASE);
-        viewModel.getFilteredPersonas().observeForever(mock(Observer.class));
+        viewModel.initialize(personasToFilter);
+        viewModel.getFilteredPersonas().observeForever(Mockito.mock(Observer.class));
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
                 99,
