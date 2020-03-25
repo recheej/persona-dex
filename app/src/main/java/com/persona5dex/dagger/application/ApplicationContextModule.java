@@ -12,7 +12,6 @@ import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.Constants;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaUtilities;
-import com.persona5dex.dagger.activity.ActivityScope;
 import com.persona5dex.fusionService.FusionChartService;
 import com.persona5dex.fusionService.FusionChartServiceFactory;
 import com.persona5dex.models.GameType;

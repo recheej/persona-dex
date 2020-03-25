@@ -10,6 +10,7 @@ import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.dagger.fragment.FragmentComponent;
 import com.persona5dex.fragments.PersonaElementsFragment;
 import com.persona5dex.fragments.PersonaSkillsFragment;
+import com.persona5dex.onboarding.OnboardingActivity;
 
 import dagger.Subcomponent;
 
@@ -32,6 +33,7 @@ public interface ActivityComponent {
     void inject(PersonaSkillsFragment fragment);
     void inject(SkillDetailActivity activity);
     void inject(BaseActivity activity);
+    void inject(OnboardingActivity activity);
 
     FragmentComponent plus();
 }

@@ -50,7 +50,5 @@ class PersonaJobCreator @Inject constructor(
 
     companion object {
         const val JOB_NAME_GENERATE_FUSION = "JOB_GENERATE_FUSION"
-
-        const val JOB_PARAM_GAME_TYPE = "gameType"
     }
 }

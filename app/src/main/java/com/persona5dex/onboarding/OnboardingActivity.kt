@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
+import com.persona5dex.Persona5Application.Companion.get
 import com.persona5dex.R
 import com.persona5dex.activities.BaseActivity
+import com.persona5dex.dagger.activity.ActivityContextModule
+import com.persona5dex.dagger.activity.LayoutModule
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.jobs.PersonaJobCreator
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
@@ -25,6 +28,13 @@ class OnboardingActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
+
+        val component = get(this).component
+                .activityComponent(
+                        LayoutModule(this),
+                        ActivityContextModule(this)
+                )
+        component.inject(this)
 
         val viewPager = findViewById<ViewPager>(R.id.onboarding_view_pager)
 
