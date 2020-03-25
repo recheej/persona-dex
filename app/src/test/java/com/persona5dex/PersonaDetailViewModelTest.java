@@ -2,16 +2,19 @@ package com.persona5dex;
 
 import android.app.Application;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 
+import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.PersonaShadowDetail;
 import com.persona5dex.repositories.PersonaDetailRepository;
 import com.persona5dex.viewmodels.PersonaDetailInfoViewModel;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -32,6 +35,9 @@ public class PersonaDetailViewModelTest {
 
     private Application application;
     private ArcanaNameProvider arcananameProvider;
+
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Before
     public void setup() {
@@ -141,6 +147,7 @@ public class PersonaDetailViewModelTest {
         PersonaDetailInfo testDetailInfo = new PersonaDetailInfo();
         testDetailInfo.name = "test persona name";
         testDetailInfo.arcanaName = "test arcana";
+        testDetailInfo.arcana = Enumerations.Arcana.CHARIOT;
         testDetailInfo.level = 1;
         testDetailInfo.imageUrl = "test url";
         testDetailInfo.note = "test note";
