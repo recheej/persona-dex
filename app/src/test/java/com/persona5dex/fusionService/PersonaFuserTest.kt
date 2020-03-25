@@ -148,6 +148,14 @@ class PersonaFuserTestSuiteTest {
             val result = fuser.fusePersona("jack frost", "surt", gameType)
             result notEqual "cait sith"
         }
+
+        @Test
+        fun `fusion for royal ame-no-uzume`() = runBlocking {
+            val gameType = GameType.ROYAL
+            val fuser = gameType.getFuser()
+            val result = fuser.fusePersona("angel", "hua po", gameType)
+            result isEqual  "ame-no-uzume"
+        }
     }
 
 }
