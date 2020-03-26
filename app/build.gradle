@@ -117,6 +117,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha01"
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+    implementation "androidx.activity:activity:$activity_version"
+    implementation "androidx.activity:activity-ktx:$activity_version"
 }
 
 apply plugin: 'kotlin-android'

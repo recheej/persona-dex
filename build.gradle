@@ -6,6 +6,7 @@ buildscript {
         room_version = "2.2.3"
         dagger_version = "2.11"
         work_version = "2.3.3"
+        activity_version = "1.2.0-alpha02"
     }
     repositories {
         jcenter()

@@ -132,5 +132,6 @@
     <string name="choose_your_theme">Choose your theme</string>
     <string name="done">done</string>
     <string name="next">next</string>
+    <string name="dlc_settings_hint">DLC settings available in settings (top right).</string>
 
 </resources>
