@@ -24,7 +24,7 @@ class OnboardingViewModel(
     fun getNextStepState(): LiveData<OnboardingPagerState> = nextStepState
 
     fun incrementNextStep() {
-        nextStepState.value = OnboardingPagerState.NextStepPagerState
+        nextStepState.postValue(OnboardingPagerState.NextStepPagerState)
     }
 
     @SuppressLint("ApplySharedPref")
