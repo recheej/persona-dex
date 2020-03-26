@@ -1,5 +1,7 @@
 package com.persona5dex.activities;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.StringRes;
@@ -101,6 +103,29 @@ public class PersonaFusionActivity extends BaseActivity {
         viewModel.getFromEdges().observe(this, fromEdges -> {
             setTabTextCount(false, fromEdges.size());
         });
+
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            performSearch(query);
+        }
+    }
+
+    private void performSearch(String query) {
+        final Fragment currentFragment = pagerAdapter.getCurrentFragment();
+        if(currentFragment instanceof FusionListFragment) {
+            FusionListFragment fusionListFragment = (FusionListFragment) currentFragment;
+            fusionListFragment.performSearch(query);
+        }
     }
 
     private void setUpToolbar() {

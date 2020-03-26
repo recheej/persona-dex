@@ -1,5 +1,7 @@
 package com.persona5dex.fragments;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,8 +25,10 @@ import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
-import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
+import com.persona5dex.viewmodels.FusionListViewModel;
+import com.persona5dex.viewmodels.FusionListViewModelFactory;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
+import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
 import java.util.ArrayList;
@@ -46,6 +51,7 @@ public class FusionListFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private ViewGroup listHeader;
+    private SearchView searchView;
 
     @Inject
     ViewModelFactory viewModelFactory;
@@ -58,6 +64,7 @@ public class FusionListFragment extends BaseFragment {
 
     @Inject
     MainPersonaRepository mainPersonaRepository;
+    private FusionListViewModel fusionListViewModel;
 
     public FusionListFragment() {
         // Required empty public constructor
@@ -114,9 +121,6 @@ public class FusionListFragment extends BaseFragment {
         fusionListAdapter = new PersonaFusionListAdapter(edgeDisplays, recyclerView);
         recyclerView.setAdapter(fusionListAdapter);
 
-        listHeader = baseView.findViewById(R.id.fusion_list_header);
-        progressBar = baseView.findViewById(R.id.progress_bar_fusions);
-
         TextView personaHeaderColumnOne = baseView.findViewById(R.id.textView_fusion_column_one_label);
         TextView personaHeaderColumnTwo = baseView.findViewById(R.id.textView_fusion_column_two_label);
 
@@ -132,18 +136,29 @@ public class FusionListFragment extends BaseFragment {
 
         viewModel = new ViewModelProvider(requireActivity(), factory).get(PersonaFusionViewModel.class);
 
+        final FusionListViewModelFactory fusionListViewModelFactory =
+                new FusionListViewModelFactory(isToList, personaID);
+        fusionListViewModel = new ViewModelProvider(this, fusionListViewModelFactory).get(FusionListViewModel.class);
+        fusionListViewModel.getFilteredEdgeDisplayLiveData().observe(getViewLifecycleOwner(), this::updateDisplayEdges);
+
         LiveData<List<PersonaEdgeDisplay>> edgesLiveData = isToList ? viewModel.getToEdges() : viewModel.getFromEdges();
         edgesLiveData.observe(getViewLifecycleOwner(), personaEdgeDisplays -> {
+            fusionListViewModel.setEdgeDisplays(personaEdgeDisplays);
+
             setProgressBarVisible(false);
 
-            edgeDisplays.clear();
-
-            if(personaEdgeDisplays != null) {
-                edgeDisplays.addAll(personaEdgeDisplays);
-            }
-
-            fusionListAdapter.notifyDataSetChanged();
+            updateDisplayEdges(personaEdgeDisplays);
         });
+    }
+
+    private void updateDisplayEdges(List<PersonaEdgeDisplay> personaEdgeDisplays) {
+        edgeDisplays.clear();
+
+        if(personaEdgeDisplays != null) {
+            edgeDisplays.addAll(personaEdgeDisplays);
+        }
+
+        fusionListAdapter.notifyDataSetChanged();
     }
 
     private void setProgressBarVisible(boolean visible) {
@@ -151,10 +166,12 @@ public class FusionListFragment extends BaseFragment {
             recyclerView.setVisibility(View.GONE);
             listHeader.setVisibility(View.GONE);
             progressBar.setVisibility(ProgressBar.VISIBLE);
+            searchView.setVisibility(View.GONE);
         } else {
             progressBar.setVisibility(ProgressBar.GONE);
             listHeader.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
+            searchView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -170,6 +187,34 @@ public class FusionListFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         baseView = inflater.inflate(R.layout.fragment_fusion_list, container, false);
+        listHeader = baseView.findViewById(R.id.fusion_list_header);
+        progressBar = baseView.findViewById(R.id.progress_bar_fusions);
+        searchView = baseView.findViewById(R.id.fusion_search_view);
+        setUpSearchView();
         return baseView;
+    }
+
+    private void setUpSearchView() {
+        SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText.length() == 0) {
+                    fusionListViewModel.setSearch(null);
+                }
+                return false;
+            }
+        });
+    }
+
+    public void performSearch(String query) {
+        fusionListViewModel.setSearch(query);
     }
 }

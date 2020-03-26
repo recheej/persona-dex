@@ -1,7 +1,9 @@
 package com.persona5dex.adapters;
 
 import android.content.Context;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -19,8 +21,7 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
     private final Context context;
     private final Fragment toFragment;
     private final Fragment fromFragment;
-    private int toListCount;
-    private int fromListCount;
+    private Fragment currentFragment;
 
     public PersonaFusionListPagerAdapter(FragmentManager fm, Context context, Fragment toFragment,
                                          Fragment fromFragment) {
@@ -45,6 +46,17 @@ public class PersonaFusionListPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return FRAGMENT_COUNT;
+    }
+
+    @Override
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.setPrimaryItem(container, position, object);
+        currentFragment = (Fragment) object;
+    }
+
+    @NonNull
+    public Fragment getCurrentFragment() {
+        return currentFragment;
     }
 
     @Override
