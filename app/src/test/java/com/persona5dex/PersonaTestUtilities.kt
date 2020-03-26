@@ -21,13 +21,13 @@ fun Any.getFusionPersonas(): List<PersonaForFusionService> {
             while (hasNext()) {
                 beginArray()
                 val persona = PersonaForFusionService().apply {
-                    arcana = Enumerations.Arcana.getArcana(nextInt())
+                    id = nextInt()
                     setName(nextString())
+                    arcana = Enumerations.Arcana.getArcana(nextInt())
                     level = nextInt()
                     setGameId(GameType.getGameType(nextInt()))
                     isRare = nextInt() == 1
                     isDlc = nextInt() == 1
-                    id = personaId++
                 }
                 personasForFusion.add(persona)
                 endArray()
