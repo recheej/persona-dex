@@ -73,6 +73,9 @@ abstract class PersonaDao {
     @Query("delete from personaFusions")
     abstract suspend fun deleteAllFromPersonaFusions()
 
+    @Query("select * from SimplePersonaNameView")
+    abstract suspend fun getAllNameViews(): Array<SimplePersonaNameView>
+
     @Transaction
     open suspend fun deleteAndInsertNewFusions(personaFusions: List<PersonaFusion>) {
         deleteAllFromPersonaFusions()

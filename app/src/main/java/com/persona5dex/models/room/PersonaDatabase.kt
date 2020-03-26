@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.persona5dex.models.SimplePersonaNameView
 
 
 /**
@@ -20,6 +21,9 @@ import androidx.room.TypeConverters
             PersonaFusion::class,
             PersonaShadowName::class
         ],
+        views = [
+            SimplePersonaNameView::class
+        ],
         version = 1
 )
 @TypeConverters(PersonaTypeConverters::class)
@@ -33,7 +37,8 @@ abstract class PersonaDatabase : RoomDatabase() {
         private var INSTANCE: PersonaDatabase? = null
         private const val DB_NAME = "persona-db.db"
 
-        @JvmStatic fun getPersonaDatabase(context: Context): PersonaDatabase = INSTANCE ?: run {
+        @JvmStatic
+        fun getPersonaDatabase(context: Context): PersonaDatabase = INSTANCE ?: run {
             Room.databaseBuilder(
                     context,
                     PersonaDatabase::class.java,

@@ -17,7 +17,7 @@ class SearchSuggestionCursorProvider @Inject constructor(
 ) {
     private val searchSuggestionDao = database.searchSuggestionDao()
 
-    fun getSearchSuggestionCursor(query: String): Cursor {
+    fun getSearchSuggestionCursor(query: String, onlyPersonas: Boolean): Cursor {
         val personaSearchSuggestions =
                 searchSuggestionDao.getPersonaSearchSuggestions(query).map {
                     val arcana = Enumerations.Arcana.getArcana(it.lineTwo.toInt())
@@ -31,7 +31,8 @@ class SearchSuggestionCursorProvider @Inject constructor(
 
         val skillSearchSuggestions = searchSuggestionDao.getSkillSearchSuggestions(query)
 
-        val finalList = (personaSearchSuggestions + skillSearchSuggestions)
+        val suggestionList = if (onlyPersonas) personaSearchSuggestions else (personaSearchSuggestions + skillSearchSuggestions)
+        val finalList = suggestionList
                 .sortedBy { it.lineOne }
                 .mapIndexed { index, searchSuggestion ->
                     arrayOf(
@@ -42,7 +43,6 @@ class SearchSuggestionCursorProvider @Inject constructor(
                             searchSuggestion.type.toString()
                     )
                 }
-
 
         return MatrixCursor(columnNames, finalList.size).apply {
             finalList.forEach {

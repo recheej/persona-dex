@@ -12,6 +12,8 @@ import com.persona5dex.dagger.contentProvider.ContentProviderContextModule;
 import com.persona5dex.dagger.contentProvider.DaggerContentProviderComponent;
 import com.persona5dex.models.room.SearchSuggestionDao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -20,6 +22,7 @@ import javax.inject.Inject;
 
 public class PersonaNameProvider extends ContentProvider {
 
+    public static final String FUSION_SUGGEST_PATH = "fusion";
     private SearchSuggestionDao dao;
 
     @Inject
@@ -38,8 +41,12 @@ public class PersonaNameProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        String query = uri.getLastPathSegment().toLowerCase();
-        return searchSuggestionCursorProvider.getSearchSuggestionCursor(String.format("%%%s%%", query));
+        final List<String> pathSegments = uri.getPathSegments();
+        String query = pathSegments.get(pathSegments.size() - 1).toLowerCase();
+        String suggestPath = pathSegments.get(0);
+
+        boolean onlyPersonas = suggestPath.equals(FUSION_SUGGEST_PATH);
+        return searchSuggestionCursorProvider.getSearchSuggestionCursor(String.format("%%%s%%", query), onlyPersonas);
     }
 
     @Nullable

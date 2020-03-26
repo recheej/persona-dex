@@ -217,4 +217,8 @@ public class FusionListFragment extends BaseFragment {
     public void performSearch(String query) {
         fusionListViewModel.setSearch(query);
     }
+
+    public void performSearch(int suggestionPersonaId) {
+        fusionListViewModel.setSuggestionSearch(suggestionPersonaId);
+    }
 }

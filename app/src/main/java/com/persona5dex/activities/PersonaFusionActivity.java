@@ -2,8 +2,10 @@ package com.persona5dex.activities;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -116,16 +118,40 @@ public class PersonaFusionActivity extends BaseActivity {
     private void handleIntent(Intent intent) {
         if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            if(query == null) {
+                // user searched by clicking persona
+                final String data = intent.getDataString();
+                if(data != null) {
+                    int suggestionPersonaId = Integer.parseInt(data);
+                    performSearch(suggestionPersonaId);
+                }
+            }
             performSearch(query);
         }
     }
 
+    private void performSearch(int suggestionPersonaId) {
+        final FusionListFragment fusionListFragment = getCurrentFusionListFragment();
+        if(fusionListFragment != null){
+            fusionListFragment.performSearch(suggestionPersonaId);
+        }
+    }
+
     private void performSearch(String query) {
-        final Fragment currentFragment = pagerAdapter.getCurrentFragment();
-        if(currentFragment instanceof FusionListFragment) {
-            FusionListFragment fusionListFragment = (FusionListFragment) currentFragment;
+        final FusionListFragment fusionListFragment = getCurrentFusionListFragment();
+        if(fusionListFragment != null){
             fusionListFragment.performSearch(query);
         }
+    }
+
+    @Nullable
+    private FusionListFragment getCurrentFusionListFragment() {
+        final Fragment currentFragment = pagerAdapter.getCurrentFragment();
+        if(currentFragment instanceof FusionListFragment) {
+            return (FusionListFragment) currentFragment;
+        }
+
+        return null;
     }
 
     private void setUpToolbar() {
