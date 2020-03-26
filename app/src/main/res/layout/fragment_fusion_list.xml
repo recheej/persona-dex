@@ -1,22 +1,31 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.persona5dex.fragments.FusionListFragment"
+    android:background="?pageBackground"
     android:orientation="vertical"
-    android:background="?pageBackground">
+    tools:context="com.persona5dex.fragments.FusionListFragment">
 
-    <include layout="@layout/progress_bar_fusions" />
+    <include
+        layout="@layout/progress_bar_fusions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/fusion_list_header"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="?statsBackground"
         android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="32dp"
-        android:background="?statsBackground"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView_fusion_column_one_label"
@@ -26,18 +35,22 @@
 
         <TextView
             android:id="@+id/textView_fusion_column_two_label"
+            style="@style/FusionHeaderLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/FusionHeaderLabel"
-            android:textAlignment="textEnd"/>
+            android:textAlignment="textEnd" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="4dp"
         android:id="@+id/recycler_view_persona_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fusion_list_header" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
