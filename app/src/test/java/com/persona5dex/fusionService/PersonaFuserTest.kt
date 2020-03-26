@@ -13,13 +13,11 @@ import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType
 import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.models.room.PersonaDao
-import com.persona5dex.models.room.PersonaDatabase
 import com.persona5dex.repositories.PersonaFusionRepository
 import com.persona5dex.repositories.PersonaFusionRepository.Companion.DLC_SHARED_PREF
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
@@ -35,17 +33,17 @@ class PersonaFuserTestSuiteTest {
         private lateinit var application: Persona5Application
         private lateinit var fusionChartFactory: FusionChartServiceFactory
         protected lateinit var allPersonas: List<PersonaForFusionService>
-        private lateinit var personaDao: PersonaDao
+        private val personaDao: PersonaDao = mock()
         private val mockPreferences: SharedPreferences = mock()
 
         @Before
         open fun setup() {
             application = ApplicationProvider.getApplicationContext() as Persona5Application
             arcanaNameProvider = ArcanaNameProvider(application)
-            fusionChartFactory = FusionChartServiceFactory(application, arcanaNameProvider)
-            personaDao = PersonaDatabase.getPersonaDatabase(application).personaDao()
 
-            allPersonas = personaDao.personasByLevel.toList()
+            fusionChartFactory = FusionChartServiceFactory(application, arcanaNameProvider)
+
+            allPersonas = getFusionPersonas()
 
             whenever(personaDao.personasByLevel).thenReturn(allPersonas.toTypedArray())
 
