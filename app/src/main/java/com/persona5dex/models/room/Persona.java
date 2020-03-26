@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.persona5dex.models.Enumerations;
@@ -14,7 +15,11 @@ import com.persona5dex.models.GameType;
  * Created by Rechee on 10/22/2017.
  */
 
-@Entity(tableName = "personas")
+@Entity(tableName = "personas",
+        indices = {
+                @Index(name = "ix_personas_game_id", value = {"gameId"}),
+        }
+)
 public class Persona {
     @PrimaryKey
     public int id;

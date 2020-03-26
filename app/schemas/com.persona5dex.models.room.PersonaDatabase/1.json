@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "915d5eded150c98f2e4ef286b9d1cacc",
+    "identityHash": "077c6aef9d0e108c46cc763c0fd5c208",
     "entities": [
       {
         "tableName": "personas",
@@ -118,7 +118,16 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "ix_personas_game_id",
+            "unique": false,
+            "columnNames": [
+              "gameId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `ix_personas_game_id` ON `${TABLE_NAME}` (`gameId`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -466,7 +475,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '915d5eded150c98f2e4ef286b9d1cacc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '077c6aef9d0e108c46cc763c0fd5c208')"
     ]
   }
 }

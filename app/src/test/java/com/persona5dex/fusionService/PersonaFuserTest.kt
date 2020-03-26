@@ -1,7 +1,6 @@
 package com.persona5dex.fusionService
 
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.test.core.app.ApplicationProvider
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.eq
@@ -14,6 +13,7 @@ import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType
 import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.models.room.PersonaDao
+import com.persona5dex.models.room.PersonaDatabase
 import com.persona5dex.repositories.PersonaFusionRepository
 import com.persona5dex.repositories.PersonaFusionRepository.Companion.DLC_SHARED_PREF
 import kotlinx.coroutines.runBlocking
@@ -25,8 +25,6 @@ import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.Config
 
 @RunWith(Enclosed::class)
 class PersonaFuserTestSuiteTest {
@@ -37,17 +35,17 @@ class PersonaFuserTestSuiteTest {
         private lateinit var application: Persona5Application
         private lateinit var fusionChartFactory: FusionChartServiceFactory
         protected lateinit var allPersonas: List<PersonaForFusionService>
-        private val personaDao: PersonaDao = mock()
+        private lateinit var personaDao: PersonaDao
         private val mockPreferences: SharedPreferences = mock()
 
         @Before
         open fun setup() {
             application = ApplicationProvider.getApplicationContext() as Persona5Application
             arcanaNameProvider = ArcanaNameProvider(application)
-
             fusionChartFactory = FusionChartServiceFactory(application, arcanaNameProvider)
+            personaDao = PersonaDatabase.getPersonaDatabase(application).personaDao()
 
-            allPersonas = getFusionPersonas()
+            allPersonas = personaDao.personasByLevel.toList()
 
             whenever(personaDao.personasByLevel).thenReturn(allPersonas.toTypedArray())
 
@@ -149,7 +147,6 @@ class PersonaFuserTestSuiteTest {
             result notEqual "cait sith"
         }
 
-        @Ignore("data is for base game")
         @Test
         fun `fusion for royal ame-no-uzume`() = runBlocking {
             val gameType = GameType.ROYAL
