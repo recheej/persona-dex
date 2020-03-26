@@ -64,8 +64,11 @@ public class MainActivity extends BaseActivity {
     private Button switchGameButton;
     private TextView currentGameTextView;
 
-    ActivityResultLauncher<Void> onboardingResultLauncher = prepareCall(new OnboardingActivityResultContract(this),
-            result -> Toast.makeText(this, R.string.dlc_settings_hint, Toast.LENGTH_LONG).show());
+    ActivityResultLauncher<Void> onboardingResultLauncher =
+            prepareCall(
+                    new OnboardingActivityResultContract(this), result ->
+                            Toast.makeText(this, R.string.dlc_settings_hint, Toast.LENGTH_LONG).show()
+            );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
