@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,6 +65,7 @@ public class FusionListFragment extends BaseFragment {
 
     @Inject
     MainPersonaRepository mainPersonaRepository;
+
     private FusionListViewModel fusionListViewModel;
 
     public FusionListFragment() {
@@ -134,15 +136,22 @@ public class FusionListFragment extends BaseFragment {
 
         setProgressBarVisible(true);
 
+        final LifecycleOwner viewLifecycleOwner = getViewLifecycleOwner();
+
         viewModel = new ViewModelProvider(requireActivity(), factory).get(PersonaFusionViewModel.class);
 
         final FusionListViewModelFactory fusionListViewModelFactory =
-                new FusionListViewModelFactory(isToList, personaID);
+                new FusionListViewModelFactory(isToList, personaID, mainPersonaRepository);
         fusionListViewModel = new ViewModelProvider(this, fusionListViewModelFactory).get(FusionListViewModel.class);
-        fusionListViewModel.getFilteredEdgeDisplayLiveData().observe(getViewLifecycleOwner(), this::updateDisplayEdges);
+        fusionListViewModel.initialize();
+        fusionListViewModel.getFilteredEdgeDisplayLiveData().observe(viewLifecycleOwner, this::updateDisplayEdges);
+        fusionListViewModel.getQueryForDisplay().observe(viewLifecycleOwner, query -> {
+            searchView.setQuery(query, false);
+            searchView.clearFocus();
+        });
 
         LiveData<List<PersonaEdgeDisplay>> edgesLiveData = isToList ? viewModel.getToEdges() : viewModel.getFromEdges();
-        edgesLiveData.observe(getViewLifecycleOwner(), personaEdgeDisplays -> {
+        edgesLiveData.observe(viewLifecycleOwner, personaEdgeDisplays -> {
             fusionListViewModel.setEdgeDisplays(personaEdgeDisplays);
 
             setProgressBarVisible(false);

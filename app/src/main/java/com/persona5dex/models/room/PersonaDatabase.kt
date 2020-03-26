@@ -21,9 +21,6 @@ import com.persona5dex.models.SimplePersonaNameView
             PersonaFusion::class,
             PersonaShadowName::class
         ],
-        views = [
-            SimplePersonaNameView::class
-        ],
         version = 1
 )
 @TypeConverters(PersonaTypeConverters::class)

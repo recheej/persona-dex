@@ -73,7 +73,7 @@ abstract class PersonaDao {
     @Query("delete from personaFusions")
     abstract suspend fun deleteAllFromPersonaFusions()
 
-    @Query("select * from SimplePersonaNameView")
+    @Query("select id, name from personas")
     abstract suspend fun getAllNameViews(): Array<SimplePersonaNameView>
 
     @Transaction

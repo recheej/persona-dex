@@ -14,7 +14,7 @@ class PersonaFusionViewModel(
         personaJobCreator: PersonaJobCreator
 ) : ViewModel() {
     val personaIsAdvanced: LiveData<Int> = personaDisplayEdgesRepository.personaIsAdvanced(personaId)
-    val personaName: LiveData<String> = mainPersonaRepository.getPersonaName(personaId)
+    val personaName: LiveData<String?> = mainPersonaRepository.getPersonaName(personaId)
 
     private val edgeComparator: Comparator<PersonaEdgeDisplay> = Comparator { o1, o2 ->
         if (o1.leftPersonaID == o2.leftPersonaID) {

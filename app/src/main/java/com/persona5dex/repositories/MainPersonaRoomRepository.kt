@@ -2,6 +2,7 @@ package com.persona5dex.repositories
 
 import androidx.lifecycle.LiveData
 import com.persona5dex.models.MainListPersona
+import com.persona5dex.models.SimplePersonaNameView
 import com.persona5dex.models.room.PersonaDatabase
 import javax.inject.Inject
 
@@ -21,4 +22,6 @@ class MainPersonaRoomRepository @Inject constructor(private val db: PersonaDatab
     override fun getPersonaName(personaID: Int): LiveData<String?> {
         return db.personaDao().getPersonaName(personaID)
     }
+
+    override suspend fun getAllSimpleNames(): Array<SimplePersonaNameView> = db.personaDao().getAllNameViews()
 }

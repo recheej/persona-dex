@@ -125,21 +125,22 @@ public class PersonaFusionActivity extends BaseActivity {
                     int suggestionPersonaId = Integer.parseInt(data);
                     performSearch(suggestionPersonaId);
                 }
+            } else {
+                performSearch(query);
             }
-            performSearch(query);
         }
     }
 
     private void performSearch(int suggestionPersonaId) {
         final FusionListFragment fusionListFragment = getCurrentFusionListFragment();
-        if(fusionListFragment != null){
+        if(fusionListFragment != null) {
             fusionListFragment.performSearch(suggestionPersonaId);
         }
     }
 
     private void performSearch(String query) {
         final FusionListFragment fusionListFragment = getCurrentFusionListFragment();
-        if(fusionListFragment != null){
+        if(fusionListFragment != null) {
             fusionListFragment.performSearch(query);
         }
     }
@@ -169,7 +170,7 @@ public class PersonaFusionActivity extends BaseActivity {
         mainToolbar.setTitle(R.string.loading_data);
 
         viewModel.getPersonaName().observe(this,
-                personaName -> mainToolbar.setTitle(String.format("Fusions for: %s", personaName)));
+                personaName -> mainToolbar.setTitle(String.format("Fusions for: %s", personaName == null ? "" : personaName)));
     }
 
     private void setTabTextCount(boolean toList, int count) {
