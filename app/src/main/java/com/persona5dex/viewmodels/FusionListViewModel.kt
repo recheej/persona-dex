@@ -60,7 +60,7 @@ class FusionListViewModel(
     }
 
     fun initialize() {
-        personaNameMap = viewModelScope.async(Dispatchers.IO) {
+        personaNameMap = viewModelScope.async {
             mainPersonaRepository.getAllSimpleNames().map {
                 FullPersonaName(it.id, it.name, it.name.normalize())
             }.associateBy { it.id }
