@@ -40,6 +40,7 @@ abstract class PersonaDatabase : RoomDatabase() {
                     DB_NAME
             )
                     .createFromAsset("databases/$DB_NAME")
+                    .fallbackToDestructiveMigrationOnDowngrade()
                     .fallbackToDestructiveMigration()
                     .build().also {
                         INSTANCE = it

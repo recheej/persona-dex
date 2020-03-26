@@ -41,7 +41,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/base_game_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/onboarding_copy_bottom_margin"
         android:layout_marginBottom="@dimen/rowPadding"
@@ -51,8 +51,8 @@
         android:text="@string/game_persona_5"
         app:backgroundTint="?colorAccent"
         app:layout_constraintBottom_toTopOf="@id/royal_game_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/right_barrier"
+        app:layout_constraintStart_toEndOf="@id/left_barrier" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/royal_game_button"
@@ -64,8 +64,8 @@
         android:paddingRight="@dimen/onboarding_btn_horizontal_padding"
         android:text="@string/game_royal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/base_game_button"
-        app:layout_constraintEnd_toEndOf="@id/base_game_button"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/skip_onboarding_button"
@@ -78,5 +78,19 @@
         app:layout_constraintBottom_toBottomOf="@id/royal_game_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/royal_game_button" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/right_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="royal_game_button,base_game_button" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/left_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="royal_game_button,base_game_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
