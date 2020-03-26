@@ -62,7 +62,7 @@ class FusionListViewModel(
     fun initialize() {
         personaNameMap = viewModelScope.async {
             mainPersonaRepository.getAllSimpleNames().map {
-                FullPersonaName(it.id, it.name, it.name.normalize())
+                SimplePersonaNameView(it.id, it.name)
             }.associateBy { it.id }
         }
         initialized = true
@@ -88,8 +88,6 @@ class FusionListViewModel(
         suggestionPersonaLiveData.value = suggestionPersonaId
     }
 }
-
-private class FullPersonaName(id: Int, originalName: String, val normalizedName: String) : SimplePersonaNameView(id, originalName)
 
 class FusionListViewModelFactory(
         private val isToList: Boolean,
