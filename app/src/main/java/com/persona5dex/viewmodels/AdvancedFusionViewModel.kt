@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.persona5dex.extensions.equalNormalized
 import com.persona5dex.extensions.normalize
 import com.persona5dex.filterGameType
-import com.persona5dex.fusionService.AdvancedPersonaFusionsFileService
+import com.persona5dex.fusionService.advanced.AdvancedPersonaService
 import com.persona5dex.models.GameType
 import com.persona5dex.models.MainListPersona
 import com.persona5dex.repositories.MainPersonaRepository
@@ -13,7 +13,7 @@ import kotlinx.coroutines.yield
 
 class AdvancedFusionViewModel(personaId: Int,
                               private val mainPersonaRepository: MainPersonaRepository,
-                              private val advancedPersonaFusionsFileService: AdvancedPersonaFusionsFileService,
+                              private val advancedPersonaService: AdvancedPersonaService,
                               private val gameType: GameType
 ) : ViewModel() {
     val personaName = Transformations.map(mainPersonaRepository.getPersonaName(personaId)) {
@@ -23,7 +23,7 @@ class AdvancedFusionViewModel(personaId: Int,
     val recipesForAdvancedPersona: LiveData<List<MainListPersona>> = Transformations.switchMap(personaName) { personaName ->
         liveData(Dispatchers.IO) {
 
-            val personas = advancedPersonaFusionsFileService.parseFile()
+            val personas = advancedPersonaService.getAdvancedPersonas().toList()
                     .firstOrNull { it.resultPersonaName equalNormalized personaName }
                     ?.let { advancedFusions ->
                         yield()
@@ -44,9 +44,9 @@ class AdvancedFusionViewModel(personaId: Int,
 
 class AdvancedFusionViewModelFactory(private val personaId: Int,
                                      private val mainPersonaRepository: MainPersonaRepository,
-                                     private val advancedPersonaFusionsFileService: AdvancedPersonaFusionsFileService,
+                                     private val advancedPersonaService: AdvancedPersonaService,
                                      private val gameType: GameType
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            AdvancedFusionViewModel(personaId, mainPersonaRepository, advancedPersonaFusionsFileService, gameType) as T
+            AdvancedFusionViewModel(personaId, mainPersonaRepository, advancedPersonaService, gameType) as T
 }

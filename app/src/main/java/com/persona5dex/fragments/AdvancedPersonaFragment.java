@@ -15,7 +15,7 @@ import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.fusionService.AdvancedPersonaFusionsFileService;
+import com.persona5dex.fusionService.advanced.AdvancedPersonaService;
 import com.persona5dex.models.GameType;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.viewmodels.AdvancedFusionViewModel;
@@ -48,7 +48,7 @@ public class AdvancedPersonaFragment extends BaseFragment {
     MainPersonaRepository mainPersonaRepository;
 
     @Inject
-    AdvancedPersonaFusionsFileService advancedPersonaFusionsFileService;
+    AdvancedPersonaService advancedPersonaService;
 
     @Inject
     GameType gameType;
@@ -86,7 +86,7 @@ public class AdvancedPersonaFragment extends BaseFragment {
         final AdvancedFusionViewModelFactory factory = new AdvancedFusionViewModelFactory(
                 personaID,
                 mainPersonaRepository,
-                advancedPersonaFusionsFileService,
+                advancedPersonaService,
                 gameType
         );
         viewModel = new ViewModelProvider(this, factory).get(AdvancedFusionViewModel.class);

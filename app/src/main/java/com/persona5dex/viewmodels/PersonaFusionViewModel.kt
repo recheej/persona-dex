@@ -26,7 +26,7 @@ class PersonaFusionViewModel(
         val isAdvanced = it == 1
         if (isAdvanced) {
             // no-op. there's no edges so don't update activity
-            MutableLiveData<List<PersonaEdgeDisplay>>()
+            MutableLiveData()
         } else {
             Transformations.switchMap(personaJobCreator.getStateForGenerateFusionJob()) { state ->
                 if (state.isDone()) {

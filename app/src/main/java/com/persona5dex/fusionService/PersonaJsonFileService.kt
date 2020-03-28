@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.InputStreamReader
 
-abstract class PersonaJsonFileService<T>(private val context: Context) : PersonaFileService<T>(context) {
+abstract class PersonaJsonFileService<T>(context: Context) : PersonaFileService<T>(context) {
     protected abstract suspend fun parseJson(jsonReader: JsonReader): T
 
     final override suspend fun parseFile(fileInputStream: InputStream): T =

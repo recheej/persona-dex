@@ -65,7 +65,7 @@ abstract class PersonaDao {
     abstract fun getPersonaName(personaID: Int): LiveData<String?>
 
     @Query("select special from personas where id = :personaID")
-    abstract fun personaIsAdvanced(personaID: Int): LiveData<Int?>
+    abstract fun personaIsAdvanced(personaID: Int): LiveData<Int>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertPersonaFusions(personaFusion: List<PersonaFusion>)

@@ -14,6 +14,8 @@ import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaUtilities;
 import com.persona5dex.fusionService.FusionChartService;
 import com.persona5dex.fusionService.FusionChartServiceFactory;
+import com.persona5dex.fusionService.advanced.AdvancedPersonaService;
+import com.persona5dex.fusionService.advanced.AdvancedPersonaServiceFactory;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.room.PersonaDao;
 import com.persona5dex.models.room.PersonaDatabase;
@@ -96,5 +98,10 @@ public class ApplicationContextModule {
     @Provides
     ArcanaNameProvider arcanaNameProvider(@Named("applicationContext") Context context) {
         return new ArcanaNameProvider(context);
+    }
+
+    @Provides
+    AdvancedPersonaService providesAdvancedPersonaService(AdvancedPersonaServiceFactory advancedPersonaServiceFactory, GameType gameType) {
+        return advancedPersonaServiceFactory.getAdvancedFusionService(gameType);
     }
 }
