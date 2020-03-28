@@ -144,11 +144,6 @@ public class FusionListFragment extends BaseFragment {
                 new FusionListViewModelFactory(isToList, personaID, mainPersonaRepository);
         fusionListViewModel = new ViewModelProvider(this, fusionListViewModelFactory).get(FusionListViewModel.class);
         fusionListViewModel.initialize();
-        fusionListViewModel.getFilteredEdgeDisplayLiveData().observe(viewLifecycleOwner, this::updateDisplayEdges);
-        fusionListViewModel.getQueryForDisplay().observe(viewLifecycleOwner, query -> {
-            searchView.setQuery(query, false);
-            searchView.clearFocus();
-        });
 
         LiveData<List<PersonaEdgeDisplay>> edgesLiveData = isToList ? viewModel.getToEdges() : viewModel.getFromEdges();
         edgesLiveData.observe(viewLifecycleOwner, personaEdgeDisplays -> {
@@ -157,6 +152,12 @@ public class FusionListFragment extends BaseFragment {
             setProgressBarVisible(false);
 
             updateDisplayEdges(personaEdgeDisplays);
+
+            fusionListViewModel.getFilteredEdgeDisplayLiveData().observe(viewLifecycleOwner, this::updateDisplayEdges);
+            fusionListViewModel.getQueryForDisplay().observe(viewLifecycleOwner, query -> {
+                searchView.setQuery(query, false);
+                searchView.clearFocus();
+            });
         });
     }
 

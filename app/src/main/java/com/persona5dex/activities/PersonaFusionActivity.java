@@ -106,7 +106,9 @@ public class PersonaFusionActivity extends BaseActivity {
             setTabTextCount(false, fromEdges.size());
         });
 
-        handleIntent(getIntent());
+        if(savedInstanceState == null) {
+            handleIntent(getIntent());
+        }
     }
 
     @Override

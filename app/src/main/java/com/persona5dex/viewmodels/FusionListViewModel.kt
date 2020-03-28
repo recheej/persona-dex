@@ -60,12 +60,14 @@ class FusionListViewModel(
     }
 
     fun initialize() {
-        personaNameMap = viewModelScope.async {
-            mainPersonaRepository.getAllSimpleNames().map {
-                SimplePersonaNameView(it.id, it.name)
-            }.associateBy { it.id }
+        if (!initialized) {
+            personaNameMap = viewModelScope.async {
+                mainPersonaRepository.getAllSimpleNames().map {
+                    SimplePersonaNameView(it.id, it.name)
+                }.associateBy { it.id }
+            }
+            initialized = true
         }
-        initialized = true
     }
 
     fun getFilteredEdgeDisplayLiveData(): LiveData<List<PersonaEdgeDisplay>> = filteredEdgeDisplayLiveData
