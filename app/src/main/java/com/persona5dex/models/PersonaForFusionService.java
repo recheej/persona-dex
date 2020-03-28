@@ -48,6 +48,10 @@ public class PersonaForFusionService implements GameTypePersona {
         return rare;
     }
 
+    public boolean isParty() {
+        return party;
+    }
+
     public void setRare(boolean rare) {
         this.rare = rare;
     }

@@ -54,13 +54,13 @@ class PersonaFuserV2(
             personaOne.isValidInRecipe() && personaTwo.isValidInRecipe()
 
     private fun PersonaForFusionService.isValidInRecipe() =
-            !((isDlc && !isOwnedDLC()) || isRare)
+            !((isDlc && !isOwnedDLC()) || isRare || isParty)
 
     private fun personasValidInResult(personaOne: PersonaForFusionService, personaTwo: PersonaForFusionService): Boolean =
             personaOne.isValidInResult() && personaTwo.isValidInResult()
 
     private fun PersonaForFusionService.isValidInResult() =
-            !((isDlc && !isOwnedDLC()) || isRare || isSpecial)
+            !((isDlc && !isOwnedDLC()) || isRare || isSpecial || isParty)
 
     private fun PersonaForFusionService.isOwnedDLC(): Boolean =
             ownedDLCPersonas.contains(this)
