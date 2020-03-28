@@ -34,6 +34,7 @@ public class Persona {
     public boolean max;
     public boolean dlc;
     public boolean rare;
+    public boolean party;
 
     public String note;
 

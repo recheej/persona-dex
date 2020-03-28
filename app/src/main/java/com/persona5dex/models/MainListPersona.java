@@ -21,6 +21,7 @@ public class MainListPersona implements GameTypePersona {
     public int level;
     public boolean rare;
     public boolean dlc;
+    public boolean party;
     public GameType gameId;
 
     @Relation(parentColumn = "id", entityColumn = "persona_id")

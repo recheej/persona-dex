@@ -15,6 +15,7 @@ public class PersonaForFusionService implements GameTypePersona {
     private boolean rare;
     private boolean special;
     private boolean dlc;
+    private boolean party;
     private int id;
     private GameType gameId;
 

@@ -10,15 +10,15 @@ import kotlinx.coroutines.yield
  */
 @Dao
 abstract class PersonaDao {
-    @get:Query("select id, name, arcana, level, rare, dlc, gameId from personas order by name")
+    @get:Query("select id, name, arcana, level, rare, dlc, gameId, party from personas order by name")
     @get:Transaction
     abstract val allPersonasForMainListLiveData: LiveData<List<MainListPersona>>
 
     @get:Transaction
-    @get:Query("select id, name, arcana, level, rare, dlc, gameId from personas order by name")
+    @get:Query("select id, name, arcana, level, rare, dlc, gameId, party from personas order by name")
     abstract val allPersonasForMainList: List<MainListPersona>
 
-    @Query("select id, arcana, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max " +
+    @Query("select id, arcana, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max, party " +
             "from personas where id = :personaID " +
             "order by name")
     abstract fun getDetailInfoForPersona(personaID: Int): LiveData<PersonaDetailInfo>
@@ -26,7 +26,7 @@ abstract class PersonaDao {
     @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID")
     abstract fun getShadowsForPersona(personaID: Int): LiveData<Array<PersonaShadowDetail>>
 
-    @get:Query("select id, arcana, name, level, rare, dlc, special, gameId from personas order by level")
+    @get:Query("select id, arcana, name, level, rare, dlc, special, gameId, party from personas order by level")
     abstract val personasByLevel: Array<PersonaForFusionService>
 
     @get:Query("select id, name, arcana, level, rare, dlc, gameId from personas where dlc = 1")
