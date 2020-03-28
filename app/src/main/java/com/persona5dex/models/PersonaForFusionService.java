@@ -52,6 +52,10 @@ public class PersonaForFusionService implements GameTypePersona {
         return party;
     }
 
+    public void setParty(boolean party) {
+        this.party = party;
+    }
+
     public void setRare(boolean rare) {
         this.rare = rare;
     }

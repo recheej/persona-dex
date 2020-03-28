@@ -15,8 +15,6 @@ fun Any.getFusionPersonas(): List<PersonaForFusionService> {
         use {
             val personasForFusion = mutableListOf<PersonaForFusionService>()
 
-            var personaId = 0
-
             beginArray()
             while (hasNext()) {
                 beginArray()
@@ -28,6 +26,7 @@ fun Any.getFusionPersonas(): List<PersonaForFusionService> {
                     setGameId(GameType.getGameType(nextInt()))
                     isRare = nextInt() == 1
                     isDlc = nextInt() == 1
+                    isParty = nextInt() == 1
                 }
                 personasForFusion.add(persona)
                 endArray()

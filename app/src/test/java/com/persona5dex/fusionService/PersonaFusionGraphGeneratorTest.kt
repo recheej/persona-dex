@@ -65,4 +65,12 @@ class PersonaFusionGraphGeneratorTest {
         val hasDuplicates = groups.any { it.value.count() > 1 }
         Assert.assertFalse(hasDuplicates)
     }
+
+    @Test
+    fun `testGetAllFusions doesn't generate party fusions`() = runBlocking {
+        val allFusions = graphGenerator.getAllFusions()
+        Assert.assertTrue(allFusions.none {
+            it.personaOne.isParty || it.personaTwo.isParty || it.resultPersona.isParty
+        })
+    }
 }

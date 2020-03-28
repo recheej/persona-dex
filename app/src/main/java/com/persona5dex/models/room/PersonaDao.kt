@@ -29,7 +29,7 @@ abstract class PersonaDao {
     @get:Query("select id, arcana, name, level, rare, dlc, special, gameId, party from personas order by level")
     abstract val personasByLevel: Array<PersonaForFusionService>
 
-    @get:Query("select id, name, arcana, level, rare, dlc, gameId from personas where dlc = 1")
+    @get:Query("select id, name, arcana, level, rare, dlc, gameId, party from personas where dlc = 1")
     @get:Transaction
     abstract val dLCPersonas: LiveData<List<MainListPersona>>
 

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "077c6aef9d0e108c46cc763c0fd5c208",
+    "identityHash": "90f0773bc1d64a3146d84b56e57ab037",
     "entities": [
       {
         "tableName": "personas",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `arcana` INTEGER, `level` INTEGER NOT NULL, `personality` TEXT, `special` INTEGER NOT NULL, `max` INTEGER NOT NULL, `dlc` INTEGER NOT NULL, `rare` INTEGER NOT NULL, `note` TEXT, `imageUrl` TEXT, `gameId` INTEGER NOT NULL DEFAULT 1, `endurance` INTEGER, `agility` INTEGER, `strength` INTEGER, `magic` INTEGER, `luck` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `arcana` INTEGER, `level` INTEGER NOT NULL, `personality` TEXT, `special` INTEGER NOT NULL, `max` INTEGER NOT NULL, `dlc` INTEGER NOT NULL, `rare` INTEGER NOT NULL, `party` INTEGER NOT NULL, `note` TEXT, `imageUrl` TEXT, `gameId` INTEGER NOT NULL DEFAULT 1, `endurance` INTEGER, `agility` INTEGER, `strength` INTEGER, `magic` INTEGER, `luck` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -59,6 +59,12 @@
           {
             "fieldPath": "rare",
             "columnName": "rare",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "party",
+            "columnName": "party",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -475,7 +481,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '077c6aef9d0e108c46cc763c0fd5c208')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '90f0773bc1d64a3146d84b56e57ab037')"
     ]
   }
 }
