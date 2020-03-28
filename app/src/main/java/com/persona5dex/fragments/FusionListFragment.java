@@ -143,7 +143,6 @@ public class FusionListFragment extends BaseFragment {
         final FusionListViewModelFactory fusionListViewModelFactory =
                 new FusionListViewModelFactory(isToList, personaID, mainPersonaRepository);
         fusionListViewModel = new ViewModelProvider(this, fusionListViewModelFactory).get(FusionListViewModel.class);
-        fusionListViewModel.initialize();
 
         LiveData<List<PersonaEdgeDisplay>> edgesLiveData = isToList ? viewModel.getToEdges() : viewModel.getFromEdges();
         edgesLiveData.observe(viewLifecycleOwner, personaEdgeDisplays -> {

@@ -16,10 +16,15 @@ class FusionListViewModel(
         private val mainPersonaRepository: MainPersonaRepository
 ) : ViewModel() {
 
-    private var initialized: Boolean = false
     private var baseEdgeDisplays: List<PersonaEdgeDisplay>? = null
 
-    private lateinit var personaNameMap: Deferred<Map<Int, SimplePersonaNameView>>
+    private val personaNameMap: Deferred<Map<Int, SimplePersonaNameView>> by lazy {
+        viewModelScope.async {
+            mainPersonaRepository.getAllSimpleNames().map {
+                SimplePersonaNameView(it.id, it.name)
+            }.associateBy { it.id }
+        }
+    }
 
     private val suggestionPersonaLiveData = MutableLiveData<Int>()
     private val queryLiveData = MutableLiveData<String?>()
@@ -59,34 +64,20 @@ class FusionListViewModel(
         }
     }
 
-    fun initialize() {
-        if (!initialized) {
-            personaNameMap = viewModelScope.async {
-                mainPersonaRepository.getAllSimpleNames().map {
-                    SimplePersonaNameView(it.id, it.name)
-                }.associateBy { it.id }
-            }
-            initialized = true
-        }
-    }
-
     fun getFilteredEdgeDisplayLiveData(): LiveData<List<PersonaEdgeDisplay>> = filteredEdgeDisplayLiveData
 
     private infix fun String?.containsNormalized(other: String) =
             this?.normalize()?.contains(other) ?: false
 
     fun setEdgeDisplays(displays: List<PersonaEdgeDisplay>) {
-        check(initialized)
         baseEdgeDisplays = displays
     }
 
     fun setSearch(query: String?) {
-        check(initialized)
         queryLiveData.value = query
     }
 
     fun setSuggestionSearch(suggestionPersonaId: Int) {
-        check(initialized)
         suggestionPersonaLiveData.value = suggestionPersonaId
     }
 }
