@@ -6,17 +6,17 @@ import com.persona5dex.R
 import javax.inject.Inject
 import javax.inject.Named
 
-class AdvancedPersonaFusionsFileService @Inject constructor(@Named("applicationContext") context: Context) : PersonaJsonFileService<List<AdvancedPersonaFusion>>(context) {
-    override fun getFileRes(): Int = R.raw.advanced_fusions
+class AdvancedPersonaRoyalFusionsFileService @Inject constructor(@Named("applicationContext") context: Context) : PersonaJsonFileService<List<AdvancedPersonaFusion>>(context) {
+    override fun getFileRes(): Int = R.raw.advanced_fusions_royal
 
     override suspend fun parseJson(jsonReader: JsonReader): List<AdvancedPersonaFusion> {
         return jsonReader.run {
-            beginArray()
+            beginObject()
             val advancedFusions = mutableListOf<AdvancedPersonaFusion>()
             while (hasNext()) {
                 advancedFusions.add(parseFusion(jsonReader))
             }
-            endArray()
+            endObject()
 
             advancedFusions
         }
@@ -24,15 +24,10 @@ class AdvancedPersonaFusionsFileService @Inject constructor(@Named("applicationC
 
     private fun parseFusion(jsonReader: JsonReader): AdvancedPersonaFusion {
         return jsonReader.run {
-            beginObject()
-            check(nextName() == "result")
-            val name = nextString()
-            check(nextName() == "sources")
+            val resultName = nextName()
             val sources = getSources(jsonReader)
 
-            endObject()
-
-            AdvancedPersonaFusion(name, sources)
+            AdvancedPersonaFusion(resultName, sources)
         }
     }
 
@@ -49,4 +44,3 @@ class AdvancedPersonaFusionsFileService @Inject constructor(@Named("applicationC
         }
     }
 }
-
