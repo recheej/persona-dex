@@ -2,9 +2,11 @@ package com.persona5dex.fusionService
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.test.core.app.ApplicationProvider
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType
@@ -17,8 +19,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
-import org.robolectric.annotation.Config
 
 
 @RunWith(RobolectricTestRunner::class)
@@ -37,7 +37,7 @@ class PersonaFusionGraphGeneratorTest {
         val mockPreferences: SharedPreferences = mock()
         whenever(mockPreferences.getStringSet(eq(DLC_SHARED_PREF), any())).thenReturn(emptySet())
 
-        val fusionRepository = PersonaFusionRepository(personaDao, mockPreferences, GameType.BASE)
+        val fusionRepository = PersonaFusionRepository(personaDao, GameType.BASE)
 
         val context: Context = ApplicationProvider.getApplicationContext()
         val arcanaNameProvider = ArcanaNameProvider(context)
@@ -45,9 +45,11 @@ class PersonaFusionGraphGeneratorTest {
         val fusionChartFactory = FusionChartServiceFactory(context, arcanaNameProvider)
 
         val fusionChartService = fusionChartFactory.getFusionChartService(GameType.BASE)
-        personaFuser = PersonaFuserV2(fusionRepository, fusionChartService.getFusionChart())
+        personaFuser = PersonaFuserV2(fusionRepository, fusionChartService.getFusionChart(), mockPreferences).also {
+            it.initialize()
+        }
 
-        graphGenerator = PersonaFusionGraphGenerator(fusionRepository, fusionChartService)
+        graphGenerator = PersonaFusionGraphGenerator(fusionRepository, fusionChartService, mockPreferences)
     }
 
     @Test

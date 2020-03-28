@@ -1,19 +1,22 @@
 package com.persona5dex.fusionService
 
+import android.content.SharedPreferences
 import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.repositories.PersonaFusionRepository
-import kotlinx.coroutines.yield
 import javax.inject.Inject
+import javax.inject.Named
 
 class PersonaFusionGraphGenerator @Inject constructor(
         private val fusionRepository: PersonaFusionRepository,
-        private val fusionChartService: FusionChartService
+        private val fusionChartService: FusionChartService,
+        @Named("defaultSharedPreferences") private val defaultSharedPreferences: SharedPreferences
 ) {
     suspend fun getAllFusions(): List<PersonaGraphEntry> {
+        val fusionChart = fusionChartService.getFusionChart()
         val personas = fusionRepository.getFusionPersonas()
-        yield()
-        val personaFuser = PersonaFuserV2(personas, fusionChartService.getFusionChart())
-        yield()
+        val personaFuser = PersonaFuserV2(fusionRepository, fusionChart, defaultSharedPreferences).also {
+            it.initialize()
+        }
 
         val personaFusions = mutableSetOf<PersonaGraphEntry>()
         personas.forEach { personaOne ->
@@ -40,7 +43,7 @@ data class PersonaGraphEntry(
 
         other as PersonaGraphEntry
 
-        if(personaOne == other.personaTwo && other.personaOne == personaTwo) {
+        if (personaOne == other.personaTwo && other.personaOne == personaTwo) {
             return resultPersona == other.resultPersona
         }
 
@@ -52,8 +55,8 @@ data class PersonaGraphEntry(
     }
 
     override fun hashCode(): Int {
-        val firstPersona = if(personaOne.id < personaTwo.id) personaOne else personaTwo
-        val secondPersona = if(firstPersona.id == personaTwo.id) personaOne else personaTwo
+        val firstPersona = if (personaOne.id < personaTwo.id) personaOne else personaTwo
+        val secondPersona = if (firstPersona.id == personaTwo.id) personaOne else personaTwo
 
         var result = firstPersona.hashCode()
         result = 31 * result + secondPersona.hashCode()

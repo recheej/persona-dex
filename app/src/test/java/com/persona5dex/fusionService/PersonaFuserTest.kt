@@ -57,8 +57,8 @@ class PersonaFuserTestSuiteTest {
 
         protected suspend fun GameType.getFuser() = runBlocking {
             fusionChartFactory.getFusionChartService(this@getFuser).getFusionChart().let {
-                val fusionRepository = PersonaFusionRepository(personaDao, mockPreferences, this@getFuser)
-                PersonaFuserV2(fusionRepository.getFusionPersonas(), it)
+                val fusionRepository = PersonaFusionRepository(personaDao, this@getFuser)
+                PersonaFuserV2(fusionRepository, it, mockPreferences).also { fuser -> fuser.initialize() }
             }
         }
 
@@ -106,7 +106,7 @@ class PersonaFuserTestSuiteTest {
             resultPersona isEqual expectedResultPersonaName
         }
 
-        private suspend infix fun String.fuse(other: String) =
+        private infix fun String.fuse(other: String) =
                 personaFuser.fusePersona(this, other, gameType)
 
         companion object {
@@ -122,7 +122,8 @@ class PersonaFuserTestSuiteTest {
                     arrayOf("Cait Sith", "Naga", "Leanan Sidhe", GameType.ROYAL),
                     arrayOf("Biyarky", "Take-Minakata", "Yatagarasu", GameType.ROYAL),
                     arrayOf("Biyarky", "Phoenix", "Horus", GameType.ROYAL),
-                    arrayOf("Biyarky", "Biyarky", null, GameType.ROYAL)
+                    arrayOf("Biyarky", "Biyarky", null, GameType.ROYAL),
+                    arrayOf("alice", "arsene", "Valkyrie", GameType.BASE)
             )
         }
     }
@@ -144,14 +145,5 @@ class PersonaFuserTestSuiteTest {
             val result = fuser.fusePersona("jack frost", "surt", gameType)
             result notEqual "cait sith"
         }
-
-        @Test
-        fun `fusion for royal ame-no-uzume`() = runBlocking {
-            val gameType = GameType.ROYAL
-            val fuser = gameType.getFuser()
-            val result = fuser.fusePersona("angel", "hua po", gameType)
-            result isEqual  "ame-no-uzume"
-        }
     }
-
 }

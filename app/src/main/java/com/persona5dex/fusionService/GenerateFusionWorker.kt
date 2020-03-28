@@ -33,6 +33,8 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
             personaDao.deleteAndInsertNewFusions(personaFusions)
         } catch (e: CancellationException) {
             Log.e(TAG, "GenerateFusionWorker job with id: $id, tags: $tags cancelled", e)
+        } catch (e: Exception) {
+            Log.e(TAG, "GenerateFusionWorker job with id: $id, tags: $tags failed.", e)
         }
 
         return Result.success()

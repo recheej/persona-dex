@@ -5,10 +5,6 @@ import android.util.JsonReader
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.R
 import com.persona5dex.models.Enumerations.Arcana
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.io.InputStream
-import java.io.InputStreamReader
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -43,9 +39,14 @@ class PersonaBaseGameFusionChartService @Inject constructor(
 
         check(nextName() == "result")
 
+        val resultArcana = arcanaNameProvider.getArcanaForEnglishNameOrThrow(nextString())
         fusionMap.getOrPut(arcanaOne) {
             mutableMapOf()
-        }[arcanaTwo] = arcanaNameProvider.getArcanaForEnglishNameOrThrow(nextString())
+        }[arcanaTwo] = resultArcana
+
+        fusionMap.getOrPut(arcanaTwo) {
+            mutableMapOf()
+        }[arcanaOne] = resultArcana
 
         endObject()
     }
