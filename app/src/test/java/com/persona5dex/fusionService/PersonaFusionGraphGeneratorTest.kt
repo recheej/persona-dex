@@ -10,6 +10,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.getFusionPersonas
 import com.persona5dex.models.GameType
+import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.models.room.PersonaDao
 import com.persona5dex.repositories.PersonaFusionRepository
 import com.persona5dex.repositories.PersonaFusionRepository.Companion.DLC_SHARED_PREF
@@ -68,9 +69,26 @@ class PersonaFusionGraphGeneratorTest {
 
     @Test
     fun `testGetAllFusions doesn't generate party fusions`() = runBlocking {
-        val allFusions = graphGenerator.getAllFusions()
-        Assert.assertTrue(allFusions.none {
-            it.personaOne.isParty || it.personaTwo.isParty || it.resultPersona.isParty
+        graphGenerator.getAllFusions().assertAll({
+            !it.isParty
+        })
+    }
+
+    @Test
+    fun `testGetAllFusions doesn't generate advanced`() = runBlocking {
+        graphGenerator.getAllFusions().assertAll({
+            !it.isSpecial
+        }) {
+            true
+        }
+    }
+
+    private fun Iterable<PersonaGraphEntry>.assertAll(resultPredicate: FusionPredicate, recipePredicate: FusionPredicate? = null) {
+        val fusionRecipePredicate = recipePredicate ?: resultPredicate
+        Assert.assertTrue(all {
+            fusionRecipePredicate(it.personaOne) || fusionRecipePredicate(it.personaTwo) || resultPredicate(it.resultPersona)
         })
     }
 }
+
+private typealias FusionPredicate = (PersonaForFusionService) -> Boolean
