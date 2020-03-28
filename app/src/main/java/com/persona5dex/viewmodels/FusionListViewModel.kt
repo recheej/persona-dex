@@ -20,9 +20,7 @@ class FusionListViewModel(
 
     private val personaNameMap: Deferred<Map<Int, SimplePersonaNameView>> by lazy {
         viewModelScope.async {
-            mainPersonaRepository.getAllSimpleNames().map {
-                SimplePersonaNameView(it.id, it.name)
-            }.associateBy { it.id }
+            mainPersonaRepository.getAllSimpleNames().associateBy { it.id }
         }
     }
 
