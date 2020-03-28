@@ -16,9 +16,10 @@ import com.persona5dex.R;
 import com.persona5dex.dagger.activity.ActivityContextModule;
 import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.fusionService.AdvancedPersonaFusionsFileService;
+import com.persona5dex.models.GameType;
 import com.persona5dex.repositories.MainPersonaRepository;
+import com.persona5dex.viewmodels.AdvancedFusionViewModel;
 import com.persona5dex.viewmodels.AdvancedFusionViewModelFactory;
-import com.persona5dex.viewmodels.AdvancedFusionViewModelV2;
 
 import javax.inject.Inject;
 
@@ -31,7 +32,7 @@ public class AdvancedPersonaFragment extends BaseFragment {
     private static final String PERSONA_ID = "persona_id";
     private int personaID;
     private TextView fusionPromptTextView;
-    private AdvancedFusionViewModelV2 viewModel;
+    private AdvancedFusionViewModel viewModel;
     private PersonaListFragment personaListFragment;
     private ProgressBar progressBar;
 
@@ -48,6 +49,9 @@ public class AdvancedPersonaFragment extends BaseFragment {
 
     @Inject
     AdvancedPersonaFusionsFileService advancedPersonaFusionsFileService;
+
+    @Inject
+    GameType gameType;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,8 +83,13 @@ public class AdvancedPersonaFragment extends BaseFragment {
                 )
                 .plus().inject(this);
 
-        final AdvancedFusionViewModelFactory factory = new AdvancedFusionViewModelFactory(personaID, mainPersonaRepository, advancedPersonaFusionsFileService);
-        viewModel = new ViewModelProvider(this, factory).get(AdvancedFusionViewModelV2.class);
+        final AdvancedFusionViewModelFactory factory = new AdvancedFusionViewModelFactory(
+                personaID,
+                mainPersonaRepository,
+                advancedPersonaFusionsFileService,
+                gameType
+        );
+        viewModel = new ViewModelProvider(this, factory).get(AdvancedFusionViewModel.class);
 
         viewModel.getPersonaName().observe(getViewLifecycleOwner(), personaName -> {
             fusionPromptTextView.setText(getString(R.string.advanced_fusion_prompt, personaName));

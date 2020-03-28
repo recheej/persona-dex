@@ -1,9 +1,6 @@
 package com.persona5dex.fusionService
 
-import com.persona5dex.models.GameType
 import com.persona5dex.models.PersonaForFusionService
-import com.persona5dex.repositories.PersonaFusionRepository
-import javax.inject.Inject
 import kotlin.math.floor
 
 /**
@@ -13,12 +10,12 @@ import kotlin.math.floor
  * https://www.gamefaqs.com/ps2/932312-shin-megami-tensei-persona-3/faqs/49926
  */
 class PersonaFuserV2(
-        private val fusionRepository: PersonaFusionRepository,
+        private val fusionPersonas: List<PersonaForFusionService>,
         private val fusionChart: FusionChart
 ) {
 
-    suspend fun fusePersona(personaOne: PersonaForFusionService, personaTwo: PersonaForFusionService): PersonaForFusionService? {
-        val personasByArcana = fusionRepository.getFusionPersonas().groupBy { it.arcana }
+    fun fusePersona(personaOne: PersonaForFusionService, personaTwo: PersonaForFusionService): PersonaForFusionService? {
+        val personasByArcana = fusionPersonas.groupBy { it.arcana }
 
         return when {
             personaOne == personaTwo -> null

@@ -2,6 +2,7 @@ package com.persona5dex.fusionService
 
 import com.persona5dex.models.PersonaForFusionService
 import com.persona5dex.repositories.PersonaFusionRepository
+import kotlinx.coroutines.yield
 import javax.inject.Inject
 
 class PersonaFusionGraphGenerator @Inject constructor(
@@ -9,8 +10,10 @@ class PersonaFusionGraphGenerator @Inject constructor(
         private val fusionChartService: FusionChartService
 ) {
     suspend fun getAllFusions(): List<PersonaGraphEntry> {
-        val personaFuser = PersonaFuserV2(fusionRepository, fusionChartService.getFusionChart())
         val personas = fusionRepository.getFusionPersonas()
+        yield()
+        val personaFuser = PersonaFuserV2(personas, fusionChartService.getFusionChart())
+        yield()
 
         val personaFusions = mutableSetOf<PersonaGraphEntry>()
         personas.forEach { personaOne ->

@@ -1,16 +1,20 @@
 package com.persona5dex.viewmodels
 
 import androidx.lifecycle.*
+import com.persona5dex.extensions.equalNormalized
 import com.persona5dex.extensions.normalize
+import com.persona5dex.filterGameType
 import com.persona5dex.fusionService.AdvancedPersonaFusionsFileService
+import com.persona5dex.models.GameType
 import com.persona5dex.models.MainListPersona
 import com.persona5dex.repositories.MainPersonaRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.yield
 
-class AdvancedFusionViewModelV2(personaId: Int,
-                                private val mainPersonaRepository: MainPersonaRepository,
-                                private val advancedPersonaFusionsFileService: AdvancedPersonaFusionsFileService
+class AdvancedFusionViewModel(personaId: Int,
+                              private val mainPersonaRepository: MainPersonaRepository,
+                              private val advancedPersonaFusionsFileService: AdvancedPersonaFusionsFileService,
+                              private val gameType: GameType
 ) : ViewModel() {
     val personaName = Transformations.map(mainPersonaRepository.getPersonaName(personaId)) {
         it.orEmpty()
@@ -18,16 +22,19 @@ class AdvancedFusionViewModelV2(personaId: Int,
 
     val recipesForAdvancedPersona: LiveData<List<MainListPersona>> = Transformations.switchMap(personaName) { personaName ->
         liveData(Dispatchers.IO) {
-            val nameNormalized = personaName.normalize()
 
-            val personas = advancedPersonaFusionsFileService.parseFile().firstOrNull { it.resultPersonaName.normalize() == nameNormalized }?.let { advancedFusions ->
-                yield()
-                val nameMap = mainPersonaRepository.allPersonasForMainList.associateBy { it.name.normalize() }
-                yield()
-                advancedFusions.sourcePersonaNames
-                        .map { nameMap.getValue(it.normalize()) }
-                        .sortedBy { it.name }
-            }.orEmpty()
+            val personas = advancedPersonaFusionsFileService.parseFile()
+                    .firstOrNull { it.resultPersonaName equalNormalized personaName }
+                    ?.let { advancedFusions ->
+                        yield()
+                        val nameMap = mainPersonaRepository.allPersonasForMainList
+                                .filterGameType(gameType)
+                                .associateBy { it.name.normalize() }
+                        yield()
+                        advancedFusions.sourcePersonaNames
+                                .map { nameMap.getValue(it.normalize()) }
+                                .sortedBy { it.name }
+                    }.orEmpty()
 
 
             emit(personas)
@@ -37,8 +44,9 @@ class AdvancedFusionViewModelV2(personaId: Int,
 
 class AdvancedFusionViewModelFactory(private val personaId: Int,
                                      private val mainPersonaRepository: MainPersonaRepository,
-                                     private val advancedPersonaFusionsFileService: AdvancedPersonaFusionsFileService
+                                     private val advancedPersonaFusionsFileService: AdvancedPersonaFusionsFileService,
+                                     private val gameType: GameType
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            AdvancedFusionViewModelV2(personaId, mainPersonaRepository, advancedPersonaFusionsFileService) as T
+            AdvancedFusionViewModel(personaId, mainPersonaRepository, advancedPersonaFusionsFileService, gameType) as T
 }

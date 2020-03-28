@@ -58,7 +58,7 @@ class PersonaFuserTestSuiteTest {
         protected suspend fun GameType.getFuser() = runBlocking {
             fusionChartFactory.getFusionChartService(this@getFuser).getFusionChart().let {
                 val fusionRepository = PersonaFusionRepository(personaDao, mockPreferences, this@getFuser)
-                PersonaFuserV2(fusionRepository, it)
+                PersonaFuserV2(fusionRepository.getFusionPersonas(), it)
             }
         }
 
@@ -70,7 +70,7 @@ class PersonaFuserTestSuiteTest {
                     throw IllegalStateException("failed to find persona: $this", e)
                 }
 
-        protected suspend fun PersonaFuserV2.fusePersona(one: String, two: String, gameType: GameType): PersonaForFusionService? {
+        protected fun PersonaFuserV2.fusePersona(one: String, two: String, gameType: GameType): PersonaForFusionService? {
             return fusePersona(one.findPersona(gameType), two.findPersona(gameType))
         }
 
