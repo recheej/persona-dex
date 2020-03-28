@@ -19,6 +19,7 @@ import com.persona5dex.models.room.PersonaDao;
 import com.persona5dex.models.room.PersonaDatabase;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -37,46 +38,46 @@ public class ApplicationContextModule {
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     @Named("applicationContext")
     public Context providesContext() {
         return context;
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     Gson gson() {
         return new GsonBuilder().create();
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     @Named("dlcSharedPreferences")
     SharedPreferences dlcSharedPreferences() {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     PersonaDatabase personaDatabase() {
         return ((Persona5Application) context).getDatabase();
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     @Named("defaultSharedPreferences")
     SharedPreferences defaultSharedPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     WorkManager providesWorkManager() {
         return WorkManager.getInstance(context);
     }
 
     @Provides
-    @ApplicationScope
+    @Singleton
     PersonaDao providesPersonaDao(PersonaDatabase personaDatabase) {
         return personaDatabase.personaDao();
     }

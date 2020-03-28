@@ -6,13 +6,15 @@ import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.fusionService.GenerateFusionWorker;
 import com.persona5dex.jobs.PersonaJobCreator;
 
+import javax.inject.Singleton;
+
 import dagger.Component;
 
 /**
  * Created by Rechee on 6/11/2017.
  */
 
-@ApplicationScope
+@Singleton
 @Component(
     modules = {
             ApplicationContextModule.class,

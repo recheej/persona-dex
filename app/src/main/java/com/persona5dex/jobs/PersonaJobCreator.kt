@@ -2,11 +2,11 @@ package com.persona5dex.jobs
 
 import androidx.lifecycle.Transformations
 import androidx.work.*
-import com.persona5dex.dagger.application.ApplicationScope
 import com.persona5dex.fusionService.GenerateFusionWorker
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ApplicationScope
+@Singleton
 class PersonaJobCreator @Inject constructor(
         private val workManager: WorkManager
 ) {

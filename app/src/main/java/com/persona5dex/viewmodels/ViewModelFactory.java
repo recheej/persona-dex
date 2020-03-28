@@ -5,12 +5,12 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.persona5dex.ArcanaNameProvider;
-import com.persona5dex.dagger.application.ApplicationScope;
 import com.persona5dex.models.GameType;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaSkillsRepository;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import dagger.Lazy;
 
@@ -18,7 +18,7 @@ import dagger.Lazy;
  * Created by reche on 1/4/2018.
  */
 
-@ApplicationScope
+@Singleton
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private final Lazy<PersonaSkillsRepository> skillsRepositoryLazy;
@@ -48,6 +48,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new SettingsViewModel(mainPersonaRepositoryLazy.get());
         }
 
-        throw new RuntimeException("could not get view model");
+        throw new IllegalStateException("could not get view model for class: " + modelClass);
     }
 }
