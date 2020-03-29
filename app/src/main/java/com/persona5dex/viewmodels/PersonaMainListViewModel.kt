@@ -66,16 +66,11 @@ class PersonaMainListViewModel(private val arcanaNameProvider: ArcanaNameProvide
 
     fun filterPersonas(filterArgs: PersonaFilterArgs) {
         check(initialized)
-        val gameType = filterArgs.gameType ?: lastGameType
-        filterArgs.gameType = gameType
-        lastGameType = gameType
         personaFilterArgs.value = filterArgs
     }
 
     fun filterPersonas(gameType: GameType) {
         check(initialized)
-        val newFilterArgs = personaFilterArgs.value ?: PersonaFilterArgs()
-        newFilterArgs.gameType = gameType
         lastGameType = gameType
         filterPersonas(newFilterArgs)
     }

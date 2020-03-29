@@ -7,44 +7,43 @@ package com.persona5dex.models;
 public class PersonaFilterArgs {
     public Enumerations.Arcana arcana;
     public boolean dlcPersona;
-    public boolean rarePersona;
     public int minLevel;
     public int maxLevel;
-    public GameType gameType = null;
+    public boolean basePersonas;
+    public boolean rarePersonas;
 
     public PersonaFilterArgs() {
         minLevel = 1;
         maxLevel = 99;
-        rarePersona = true;
         dlcPersona = true;
         arcana = Enumerations.Arcana.ANY;
+        basePersonas = true;
+        rarePersonas = true;
     }
 
     /**
-     * @param minLevel min persona level
-     * @param maxLevel maximum persona level
-     * @param arcana arcana to filter by
+     * @param minLevel    min persona level
+     * @param maxLevel    maximum persona level
+     * @param arcana      arcana to filter by
      * @param rarePersona True: include rare persona
-     * @param dlcPersona True: include dlc persona
+     * @param dlcPersona  True: include dlc persona
      */
-    public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana, boolean rarePersona, boolean dlcPersona){
+    public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana, boolean rarePersona, boolean dlcPersona) {
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
         this.arcana = arcana;
-        this.rarePersona = rarePersona;
         this.dlcPersona = dlcPersona;
     }
 
     /**
      * @param minLevel min persona level
      * @param maxLevel maximum persona level
-     * @param arcana arcana to filter by
+     * @param arcana   arcana to filter by
      */
-    public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana){
+    public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana) {
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
         this.arcana = arcana;
-        this.rarePersona = true;
         this.dlcPersona = true;
     }
 }

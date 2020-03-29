@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -37,7 +36,8 @@ import javax.inject.Inject;
 
 public class FilterDialogFragment extends DialogFragment {
 
-    private CheckBox rarePersonaCheckBox;
+    private CheckBox basePersonasCheckbox;
+    private CheckBox rarePersonasCheckbox;
     private CheckBox dlcPersonaCheckBox;
     private EditText minLevelEditText;
     private EditText maxLevelEditText;
@@ -76,7 +76,8 @@ public class FilterDialogFragment extends DialogFragment {
         minLevelEditText.setFilters(new InputFilter[]{filter});
         maxLevelEditText.setFilters(new InputFilter[]{filter});
 
-        rarePersonaCheckBox = view.findViewById(R.id.checkbox_rarePersona);
+        basePersonasCheckbox = view.findViewById(R.id.checkbox_base_personas);
+        rarePersonasCheckbox = view.findViewById(R.id.checkbox_royal_personas);
         dlcPersonaCheckBox = view.findViewById(R.id.checkbox_dlcPersona);
 
         builder.setView(view)
@@ -109,7 +110,8 @@ public class FilterDialogFragment extends DialogFragment {
         arcanaSpinner.setAdapter(arcanaMapArrayAdapter);
 
         personaMainListViewModel.getFilterArgs().observe(requireActivity(), personaFilterArgs -> {
-            rarePersonaCheckBox.setChecked(personaFilterArgs.rarePersona);
+            basePersonasCheckbox.setChecked(personaFilterArgs.basePersonas);
+            rarePersonasCheckbox.setChecked(personaFilterArgs.rarePersonas);
             dlcPersonaCheckBox.setChecked(personaFilterArgs.dlcPersona);
 
             arcanaSpinner.setSelection(this.getSpinnerPosition(personaFilterArgs.arcana));
@@ -125,7 +127,8 @@ public class FilterDialogFragment extends DialogFragment {
         selectedArcanaName = (ArcanaName) arcanaSpinner.getSelectedItem();
 
         filterArgs.arcana = selectedArcanaName.getArcana();
-        filterArgs.rarePersona = rarePersonaCheckBox.isChecked();
+        filterArgs.basePersonas = basePersonasCheckbox.isChecked();
+        filterArgs.rarePersonas = rarePersonasCheckbox.isChecked();
         filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
 
         String minLevelText = minLevelEditText.getText().toString();

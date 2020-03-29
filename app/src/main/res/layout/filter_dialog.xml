@@ -15,21 +15,21 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/arcana"
-            android:textAppearance="?textBodyTitle"/>
+            android:textAppearance="?textBodyTitle" />
 
         <Spinner
             android:id="@+id/spinner_arcana"
+            style="@style/PersonaSpinnerDropdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            style="@style/PersonaSpinnerDropdown"/>
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <include
+        layout="@layout/grid_divider_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        layout="@layout/grid_divider_horizontal" />
+        android:layout_height="1dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/min_level"
-            android:textAppearance="?textBodyTitle"/>
+            android:textAppearance="?textBodyTitle" />
 
         <EditText
             android:id="@+id/editText_minLevel"
@@ -78,25 +78,22 @@
     </LinearLayout>
 
     <include
+        layout="@layout/grid_divider_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        layout="@layout/grid_divider_horizontal" />
+        android:layout_height="1dp" />
 
     <CheckBox
-        android:id="@+id/checkbox_rarePersona"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:padding="10dp"
+        android:id="@+id/checkbox_base_personas"
         style="@style/PersonaCheckbox"
-        android:text="@string/rare_persona" />
+        android:text="@string/game_persona_5" />
+
+    <CheckBox
+        android:id="@+id/checkbox_royal_personas"
+        style="@style/PersonaCheckbox"
+        android:text="@string/game_royal" />
 
     <CheckBox
         android:id="@+id/checkbox_dlcPersona"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:padding="10dp"
         style="@style/PersonaCheckbox"
         android:text="@string/dlc_persona" />
 

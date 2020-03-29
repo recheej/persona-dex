@@ -87,6 +87,10 @@
 
     <style name="PersonaCheckbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:textColor">?defaultTextColor</item>
+        <item name="android:padding">@dimen/filter_dialog_padding</item>
+        <item name="android:checked">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="DropDownItemStyle" parent="Widget.AppCompat.SearchView">
@@ -169,4 +173,5 @@
         <item name="android:textAppearance">@style/TextHeadlineSmall</item>
     </style>
 
+    <dimen name="filter_dialog_padding">10dp</dimen>
 </resources>
