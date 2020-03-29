@@ -18,9 +18,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.persona5dex.ArcanaNameProvider.ArcanaName;
+import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.activities.BaseActivity;
-import com.persona5dex.dagger.fragment.FragmentComponent;
 import com.persona5dex.models.Enumerations;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
@@ -63,8 +63,10 @@ public class FilterDialogFragment extends DialogFragment {
 
         View view = inflater.inflate(R.layout.filter_dialog, null);
 
-        FragmentComponent component = activity.getComponent().plus();
-        component.inject(this);
+        Persona5Application.get(requireActivity()).getComponent()
+                .activityComponent()
+                .activityContext(requireActivity())
+                .build().inject(this);
 
         arcanaSpinner = view.findViewById(R.id.spinner_arcana);
 
@@ -111,7 +113,7 @@ public class FilterDialogFragment extends DialogFragment {
 
         personaMainListViewModel.getFilterArgs().observe(requireActivity(), personaFilterArgs -> {
             basePersonasCheckbox.setChecked(personaFilterArgs.basePersonas);
-            rarePersonasCheckbox.setChecked(personaFilterArgs.rarePersonas);
+            rarePersonasCheckbox.setChecked(personaFilterArgs.royalPersonas);
             dlcPersonaCheckBox.setChecked(personaFilterArgs.dlcPersona);
 
             arcanaSpinner.setSelection(this.getSpinnerPosition(personaFilterArgs.arcana));
@@ -128,7 +130,7 @@ public class FilterDialogFragment extends DialogFragment {
 
         filterArgs.arcana = selectedArcanaName.getArcana();
         filterArgs.basePersonas = basePersonasCheckbox.isChecked();
-        filterArgs.rarePersonas = rarePersonasCheckbox.isChecked();
+        filterArgs.royalPersonas = rarePersonasCheckbox.isChecked();
         filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
 
         String minLevelText = minLevelEditText.getText().toString();

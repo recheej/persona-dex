@@ -1,8 +1,8 @@
 package com.persona5dex;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.annotation.Nullable;
 
 import com.persona5dex.models.MainListPersona;
 import com.persona5dex.models.PersonaDetailSkill;
@@ -122,7 +122,7 @@ public class PersonaDetailSkillsViewModelTest {
         MutableLiveData<List<MainListPersona>> data = new MutableLiveData<>();
         data.setValue(new ArrayList<>());
         PersonaSkillsRepository repository = mock(PersonaSkillsRepository.class);
-        when(repository.getPersonasWithSkill(anyInt())).thenReturn(data);
+        when(repository.getPersonasWithSkillLiveData(anyInt())).thenReturn(data);
 
         PersonaDetailSkillsViewModel viewModel = new PersonaDetailSkillsViewModel(repository);
         viewModel.getPersonasWithSkill(1).observeForever(personas -> {

@@ -268,7 +268,7 @@ public class PersonaListViewModelTest {
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
                 99,
-                Enumerations.Arcana.CHARIOT, true, false);
+                Enumerations.Arcana.CHARIOT, false);
 
         viewModel.filterPersonas(filterArgs);
 
@@ -303,7 +303,7 @@ public class PersonaListViewModelTest {
 
         PersonaFilterArgs filterArgs = new PersonaFilterArgs(1,
                 99,
-                Enumerations.Arcana.CHARIOT, false, true);
+                Enumerations.Arcana.CHARIOT, true);
         viewModel.filterPersonas(filterArgs);
 
         List<MainListPersona> mainListPersonas = viewModel.getFilteredPersonas().getValue();

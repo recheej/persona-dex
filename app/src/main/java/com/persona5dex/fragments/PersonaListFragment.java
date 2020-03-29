@@ -12,15 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.persona5dex.ArcanaNameProvider;
-import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaListAdapter;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.MainListPersona;
-import com.persona5dex.repositories.MainPersonaRepository;
-import com.persona5dex.viewmodels.PersonaListViewModelFactory;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import java.util.ArrayList;
@@ -37,6 +32,7 @@ import in.myinnos.alphabetsindexfastscrollrecycler.IndexFastScrollRecyclerView;
 public class PersonaListFragment extends BaseFragment {
 
     public static final String INDEX_BAR_VISIBLE = "index_bar_visible";
+    private static final String REPO_TYPE = "repoType";
     //https://github.com/myinnos/AlphabetIndex-Fast-Scroll-RecyclerView
     private IndexFastScrollRecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -44,6 +40,7 @@ public class PersonaListFragment extends BaseFragment {
     private List<MainListPersona> personas;
     private PersonaListAdapter personaListAdapter;
     private PersonaMainListViewModel viewModel;
+    private PersonaListRepositoryType repositoryType;
 
     @Inject
     ArcanaNameProvider arcanaNameProvider;
@@ -54,10 +51,11 @@ public class PersonaListFragment extends BaseFragment {
     private LinearLayoutManager layoutManager;
     private boolean showIndexBar;
 
-    public static PersonaListFragment newInstance(boolean indexBarVisible){
+    public static PersonaListFragment newInstance(boolean indexBarVisible, PersonaListRepositoryType repositoryType) {
         PersonaListFragment listFragment = new PersonaListFragment();
         Bundle args = new Bundle();
         args.putBoolean(INDEX_BAR_VISIBLE, indexBarVisible);
+        args.putInt(REPO_TYPE, repositoryType.getValue());
         listFragment.setArguments(args);
         return listFragment;
     }
@@ -72,16 +70,18 @@ public class PersonaListFragment extends BaseFragment {
         this.recyclerView.setIndexBarVisibility(isVisible);
     }
 
-     @Override
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        personas = new ArrayList<>(250);
+        personas = new ArrayList<>(350);
 
         this.showIndexBar = true;
 
         Bundle args = getArguments();
-        if(args != null){
+        if(args != null) {
             this.showIndexBar = args.getBoolean(INDEX_BAR_VISIBLE, true);
+            final int repoTypeInt = args.getInt(REPO_TYPE, PersonaListRepositoryType.PERSONA.getValue());
+            this.repositoryType = PersonaListRepositoryType.getRepositoryType(repoTypeInt);
         }
     }
 
@@ -110,16 +110,12 @@ public class PersonaListFragment extends BaseFragment {
         progressBar.setVisibility(View.GONE);
     }
 
-    public void filterPersonas(String personaName){
-        viewModel.filterPersonas(personaName);
-    }
-
-    public void filterPersonas(@NonNull GameType gameType){
+    public void filterPersonas(@NonNull GameType gameType) {
         showProgressBar();
         viewModel.filterPersonas(gameType);
     }
 
-    public void sortPersonasByName(boolean asc){
+    public void sortPersonasByName(boolean asc) {
         viewModel.sortPersonasByName(asc);
 
         personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.PersonaName);
@@ -128,7 +124,7 @@ public class PersonaListFragment extends BaseFragment {
         recyclerView.setIndexBarVisibility(showIndexBar);
     }
 
-    public void sortPersonasByLevel(boolean asc){
+    public void sortPersonasByLevel(boolean asc) {
         viewModel.sortPersonasByLevel(asc);
 
         recyclerView.setIndexBarVisibility(false);
@@ -136,7 +132,7 @@ public class PersonaListFragment extends BaseFragment {
         personaListAdapter.notifyDataSetChanged();
     }
 
-    public void sortPersonasByArcana(boolean asc){
+    public void sortPersonasByArcana(boolean asc) {
         viewModel.sortPersonasByArcana(asc);
 
         personaListAdapter.setIndexerType(PersonaListAdapter.IndexerType.ArcanaName);
@@ -145,32 +141,30 @@ public class PersonaListFragment extends BaseFragment {
         recyclerView.setIndexBarVisibility(showIndexBar);
     }
 
-    public void setPersonas(List<MainListPersona> personas){
-        viewModel.initialize(personas);
-    }
+//    private FusionListRepositoryComponent getRepositoryComponent(FragmentComponent component) {
+//        if(repositoryType == PersonaListRepositoryType.PERSONA) {
+//            return component.
+//        } else {
+//            return component.personaSkillsRepositoryComponent();
+//        }
+//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5Application.get(activity).getComponent()
-                .activityComponent(new LayoutModule(activity),
-                        new ActivityContextModule(activity)
-                )
-                .plus()
-                .inject(this);
+        getActivityComponent().inject(this);
 
         personaListAdapter = new PersonaListAdapter(personas, arcanaNameProvider);
         recyclerView.setAdapter(personaListAdapter);
 
         showProgressBar();
-        PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, gameType);
-        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(PersonaMainListViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(PersonaMainListViewModel.class);
 
         viewModel.getFilteredPersonas().observe(getViewLifecycleOwner(), personas -> {
             this.personas.clear();
 
-            if(personas != null){
+            if(personas != null) {
                 this.personas.addAll(personas);
             }
 

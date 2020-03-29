@@ -1,21 +1,29 @@
 package com.persona5dex.activities;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import androidx.annotation.Nullable;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.persona5dex.ArcanaNameProvider;
+import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.fragments.PersonaListFragment;
+import com.persona5dex.fragments.PersonaListRepositoryType;
 import com.persona5dex.fragments.PersonaSkillsFragment;
+import com.persona5dex.models.GameType;
+import com.persona5dex.models.PersonaRepository;
 import com.persona5dex.models.room.Skill;
+import com.persona5dex.repositories.PersonaListRepositoryFactory;
 import com.persona5dex.viewmodels.PersonaDetailSkillsViewModel;
+import com.persona5dex.viewmodels.PersonaListViewModelFactory;
+import com.persona5dex.viewmodels.PersonaMainListViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
 import javax.inject.Inject;
@@ -28,6 +36,15 @@ public class SkillDetailActivity extends BaseActivity {
     @Inject
     ViewModelFactory viewModelFactory;
 
+    @Inject
+    ArcanaNameProvider arcanaNameProvider;
+
+    @Inject
+    GameType gameType;
+
+    @Inject
+    PersonaListRepositoryFactory personaListRepositoryFactory;
+
     private PersonaDetailSkillsViewModel viewModel;
     private PersonaListFragment personaListFragment;
 
@@ -35,7 +52,15 @@ public class SkillDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_detail);
-        component.inject(this);
+
+        Intent intent = getIntent();
+        final int skillID = intent.getIntExtra(PersonaSkillsFragment.SKILL_ID, 1);
+
+        Persona5Application.get(this).getComponent()
+                .activityComponent()
+                .skillId(skillID)
+                .activityContext(this).build()
+                .inject(this);
 
         mainToolbar.setTitle(R.string.persona_skill);
         setSupportActionBar(mainToolbar);
@@ -46,8 +71,9 @@ public class SkillDetailActivity extends BaseActivity {
         final TextView noteTextView = findViewById(R.id.textView_Note);
         final TextView costTextView = findViewById(R.id.textView_Cost);
 
-        Intent intent = getIntent();
-        final int skillID = intent.getIntExtra(PersonaSkillsFragment.SKILL_ID, 1);
+        final PersonaRepository repository = personaListRepositoryFactory.getPersonaListRepository(PersonaListRepositoryType.SKILLS);
+        final PersonaListViewModelFactory factory = new PersonaListViewModelFactory(arcanaNameProvider, gameType, repository);
+        new ViewModelProvider(this, factory).get(PersonaMainListViewModel.class);
 
         this.viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaDetailSkillsViewModel.class);
         this.viewModel.getSkill(skillID).observe(this, new Observer<Skill>() {
@@ -61,15 +87,14 @@ public class SkillDetailActivity extends BaseActivity {
                 effectTextView.setText(skill.effect);
                 elementTextView.setText(skill.element);
 
-                if(skill.note == null || skill.note.isEmpty()){
+                if(skill.note == null || skill.note.isEmpty()) {
                     View labelNote = findViewById(R.id.textView_note_label);
                     View star = findViewById(R.id.textView_star);
 
                     star.setVisibility(View.GONE);
                     labelNote.setVisibility(View.GONE);
                     noteTextView.setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     noteTextView.setText(skill.note);
                 }
 
@@ -77,11 +102,14 @@ public class SkillDetailActivity extends BaseActivity {
             }
         });
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
-        personaListFragment.setIndexBarVisible(false);
+        configureFragment();
+    }
 
-        viewModel.getPersonasWithSkill(skillID)
-                .observe(this, personas -> personaListFragment.setPersonas(personas));
+    private void configureFragment() {
+        personaListFragment = PersonaListFragment.newInstance(false, PersonaListRepositoryType.SKILLS);
+
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.persona_list, personaListFragment);
+        fragmentTransaction.commit();
     }
 }

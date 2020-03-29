@@ -69,6 +69,6 @@ public class PersonaDetailSkillsViewModel extends ViewModel {
     }
 
     public LiveData<List<MainListPersona>> getPersonasWithSkill(int skillID) {
-        return repository.getPersonasWithSkill(skillID);
+        return repository.getPersonasWithSkillLiveData(skillID);
     }
 }

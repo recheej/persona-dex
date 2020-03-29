@@ -19,3 +19,13 @@ fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType): List<T> {
         result
     }
 }
+
+fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType, basePersonas: Boolean, royalPersonas: Boolean): List<T> {
+    return if ((!royalPersonas && !basePersonas) || (gameType == GameType.BASE && !basePersonas)) {
+        emptyList()
+    } else {
+        filterGameType(gameType).filter {
+            if (gameType == GameType.BASE) basePersonas else royalPersonas
+        }
+    }
+}

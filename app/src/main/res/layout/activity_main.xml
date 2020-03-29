@@ -61,10 +61,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/switch_game_button">
 
-        <fragment
-            android:id="@+id/fragment_persona_list"
-            android:name="com.persona5dex.fragments.PersonaListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

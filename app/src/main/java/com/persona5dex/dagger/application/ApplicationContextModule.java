@@ -12,6 +12,7 @@ import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.Constants;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.PersonaUtilities;
+import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.fusionService.FusionChartService;
 import com.persona5dex.fusionService.FusionChartServiceFactory;
 import com.persona5dex.fusionService.advanced.AdvancedPersonaService;
@@ -30,7 +31,9 @@ import dagger.Provides;
  * Created by Rechee on 6/11/2017.
  */
 
-@Module
+@Module(
+        subcomponents = ActivityComponent.class
+)
 public class ApplicationContextModule {
 
     private final Context context;

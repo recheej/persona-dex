@@ -15,10 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.BuildConfig;
-import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.room.Stats;
 import com.persona5dex.repositories.PersonaDetailRepository;
@@ -66,10 +63,7 @@ public class PersonaDetailInfoFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5Application.get(activity).getComponent().activityComponent(
-                new LayoutModule(requireActivity()),
-                new ActivityContextModule(requireActivity())
-        ).plus().inject(this);
+        getActivityComponent().inject(this);
 
         final PersonaDetailInfoViewModelFactory factory = new PersonaDetailInfoViewModelFactory(repository, arcanaNameProvider, personaID);
         viewModel = new ViewModelProvider(this, factory).get(PersonaDetailInfoViewModel.class);

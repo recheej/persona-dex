@@ -8,13 +8,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.fusionService.advanced.AdvancedPersonaService;
 import com.persona5dex.models.GameType;
 import com.persona5dex.repositories.MainPersonaRepository;
@@ -77,11 +73,7 @@ public class AdvancedPersonaFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5Application.get(activity).getComponent()
-                .activityComponent(new LayoutModule(activity),
-                        new ActivityContextModule(activity)
-                )
-                .plus().inject(this);
+        getActivityComponent().inject(this);
 
         final AdvancedFusionViewModelFactory factory = new AdvancedFusionViewModelFactory(
                 personaID,
@@ -95,14 +87,14 @@ public class AdvancedPersonaFragment extends BaseFragment {
             fusionPromptTextView.setText(getString(R.string.advanced_fusion_prompt, personaName));
         });
 
-        viewModel.getRecipesForAdvancedPersona().observe(getViewLifecycleOwner(), personas -> {
-            personaListFragment.setPersonas(personas);
-            progressBar.setVisibility(View.GONE);
-        });
+//        viewModel.getRecipesForAdvancedPersona().observe(getViewLifecycleOwner(), personas -> {
+//            personaListFragment.setPersonas(personas);
+//            progressBar.setVisibility(View.GONE);
+//        });
 
-        personaListFragment = PersonaListFragment.newInstance(false);
-
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, personaListFragment).commit();
+//        personaListFragment = PersonaListFragment.newInstance(false, );
+//
+//        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//        transaction.replace(R.id.fragment_container, personaListFragment).commit();
     }
 }

@@ -10,7 +10,7 @@ public class PersonaFilterArgs {
     public int minLevel;
     public int maxLevel;
     public boolean basePersonas;
-    public boolean rarePersonas;
+    public boolean royalPersonas;
 
     public PersonaFilterArgs() {
         minLevel = 1;
@@ -18,17 +18,16 @@ public class PersonaFilterArgs {
         dlcPersona = true;
         arcana = Enumerations.Arcana.ANY;
         basePersonas = true;
-        rarePersonas = true;
+        royalPersonas = true;
     }
 
     /**
      * @param minLevel    min persona level
      * @param maxLevel    maximum persona level
      * @param arcana      arcana to filter by
-     * @param rarePersona True: include rare persona
      * @param dlcPersona  True: include dlc persona
      */
-    public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana, boolean rarePersona, boolean dlcPersona) {
+    public PersonaFilterArgs(int minLevel, int maxLevel, Enumerations.Arcana arcana, boolean dlcPersona) {
         this.minLevel = minLevel;
         this.maxLevel = maxLevel;
         this.arcana = arcana;

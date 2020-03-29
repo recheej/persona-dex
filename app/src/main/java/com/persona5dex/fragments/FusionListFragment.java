@@ -17,11 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListAdapter;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.PersonaEdgeDisplay;
 import com.persona5dex.repositories.MainPersonaRepository;
@@ -104,12 +101,7 @@ public class FusionListFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5Application.get(activity).getComponent()
-                .activityComponent(new LayoutModule(activity),
-                        new ActivityContextModule(activity)
-                )
-                .plus()
-                .inject(this);
+        getActivityComponent().inject(this);
 
         final PersonaFusionViewModelFactory factory = new PersonaFusionViewModelFactory(
                 personaDisplayEdgesRepository,

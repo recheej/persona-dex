@@ -2,9 +2,11 @@ package com.persona5dex.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.view.View;
 
 import com.persona5dex.activities.BaseActivity;
 import com.persona5dex.dagger.activity.ActivityComponent;
@@ -16,7 +18,6 @@ import com.persona5dex.dagger.activity.ActivityComponent;
 public class BaseFragment extends Fragment {
 
     protected BaseActivity activity;
-    protected ActivityComponent activityComponent;
     protected View baseView;
 
     @Override
@@ -28,6 +29,10 @@ public class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.activityComponent = activity.getComponent();
+    }
+
+    @NonNull
+    protected ActivityComponent getActivityComponent() {
+        return ((BaseActivity) requireActivity()).getComponent();
     }
 }

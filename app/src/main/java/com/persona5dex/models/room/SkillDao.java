@@ -33,5 +33,12 @@ public interface SkillDao {
             "inner join personas on personas.id = personaSkills.persona_id\n" +
             "where personaSkills.skill_id = :skillID\n" +
             "order by name")
-    LiveData<List<MainListPersona>> getPersonasWithSkill(int skillID);
+    LiveData<List<MainListPersona>> getPersonasWithSkillLiveData(int skillID);
+
+    @Transaction
+    @Query(" select id, name, arcana, level, rare, dlc, party, personas.gameId from personaSkills\n" +
+            "inner join personas on personas.id = personaSkills.persona_id\n" +
+            "where personaSkills.skill_id = :skillID\n" +
+            "order by name")
+    List<MainListPersona> getPersonasWithSkill(int skillID);
 }

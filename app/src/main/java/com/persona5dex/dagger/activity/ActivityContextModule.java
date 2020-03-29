@@ -18,44 +18,31 @@ import dagger.Provides;
 @Module
 public class ActivityContextModule {
 
-    private final Context context;
-
-    public ActivityContextModule(Context context){
-        this.context = context;
-    }
-
-    @ActivityScope
-    @Provides
-    @Named("activityContext")
-    public Context providesContext() {
-        return context;
-    }
-
     @ActivityScope
     @Provides
     @Named("transferSharedPreferences")
-    SharedPreferences sharedPreferences(){
+    SharedPreferences sharedPreferences(@Named("activityContext") Context context) {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_TRANSFER_CONTENT, Context.MODE_PRIVATE);
     }
 
     @Provides
     @ActivityScope
     @Named("dlcSharedPreferences")
-    SharedPreferences dlcSharedPreferences(){
+    SharedPreferences dlcSharedPreferences(@Named("activityContext") Context context) {
         return context.getSharedPreferences(PersonaUtilities.SHARED_PREF_DLC, Context.MODE_PRIVATE);
     }
 
     @Provides
     @ActivityScope
     @Named("dlcPrefKey")
-    String dlcprefKey(){
+    String dlcprefKey(@Named("activityContext") Context context) {
         return context.getString(R.string.pref_key_dlc);
     }
 
     @Provides
     @ActivityScope
     @Named("rarePersonaInFusionKey")
-    String rarePersonaInFusion(){
+    String rarePersonaInFusion(@Named("activityContext") Context context) {
         return context.getString(R.string.pref_key_rarePersona);
     }
 }

@@ -15,5 +15,6 @@ import java.util.List;
 public interface PersonaSkillsRepository {
     LiveData<List<PersonaDetailSkill>> getPersonaSkillsForDetail(int personaID);
     LiveData<Skill> getSkill(Integer skillID);
-    LiveData<List<MainListPersona>> getPersonasWithSkill(int skillID);
+    LiveData<List<MainListPersona>> getPersonasWithSkillLiveData(int skillID);
+    List<MainListPersona> getPersonasWithSkill(int skillID);
 }

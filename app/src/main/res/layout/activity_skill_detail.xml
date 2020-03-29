@@ -130,14 +130,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textAppearance="?textBody"
+        android:textAppearance="?textBodyTitle"
         android:text="@string/personas_with_skill"
         app:layout_constraintStart_toStartOf="@+id/textView_Note"
         app:layout_constraintTop_toBottomOf="@+id/textView_Note" />
 
-    <fragment
-        android:id="@+id/fragment_persona_list"
-        android:name="com.persona5dex.fragments.PersonaListFragment"
+    <FrameLayout
+        android:id="@+id/persona_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="4dp"

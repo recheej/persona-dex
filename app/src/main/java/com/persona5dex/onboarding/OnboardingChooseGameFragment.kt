@@ -28,7 +28,7 @@ class OnboardingChooseGameFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activityComponent.plus().inject(this)
+        activityComponent.inject(this)
 
         viewModel = OnboardingViewModelFactory(defaultSharedPreferences, activity.toPersonaApplication(), personaJobCreator).let {
             ViewModelProvider(requireActivity(), it).get(OnboardingViewModel::class.java)

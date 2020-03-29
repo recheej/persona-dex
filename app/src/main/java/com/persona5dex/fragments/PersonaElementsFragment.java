@@ -1,25 +1,18 @@
 package com.persona5dex.fragments;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.persona5dex.Persona5Application;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.persona5dex.R;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
-import com.persona5dex.dagger.application.Persona5ApplicationComponent;
 import com.persona5dex.repositories.PersonaElementsRepository;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;
 import com.persona5dex.viewmodels.PersonaElementsViewModelFactory;
-
-import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -56,10 +49,7 @@ public class PersonaElementsFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Persona5Application.get(activity).getComponent().activityComponent(
-                new LayoutModule(requireActivity()),
-                new ActivityContextModule(requireActivity())
-        ).plus().inject(this);
+        getActivityComponent().inject(this);
 
         final PersonaElementsViewModelFactory factory = new PersonaElementsViewModelFactory(repository, personaID);
         viewModel = new ViewModelProvider(this, factory).get(PersonaElementsViewModel.class);

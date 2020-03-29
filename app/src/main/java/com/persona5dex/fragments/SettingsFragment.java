@@ -17,8 +17,6 @@ import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.ThemeUtil;
 import com.persona5dex.activities.BaseActivity;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
 import com.persona5dex.viewmodels.SettingsViewModel;
 import com.persona5dex.viewmodels.ViewModelFactory;
 
@@ -57,13 +55,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         this.activity = (BaseActivity) getActivity();
 
-        Persona5Application.get(activity)
-                .getComponent()
-                .activityComponent(new LayoutModule(activity),
-                        new ActivityContextModule(activity)
-                )
-                .plus()
-                .inject(this);
+        Persona5Application.get(requireActivity()).getComponent()
+                .activityComponent()
+                .activityContext(requireActivity())
+                .build().inject(this);
 
         viewModel = new ViewModelProvider(this, viewModelFactory).get(SettingsViewModel.class);
 

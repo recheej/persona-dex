@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.dagger.activity.ActivityComponent;
-import com.persona5dex.dagger.activity.ActivityContextModule;
-import com.persona5dex.dagger.activity.LayoutModule;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,16 +35,16 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityComponent component = Persona5Application.get(this).getComponent()
-                .activityComponent(
-                        new LayoutModule(this),
-                        new ActivityContextModule(this)
-                );
+        ActivityComponent component = buildComponent();
         component.inject(this);
         this.component = component;
 
         final String nightModeValue =
                 defaultSharedPreferences.getString(getString(R.string.pref_key_theme), String.valueOf(MODE_NIGHT_FOLLOW_SYSTEM));
         AppCompatDelegate.setDefaultNightMode(Integer.parseInt(nightModeValue));
+    }
+
+    protected ActivityComponent buildComponent() {
+        return Persona5Application.get(this).getComponent().activityComponent().activityContext(this).build();
     }
 }

@@ -1,10 +1,14 @@
 package com.persona5dex.dagger.activity;
 
 import android.app.Activity;
-import androidx.appcompat.widget.Toolbar;
+import android.content.Context;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.persona5dex.R;
+
+import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,21 +20,17 @@ import dagger.Provides;
 @Module
 public class LayoutModule {
 
-    private final Activity activity;
-
-    public LayoutModule(Activity activity){
-        this.activity = activity;
-    }
-
     @ActivityScope
     @Provides
-    Toolbar mainToolbar() {
+    Toolbar mainToolbar(@Named("activityContext") Context context) {
+        Activity activity = (Activity) context;
         return (Toolbar) activity.findViewById(R.id.main_toolbar);
     }
 
     @ActivityScope
     @Provides
-    ProgressBar fusionsProgressBar() {
+    ProgressBar fusionsProgressBar(@Named("activityContext") Context context) {
+        Activity activity = (Activity) context;
         return (ProgressBar) activity.findViewById(R.id.progress_bar_fusions);
     }
 }

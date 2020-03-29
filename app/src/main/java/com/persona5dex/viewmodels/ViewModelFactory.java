@@ -42,8 +42,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if(modelClass == PersonaDetailSkillsViewModel.class) {
             return (T) new PersonaDetailSkillsViewModel(skillsRepositoryLazy.get());
-        } else if(modelClass == PersonaMainListViewModel.class) {
-            return (T) new PersonaMainListViewModel(arcanaNameProviderLazy.get(), gameTypeLazy.get());
         } else if(modelClass == SettingsViewModel.class) {
             return (T) new SettingsViewModel(mainPersonaRepositoryLazy.get());
         }

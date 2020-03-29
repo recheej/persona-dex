@@ -17,7 +17,7 @@ public class PersonaSkillsRoomRepository implements PersonaSkillsRepository {
 
     private final SkillDao skillDao;
 
-    public PersonaSkillsRoomRepository(SkillDao skillDao){
+    public PersonaSkillsRoomRepository(SkillDao skillDao) {
         this.skillDao = skillDao;
     }
 
@@ -32,7 +32,12 @@ public class PersonaSkillsRoomRepository implements PersonaSkillsRepository {
     }
 
     @Override
-    public LiveData<List<MainListPersona>> getPersonasWithSkill(int skillID) {
+    public LiveData<List<MainListPersona>> getPersonasWithSkillLiveData(int skillID) {
+        return skillDao.getPersonasWithSkillLiveData(skillID);
+    }
+
+    @Override
+    public List<MainListPersona> getPersonasWithSkill(int skillID) {
         return skillDao.getPersonasWithSkill(skillID);
     }
 }

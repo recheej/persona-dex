@@ -19,22 +19,29 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.SearchEvent;
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.BuildConfig;
 import com.persona5dex.Constants;
 import com.persona5dex.R;
 import com.persona5dex.fragments.FilterDialogFragment;
 import com.persona5dex.fragments.PersonaListFragment;
+import com.persona5dex.fragments.PersonaListRepositoryType;
 import com.persona5dex.fragments.PersonaSkillsFragment;
 import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.GameType;
+import com.persona5dex.models.PersonaRepository;
 import com.persona5dex.onboarding.OnboardingActivityResultContract;
 import com.persona5dex.repositories.MainPersonaRepository;
+import com.persona5dex.repositories.PersonaListRepositoryFactory;
+import com.persona5dex.viewmodels.PersonaListViewModelFactory;
+import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import javax.inject.Inject;
 
@@ -59,10 +66,18 @@ public class MainActivity extends BaseActivity {
     @Inject
     GameType currentGameType;
 
+    @Inject
+    ArcanaNameProvider arcanaNameProvider;
+
+    @Inject
+    PersonaListRepositoryFactory personaListRepositoryFactory;
+
     private int selectedSortMenuItemID;
     private PersonaListFragment personaListFragment;
     private Button switchGameButton;
     private TextView currentGameTextView;
+
+    private PersonaMainListViewModel viewModel;
 
     ActivityResultLauncher<Void> onboardingResultLauncher =
             prepareCall(
@@ -88,12 +103,11 @@ public class MainActivity extends BaseActivity {
             Fabric.with(this, new Crashlytics());
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        personaListFragment = (PersonaListFragment) fragmentManager.findFragmentById(R.id.fragment_persona_list);
+        final PersonaRepository repository = personaListRepositoryFactory.getPersonaListRepository(PersonaListRepositoryType.PERSONA);
+        PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, currentGameType, repository);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaMainListViewModel.class);
 
-        repository.getAllPersonasForMainListLiveData().observe(this, personas -> {
-            personaListFragment.setPersonas(personas);
-        });
+        configureListFragment();
 
         //sets default values for preferences only once in entire lifetime of application
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -108,6 +122,13 @@ public class MainActivity extends BaseActivity {
 
         Intent intent = getIntent();
         handleIntent(intent);
+    }
+
+    private void configureListFragment() {
+        personaListFragment = PersonaListFragment.newInstance(true, PersonaListRepositoryType.PERSONA);
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.list_container, personaListFragment);
+        fragmentTransaction.commit();
     }
 
     private void setCurrentGameString() {
@@ -164,7 +185,7 @@ public class MainActivity extends BaseActivity {
 
             logSearchQuery(query);
 
-            personaListFragment.filterPersonas(query);
+            viewModel.filterPersonas(query);
         } else if(Intent.ACTION_VIEW.equals(intent.getAction())) {
             String itemID = intent.getDataString();
 
@@ -219,7 +240,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                personaListFragment.filterPersonas("");
+                viewModel.filterPersonas((String) null);
 
                 menu.setGroupVisible(R.id.menu_item_group_sorting, true);
                 settingsItem.setVisible(true);
