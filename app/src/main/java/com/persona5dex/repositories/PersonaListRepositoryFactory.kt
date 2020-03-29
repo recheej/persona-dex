@@ -14,7 +14,8 @@ import javax.inject.Named
 class PersonaListRepositoryFactory @Inject constructor(
         private val mainListRepository: Lazy<MainListRepository>,
         private val personaSkillsRepository: Lazy<PersonaSkillsRepository>,
-        @Named("skillId") private val skillId: Int?
+        @Named("skillId") private val skillId: Int?,
+        private val advancedPersonaListRepository: Lazy<AdvancedPersonaListRepository>
 ) {
     private val skillRepository by lazy {
         object : PersonaRepository {
@@ -31,5 +32,6 @@ class PersonaListRepositoryFactory @Inject constructor(
             when (personaListRepositoryType) {
                 PersonaListRepositoryType.PERSONA -> mainListRepository.get()
                 PersonaListRepositoryType.SKILLS -> skillRepository
+                PersonaListRepositoryType.ADVANCED -> advancedPersonaListRepository.get()
             }
 }

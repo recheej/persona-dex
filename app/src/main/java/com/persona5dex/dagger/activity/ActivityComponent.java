@@ -67,5 +67,7 @@ public interface ActivityComponent {
         @BindsInstance
         Builder activityContext(@Named("activityContext") Context context);
         ActivityComponent build();
+        @BindsInstance
+        Builder advancedPersonaId(@Nullable @Named("advancedPersonaId") Integer personaID);
     }
 }

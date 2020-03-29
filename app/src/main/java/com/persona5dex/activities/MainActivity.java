@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void configureListFragment() {
-        personaListFragment = PersonaListFragment.newInstance(true, PersonaListRepositoryType.PERSONA);
+        personaListFragment = PersonaListFragment.newInstance(true);
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.list_container, personaListFragment);
         fragmentTransaction.commit();

@@ -8,14 +8,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.persona5dex.ArcanaNameProvider;
+import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.fusionService.advanced.AdvancedPersonaService;
 import com.persona5dex.models.GameType;
 import com.persona5dex.repositories.MainPersonaRepository;
+import com.persona5dex.repositories.PersonaListRepositoryFactory;
 import com.persona5dex.viewmodels.AdvancedFusionViewModel;
 import com.persona5dex.viewmodels.AdvancedFusionViewModelFactory;
+import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import javax.inject.Inject;
 
@@ -49,6 +54,12 @@ public class AdvancedPersonaFragment extends BaseFragment {
     @Inject
     GameType gameType;
 
+    @Inject
+    PersonaListRepositoryFactory personaListRepositoryFactory;
+
+    @Inject
+    ArcanaNameProvider arcanaNameProvider;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +84,9 @@ public class AdvancedPersonaFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getActivityComponent().inject(this);
+        Persona5Application.get(requireActivity()).getComponent().activityComponent()
+                .activityContext(requireActivity())
+                .advancedPersonaId(personaID).build().inject(this);
 
         final AdvancedFusionViewModelFactory factory = new AdvancedFusionViewModelFactory(
                 personaID,
@@ -87,14 +100,15 @@ public class AdvancedPersonaFragment extends BaseFragment {
             fusionPromptTextView.setText(getString(R.string.advanced_fusion_prompt, personaName));
         });
 
-//        viewModel.getRecipesForAdvancedPersona().observe(getViewLifecycleOwner(), personas -> {
-//            personaListFragment.setPersonas(personas);
-//            progressBar.setVisibility(View.GONE);
-//        });
+        final PersonaMainListViewModel personaMainListViewModel = new ViewModelProvider(requireActivity()).get(PersonaMainListViewModel.class);
+        personaMainListViewModel.getState().observe(getViewLifecycleOwner(), state -> {
+            if(state == PersonaMainListViewModel.State.LoadingCompleted.INSTANCE) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
 
-//        personaListFragment = PersonaListFragment.newInstance(false, );
-//
-//        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//        transaction.replace(R.id.fragment_container, personaListFragment).commit();
+        personaListFragment = PersonaListFragment.newInstance(false);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, personaListFragment).commit();
     }
 }

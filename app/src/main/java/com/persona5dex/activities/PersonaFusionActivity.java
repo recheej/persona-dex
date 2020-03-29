@@ -2,7 +2,6 @@ package com.persona5dex.activities;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,16 +12,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.persona5dex.ArcanaNameProvider;
 import com.persona5dex.BuildConfig;
+import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.adapters.PersonaFusionListPagerAdapter;
 import com.persona5dex.fragments.AdvancedPersonaFragment;
 import com.persona5dex.fragments.FusionListFragment;
+import com.persona5dex.fragments.PersonaListRepositoryType;
 import com.persona5dex.jobs.PersonaJobCreator;
+import com.persona5dex.models.GameType;
+import com.persona5dex.models.PersonaRepository;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaDisplayEdgesRepository;
-import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
+import com.persona5dex.repositories.PersonaListRepositoryFactory;
 import com.persona5dex.viewmodels.PersonaFusionViewModel;
+import com.persona5dex.viewmodels.PersonaFusionViewModelFactory;
+import com.persona5dex.viewmodels.PersonaListViewModelFactory;
+import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import java.util.Locale;
 
@@ -32,15 +39,18 @@ public class PersonaFusionActivity extends BaseActivity {
 
     @Inject
     Toolbar mainToolbar;
-
     @Inject
     PersonaDisplayEdgesRepository personaDisplayEdgesRepository;
-
     @Inject
     MainPersonaRepository mainPersonaRepository;
-
     @Inject
     PersonaJobCreator personaJobCreator;
+    @Inject
+    PersonaListRepositoryFactory personaListRepositoryFactory;
+    @Inject
+    ArcanaNameProvider arcanaNameProvider;
+    @Inject
+    GameType gameType;
 
     private PersonaFusionViewModel viewModel;
 
@@ -54,9 +64,11 @@ public class PersonaFusionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_persona_fusion);
-        component.inject(this);
-
         personaForFusionID = getIntent().getIntExtra("persona_id", 1);
+
+        Persona5Application.get(this).getComponent().activityComponent()
+                .activityContext(this)
+                .advancedPersonaId(personaForFusionID).build().inject(this);
 
         final PersonaFusionViewModelFactory factory = new PersonaFusionViewModelFactory(
                 personaDisplayEdgesRepository,
@@ -80,6 +92,7 @@ public class PersonaFusionActivity extends BaseActivity {
 
             Fragment toFragment;
             if(isAdvanced) {
+                configureListViewModel();
                 toFragment = AdvancedPersonaFragment.newInstance(personaForFusionID);
             } else {
                 toFragment = FusionListFragment.newInstance(true, personaForFusionID);
@@ -109,6 +122,12 @@ public class PersonaFusionActivity extends BaseActivity {
         if(savedInstanceState == null) {
             handleIntent(getIntent());
         }
+    }
+
+    private void configureListViewModel() {
+        final PersonaRepository personaListRepository = personaListRepositoryFactory.getPersonaListRepository(PersonaListRepositoryType.ADVANCED);
+        final PersonaListViewModelFactory personaListViewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, gameType, personaListRepository);
+        new ViewModelProvider(this, personaListViewModelFactory).get(PersonaMainListViewModel.class);
     }
 
     @Override

@@ -106,7 +106,7 @@ public class SkillDetailActivity extends BaseActivity {
     }
 
     private void configureFragment() {
-        personaListFragment = PersonaListFragment.newInstance(false, PersonaListRepositoryType.SKILLS);
+        personaListFragment = PersonaListFragment.newInstance(false);
 
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.persona_list, personaListFragment);

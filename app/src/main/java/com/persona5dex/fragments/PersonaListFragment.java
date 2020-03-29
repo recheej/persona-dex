@@ -40,7 +40,6 @@ public class PersonaListFragment extends BaseFragment {
     private List<MainListPersona> personas;
     private PersonaListAdapter personaListAdapter;
     private PersonaMainListViewModel viewModel;
-    private PersonaListRepositoryType repositoryType;
 
     @Inject
     ArcanaNameProvider arcanaNameProvider;
@@ -51,11 +50,10 @@ public class PersonaListFragment extends BaseFragment {
     private LinearLayoutManager layoutManager;
     private boolean showIndexBar;
 
-    public static PersonaListFragment newInstance(boolean indexBarVisible, PersonaListRepositoryType repositoryType) {
+    public static PersonaListFragment newInstance(boolean indexBarVisible) {
         PersonaListFragment listFragment = new PersonaListFragment();
         Bundle args = new Bundle();
         args.putBoolean(INDEX_BAR_VISIBLE, indexBarVisible);
-        args.putInt(REPO_TYPE, repositoryType.getValue());
         listFragment.setArguments(args);
         return listFragment;
     }
@@ -81,7 +79,6 @@ public class PersonaListFragment extends BaseFragment {
         if(args != null) {
             this.showIndexBar = args.getBoolean(INDEX_BAR_VISIBLE, true);
             final int repoTypeInt = args.getInt(REPO_TYPE, PersonaListRepositoryType.PERSONA.getValue());
-            this.repositoryType = PersonaListRepositoryType.getRepositoryType(repoTypeInt);
         }
     }
 

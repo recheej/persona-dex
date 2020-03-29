@@ -5,7 +5,6 @@ import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.extensions.toLowerCaseInsensitive
 import com.persona5dex.filterGameType
 import com.persona5dex.models.*
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
@@ -54,8 +53,8 @@ class PersonaMainListViewModel(
                         }
                         setValue(finalList)
                     }
-                } catch (e: CancellationException) {
-
+                } finally {
+                    finishLoading()
                 }
             }
         }
@@ -73,7 +72,8 @@ class PersonaMainListViewModel(
                     sortByPersonaNameDesc
                 }
             }
-            setValue(newPersonas)
+            value = newPersonas
+            finishLoading()
         }
         addSource(personasByLevel) { asc: Boolean? ->
             val newPersonas = value
@@ -89,7 +89,8 @@ class PersonaMainListViewModel(
                     sortByPersonaLevelDesc
                 }
             }
-            setValue(newPersonas)
+            value = newPersonas
+            finishLoading()
         }
         addSource(personasByArcana) { asc: Boolean? ->
             val newPersonas = value
@@ -105,7 +106,8 @@ class PersonaMainListViewModel(
                     sortByPersonaArcanaDesc
                 }
             }
-            setValue(newPersonas)
+            value = newPersonas
+            finishLoading()
         }
         addSource(personaFilterArgs) { inputFilterArgs: PersonaFilterArgs ->
             val finalValue: MutableList<MainListPersona> = ArrayList()
@@ -129,7 +131,8 @@ class PersonaMainListViewModel(
                         finalValue.add(persona)
                     }
                     setValue(finalValue)
-                } catch (e: CancellationException) {
+                } finally {
+                    finishLoading()
                 }
             }
         }
@@ -161,32 +164,38 @@ class PersonaMainListViewModel(
         }
 
         filterPersonas(currentGameType)
-        stateLiveData.postValue(State.InitializeLoading)
+        stateLiveData.postValue(State.LoadingStarted)
     }
 
     fun getState(): LiveData<State> = stateLiveData
 
     fun filterPersonas(personaNameQuery: String?) {
+        startLoading()
         personaSearchName.postValue(personaNameQuery)
     }
 
     fun sortPersonasByName(asc: Boolean) {
+        startLoading()
         personasByName.value = asc
     }
 
     fun sortPersonasByLevel(asc: Boolean) {
+        startLoading()
         personasByLevel.value = asc
     }
 
     fun sortPersonasByArcana(asc: Boolean) {
+        startLoading()
         personasByArcana.value = asc
     }
 
     fun filterPersonas(filterArgs: PersonaFilterArgs) {
+        startLoading()
         personaFilterArgs.value = filterArgs
     }
 
     fun filterPersonas(gameType: GameType) {
+        startLoading()
         currentGameType = gameType
 
         val newFilterArgs = checkNotNull(personaFilterArgs.value) {
@@ -207,8 +216,17 @@ class PersonaMainListViewModel(
 
     fun getArcanaNamesForSpinner() = arcanaNameProvider.getAllArcanaNamesForDisplay()
 
+    private fun startLoading() {
+        stateLiveData.value = State.LoadingStarted
+    }
+
+    private fun finishLoading() {
+        stateLiveData.value = State.LoadingCompleted
+    }
+
     sealed class State {
-        object InitializeLoading : State()
+        object LoadingStarted : State()
+        object LoadingCompleted : State()
     }
 
     private fun getPersonaNameComparison(personaOne: MainListPersona, personaTwo: MainListPersona) =
