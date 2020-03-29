@@ -90,9 +90,7 @@ public class AdvancedPersonaFragment extends BaseFragment {
 
         final AdvancedFusionViewModelFactory factory = new AdvancedFusionViewModelFactory(
                 personaID,
-                mainPersonaRepository,
-                advancedPersonaService,
-                gameType
+                mainPersonaRepository
         );
         viewModel = new ViewModelProvider(this, factory).get(AdvancedFusionViewModel.class);
 
