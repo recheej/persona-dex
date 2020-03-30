@@ -25,7 +25,9 @@ fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType, basePersona
         emptyList()
     } else {
         filterGameType(gameType).filter {
-            if (gameType == GameType.BASE) basePersonas else royalPersonas
+            if (it.gameId == GameType.BASE) {
+                basePersonas
+            } else royalPersonas
         }
     }
 }
