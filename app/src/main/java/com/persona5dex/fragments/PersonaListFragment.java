@@ -78,7 +78,6 @@ public class PersonaListFragment extends BaseFragment {
         Bundle args = getArguments();
         if(args != null) {
             this.showIndexBar = args.getBoolean(INDEX_BAR_VISIBLE, true);
-            final int repoTypeInt = args.getInt(REPO_TYPE, PersonaListRepositoryType.PERSONA.getValue());
         }
     }
 
@@ -137,14 +136,6 @@ public class PersonaListFragment extends BaseFragment {
 
         recyclerView.setIndexBarVisibility(showIndexBar);
     }
-
-//    private FusionListRepositoryComponent getRepositoryComponent(FragmentComponent component) {
-//        if(repositoryType == PersonaListRepositoryType.PERSONA) {
-//            return component.
-//        } else {
-//            return component.personaSkillsRepositoryComponent();
-//        }
-//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

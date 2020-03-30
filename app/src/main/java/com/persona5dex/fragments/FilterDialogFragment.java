@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,13 +21,11 @@ import com.persona5dex.Persona5Application;
 import com.persona5dex.R;
 import com.persona5dex.activities.BaseActivity;
 import com.persona5dex.models.Enumerations;
+import com.persona5dex.models.GameType;
 import com.persona5dex.models.PersonaFilterArgs;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
-import com.persona5dex.viewmodels.ViewModelFactory;
 
 import java.util.Locale;
-
-import javax.inject.Inject;
 
 /**
  * Created by Rechee on 8/14/2017.
@@ -37,7 +34,7 @@ import javax.inject.Inject;
 public class FilterDialogFragment extends DialogFragment {
 
     private CheckBox basePersonasCheckbox;
-    private CheckBox rarePersonasCheckbox;
+    private CheckBox royalPersonasCheckbox;
     private CheckBox dlcPersonaCheckBox;
     private EditText minLevelEditText;
     private EditText maxLevelEditText;
@@ -45,9 +42,6 @@ public class FilterDialogFragment extends DialogFragment {
     private Spinner arcanaSpinner;
     private ArrayAdapter<ArcanaName> arcanaMapArrayAdapter;
     private PersonaMainListViewModel personaMainListViewModel;
-
-    @Inject
-    ViewModelFactory viewModelFactory;
 
     public static FilterDialogFragment newInstance() {
         return new FilterDialogFragment();
@@ -79,7 +73,7 @@ public class FilterDialogFragment extends DialogFragment {
         maxLevelEditText.setFilters(new InputFilter[]{filter});
 
         basePersonasCheckbox = view.findViewById(R.id.checkbox_base_personas);
-        rarePersonasCheckbox = view.findViewById(R.id.checkbox_royal_personas);
+        royalPersonasCheckbox = view.findViewById(R.id.checkbox_royal_personas);
         dlcPersonaCheckBox = view.findViewById(R.id.checkbox_dlcPersona);
 
         builder.setView(view)
@@ -98,22 +92,15 @@ public class FilterDialogFragment extends DialogFragment {
                     }
                 });
 
-        return builder.create();
-    }
+        personaMainListViewModel = new ViewModelProvider(activity).get(PersonaMainListViewModel.class);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        personaMainListViewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(PersonaMainListViewModel.class);
-
-        arcanaMapArrayAdapter = new ArrayAdapter<>(requireActivity(),
+        arcanaMapArrayAdapter = new ArrayAdapter<>(requireContext(),
                 R.layout.spinner_dropdown, personaMainListViewModel.getArcanaNamesForSpinner());
         arcanaSpinner.setAdapter(arcanaMapArrayAdapter);
 
-        personaMainListViewModel.getFilterArgs().observe(requireActivity(), personaFilterArgs -> {
+        personaMainListViewModel.getFilterArgs().observe(this, personaFilterArgs -> {
             basePersonasCheckbox.setChecked(personaFilterArgs.basePersonas);
-            rarePersonasCheckbox.setChecked(personaFilterArgs.royalPersonas);
+            royalPersonasCheckbox.setChecked(personaFilterArgs.royalPersonas);
             dlcPersonaCheckBox.setChecked(personaFilterArgs.dlcPersona);
 
             arcanaSpinner.setSelection(this.getSpinnerPosition(personaFilterArgs.arcana));
@@ -121,6 +108,29 @@ public class FilterDialogFragment extends DialogFragment {
             minLevelEditText.setText(String.format(Locale.ROOT, "%d", personaFilterArgs.minLevel));
             maxLevelEditText.setText(String.format(Locale.ROOT, "%d", personaFilterArgs.maxLevel));
         });
+
+        personaMainListViewModel.getGameType().observe(this, gameType -> {
+            if(gameType == GameType.BASE) {
+                hidePersonaFilterCheckboxes();
+            } else {
+                showPersonaFilterCheckboxes();
+            }
+        });
+
+        return builder.create();
+    }
+
+    private void setFilterCheckboxesVisibility(int visibility) {
+        royalPersonasCheckbox.setVisibility(visibility);
+        basePersonasCheckbox.setVisibility(visibility);
+    }
+
+    private void hidePersonaFilterCheckboxes() {
+        setFilterCheckboxesVisibility(View.GONE);
+    }
+
+    private void showPersonaFilterCheckboxes() {
+        setFilterCheckboxesVisibility(View.VISIBLE);
     }
 
     private void filter() {
@@ -130,7 +140,7 @@ public class FilterDialogFragment extends DialogFragment {
 
         filterArgs.arcana = selectedArcanaName.getArcana();
         filterArgs.basePersonas = basePersonasCheckbox.isChecked();
-        filterArgs.royalPersonas = rarePersonasCheckbox.isChecked();
+        filterArgs.royalPersonas = royalPersonasCheckbox.isChecked();
         filterArgs.dlcPersona = dlcPersonaCheckBox.isChecked();
 
         String minLevelText = minLevelEditText.getText().toString();

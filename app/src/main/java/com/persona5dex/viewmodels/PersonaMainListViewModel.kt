@@ -23,6 +23,7 @@ class PersonaMainListViewModel(
     private val personasByArcana: MutableLiveData<Boolean> = MutableLiveData()
     private val personaFilterArgs: MutableLiveData<PersonaFilterArgs> = MutableLiveData()
     private val stateLiveData = MutableLiveData<State>()
+    private val gameTypeLiveData = MutableLiveData<GameType>()
     private val allPersonas by lazy {
         viewModelScope.async {
             personaRepository.getPersonas()
@@ -196,19 +197,28 @@ class PersonaMainListViewModel(
 
     fun filterPersonas(gameType: GameType) {
         startLoading()
+        if (gameType != currentGameType) {
+            gameTypeLiveData.value = gameType
+        }
         currentGameType = gameType
 
         val newFilterArgs = checkNotNull(personaFilterArgs.value) {
             "not expecting filter args to be null. game type $gameType"
         }.let {
-            it.royalPersonas = if (gameType == GameType.BASE) {
-                false
-            } else it.royalPersonas
+            if (gameType == GameType.BASE) {
+                it.basePersonas = true
+                it.royalPersonas = false
+            } else {
+                it.basePersonas = true
+                it.royalPersonas = true
+            }
             it
         }
 
         filterPersonas(newFilterArgs)
     }
+
+    fun getGameType() = gameTypeLiveData
 
     fun getFilteredPersonas() = filteredLiveData
 
