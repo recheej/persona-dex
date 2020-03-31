@@ -1,10 +1,13 @@
 package com.persona5dex.viewmodels
 
+import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.persona5dex.ArcanaNameProvider
+import com.persona5dex.SHARED_PREF_KEY_GAME_TYPE
 import com.persona5dex.extensions.toLowerCaseInsensitive
 import com.persona5dex.filterGameType
 import com.persona5dex.models.*
+import com.persona5dex.models.GameType.Companion.toGameType
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.util.*
@@ -15,8 +18,9 @@ import java.util.*
 class PersonaMainListViewModel(
         private val arcanaNameProvider: ArcanaNameProvider,
         private var currentGameType: GameType,
-        private val personaRepository: PersonaRepository
-) : ViewModel() {
+        private val personaRepository: PersonaRepository,
+        private val defaultSharedSharedPreferences: SharedPreferences
+) : ViewModel(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val personaSearchName: MutableLiveData<String> = MutableLiveData()
     private val personasByName: MutableLiveData<Boolean> = MutableLiveData()
     private val personasByLevel: MutableLiveData<Boolean> = MutableLiveData()
@@ -166,6 +170,8 @@ class PersonaMainListViewModel(
 
         filterPersonas(currentGameType)
         stateLiveData.postValue(State.LoadingStarted)
+
+        defaultSharedSharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
     fun getState(): LiveData<State> = stateLiveData
@@ -234,6 +240,11 @@ class PersonaMainListViewModel(
         stateLiveData.value = State.LoadingCompleted
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        defaultSharedSharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+    }
+
     sealed class State {
         object LoadingStarted : State()
         object LoadingCompleted : State()
@@ -241,4 +252,13 @@ class PersonaMainListViewModel(
 
     private fun getPersonaNameComparison(personaOne: MainListPersona, personaTwo: MainListPersona) =
             arcanaNameProvider.getArcanaNameForDisplay(personaOne.arcana).compareTo(arcanaNameProvider.getArcanaNameForDisplay(personaTwo.arcana))
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == SHARED_PREF_KEY_GAME_TYPE) {
+            val newGameType = defaultSharedSharedPreferences.getInt(SHARED_PREF_KEY_GAME_TYPE, GameType.BASE.value).toGameType()
+            if (newGameType != gameTypeLiveData.value) {
+                gameTypeLiveData.value = newGameType
+            }
+        }
+    }
 }

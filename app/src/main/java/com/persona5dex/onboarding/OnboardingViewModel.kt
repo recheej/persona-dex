@@ -3,7 +3,6 @@ package com.persona5dex.onboarding
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.*
 import com.persona5dex.R
 import com.persona5dex.SHARED_PREF_KEY_GAME_TYPE
@@ -34,7 +33,6 @@ class OnboardingViewModel(
                     .putInt(SHARED_PREF_KEY_GAME_TYPE, gameType.value)
                     .commit()
             incrementNextStep()
-            personaJobCreator.scheduleGenerateFusionJob()
         }
     }
 

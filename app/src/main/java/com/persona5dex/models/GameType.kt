@@ -5,7 +5,8 @@ enum class GameType(val value: Int) {
 
     companion object {
         @JvmStatic
-        fun getGameType(value: Int) =
-                values().first { it.value == value }
+        @JvmName("getGameType")
+        fun Int.toGameType() =
+                values().first { it.value == this }
     }
 }

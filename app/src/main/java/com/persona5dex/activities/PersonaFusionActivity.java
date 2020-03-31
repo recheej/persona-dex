@@ -126,7 +126,7 @@ public class PersonaFusionActivity extends BaseActivity {
 
     private void configureListViewModel() {
         final PersonaRepository personaListRepository = personaListRepositoryFactory.getPersonaListRepository(PersonaListRepositoryType.ADVANCED);
-        final PersonaListViewModelFactory personaListViewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, gameType, personaListRepository);
+        final PersonaListViewModelFactory personaListViewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, gameType, personaListRepository, defaultSharedPreferences);
         new ViewModelProvider(this, personaListViewModelFactory).get(PersonaMainListViewModel.class);
     }
 

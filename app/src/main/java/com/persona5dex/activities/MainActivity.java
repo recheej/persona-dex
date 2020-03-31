@@ -104,8 +104,12 @@ public class MainActivity extends BaseActivity {
         }
 
         final PersonaRepository repository = personaListRepositoryFactory.getPersonaListRepository(PersonaListRepositoryType.PERSONA);
-        PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, currentGameType, repository);
+        PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, currentGameType, repository, defaultSharedPreferences);
         viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaMainListViewModel.class);
+        viewModel.getGameType().observe(this, gameType -> {
+            currentGameType = gameType;
+            switchGames();
+        });
 
         configureListFragment();
 
@@ -147,19 +151,18 @@ public class MainActivity extends BaseActivity {
 
         setNewSwitchButtonText();
         switchGameButton.setOnClickListener(v -> {
+            currentGameType = currentGameType == GameType.BASE ? GameType.ROYAL : GameType.BASE;
             switchGames();
         });
     }
 
     private void switchGames() {
-        currentGameType = currentGameType == GameType.BASE ? GameType.ROYAL : GameType.BASE;
         setCurrentGameString();
         setNewSwitchButtonText();
         defaultSharedPreferences.edit()
                 .putInt(Constants.SHARED_PREF_KEY_GAME_TYPE, currentGameType.getValue())
                 .apply();
         personaListFragment.filterPersonas(currentGameType);
-
         personaJobCreator.scheduleGenerateFusionJob();
     }
 

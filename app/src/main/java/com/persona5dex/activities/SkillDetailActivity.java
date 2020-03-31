@@ -32,16 +32,12 @@ public class SkillDetailActivity extends BaseActivity {
 
     @Inject
     Toolbar mainToolbar;
-
     @Inject
     ViewModelFactory viewModelFactory;
-
     @Inject
     ArcanaNameProvider arcanaNameProvider;
-
     @Inject
     GameType gameType;
-
     @Inject
     PersonaListRepositoryFactory personaListRepositoryFactory;
 
@@ -72,7 +68,7 @@ public class SkillDetailActivity extends BaseActivity {
         final TextView costTextView = findViewById(R.id.textView_Cost);
 
         final PersonaRepository repository = personaListRepositoryFactory.getPersonaListRepository(PersonaListRepositoryType.SKILLS);
-        final PersonaListViewModelFactory factory = new PersonaListViewModelFactory(arcanaNameProvider, gameType, repository);
+        final PersonaListViewModelFactory factory = new PersonaListViewModelFactory(arcanaNameProvider, gameType, repository, defaultSharedPreferences);
         new ViewModelProvider(this, factory).get(PersonaMainListViewModel.class);
 
         this.viewModel = new ViewModelProvider(this, viewModelFactory).get(PersonaDetailSkillsViewModel.class);
