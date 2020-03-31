@@ -1,13 +1,11 @@
 package com.persona5dex.fusionService
 
 import android.content.Context
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.models.room.PersonaFusion
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.yield
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class GenerateFusionWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
@@ -21,20 +19,38 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
     override suspend fun doWork(): Result {
         application.component.inject(this)
 
-        try {
-            val personaFusions = graphGenerator.getAllFusions().map {
-                PersonaFusion().apply {
-                    personaOneID = it.personaOne.id
-                    personaTwoID = it.personaTwo.id
-                    personaResultID = it.resultPersona.id
+        val personaFusions = graphGenerator.getAllFusions().map {
+            PersonaFusion().apply {
+                personaOneID = it.personaOne.id
+                personaTwoID = it.personaTwo.id
+                personaResultID = it.resultPersona.id
+            }
+        }
+
+        yield()
+        personaDao.apply {
+            /*
+                Received error saying that db is getting truncated so splitting list in half.
+
+                2020-03-30 23:53:38.148 5023-5132/com.persona5dex.debug I/SQLiteConnection: /data/user/0/com.persona5dex.debug/databases/persona-db.db-wal 1231912 bytes: Bigger than 1048576; truncating
+            */
+
+            try {
+                deleteAllFromPersonaFusions()
+
+                coroutineScope {
+                    personaFusions.chunked(personaFusions.size / 4).map {
+                        async {
+                            insertPersonaFusions(it)
+                        }
+                    }
+                }.awaitAll()
+            } catch (ex: Exception) {
+                withContext(NonCancellable) {
+                    deleteAllFromPersonaFusions()
+                    throw ex
                 }
             }
-            yield()
-            personaDao.deleteAndInsertNewFusions(personaFusions)
-        } catch (e: CancellationException) {
-            Log.e(TAG, "GenerateFusionWorker job with id: $id, tags: $tags cancelled", e)
-        } catch (e: Exception) {
-            Log.e(TAG, "GenerateFusionWorker job with id: $id, tags: $tags failed.", e)
         }
 
         return Result.success()
