@@ -2,7 +2,7 @@ package com.persona5dex
 
 import android.util.JsonReader
 import com.persona5dex.models.Enumerations
-import com.persona5dex.models.GameType
+import com.persona5dex.models.GameType.Companion.toGameType
 import com.persona5dex.models.PersonaForFusionService
 import java.io.File
 
@@ -23,7 +23,7 @@ fun Any.getFusionPersonas(): List<PersonaForFusionService> {
                     setName(nextString())
                     arcana = Enumerations.Arcana.getArcana(nextInt())
                     level = nextInt()
-                    setGameId(GameType.getGameType(nextInt()))
+                    setGameId(nextInt().toGameType())
                     isRare = nextInt() == 1
                     isDlc = nextInt() == 1
                     isParty = nextInt() == 1

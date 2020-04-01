@@ -3,15 +3,10 @@ package com.persona5dex
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
-import com.persona5dex.dagger.application.ApplicationScope
 import com.persona5dex.extensions.equalNormalized
 import com.persona5dex.extensions.normalize
-import com.persona5dex.models.Enumerations
 import com.persona5dex.models.Enumerations.Arcana
 import java.util.*
-import javax.inject.Inject
-import javax.inject.Named
-import kotlin.Comparator
 
 class ArcanaNameProvider(private val context: Context) {
 
@@ -41,6 +36,9 @@ class ArcanaNameProvider(private val context: Context) {
                 it.value equalNormalized rawEnglishArcanaName
             }?.key
                     ?: Arcana.HANGED_MAN.takeIf { rawEnglishArcanaName.normalize().contains("hanged") }
+                    ?: Arcana.CONSULTANT.takeIf {
+                        rawEnglishArcanaName equalNormalized "consultant"
+                    }
 
     fun getArcanaForEnglishNameOrThrow(rawEnglishArcanaName: String): Arcana =
             checkNotNull(getArcanaForEnglishName(rawEnglishArcanaName)) {
