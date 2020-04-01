@@ -3,6 +3,7 @@ package com.persona5dex.fusionService
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.crashlytics.android.Crashlytics
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.models.room.PersonaFusion
 import kotlinx.coroutines.*
@@ -47,6 +48,10 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
                 }.awaitAll()
             } catch (ex: Exception) {
                 withContext(NonCancellable) {
+                    if (ex !is CancellationException) {
+                        Crashlytics.log("crash on fusions. fusion count: ${personaFusions.size}")
+                        Crashlytics.logException(ex)
+                    }
                     deleteAllFromPersonaFusions()
                     throw ex
                 }
