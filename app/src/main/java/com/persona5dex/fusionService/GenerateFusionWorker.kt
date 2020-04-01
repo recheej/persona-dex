@@ -18,7 +18,8 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
     internal lateinit var graphGenerator: PersonaFusionGraphGenerator
 
     override suspend fun doWork(): Result {
-        application.component.inject(this)
+        val applicationComponent = application.component
+        applicationComponent.inject(this)
 
         val personaFusions = graphGenerator.getAllFusions().map {
             PersonaFusion().apply {
@@ -49,6 +50,7 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
             } catch (ex: Exception) {
                 withContext(NonCancellable) {
                     if (ex !is CancellationException) {
+                        Crashlytics.setInt("game_type", applicationComponent.gameType().value)
                         Crashlytics.log("crash on fusions. fusion count: ${personaFusions.size}")
                         Crashlytics.logException(ex)
                     }

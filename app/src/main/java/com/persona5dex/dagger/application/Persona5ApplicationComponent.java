@@ -3,6 +3,7 @@ package com.persona5dex.dagger.application;
 import com.persona5dex.dagger.activity.ActivityComponent;
 import com.persona5dex.fusionService.GenerateFusionWorker;
 import com.persona5dex.jobs.PersonaJobCreator;
+import com.persona5dex.models.GameType;
 
 import javax.inject.Singleton;
 
@@ -24,4 +25,5 @@ public interface Persona5ApplicationComponent {
 
     PersonaJobCreator personaJobCreator();
     ActivityComponent.Builder activityComponent();
+    GameType gameType();
 }
