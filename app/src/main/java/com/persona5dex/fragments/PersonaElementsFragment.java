@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.crashlytics.android.Crashlytics;
 import com.persona5dex.R;
 import com.persona5dex.repositories.PersonaElementsRepository;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;
@@ -78,27 +79,32 @@ public class PersonaElementsFragment extends BaseFragment {
         TextView elementStatView = parentView.findViewById(textViewID);
         String statText = "";
 
-        switch(effect){
-            case WEAK:
-                statText = getContext().getString(R.string.effect_weak);
-                break;
-            case RESIST:
-                statText = getContext().getString(R.string.effect_resist);
-                break;
-            case NULL:
-                statText = getContext().getString(R.string.effect_null);
-                break;
-            case REPEL:
-                statText = getContext().getString(R.string.effect_repel);
-                break;
-            case DRAIN:
-                statText = getContext().getString(R.string.effect_drain);
-                break;
-            case NO_EFFECT:
-                statText = "-";
-                break;
-        }
+        try {
+            switch(effect) {
+                case WEAK:
+                    statText = getContext().getString(R.string.effect_weak);
+                    break;
+                case RESIST:
+                    statText = getContext().getString(R.string.effect_resist);
+                    break;
+                case NULL:
+                    statText = getContext().getString(R.string.effect_null);
+                    break;
+                case REPEL:
+                    statText = getContext().getString(R.string.effect_repel);
+                    break;
+                case DRAIN:
+                    statText = getContext().getString(R.string.effect_drain);
+                    break;
+                case NO_EFFECT:
+                    statText = "-";
+                    break;
+            }
 
-        elementStatView.setText(statText);
+            elementStatView.setText(statText);
+        } catch(NullPointerException e) {
+            final String exceptionMessage = "null for persona with id: " + personaID;
+            Crashlytics.logException(new RuntimeException(exceptionMessage, e));
+        }
     }
 }
