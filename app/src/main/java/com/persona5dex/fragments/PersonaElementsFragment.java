@@ -15,6 +15,10 @@ import com.persona5dex.repositories.PersonaElementsRepository;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;
 import com.persona5dex.viewmodels.PersonaElementsViewModelFactory;
 
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import static com.persona5dex.models.Enumerations.Element;
@@ -32,7 +36,7 @@ public class PersonaElementsFragment extends BaseFragment {
         super();
     }
 
-    public static PersonaElementsFragment newInstance(int personaID){
+    public static PersonaElementsFragment newInstance(int personaID) {
         PersonaElementsFragment elementsFragment = new PersonaElementsFragment();
         Bundle args = new Bundle();
         args.putInt("persona_id", personaID);
@@ -55,16 +59,16 @@ public class PersonaElementsFragment extends BaseFragment {
         final PersonaElementsViewModelFactory factory = new PersonaElementsViewModelFactory(repository, personaID);
         viewModel = new ViewModelProvider(this, factory).get(PersonaElementsViewModel.class);
         viewModel.getElementsForPersona().observe(getViewLifecycleOwner(), elements -> {
-            setElementView(baseView, R.id.textViewPhysicalStat, elements.get(Element.PHYSICAL));
-            setElementView(baseView, R.id.textViewGunStat, elements.get(Element.GUN));
-            setElementView(baseView, R.id.textViewFireStat, elements.get(Element.FIRE));
-            setElementView(baseView, R.id.textViewIceStat, elements.get(Element.ICE));
-            setElementView(baseView, R.id.textViewElectricStat, elements.get(Element.ELECTRIC));
-            setElementView(baseView, R.id.textViewWindStat, elements.get(Element.WIND));
-            setElementView(baseView, R.id.textViewPsyStat, elements.get(Element.PSYCHIC));
-            setElementView(baseView, R.id.textViewNuclearStat, elements.get(Element.NUCLEAR));
-            setElementView(baseView, R.id.textViewBlessStat, elements.get(Element.BLESS));
-            setElementView(baseView, R.id.textViewCurseStat, elements.get(Element.CURSE));
+            setElementView(elements, R.id.textViewPhysicalStat, Element.PHYSICAL);
+            setElementView(elements, R.id.textViewGunStat, Element.GUN);
+            setElementView(elements, R.id.textViewFireStat, Element.FIRE);
+            setElementView(elements, R.id.textViewIceStat, Element.ICE);
+            setElementView(elements, R.id.textViewElectricStat, Element.ELECTRIC);
+            setElementView(elements, R.id.textViewWindStat, Element.WIND);
+            setElementView(elements, R.id.textViewPsyStat, Element.PSYCHIC);
+            setElementView(elements, R.id.textViewNuclearStat, Element.NUCLEAR);
+            setElementView(elements, R.id.textViewBlessStat, Element.BLESS);
+            setElementView(elements, R.id.textViewCurseStat, Element.CURSE);
         });
     }
 
@@ -75,12 +79,13 @@ public class PersonaElementsFragment extends BaseFragment {
         return baseView;
     }
 
-    private void setElementView(View parentView, int textViewID, ElementEffect effect){
-        TextView elementStatView = parentView.findViewById(textViewID);
+    private void setElementView(Map<Element, ElementEffect> elementMap, int textViewID, Element element) {
+        TextView elementStatView = baseView.findViewById(textViewID);
         String statText = "";
 
         try {
-            switch(effect) {
+            ElementEffect elementEffect = Objects.requireNonNull(elementMap.get(element));
+            switch(elementEffect) {
                 case WEAK:
                     statText = getContext().getString(R.string.effect_weak);
                     break;
@@ -103,7 +108,7 @@ public class PersonaElementsFragment extends BaseFragment {
 
             elementStatView.setText(statText);
         } catch(NullPointerException e) {
-            final String exceptionMessage = "null for persona with id: " + personaID;
+            final String exceptionMessage = String.format(Locale.ROOT, "null for persona with id: %d. Element: %s", personaID, element);
             Crashlytics.logException(new RuntimeException(exceptionMessage, e));
         }
     }
