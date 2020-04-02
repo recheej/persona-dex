@@ -46,7 +46,7 @@ class AdvancedPersonaListRepository @Inject constructor(
                 game type: $gameType
                 all personas count: $allPersonas
             """.trimIndent(), e))
-            emptyList()
+            emptyList<MainListPersona>()
         }
     }
 }
