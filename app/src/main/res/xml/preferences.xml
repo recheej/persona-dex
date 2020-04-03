@@ -13,6 +13,7 @@
         android:key="@string/pref_key_dlc"
         android:title="@string/dlc_persona_owned"
         android:summary="@string/dlc_persona_pref_summary"
+        android:defaultValue="@array/emptyArray"
         />
 
     <Preference
