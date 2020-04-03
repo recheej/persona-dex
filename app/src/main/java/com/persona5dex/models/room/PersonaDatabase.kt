@@ -40,8 +40,11 @@ abstract class PersonaDatabase : RoomDatabase() {
                     PersonaDatabase::class.java,
                     DB_NAME
             )
+                    .addMigrations(
+                            MIGRATION_1_2,
+                            MIGRATION_2_3
+                    )
                     .createFromAsset("databases/$DB_NAME")
-                    .fallbackToDestructiveMigrationOnDowngrade()
                     .fallbackToDestructiveMigration()
                     .build().also {
                         INSTANCE = it
