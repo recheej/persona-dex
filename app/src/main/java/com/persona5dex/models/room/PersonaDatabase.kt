@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.persona5dex.models.SimplePersonaNameView
 
 
 /**
@@ -21,7 +20,7 @@ import com.persona5dex.models.SimplePersonaNameView
             PersonaFusion::class,
             PersonaShadowName::class
         ],
-        version = 1
+        version = 4
 )
 @TypeConverters(PersonaTypeConverters::class)
 abstract class PersonaDatabase : RoomDatabase() {
