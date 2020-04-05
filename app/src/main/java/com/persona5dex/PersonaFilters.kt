@@ -27,7 +27,15 @@ fun List<MainListPersona>.filterGameType(gameType: GameType, basePersonas: Boole
     } else {
         when {
             basePersonas && royalPersonas -> filterGameType(gameType)
-            basePersonas -> filter { it.gameId == GameType.BASE }
+            basePersonas -> {
+                val basePersonasSet = filter { it.gameId == GameType.BASE }.map { it.name }.toSet()
+                val royalSet = filter { it.gameId == GameType.ROYAL }.map { it.name }.toSet()
+                if (gameType == GameType.BASE) {
+                    filter { it.gameId == GameType.BASE }
+                } else {
+                    filter { it.gameId == GameType.ROYAL && basePersonasSet.contains(it.name) || it.gameId == GameType.BASE && !royalSet.contains(it.name) }
+                }
+            }
             else -> {
                 val basePersonasSet = filter { it.gameId == GameType.BASE }.map { it.name }.toSet()
                 filter { it.gameId == GameType.ROYAL && !basePersonasSet.contains(it.name) }
