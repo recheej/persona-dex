@@ -1,0 +1,487 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 5,
+    "identityHash": "90f0773bc1d64a3146d84b56e57ab037",
+    "entities": [
+      {
+        "tableName": "personas",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `arcana` INTEGER, `level` INTEGER NOT NULL, `personality` TEXT, `special` INTEGER NOT NULL, `max` INTEGER NOT NULL, `dlc` INTEGER NOT NULL, `rare` INTEGER NOT NULL, `party` INTEGER NOT NULL, `note` TEXT, `imageUrl` TEXT, `gameId` INTEGER NOT NULL DEFAULT 1, `endurance` INTEGER, `agility` INTEGER, `strength` INTEGER, `magic` INTEGER, `luck` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "arcana",
+            "columnName": "arcana",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "level",
+            "columnName": "level",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personality",
+            "columnName": "personality",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "special",
+            "columnName": "special",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "max",
+            "columnName": "max",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dlc",
+            "columnName": "dlc",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rare",
+            "columnName": "rare",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "party",
+            "columnName": "party",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "gameId",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          },
+          {
+            "fieldPath": "stats.endurance",
+            "columnName": "endurance",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stats.agility",
+            "columnName": "agility",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stats.strength",
+            "columnName": "strength",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stats.magic",
+            "columnName": "magic",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stats.luck",
+            "columnName": "luck",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "ix_personas_game_id",
+            "unique": false,
+            "columnNames": [
+              "gameId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `ix_personas_game_id` ON `${TABLE_NAME}` (`gameId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "skills",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `effect` TEXT, `element` TEXT, `cost` INTEGER NOT NULL, `note` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "effect",
+            "columnName": "effect",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "element",
+            "columnName": "element",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cost",
+            "columnName": "cost",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "personaSkills",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`persona_id` INTEGER NOT NULL, `skill_id` INTEGER NOT NULL, `level_required` INTEGER NOT NULL, `gameId` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`persona_id`, `skill_id`), FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`skill_id`) REFERENCES `skills`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "personaID",
+            "columnName": "persona_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "skillID",
+            "columnName": "skill_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "levelRequired",
+            "columnName": "level_required",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "gameId",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "persona_id",
+            "skill_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "ix_personaSkills_persona_id",
+            "unique": false,
+            "columnNames": [
+              "persona_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `ix_personaSkills_persona_id` ON `${TABLE_NAME}` (`persona_id`)"
+          },
+          {
+            "name": "ix_personaSkills_skill_id",
+            "unique": false,
+            "columnNames": [
+              "skill_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `ix_personaSkills_skill_id` ON `${TABLE_NAME}` (`skill_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "personas",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "persona_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "skills",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "skill_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "personaElements",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `persona_id` INTEGER NOT NULL, `element` INTEGER, `effect` INTEGER, FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personaId",
+            "columnName": "persona_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "element",
+            "columnName": "element",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "effect",
+            "columnName": "effect",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "ix_personaElements_persona_id",
+            "unique": false,
+            "columnNames": [
+              "persona_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `ix_personaElements_persona_id` ON `${TABLE_NAME}` (`persona_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "personas",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "persona_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "personaFusions",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`persona_one` INTEGER NOT NULL, `persona_two` INTEGER NOT NULL, `result` INTEGER NOT NULL, PRIMARY KEY(`persona_one`, `persona_two`), FOREIGN KEY(`persona_one`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`persona_two`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`result`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "personaOneID",
+            "columnName": "persona_one",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personaTwoID",
+            "columnName": "persona_two",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personaResultID",
+            "columnName": "result",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "persona_one",
+            "persona_two"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "ix_personaFusions_persona_one",
+            "unique": false,
+            "columnNames": [
+              "persona_one"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `ix_personaFusions_persona_one` ON `${TABLE_NAME}` (`persona_one`)"
+          },
+          {
+            "name": "ix_personaFusions_persona_two",
+            "unique": false,
+            "columnNames": [
+              "persona_two"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `ix_personaFusions_persona_two` ON `${TABLE_NAME}` (`persona_two`)"
+          },
+          {
+            "name": "ix_personaFusions_result",
+            "unique": false,
+            "columnNames": [
+              "result"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `ix_personaFusions_result` ON `${TABLE_NAME}` (`result`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "personas",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "persona_one"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "personas",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "persona_two"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "personas",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "result"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "personaShadowNames",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `isPrimary` INTEGER NOT NULL, FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "personaID",
+            "columnName": "persona_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shadowName",
+            "columnName": "shadow_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isPrimary",
+            "columnName": "isPrimary",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "unique_shadows",
+            "unique": true,
+            "columnNames": [
+              "persona_id",
+              "shadow_name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `unique_shadows` ON `${TABLE_NAME}` (`persona_id`, `shadow_name`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "personas",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "persona_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '90f0773bc1d64a3146d84b56e57ab037')"
+    ]
+  }
+}
