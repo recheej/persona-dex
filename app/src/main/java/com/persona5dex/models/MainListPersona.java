@@ -22,7 +22,7 @@ public class MainListPersona implements GameTypePersona {
     public boolean rare;
     public boolean dlc;
     public boolean party;
-    public GameType gameId;
+    private GameType gameId;
 
     @Relation(parentColumn = "id", entityColumn = "persona_id")
     public List<PersonaShadowName> personaShadowNames;
@@ -56,6 +56,10 @@ public class MainListPersona implements GameTypePersona {
     @Override
     public GameType getGameId() {
         return gameId;
+    }
+
+    public void setGameId(GameType gameId) {
+        this.gameId = gameId;
     }
 
     @NotNull

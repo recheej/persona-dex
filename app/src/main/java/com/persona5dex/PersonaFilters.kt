@@ -4,6 +4,7 @@ package com.persona5dex
 
 import com.persona5dex.models.GameType
 import com.persona5dex.models.GameTypePersona
+import com.persona5dex.models.MainListPersona
 
 
 fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType): List<T> {
@@ -20,14 +21,17 @@ fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType): List<T> {
     }
 }
 
-fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType, basePersonas: Boolean, royalPersonas: Boolean): List<T> {
+fun List<MainListPersona>.filterGameType(gameType: GameType, basePersonas: Boolean, royalPersonas: Boolean): List<MainListPersona> {
     return if ((!royalPersonas && !basePersonas) || (gameType == GameType.BASE && !basePersonas)) {
         emptyList()
     } else {
-        filterGameType(gameType).filter {
-            if (it.gameId == GameType.BASE) {
-                basePersonas
-            } else royalPersonas
+        when {
+            basePersonas && royalPersonas -> filterGameType(gameType)
+            basePersonas -> filter { it.gameId == GameType.BASE }
+            else -> {
+                val basePersonasSet = filter { it.gameId == GameType.BASE }.map { it.name }.toSet()
+                filter { it.gameId == GameType.ROYAL && !basePersonasSet.contains(it.name) }
+            }
         }
     }
 }
