@@ -16,7 +16,7 @@ fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType): List<T> {
         val personasForGameNameSet = personasForGameType.map { it.name }.toSet()
         val allGameTypePersonas = basePersonas + personasForGameType
         val result = allGameTypePersonas
-                .filterNot { it.gameId == GameType.BASE && personasForGameNameSet.contains(it.name) }
+                .filter { it.gameId == gameType || !personasForGameNameSet.contains(it.name) }
         result
     }
 }
