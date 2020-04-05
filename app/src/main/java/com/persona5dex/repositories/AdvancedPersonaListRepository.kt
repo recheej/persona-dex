@@ -44,7 +44,7 @@ class AdvancedPersonaListRepository @Inject constructor(
             Crashlytics.logException(RuntimeException("""
                 failed to get advanced personas for persona: $advancedPersonaId
                 game type: $gameType
-                all personas count: $allPersonas
+                all personas count: ${allPersonas.size}
             """.trimIndent(), e))
             emptyList<MainListPersona>()
         }
