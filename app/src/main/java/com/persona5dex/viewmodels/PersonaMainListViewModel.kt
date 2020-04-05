@@ -203,7 +203,9 @@ class PersonaMainListViewModel(
 
     fun filterPersonas(gameType: GameType) {
         startLoading()
+        var gamTypeChanged = false
         if (gameType != currentGameType) {
+            gamTypeChanged = true
             gameTypeLiveData.value = gameType
         }
         currentGameType = gameType
@@ -211,12 +213,14 @@ class PersonaMainListViewModel(
         val newFilterArgs = checkNotNull(personaFilterArgs.value) {
             "not expecting filter args to be null. game type $gameType"
         }.let {
-            if (gameType == GameType.BASE) {
-                it.basePersonas = true
-                it.royalPersonas = false
-            } else {
-                it.basePersonas = true
-                it.royalPersonas = true
+            if (gamTypeChanged) {
+                if (gameType == GameType.BASE) {
+                    it.basePersonas = true
+                    it.royalPersonas = false
+                } else {
+                    it.basePersonas = true
+                    it.royalPersonas = true
+                }
             }
             it
         }
