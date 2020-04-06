@@ -9,6 +9,7 @@ import com.persona5dex.models.GameType
 import com.persona5dex.models.MainListPersona
 import com.persona5dex.models.PersonaRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
@@ -43,6 +44,7 @@ class AdvancedPersonaListRepository @Inject constructor(
                 failed to get advanced personas for persona: $advancedPersonaId
                 game type: $gameType
                 all personas count: ${allPersonas.size}
+                coroutine activity: $isActive
             """.trimIndent(), e))
             emptyList<MainListPersona>()
         }
