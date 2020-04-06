@@ -1,7 +1,6 @@
 package com.persona5dex.repositories
 
 import com.crashlytics.android.Crashlytics
-import com.persona5dex.dagger.activity.ActivityScope
 import com.persona5dex.extensions.equalNormalized
 import com.persona5dex.extensions.normalize
 import com.persona5dex.filterGameType
@@ -14,7 +13,6 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
 
-@ActivityScope
 class AdvancedPersonaListRepository @Inject constructor(
         @Named("advancedPersonaId") private val advancedPersonaId: Int?,
         private val advancedPersonaService: AdvancedPersonaService,
