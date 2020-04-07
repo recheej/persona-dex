@@ -60,7 +60,8 @@ class SearchSuggestionCursorProvider @Inject constructor(
 
         val skillSearchSuggestions = searchSuggestionDao.getSkillSearchSuggestions(query)
 
-        val suggestionList = if (onlyPersonas) personaSearchSuggestions else (personaSearchSuggestions + skillSearchSuggestions + shadowSuggestions)
+        val allPersonaSuggestions = personaSearchSuggestions + shadowSuggestions
+        val suggestionList = if (onlyPersonas) allPersonaSuggestions else (allPersonaSuggestions + skillSearchSuggestions)
         val finalList = suggestionList
                 .sortedBy { it.lineOne }
                 .mapIndexed { index, searchSuggestion ->
