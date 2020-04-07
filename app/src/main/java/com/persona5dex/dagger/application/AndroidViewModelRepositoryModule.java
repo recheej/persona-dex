@@ -1,5 +1,6 @@
 package com.persona5dex.dagger.application;
 
+import com.persona5dex.models.GameType;
 import com.persona5dex.models.room.PersonaDatabase;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.MainPersonaRoomRepository;
@@ -24,8 +25,8 @@ public class AndroidViewModelRepositoryModule {
     }
 
     @Provides
-    PersonaDetailRepository personaDetailRepository(PersonaDatabase database){
-        return new PersonaDetailRoomRepository(database.personaDao());
+    PersonaDetailRepository personaDetailRepository(PersonaDatabase database, GameType gameType) {
+        return new PersonaDetailRoomRepository(database.personaDao(), gameType);
     }
 
     @Provides

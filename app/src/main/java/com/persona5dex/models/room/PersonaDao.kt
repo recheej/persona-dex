@@ -23,8 +23,8 @@ abstract class PersonaDao {
             "order by name")
     abstract fun getDetailInfoForPersona(personaID: Int): LiveData<PersonaDetailInfo>
 
-    @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID")
-    abstract fun getShadowsForPersona(personaID: Int): LiveData<Array<PersonaShadowDetail>>
+    @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID and gameId = :gameType")
+    abstract fun getShadowsForPersona(personaID: Int, gameType: GameType): LiveData<Array<PersonaShadowDetail>>
 
     @get:Query("select id, arcana, name, level, rare, dlc, special, gameId, party from personas order by level")
     abstract val personasByLevel: Array<PersonaForFusionService>

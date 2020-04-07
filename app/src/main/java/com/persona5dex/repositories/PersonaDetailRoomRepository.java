@@ -2,6 +2,7 @@ package com.persona5dex.repositories;
 
 import androidx.lifecycle.LiveData;
 
+import com.persona5dex.models.GameType;
 import com.persona5dex.models.PersonaDetailInfo;
 import com.persona5dex.models.PersonaShadowDetail;
 import com.persona5dex.models.room.PersonaDao;
@@ -13,9 +14,11 @@ import com.persona5dex.models.room.PersonaDao;
 public class PersonaDetailRoomRepository implements PersonaDetailRepository {
 
     private final PersonaDao personaDao;
+    private final GameType gameType;
 
-    public PersonaDetailRoomRepository(PersonaDao personaDao){
+    public PersonaDetailRoomRepository(PersonaDao personaDao, GameType gameType) {
         this.personaDao = personaDao;
+        this.gameType = gameType;
     }
 
     @Override
@@ -25,6 +28,6 @@ public class PersonaDetailRoomRepository implements PersonaDetailRepository {
 
     @Override
     public LiveData<PersonaShadowDetail[]> getShadowsForPersona(int id) {
-        return personaDao.getShadowsForPersona(id);
+        return personaDao.getShadowsForPersona(id, gameType);
     }
 }
