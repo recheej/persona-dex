@@ -44,7 +44,7 @@ class AdvancedPersonaListRepository @Inject constructor(
                 failed to get advanced personas for persona: $advancedPersonaId
                 game type: $gameType
                 all personas count: ${allPersonas.size}
-                coroutine activity: $isActive
+                coroutine active: $isActive
             """.trimIndent(), e))
             emptyList<MainListPersona>()
         }
