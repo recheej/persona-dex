@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "90f0773bc1d64a3146d84b56e57ab037",
+    "identityHash": "73e657ebffe442d0dd5c6f64fec52308",
     "entities": [
       {
         "tableName": "personas",
@@ -419,7 +419,7 @@
       },
       {
         "tableName": "personaShadowNames",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `isPrimary` INTEGER NOT NULL, FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `persona_id` INTEGER NOT NULL, `shadow_name` TEXT, `isPrimary` INTEGER NOT NULL, `gameId` INTEGER NOT NULL DEFAULT 1, FOREIGN KEY(`persona_id`) REFERENCES `personas`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -444,6 +444,13 @@
             "columnName": "isPrimary",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "gameId",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
           }
         ],
         "primaryKey": {
@@ -458,9 +465,10 @@
             "unique": true,
             "columnNames": [
               "persona_id",
-              "shadow_name"
+              "shadow_name",
+              "gameId"
             ],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `unique_shadows` ON `${TABLE_NAME}` (`persona_id`, `shadow_name`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `unique_shadows` ON `${TABLE_NAME}` (`persona_id`, `shadow_name`, `gameId`)"
           }
         ],
         "foreignKeys": [
@@ -481,7 +489,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '90f0773bc1d64a3146d84b56e57ab037')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '73e657ebffe442d0dd5c6f64fec52308')"
     ]
   }
 }

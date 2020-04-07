@@ -40,6 +40,13 @@ class SearchSuggestionCursorProvider @Inject constructor(
             }
         }
 
+        val shadowSuggestions = searchSuggestionDao
+                .getShadowSuggestions(query, gameType)
+        val shadowPersonaMap = shadowSuggestions.groupBy { it.id }
+        filteredPersonaSuggestions = filteredPersonaSuggestions.filter {
+            !shadowPersonaMap.contains(it.id)
+        }
+
         val personaSearchSuggestions = filteredPersonaSuggestions
                 .map {
                     val arcana = Enumerations.Arcana.getArcana(it.lineTwo.toInt())
@@ -53,7 +60,7 @@ class SearchSuggestionCursorProvider @Inject constructor(
 
         val skillSearchSuggestions = searchSuggestionDao.getSkillSearchSuggestions(query)
 
-        val suggestionList = if (onlyPersonas) personaSearchSuggestions else (personaSearchSuggestions + skillSearchSuggestions)
+        val suggestionList = if (onlyPersonas) personaSearchSuggestions else (personaSearchSuggestions + skillSearchSuggestions + shadowSuggestions)
         val finalList = suggestionList
                 .sortedBy { it.lineOne }
                 .mapIndexed { index, searchSuggestion ->

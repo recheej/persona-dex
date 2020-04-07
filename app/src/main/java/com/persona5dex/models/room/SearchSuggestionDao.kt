@@ -2,6 +2,7 @@ package com.persona5dex.models.room
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.persona5dex.models.GameType
 import com.persona5dex.searchSuggestions.PersonaSearchSuggestion
 import com.persona5dex.searchSuggestions.SearchSuggestion
 
@@ -21,4 +22,11 @@ interface SearchSuggestionDao {
         WHERE name LIKE :query
     """)
     fun getSkillSearchSuggestions(query: String?): List<SearchSuggestion>
+
+    @Query("""
+        select personas.id, personas.name as lineOne, personaShadowNames.shadow_name as lineTwo, 3 as type from personaShadowNames
+        inner join personas on personas.id = personaShadowNames.persona_id
+        WHERE personaShadowNames.gameId = :gameType and shadow_name LIKE :query
+    """)
+    fun getShadowSuggestions(query: String?, gameType: GameType): List<SearchSuggestion>
 }

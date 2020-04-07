@@ -1,5 +1,6 @@
 package com.persona5dex.models.room;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -40,6 +41,8 @@ public class PersonaShadowName implements GameTypePersona {
 
     public int isPrimary;
 
+    @ColumnInfo(defaultValue = "1")
+    @NonNull
     private GameType gameId;
 
     @Ignore
