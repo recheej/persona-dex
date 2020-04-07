@@ -6,7 +6,6 @@ import android.database.MatrixCursor
 import android.provider.BaseColumns
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.dagger.contentProvider.ContentProviderScope
-import com.persona5dex.filterGameType
 import com.persona5dex.models.Enumerations
 import com.persona5dex.models.GameType
 import com.persona5dex.models.room.PersonaDatabase
@@ -20,19 +19,37 @@ class SearchSuggestionCursorProvider @Inject constructor(
     private val searchSuggestionDao = database.searchSuggestionDao()
 
     fun getSearchSuggestionCursor(query: String, onlyPersonas: Boolean, gameType: GameType): Cursor {
-        val personaSearchSuggestions =
+        var filteredPersonaSuggestions =
                 searchSuggestionDao.getPersonaSearchSuggestions(query)
                         .asSequence()
-                        .filterGameType(gameType)
-                        .map {
-                            val arcana = Enumerations.Arcana.getArcana(it.lineTwo.toInt())
-                            SearchSuggestion(
-                                    it.id,
-                                    it.lineOne,
-                                    arcanaNameProvider.getArcanaNameForDisplay(arcana),
-                                    it.type
-                            )
-                        }.toList()
+        val royalSet = filteredPersonaSuggestions.filter { it.gameId == GameType.ROYAL }.map { it.name }.toSet()
+        val baseSet = filteredPersonaSuggestions.filter { it.gameId == GameType.BASE }.map { it.name }.toSet()
+        filteredPersonaSuggestions = filteredPersonaSuggestions.filter {
+            if (gameType == GameType.BASE) {
+                if (it.gameId == GameType.BASE) {
+                    true
+                } else {
+                    !baseSet.contains(it.name)
+                }
+            } else {
+                if (it.gameId == GameType.BASE) {
+                    !royalSet.contains(it.name)
+                } else {
+                    true
+                }
+            }
+        }
+
+        val personaSearchSuggestions = filteredPersonaSuggestions
+                .map {
+                    val arcana = Enumerations.Arcana.getArcana(it.lineTwo.toInt())
+                    SearchSuggestion(
+                            it.id,
+                            it.lineOne,
+                            arcanaNameProvider.getArcanaNameForDisplay(arcana),
+                            it.type
+                    )
+                }.toList()
 
         val skillSearchSuggestions = searchSuggestionDao.getSkillSearchSuggestions(query)
 

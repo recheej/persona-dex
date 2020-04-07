@@ -38,11 +38,11 @@ class PersonaMainListViewModel(
         addSource(personaSearchName) { searchValue: String? ->
             viewModelScope.launch {
                 try {
-                    val allPersonas = getAllPersonas()
+                    val allPersonas = getNewPersonaList(checkNotNull(personaFilterArgs.value))
                     if (searchValue.isNullOrEmpty()) {
                         setValue(allPersonas)
                     } else {
-                        val finalList: kotlin.collections.MutableList<com.persona5dex.models.MainListPersona> = java.util.ArrayList()
+                        val finalList: MutableList<MainListPersona> = ArrayList()
                         for (mainListPersona in allPersonas) {
                             val searchValueLower = searchValue.toLowerCaseInsensitive()
                             if (mainListPersona.name.toLowerCaseInsensitive().contains(searchValueLower)) {
@@ -116,12 +116,9 @@ class PersonaMainListViewModel(
         }
         addSource(personaFilterArgs) { inputFilterArgs: PersonaFilterArgs ->
             val finalValue: MutableList<MainListPersona> = ArrayList()
-            val comparator = lastPersonaComparator ?: sortByPersonaNameAsc
             viewModelScope.launch {
                 try {
-                    val newPersonas = getAllPersonas()
-                            .filterGameType(currentGameType, inputFilterArgs.basePersonas, inputFilterArgs.royalPersonas)
-                            .sortedWith(comparator)
+                    val newPersonas = getNewPersonaList(inputFilterArgs)
 
                     for (persona in newPersonas) {
                         if (persona.dlc && !inputFilterArgs.dlcPersona) {
@@ -143,8 +140,13 @@ class PersonaMainListViewModel(
         }
     }
 
-    private suspend fun getAllPersonas() =
-            if (allPersonas.isCompleted) allPersonas.getCompleted() else allPersonas.await()
+    private suspend fun getNewPersonaList(inputFilterArgs: PersonaFilterArgs): List<MainListPersona> {
+        val comparator = lastPersonaComparator ?: sortByPersonaNameAsc
+        val allPersonas = if (allPersonas.isCompleted) allPersonas.getCompleted() else allPersonas.await()
+        return allPersonas
+                .filterGameType(currentGameType, inputFilterArgs.basePersonas, inputFilterArgs.royalPersonas)
+                .sortedWith(comparator)
+    }
 
     private val sortByPersonaNameDesc: Comparator<MainListPersona>
     private val sortByPersonaNameAsc: Comparator<MainListPersona>
