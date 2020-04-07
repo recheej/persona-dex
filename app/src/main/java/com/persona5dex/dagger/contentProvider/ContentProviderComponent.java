@@ -1,5 +1,6 @@
 package com.persona5dex.dagger.contentProvider;
 
+import com.persona5dex.models.GameType;
 import com.persona5dex.searchSuggestions.PersonaNameProvider;
 
 import dagger.Component;
@@ -18,4 +19,5 @@ import dagger.Component;
 )
 public interface ContentProviderComponent {
     void inject(PersonaNameProvider provider);
+    GameType gameType();
 }

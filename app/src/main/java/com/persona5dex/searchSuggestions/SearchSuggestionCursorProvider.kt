@@ -6,7 +6,9 @@ import android.database.MatrixCursor
 import android.provider.BaseColumns
 import com.persona5dex.ArcanaNameProvider
 import com.persona5dex.dagger.contentProvider.ContentProviderScope
+import com.persona5dex.filterGameType
 import com.persona5dex.models.Enumerations
+import com.persona5dex.models.GameType
 import com.persona5dex.models.room.PersonaDatabase
 import javax.inject.Inject
 
@@ -17,17 +19,20 @@ class SearchSuggestionCursorProvider @Inject constructor(
 ) {
     private val searchSuggestionDao = database.searchSuggestionDao()
 
-    fun getSearchSuggestionCursor(query: String, onlyPersonas: Boolean): Cursor {
+    fun getSearchSuggestionCursor(query: String, onlyPersonas: Boolean, gameType: GameType): Cursor {
         val personaSearchSuggestions =
-                searchSuggestionDao.getPersonaSearchSuggestions(query).map {
-                    val arcana = Enumerations.Arcana.getArcana(it.lineTwo.toInt())
-                    SearchSuggestion(
-                            it.id,
-                            it.lineOne,
-                            arcanaNameProvider.getArcanaNameForDisplay(arcana),
-                            it.type
-                    )
-                }
+                searchSuggestionDao.getPersonaSearchSuggestions(query)
+                        .asSequence()
+                        .filterGameType(gameType)
+                        .map {
+                            val arcana = Enumerations.Arcana.getArcana(it.lineTwo.toInt())
+                            SearchSuggestion(
+                                    it.id,
+                                    it.lineOne,
+                                    arcanaNameProvider.getArcanaNameForDisplay(arcana),
+                                    it.type
+                            )
+                        }.toList()
 
         val skillSearchSuggestions = searchSuggestionDao.getSkillSearchSuggestions(query)
 

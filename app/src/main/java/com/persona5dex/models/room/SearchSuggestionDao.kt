@@ -1,8 +1,8 @@
 package com.persona5dex.models.room
 
-import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Query
+import com.persona5dex.searchSuggestions.PersonaSearchSuggestion
 import com.persona5dex.searchSuggestions.SearchSuggestion
 
 /**
@@ -11,10 +11,10 @@ import com.persona5dex.searchSuggestions.SearchSuggestion
 @Dao
 interface SearchSuggestionDao {
     @Query("""
-        select id, name as lineOne, arcana as lineTwo, 1 as type from personas
+        select id, name as lineOne, arcana as lineTwo, 1 as type, gameId from personas
         WHERE name LIKE :query
     """)
-    fun getPersonaSearchSuggestions(query: String?): List<SearchSuggestion>
+    fun getPersonaSearchSuggestions(query: String?): List<PersonaSearchSuggestion>
 
     @Query("""
         select id, name as lineOne, effect as lineTwo, 2 as type from skills

@@ -7,7 +7,7 @@ import com.persona5dex.models.GameTypePersona
 import com.persona5dex.models.MainListPersona
 
 
-fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType): List<T> {
+fun <T : GameTypePersona> Sequence<T>.filterGameType(gameType: GameType): Sequence<T> {
     val basePersonas = filter { it.gameId == GameType.BASE }
     return if (gameType == GameType.BASE) {
         basePersonas
@@ -20,6 +20,9 @@ fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType): List<T> {
         result
     }
 }
+
+fun <T : GameTypePersona> List<T>.filterGameType(gameType: GameType): List<T> =
+        asSequence().filterGameType(gameType).toList()
 
 fun List<MainListPersona>.filterGameType(gameType: GameType, basePersonas: Boolean, royalPersonas: Boolean): List<MainListPersona> {
     return if ((!royalPersonas && !basePersonas) || (gameType == GameType.BASE && !basePersonas)) {
