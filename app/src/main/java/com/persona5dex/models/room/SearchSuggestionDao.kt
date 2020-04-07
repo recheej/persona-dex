@@ -24,7 +24,7 @@ interface SearchSuggestionDao {
     fun getSkillSearchSuggestions(query: String?): List<SearchSuggestion>
 
     @Query("""
-        select personas.id, personas.name as lineOne, personaShadowNames.shadow_name as lineTwo, 3 as type from personaShadowNames
+        select personas.id, personas.name as lineOne, personaShadowNames.shadow_name as lineTwo, 1 as type from personaShadowNames
         inner join personas on personas.id = personaShadowNames.persona_id
         WHERE personaShadowNames.gameId = :gameType and shadow_name LIKE :query
     """)
