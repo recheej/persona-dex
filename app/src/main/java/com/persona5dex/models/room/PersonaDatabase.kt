@@ -20,7 +20,7 @@ import androidx.room.TypeConverters
             PersonaFusion::class,
             PersonaShadowName::class
         ],
-        version = 5
+        version = 6
 )
 @TypeConverters(PersonaTypeConverters::class)
 abstract class PersonaDatabase : RoomDatabase() {
