@@ -31,8 +31,8 @@ android {
         applicationId "com.persona5dex"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 28
-        versionName "3.0.4"
+        versionCode 29
+        versionName "3.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
