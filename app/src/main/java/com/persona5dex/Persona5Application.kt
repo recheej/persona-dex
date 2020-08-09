@@ -4,10 +4,12 @@ import android.app.Activity
 import android.app.Application
 import androidx.core.app.JobIntentService
 import androidx.work.Configuration
+import com.crashlytics.android.Crashlytics
 import com.persona5dex.dagger.application.ApplicationContextModule
 import com.persona5dex.dagger.application.DaggerPersona5ApplicationComponent
 import com.persona5dex.dagger.application.Persona5ApplicationComponent
 import com.persona5dex.models.room.PersonaDatabase
+import io.fabric.sdk.android.Fabric
 
 
 /**
@@ -21,6 +23,8 @@ open class Persona5Application : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+
+        Fabric.with(this, Crashlytics())
 
         component = DaggerPersona5ApplicationComponent.builder()
                 .applicationContextModule(ApplicationContextModule(this))

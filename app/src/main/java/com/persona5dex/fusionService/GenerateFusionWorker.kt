@@ -6,6 +6,7 @@ import androidx.work.WorkerParameters
 import com.crashlytics.android.Crashlytics
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.models.room.PersonaFusion
+import io.fabric.sdk.android.Fabric
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
