@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Persona5Calculator.iml" filepath="$PROJECT_DIR$/Persona5Calculator.iml" group="Persona5Calculator" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Persona5Calculator/app" />
-      <module fileurl="file://$PROJECT_DIR$/persona-dex.iml" filepath="$PROJECT_DIR$/persona-dex.iml" group="persona-dex" />
-      <module fileurl="file://$PROJECT_DIR$/app/persona-dex-app.iml" filepath="$PROJECT_DIR$/app/persona-dex-app.iml" group="persona-dex/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/persona-dex.iml" filepath="$PROJECT_DIR$/.idea/modules/persona-dex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/persona-dex.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/persona-dex.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/persona-dex.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/persona-dex.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/persona-dex.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/persona-dex.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/persona-dex.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/persona-dex.app.unitTest.iml" />
     </modules>
   </component>
 </project>

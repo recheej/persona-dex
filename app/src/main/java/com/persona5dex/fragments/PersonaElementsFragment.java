@@ -108,6 +108,7 @@ public class PersonaElementsFragment extends BaseFragment {
             elementStatView.setText(statText);
         } catch (NullPointerException e) {
             final String exceptionMessage = String.format(Locale.ROOT, "null for persona with id: %d. Element: %s", personaID, element);
+            throw e;
 //            Firebase.INSTANCE .logException(new RuntimeException(exceptionMessage, e));
         }
     }

@@ -75,6 +75,8 @@ build/
 
 # Intellij
 .idea/tasks.xml
+.idea/runConfigurations.xml
+.idea/modules.xml.xml
 
 # Keystore files
 *.jks
