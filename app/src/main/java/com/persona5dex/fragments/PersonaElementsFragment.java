@@ -1,5 +1,8 @@
 package com.persona5dex.fragments;
 
+import static com.persona5dex.models.Enumerations.Element;
+import static com.persona5dex.models.Enumerations.ElementEffect;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.crashlytics.android.Crashlytics;
 import com.persona5dex.R;
 import com.persona5dex.repositories.PersonaElementsRepository;
 import com.persona5dex.viewmodels.PersonaElementsViewModel;
@@ -20,9 +22,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
-
-import static com.persona5dex.models.Enumerations.Element;
-import static com.persona5dex.models.Enumerations.ElementEffect;
 
 public class PersonaElementsFragment extends BaseFragment {
     PersonaElementsViewModel viewModel;
@@ -85,7 +84,7 @@ public class PersonaElementsFragment extends BaseFragment {
 
         try {
             ElementEffect elementEffect = Objects.requireNonNull(elementMap.get(element));
-            switch(elementEffect) {
+            switch (elementEffect) {
                 case WEAK:
                     statText = getContext().getString(R.string.effect_weak);
                     break;
@@ -107,9 +106,9 @@ public class PersonaElementsFragment extends BaseFragment {
             }
 
             elementStatView.setText(statText);
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             final String exceptionMessage = String.format(Locale.ROOT, "null for persona with id: %d. Element: %s", personaID, element);
-            Crashlytics.logException(new RuntimeException(exceptionMessage, e));
+//            Firebase.INSTANCE .logException(new RuntimeException(exceptionMessage, e));
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.persona5dex.activities;
 
+import static android.app.SearchManager.EXTRA_DATA_KEY;
+import static android.app.SearchManager.USER_QUERY;
+
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -22,11 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.SearchEvent;
 import com.persona5dex.ArcanaNameProvider;
-import com.persona5dex.BuildConfig;
 import com.persona5dex.Constants;
 import com.persona5dex.R;
 import com.persona5dex.fragments.FilterDialogFragment;
@@ -44,11 +43,6 @@ import com.persona5dex.viewmodels.PersonaListViewModelFactory;
 import com.persona5dex.viewmodels.PersonaMainListViewModel;
 
 import javax.inject.Inject;
-
-import io.fabric.sdk.android.Fabric;
-
-import static android.app.SearchManager.EXTRA_DATA_KEY;
-import static android.app.SearchManager.USER_QUERY;
 
 public class MainActivity extends BaseActivity {
 
@@ -90,18 +84,13 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         final boolean onboardingComplete = defaultSharedPreferences.getBoolean(Constants.SHARED_PREF_ONBOARDING_COMPLETE, false);
-        if(!onboardingComplete) {
+        if (!onboardingComplete) {
             onboardingResultLauncher.launch(null);
         }
 
         setContentView(R.layout.activity_main);
 
         component.inject(this);
-
-        //init crashlytics
-        if(BuildConfig.ENABLE_CRASHLYTICS) {
-            Fabric.with(this, new Crashlytics());
-        }
 
         final PersonaRepository repository = personaListRepositoryFactory.getPersonaListRepository(PersonaListRepositoryType.PERSONA);
         PersonaListViewModelFactory viewModelFactory = new PersonaListViewModelFactory(arcanaNameProvider, currentGameType, repository, defaultSharedPreferences);
@@ -137,7 +126,7 @@ public class MainActivity extends BaseActivity {
 
     private void setCurrentGameString() {
         @StringRes int switchButtonTextRes;
-        if(currentGameType == GameType.BASE) {
+        if (currentGameType == GameType.BASE) {
             switchButtonTextRes = R.string.game_persona_5;
         } else {
             switchButtonTextRes = R.string.game_royal;
@@ -168,7 +157,7 @@ public class MainActivity extends BaseActivity {
 
     private void setNewSwitchButtonText() {
         @StringRes int switchButtonTextRes;
-        if(currentGameType == GameType.BASE) {
+        if (currentGameType == GameType.BASE) {
             switchButtonTextRes = R.string.game_royal;
         } else {
             switchButtonTextRes = R.string.game_persona_5;
@@ -183,29 +172,29 @@ public class MainActivity extends BaseActivity {
     }
 
     private void handleIntent(Intent intent) {
-        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
 
-            logSearchQuery(query);
+//            logSearchQuery(query);
 
             viewModel.filterPersonas(query);
-        } else if(Intent.ACTION_VIEW.equals(intent.getAction())) {
+        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             String itemID = intent.getDataString();
 
             Bundle extras = intent.getExtras();
-            if(extras != null) {
+            if (extras != null) {
                 String userQuery = extras.getString(USER_QUERY, null);
                 String searchType = extras.getString(EXTRA_DATA_KEY, null);
 
-                if(userQuery != null) {
-                    logSearchQuery(userQuery);
-                }
+//                if(userQuery != null) {
+//                    logSearchQuery(userQuery);
+//                }
 
-                if(searchType != null) {
+                if (searchType != null) {
                     int searchTypeAsInt = Integer.parseInt(searchType);
                     SearchResultType searchResultType = SearchResultType.getSearchResultType(searchTypeAsInt);
 
-                    if(searchResultType == SearchResultType.PERSONA) {
+                    if (searchResultType == SearchResultType.PERSONA) {
                         Intent startDetailIntent = new Intent(this, PersonaDetailActivity.class);
                         startDetailIntent.putExtra("persona_id", Integer.parseInt(itemID));
                         startActivity(startDetailIntent);
@@ -219,12 +208,12 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void logSearchQuery(String query) {
-        if(BuildConfig.ENABLE_CRASHLYTICS) {
-            Answers.getInstance().logSearch(new SearchEvent()
-                    .putQuery(query));
-        }
-    }
+//    private void logSearchQuery(String query) {
+//        if(BuildConfig.ENABLE_CRASHLYTICS) {
+//            Answers.getInstance().logSearch(new SearchEvent()
+//                    .putQuery(query));
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
@@ -264,7 +253,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_sort:
                 this.showSortPopup();
                 return true;
@@ -301,7 +290,7 @@ public class MainActivity extends BaseActivity {
      * @return True if selected sort menu item matches one of menu item ids
      */
     private boolean handleSortClick() {
-        switch(selectedSortMenuItemID) {
+        switch (selectedSortMenuItemID) {
             case R.id.menu_sort_name_asc:
                 personaListFragment.sortPersonasByName(true);
                 return true;

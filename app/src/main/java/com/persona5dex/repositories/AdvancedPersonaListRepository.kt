@@ -1,6 +1,7 @@
 package com.persona5dex.repositories
 
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import com.persona5dex.extensions.equalNormalized
 import com.persona5dex.extensions.normalize
 import com.persona5dex.filterGameType
@@ -15,14 +16,14 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class AdvancedPersonaListRepository @Inject constructor(
-        @Named("advancedPersonaId") private val advancedPersonaId: Int?,
-        private val advancedPersonaService: AdvancedPersonaService,
-        private val gameType: GameType,
-        private val mainPersonaRepository: MainPersonaRepository
+    @Named("advancedPersonaId") private val advancedPersonaId: Int?,
+    private val advancedPersonaService: AdvancedPersonaService,
+    private val gameType: GameType,
+    private val mainPersonaRepository: MainPersonaRepository
 ) : PersonaRepository {
     private val allPersonas by lazy {
         mainPersonaRepository.allPersonasForMainList
-                .filterGameType(gameType)
+            .filterGameType(gameType)
     }
 
     private val nameMap by lazy {
@@ -33,19 +34,23 @@ class AdvancedPersonaListRepository @Inject constructor(
         try {
             val personaName = allPersonas.first { it.id == advancedPersonaId }
             advancedPersonaService.getAdvancedPersonas().toList()
-                    .firstOrNull { it.resultPersonaName equalNormalized personaName.name }
-                    ?.let { advancedFusions ->
-                        advancedFusions.sourcePersonaNames
-                                .map { nameMap.getValue(it.normalize()) }
-                                .sortedBy { it.name }
-                    }.orEmpty()
+                .firstOrNull { it.resultPersonaName equalNormalized personaName.name }
+                ?.let { advancedFusions ->
+                    advancedFusions.sourcePersonaNames
+                        .map { nameMap.getValue(it.normalize()) }
+                        .sortedBy { it.name }
+                }.orEmpty()
         } catch (e: NoSuchElementException) {
-            Crashlytics.logException(RuntimeException("""
+            Firebase.crashlytics.recordException(
+                RuntimeException(
+                    """
                 failed to get advanced personas for persona: $advancedPersonaId
                 game type: $gameType
                 all personas count: ${allPersonas.size}
                 coroutine active: $isActive
-            """.trimIndent(), e))
+            """.trimIndent(), e
+                )
+            )
             emptyList<MainListPersona>()
         }
     }

@@ -3,14 +3,16 @@ package com.persona5dex.fusionService
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.crashlytics.ktx.setCustomKeys
+import com.google.firebase.ktx.Firebase
 import com.persona5dex.extensions.toPersonaApplication
 import com.persona5dex.models.room.PersonaFusion
-import io.fabric.sdk.android.Fabric
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-class GenerateFusionWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
+class GenerateFusionWorker(context: Context, params: WorkerParameters) :
+    CoroutineWorker(context, params) {
     private val application = context.toPersonaApplication()
     private val database = application.database
     private val personaDao = database.personaDao()
@@ -51,9 +53,11 @@ class GenerateFusionWorker(context: Context, params: WorkerParameters) : Corouti
             } catch (ex: Exception) {
                 withContext(NonCancellable) {
                     if (ex !is CancellationException) {
-                        Crashlytics.setInt("game_type", applicationComponent.gameType().value)
-                        Crashlytics.log("crash on fusions. fusion count: ${personaFusions.size}")
-                        Crashlytics.logException(ex)
+                        Firebase.crashlytics.setCustomKeys {
+                            key("game_type", applicationComponent.gameType().value)
+                        }
+                        Firebase.crashlytics.log("crash on fusions. fusion count: ${personaFusions.size}")
+                        Firebase.crashlytics.recordException(ex)
                     }
                     deleteAllFromPersonaFusions()
                     throw ex
