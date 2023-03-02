@@ -12,8 +12,8 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 val MIGRATION_2_3 = object : Migration(2, 3) {
     override fun migrate(database: SupportSQLiteDatabase) {
         //if existing database, don't run the rest of the migration steps
-        val versionCursor = database.query("select DISTINCT tbl_name from sqlite_master where tbl_name = 'version'", null);
-        val imageNameCursor = database.query("select imageurl from personas where name = 'Yamata-no-Orochi'", null);
+        val versionCursor = database.query("select DISTINCT tbl_name from sqlite_master where tbl_name = 'version'",);
+        val imageNameCursor = database.query("select imageurl from personas where name = 'Yamata-no-Orochi'");
         imageNameCursor.moveToNext();
 
         val imageUrl = imageNameCursor.getString(0);

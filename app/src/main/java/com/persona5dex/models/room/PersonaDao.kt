@@ -11,26 +11,28 @@ import kotlinx.coroutines.yield
 @Dao
 abstract class PersonaDao {
     @get:Query("select id, name, arcana, level, rare, dlc, gameId, party from personas order by name")
-    @get:Transaction
     abstract val allPersonasForMainListLiveData: LiveData<List<MainListPersona>>
 
-    @get:Transaction
     @get:Query("select id, name, arcana, level, rare, dlc, gameId, party from personas order by name")
     abstract val allPersonasForMainList: List<MainListPersona>
 
-    @Query("select id, arcana, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max, party " +
-            "from personas where id = :personaID " +
-            "order by name")
+    @Query(
+        "select id, arcana, name, level, endurance, agility, strength, magic, luck, imageUrl, note, max, party " +
+                "from personas where id = :personaID " +
+                "order by name"
+    )
     abstract fun getDetailInfoForPersona(personaID: Int): LiveData<PersonaDetailInfo>
 
     @Query("select shadow_name as shadowName, isPrimary from personaShadowNames where persona_id = :personaID and gameId = :gameType")
-    abstract fun getShadowsForPersona(personaID: Int, gameType: GameType): LiveData<Array<PersonaShadowDetail>>
+    abstract fun getShadowsForPersona(
+        personaID: Int,
+        gameType: GameType
+    ): LiveData<Array<PersonaShadowDetail>>
 
     @get:Query("select id, arcana, name, level, rare, dlc, special, gameId, party from personas order by level")
     abstract val personasByLevel: Array<PersonaForFusionService>
 
     @get:Query("select id, name, arcana, level, rare, dlc, gameId, party from personas where dlc = 1")
-    @get:Transaction
     abstract val dLCPersonas: LiveData<List<MainListPersona>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -39,23 +41,27 @@ abstract class PersonaDao {
     @Query("select * from personaElements where persona_id = :personaID")
     abstract fun getElementsForPersona(personaID: Int): LiveData<List<PersonaElement>>
 
-    @Query("select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
-            "p2.name as rightPersonaName, p2.id as rightPersonaID, " +
-            "null as resultPersonaName, 0 as resultPersonaID " +
-            "from personaFusions " +
-            "inner join personas as p1 on p1.id = personaFusions.persona_one " +
-            "inner join personas as p2 on p2.id = personaFusions.persona_two " +
-            "where personaFusions.result = :personaID")
+    @Query(
+        "select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
+                "p2.name as rightPersonaName, p2.id as rightPersonaID, " +
+                "null as resultPersonaName, 0 as resultPersonaID " +
+                "from personaFusions " +
+                "inner join personas as p1 on p1.id = personaFusions.persona_one " +
+                "inner join personas as p2 on p2.id = personaFusions.persona_two " +
+                "where personaFusions.result = :personaID"
+    )
     abstract fun getEdgesToPersona(personaID: Int): LiveData<List<PersonaEdgeDisplay>>
 
-    @Query("select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
-            "p2.name as rightPersonaName, p2.id as rightPersonaID, " +
-            "p3.name as resultPersonaName, p3.id as resultPersonaID " +
-            "from personaFusions " +
-            "inner join personas as p1 on p1.id = personaFusions.persona_one " +
-            "inner join personas as p2 on p2.id = personaFusions.persona_two " +
-            "inner join personas as p3 on p3.id = personaFusions.result " +
-            "where personaFusions.persona_one = :personaID or personaFusions.persona_two == :personaID")
+    @Query(
+        "select p1.name as leftPersonaName, p1.id as leftPersonaID, " +
+                "p2.name as rightPersonaName, p2.id as rightPersonaID, " +
+                "p3.name as resultPersonaName, p3.id as resultPersonaID " +
+                "from personaFusions " +
+                "inner join personas as p1 on p1.id = personaFusions.persona_one " +
+                "inner join personas as p2 on p2.id = personaFusions.persona_two " +
+                "inner join personas as p3 on p3.id = personaFusions.result " +
+                "where personaFusions.persona_one = :personaID or personaFusions.persona_two == :personaID"
+    )
     abstract fun getEdgesFromPersona(personaID: Int): LiveData<List<PersonaEdgeDisplay>>
 
     @Query("delete from personaFusions")
