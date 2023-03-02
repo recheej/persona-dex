@@ -33,7 +33,7 @@ class MigrationTest {
     @Throws(IOException::class)
     fun migrate3to4() {
         var db = helper.createDatabase(TEST_DB, 3)
-        db = helper.runMigrationsAndValidate("persona-db.db", 4, true)
+        db = helper.runMigrationsAndValidate(PersonaDatabase.DB_NAME, 4, true)
 
         var cursor = db.query("select * from personas")
         Assert.assertTrue(cursor.count > 0)

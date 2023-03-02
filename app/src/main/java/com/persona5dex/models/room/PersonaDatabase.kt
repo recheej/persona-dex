@@ -12,15 +12,15 @@ import androidx.room.TypeConverters
  */
 
 @Database(
-        entities = [
-            Persona::class,
-            Skill::class,
-            PersonaSkill::class,
-            PersonaElement::class,
-            PersonaFusion::class,
-            PersonaShadowName::class
-        ],
-        version = 8
+    entities = [
+        Persona::class,
+        Skill::class,
+        PersonaSkill::class,
+        PersonaElement::class,
+        PersonaFusion::class,
+        PersonaShadowName::class
+    ],
+    version = 8
 )
 @TypeConverters(PersonaTypeConverters::class)
 abstract class PersonaDatabase : RoomDatabase() {
@@ -32,23 +32,24 @@ abstract class PersonaDatabase : RoomDatabase() {
 
         private var INSTANCE: PersonaDatabase? = null
         private const val DB_NAME = "persona-db.db"
+        private const val DB_RELATIVE_PATH = "databases/$DB_NAME"
 
         @JvmStatic
         fun getPersonaDatabase(context: Context): PersonaDatabase = INSTANCE ?: run {
             Room.databaseBuilder(
-                    context,
-                    PersonaDatabase::class.java,
-                    DB_NAME
+                context,
+                PersonaDatabase::class.java,
+                DB_NAME
             )
-                    .addMigrations(
-                            MIGRATION_1_2,
-                            MIGRATION_2_3
-                    )
-                    .createFromAsset("databases/$DB_NAME")
-                    .fallbackToDestructiveMigration()
-                    .build().also {
-                        INSTANCE = it
-                    }
+                .addMigrations(
+                    MIGRATION_1_2,
+                    MIGRATION_2_3
+                )
+                .createFromAsset(DB_RELATIVE_PATH)
+                .fallbackToDestructiveMigration()
+                .build().also {
+                    INSTANCE = it
+                }
         }
     }
 }

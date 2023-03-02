@@ -96,3 +96,8 @@ freeline_project_description.json
 app/app-release.apk
 /app/src/main/assets/databases/persona-db.db
 /.idea/caches/build_file_checksums.ser
+/app/src/debug/assets/databases/persona-db.db
+/.idea/compiler.xml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/.idea/vcs.xml
