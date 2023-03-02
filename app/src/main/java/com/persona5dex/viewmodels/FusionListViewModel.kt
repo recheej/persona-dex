@@ -11,9 +11,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class FusionListViewModel(
-        private val isToList: Boolean,
-        private val personaId: Int,
-        private val mainPersonaRepository: MainPersonaRepository
+    private val isToList: Boolean,
+    private val personaId: Int,
+    private val mainPersonaRepository: MainPersonaRepository
 ) : ViewModel() {
 
     private var baseEdgeDisplays: List<PersonaEdgeDisplay>? = null
@@ -41,8 +41,8 @@ class FusionListViewModel(
                     } else {
                         val flag = display.resultPersonaName containsNormalized queryNormalized
                         val otherPersonaName =
-                                if (display.leftPersonaID == personaId) display.rightPersonaName
-                                else display.leftPersonaName
+                            if (display.leftPersonaID == personaId) display.rightPersonaName
+                            else display.leftPersonaName
                         flag || otherPersonaName containsNormalized queryNormalized
                     }
                 }.orEmpty()
@@ -62,10 +62,11 @@ class FusionListViewModel(
         }
     }
 
-    fun getFilteredEdgeDisplayLiveData(): LiveData<List<PersonaEdgeDisplay>> = filteredEdgeDisplayLiveData
+    fun getFilteredEdgeDisplayLiveData(): LiveData<List<PersonaEdgeDisplay>> =
+        filteredEdgeDisplayLiveData
 
     private infix fun String?.containsNormalized(other: String) =
-            this?.normalize()?.contains(other) ?: false
+        this?.normalize()?.contains(other) ?: false
 
     fun setEdgeDisplays(displays: List<PersonaEdgeDisplay>) {
         baseEdgeDisplays = displays
@@ -81,10 +82,10 @@ class FusionListViewModel(
 }
 
 class FusionListViewModelFactory(
-        private val isToList: Boolean,
-        private val personaId: Int,
-        private val mainPersonaRepository: MainPersonaRepository
+    private val isToList: Boolean,
+    private val personaId: Int,
+    private val mainPersonaRepository: MainPersonaRepository
 ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            FusionListViewModel(isToList, personaId, mainPersonaRepository) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T =
+        FusionListViewModel(isToList, personaId, mainPersonaRepository) as T
 }

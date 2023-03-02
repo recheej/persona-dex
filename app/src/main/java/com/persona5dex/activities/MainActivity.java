@@ -17,7 +17,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
@@ -36,7 +39,7 @@ import com.persona5dex.jobs.PersonaJobCreator;
 import com.persona5dex.models.Enumerations.SearchResultType;
 import com.persona5dex.models.GameType;
 import com.persona5dex.models.PersonaRepository;
-import com.persona5dex.onboarding.OnboardingActivityResultContract;
+import com.persona5dex.onboarding.OnboardingActivity;
 import com.persona5dex.repositories.MainPersonaRepository;
 import com.persona5dex.repositories.PersonaListRepositoryFactory;
 import com.persona5dex.viewmodels.PersonaListViewModelFactory;
@@ -73,10 +76,15 @@ public class MainActivity extends BaseActivity {
 
     private PersonaMainListViewModel viewModel;
 
-    ActivityResultLauncher<Void> onboardingResultLauncher =
-            prepareCall(
-                    new OnboardingActivityResultContract(this), result ->
-                            Toast.makeText(this, R.string.dlc_settings_hint, Toast.LENGTH_LONG).show()
+    ActivityResultLauncher<Intent> onboardingResultLauncher =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            Toast.makeText(MainActivity.this, R.string.dlc_settings_hint, Toast.LENGTH_LONG).show();
+                        }
+                    }
             );
 
     @Override
@@ -85,7 +93,7 @@ public class MainActivity extends BaseActivity {
 
         final boolean onboardingComplete = defaultSharedPreferences.getBoolean(Constants.SHARED_PREF_ONBOARDING_COMPLETE, false);
         if (!onboardingComplete) {
-            onboardingResultLauncher.launch(null);
+            onboardingResultLauncher.launch(new Intent(this, OnboardingActivity.class));
         }
 
         setContentView(R.layout.activity_main);

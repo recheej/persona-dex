@@ -13,9 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class OnboardingViewModel(
-        private val defaultSharedPreferences: SharedPreferences,
-        private val application: Application,
-        private val personaJobCreator: PersonaJobCreator
+    private val defaultSharedPreferences: SharedPreferences,
+    private val application: Application,
+    private val personaJobCreator: PersonaJobCreator
 ) : ViewModel() {
 
     private val nextStepState = MutableLiveData<OnboardingPagerState>()
@@ -30,8 +30,8 @@ class OnboardingViewModel(
     fun setGameType(gameType: GameType) {
         viewModelScope.launch(Dispatchers.IO) {
             defaultSharedPreferences.edit()
-                    .putInt(SHARED_PREF_KEY_GAME_TYPE, gameType.value)
-                    .commit()
+                .putInt(SHARED_PREF_KEY_GAME_TYPE, gameType.value)
+                .commit()
             incrementNextStep()
         }
     }
@@ -40,16 +40,16 @@ class OnboardingViewModel(
     fun setOnboardingComplete() {
         viewModelScope.launch(Dispatchers.IO) {
             defaultSharedPreferences.edit()
-                    .putBoolean(SHARED_PREF_ONBOARDING_COMPLETE, true)
-                    .commit()
+                .putBoolean(SHARED_PREF_ONBOARDING_COMPLETE, true)
+                .commit()
             nextStepState.postValue(OnboardingPagerState.OnboardingComplete)
         }
     }
 
     fun setNightMode(nightMode: Int) {
         defaultSharedPreferences.edit()
-                .putString(application.getString(R.string.pref_key_theme), nightMode.toString())
-                .apply()
+            .putString(application.getString(R.string.pref_key_theme), nightMode.toString())
+            .apply()
     }
 
     sealed class OnboardingPagerState {
@@ -58,8 +58,11 @@ class OnboardingViewModel(
     }
 }
 
-class OnboardingViewModelFactory(private val defaultSharedPreferences: SharedPreferences, private val application: Application, val personaJobCreator: PersonaJobCreator) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            OnboardingViewModel(defaultSharedPreferences, application, personaJobCreator) as T
-
+class OnboardingViewModelFactory(
+    private val defaultSharedPreferences: SharedPreferences,
+    private val application: Application,
+    val personaJobCreator: PersonaJobCreator
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T =
+        OnboardingViewModel(defaultSharedPreferences, application, personaJobCreator) as T
 }
